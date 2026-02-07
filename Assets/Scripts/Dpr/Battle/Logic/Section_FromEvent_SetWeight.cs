@@ -4,8 +4,11 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_SetWeight(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result result, in Description description) { }
+        public void Execute(Result result, in Description description)
+        {
+            GetServerCommandPutter().SetWeight(description.pokeID, description.weight);
+            GetServerCommandPutter().Message(in description.successMessage);
+        }
 
 		public class Description
 		{

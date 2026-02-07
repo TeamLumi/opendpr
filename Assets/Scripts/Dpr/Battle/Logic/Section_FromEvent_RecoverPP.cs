@@ -4,8 +4,18 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_RecoverPP(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result result, in Description description) { }
+        public void Execute(Result result, in Description description)
+        {
+            BTL_POKEPARAM poke = GetPokeParam(description.pokeID);
+            if (!description.isDeadPokeEnable && poke.IsDead())
+            {
+                result.isSuccessed = false;
+                return;
+            }
+            result.isSuccessed = true;
+            GetServerCommandPutter().RecoverPP(poke, description.wazaIdx, description.volume, !description.isSurfacePP);
+            GetServerCommandPutter().Message(in description.successMessage);
+        }
 
 		public class Description
 		{

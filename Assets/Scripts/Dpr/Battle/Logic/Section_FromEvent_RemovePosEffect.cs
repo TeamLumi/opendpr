@@ -4,8 +4,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_RemovePosEffect(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result result, in Description description) { }
+        public void Execute(Result result, in Description description)
+        {
+            GetServerCommandPutter().RemovePosHandler(description.effect, description.pos);
+        }
 
 		public class Description
 		{

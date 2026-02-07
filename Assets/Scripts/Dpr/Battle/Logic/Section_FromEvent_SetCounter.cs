@@ -4,8 +4,11 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_SetCounter(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result result, in Description description) { }
+		public void Execute(Result result, in Description description)
+		{
+			BTL_POKEPARAM poke = GetPokeParam(description.pokeID);
+			GetServerCommandPutter().SetBppCounter(poke, (BTL_POKEPARAM.Counter)description.counterID, description.value);
+		}
 
 		public class Description
 		{

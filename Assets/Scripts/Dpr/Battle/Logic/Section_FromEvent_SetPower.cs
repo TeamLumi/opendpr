@@ -4,8 +4,40 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_SetPower(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result result, in Description description) { }
+		public void Execute(Result result, in Description description)
+		{
+			result.isSuccessed = false;
+			ServerCommandPutter scp = GetServerCommandPutter();
+			if (description.isAttackEnable)
+			{
+				scp.SetBaseStatus(description.pokeID, BTL_POKEPARAM.ValueID.BPP_ATTACK, description.attack);
+				result.isSuccessed = true;
+			}
+			if (description.isDefenceEnable)
+			{
+				scp.SetBaseStatus(description.pokeID, BTL_POKEPARAM.ValueID.BPP_DEFENCE, description.defence);
+				result.isSuccessed = true;
+			}
+			if (description.isSpAttackEnable)
+			{
+				scp.SetBaseStatus(description.pokeID, BTL_POKEPARAM.ValueID.BPP_SP_ATTACK, description.spAttack);
+				result.isSuccessed = true;
+			}
+			if (description.isSpDefenceEnable)
+			{
+				scp.SetBaseStatus(description.pokeID, BTL_POKEPARAM.ValueID.BPP_SP_DEFENCE, description.spDefence);
+				result.isSuccessed = true;
+			}
+			if (description.isAgilityEnable)
+			{
+				scp.SetBaseStatus(description.pokeID, BTL_POKEPARAM.ValueID.BPP_AGILITY, description.agility);
+				result.isSuccessed = true;
+			}
+			if (result.isSuccessed)
+			{
+				scp.Message(in description.successMessage);
+			}
+		}
 
 		public class Description
 		{

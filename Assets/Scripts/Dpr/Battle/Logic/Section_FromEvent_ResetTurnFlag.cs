@@ -4,8 +4,12 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_ResetTurnFlag(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result result, in Description description) { }
+		public void Execute(Result result, in Description description)
+		{
+			BTL_POKEPARAM poke = GetPokeParam(description.pokeID);
+			GetServerCommandPutter().ResetTurnFlag(poke, description.flag);
+			result.isSuccessed = true;
+		}
 
 		public class Description
 		{

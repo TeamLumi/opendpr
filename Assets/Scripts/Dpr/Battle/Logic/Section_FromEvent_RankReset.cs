@@ -4,8 +4,17 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_RankReset(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result result, in Description description) { }
+        public void Execute(Result result, in Description description)
+        {
+            result.isSuccessed = false;
+            for (byte i = 0; i < description.pokeCount; i++)
+            {
+                BTL_POKEPARAM poke = GetPokeParam(description.pokeID[i]);
+                poke.RankReset();
+                GetServerCommandPutter().RankReset(description.pokeID[i]);
+                result.isSuccessed = true;
+            }
+        }
 
 		public class Description
 		{

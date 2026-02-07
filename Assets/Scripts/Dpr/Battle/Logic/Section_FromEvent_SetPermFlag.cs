@@ -4,8 +4,11 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_SetPermFlag(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result result, in Description description) { }
+        public void Execute(Result result, in Description description)
+        {
+            BTL_POKEPARAM poke = GetPokeParam(description.pokeID);
+            GetServerCommandPutter().SetPermFlag(poke, description.flag);
+        }
 
 		public class Description
 		{

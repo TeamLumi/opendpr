@@ -4,8 +4,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_SetWazaEffectEnable(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result result, in Description description) { }
+		public void Execute(Result result, in Description description)
+		{
+			GetActionSharedData().wazaEffectParams.SetEnable();
+		}
 
 		public class Description { }
 

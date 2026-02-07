@@ -4,8 +4,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_SetWazaEffectIndex(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result result, in Description description) { }
+        public void Execute(Result result, in Description description)
+        {
+            GetActionSharedData().wazaEffectParams.SetEffectIndex(description.effectIndex);
+        }
 
 		public class Description
 		{
