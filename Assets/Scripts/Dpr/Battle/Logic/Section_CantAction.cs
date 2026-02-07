@@ -4,8 +4,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_CantAction(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result pResult, in Description description) { }
+        public void Execute(Result pResult, in Description description)
+        {
+            GetServerCommandPutter().CantAction(description.poke);
+        }
 
 		public class Description
 		{

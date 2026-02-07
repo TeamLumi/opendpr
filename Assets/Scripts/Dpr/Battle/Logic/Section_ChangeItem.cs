@@ -6,8 +6,17 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_ChangeItem(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result pResult, in Description description) { }
+        public void Execute(Result pResult, in Description description)
+        {
+            ushort prevItemID = description.poke.GetItem();
+
+            if (description.isPrevItemConsumed)
+            {
+                GetServerCommandPutter().ConsumeItem(description.poke, prevItemID);
+            }
+
+            GetServerCommandPutter().SetItem(description.poke, description.nextItemID);
+        }
 
 		public class Description
 		{

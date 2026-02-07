@@ -4,8 +4,18 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_DecrementPP(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result pResult, in Description description) { }
+        public void Execute(Result pResult, in Description description)
+        {
+            BTL_POKEPARAM poke = description.poke;
+            byte wazaIdx = description.wazaIndex;
+            byte volume = description.volume;
+
+            if (poke.WAZA_GetPP(wazaIdx) > 0)
+            {
+                GetServerCommandPutter().DecrementPP(poke, wazaIdx, volume);
+                pResult.isDecrement = true;
+            }
+        }
 
 		public class Description
 		{

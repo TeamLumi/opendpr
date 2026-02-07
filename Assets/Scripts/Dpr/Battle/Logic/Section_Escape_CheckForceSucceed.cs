@@ -4,8 +4,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_Escape_CheckForceSucceed(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result pResult, in Description description) { }
+        public void Execute(Result pResult, in Description description)
+        {
+            pResult.canEscape = GetEventLauncher().Event_SkipNigeruCalc(description.poke);
+        }
 
 		public class Description
 		{

@@ -4,8 +4,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_AfterTokuseiChanged_Event(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result pResult, in Description desc) { }
+        public void Execute(Result pResult, in Description desc)
+        {
+            GetEventLauncher().Event_ChangeTokuseiAfter(desc.poke.GetID());
+        }
 
 		public class Description
 		{

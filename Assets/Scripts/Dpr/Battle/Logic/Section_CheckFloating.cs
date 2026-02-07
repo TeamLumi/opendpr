@@ -4,8 +4,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_CheckFloating(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result pResult, in Description description) { }
+        public void Execute(Result pResult, in Description description)
+        {
+            pResult.isFloating = GetEventLauncher().Event_CheckFloating(description.target, description.isIncludeHikouType);
+        }
 
 		public class Description
 		{

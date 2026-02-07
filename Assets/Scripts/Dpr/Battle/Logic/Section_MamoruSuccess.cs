@@ -4,8 +4,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_MamoruSuccess(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result pResult, in Description description) { }
+		public void Execute(Result pResult, in Description description)
+		{
+			GetEventLauncher().Event_MamoruSuccess(description.attacker, description.target, description.wazaParam);
+		}
 
 		public class Description
 		{

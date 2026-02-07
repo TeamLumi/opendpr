@@ -4,8 +4,25 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_AddWazaDamageRecord(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result pResult, in Description description) { }
+		public void Execute(Result pResult, in Description description)
+		{
+			BTL_POKEPARAM.WAZADMG_REC rec = new BTL_POKEPARAM.WAZADMG_REC();
+			rec.wazaID = (ushort)description.wazaParam.wazaID;
+			rec.damage = description.damage;
+			rec.damageType = description.wazaParam.damageType;
+			rec.wazaType = description.wazaParam.wazaType;
+			rec.pokeID = description.attacker.GetID();
+			rec.pokePos = description.attackerPos;
+			description.defender.WAZADMGREC_Add(rec);
+
+			GetServerCommandPutter().AddWazaDamageRecord(
+				description.defender, description.attacker,
+				description.attackerPos,
+				description.wazaParam.wazaType,
+				description.wazaParam.damageType,
+				(ushort)description.wazaParam.wazaID,
+				description.damage);
+		}
 
 		public class Description
 		{

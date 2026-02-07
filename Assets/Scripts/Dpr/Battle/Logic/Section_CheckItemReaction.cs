@@ -4,8 +4,11 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_CheckItemReaction(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result pResult, in Description desc) { }
+        public void Execute(Result pResult, in Description desc)
+        {
+            BTL_POKEPARAM poke = GetPokeParam(desc.pokeID);
+            GetEventLauncher().Event_CheckItemReaction(poke, desc.reactionType);
+        }
 
 		public class Description
 		{

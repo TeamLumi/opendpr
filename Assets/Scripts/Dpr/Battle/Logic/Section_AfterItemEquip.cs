@@ -6,8 +6,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_AfterItemEquip(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result pResult, in Description description) { }
+		public void Execute(Result pResult, in Description description)
+		{
+			GetEventLauncher().Event_AfterItemEquip(description.poke, description.itemID, description.isKinomiCheckEnable);
+		}
 
 		public class Description
 		{

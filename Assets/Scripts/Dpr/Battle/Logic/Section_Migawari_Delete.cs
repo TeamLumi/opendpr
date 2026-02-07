@@ -4,8 +4,17 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_Migawari_Delete(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result pResult, in Description description) { }
+		public void Execute(Result pResult, in Description description)
+		{
+			BTL_POKEPARAM poke = description.poke;
+			byte pokeID = poke.GetID();
+
+			poke.MIGAWARI_Delete();
+			GetServerCommandPutter().DeleteMigawari(pokeID);
+
+			BtlPokePos pos = GetPokePos(poke);
+			GetServerCommandPutter().Act_MigawariDelete(pos);
+		}
 
 		public class Description
 		{

@@ -4,8 +4,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_ChangeWeather_After(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result pResult, in Description description) { }
+        public void Execute(Result pResult, in Description description)
+        {
+            GetEventLauncher().Event_AfterChangeWeather(description.weather);
+        }
 
 		public class Description
 		{

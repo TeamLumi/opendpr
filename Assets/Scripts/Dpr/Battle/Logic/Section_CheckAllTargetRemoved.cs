@@ -4,8 +4,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_CheckAllTargetRemoved(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result pResult, in Description description) { }
+        public void Execute(Result pResult, in Description description)
+        {
+            pResult.isFailed = (description.targets.GetAliveCount() == 0);
+        }
 
 		public class Description
 		{
