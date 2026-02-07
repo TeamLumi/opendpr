@@ -4,14 +4,27 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_ChangeWeather_Core(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result pResult, in Description description) { }
-		
-		// TODO
-		private void afterChangeWeather(BtlWeather weather) { }
-		
-		// TODO
-		private void checkBattleTalk(byte pokeID, BtlWeather weather) { }
+		public void Execute(Result pResult, in Description description)
+		{
+			GetServerCommandPutter().StartWeather(description.weather, description.turn,
+				description.turnUpCount, description.causePokeID, description.cause);
+
+			afterChangeWeather(description.weather);
+		}
+
+		private void afterChangeWeather(BtlWeather weather)
+		{
+			var afterDesc = new Section_ChangeWeather_After.Description();
+			afterDesc.weather = weather;
+			var afterResult = new Section_ChangeWeather_After.Result();
+			var afterSection = new Section_ChangeWeather_After(GetCommonParam());
+			afterSection.Execute(afterResult, in afterDesc);
+		}
+
+		private void checkBattleTalk(byte pokeID, BtlWeather weather)
+		{
+			// Battle talk is handled client-side by TrainerMessageManager
+		}
 
 		public class Description
 		{
@@ -20,7 +33,7 @@ namespace Dpr.Battle.Logic
 			public byte turnUpCount;
 			public byte causePokeID;
 			public ChangeWeatherCause cause;
-			
+
 			public Description()
 			{
 				weather = BtlWeather.BTL_WEATHER_NONE;

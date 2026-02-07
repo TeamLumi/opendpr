@@ -4,14 +4,40 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_DamageDrain_Core(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result pResult, in Description description) { }
-		
-		// TODO
-		private ushort recalcDrainVolume(BTL_POKEPARAM attacker, BTL_POKEPARAM target, ushort drainHP) { return default; }
-		
-		// TODO
-		private bool recoverHP(BTL_POKEPARAM poke, ushort drainHP, bool skipSpFailCheck) { return default; }
+		public void Execute(Result pResult, in Description description)
+		{
+			pResult.isHpRecovered = false;
+
+			ushort drainHP = recalcDrainVolume(description.attacker, description.target, description.drainHP);
+
+			if (drainHP > 0)
+			{
+				pResult.isHpRecovered = recoverHP(description.attacker, drainHP, description.skipSpFailCheck);
+			}
+		}
+
+		private ushort recalcDrainVolume(BTL_POKEPARAM attacker, BTL_POKEPARAM target, ushort drainHP)
+		{
+			return GetEventLauncher().Event_RecalcDrainVolume(attacker, target, drainHP);
+		}
+
+		private bool recoverHP(BTL_POKEPARAM poke, ushort drainHP, bool skipSpFailCheck)
+		{
+			var desc = new Section_RecoverHP.Description();
+			desc.userPokeID = poke.GetID();
+			desc.targetPokeID = poke.GetID();
+			desc.recoverHP = drainHP;
+			desc.isDisplayRecoverEffect = true;
+			desc.isDisplayFailMessage_HPFull = false;
+			desc.isDisplayFailMessage_SP = !skipSpFailCheck;
+			desc.isSkipFailCheckSP = skipSpFailCheck;
+
+			var result = new Section_RecoverHP.Result();
+			var section = new Section_RecoverHP(GetCommonParam());
+			section.Execute(result, in desc);
+
+			return result.isRecovered;
+		}
 
 		public class Description
 		{
@@ -19,7 +45,7 @@ namespace Dpr.Battle.Logic
 			public BTL_POKEPARAM target;
 			public ushort drainHP;
 			public bool skipSpFailCheck;
-			
+
 			public Description()
 			{
 				attacker = null;
