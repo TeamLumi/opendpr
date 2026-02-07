@@ -24,22 +24,74 @@ namespace Dpr.Battle.Logic
 			new getCureStrIDTable_t(WazaSick.WAZASICK_KONRAN,       BTL_STRID_SET.KonranCure,      BTL_STRID_SET.UseItem_CureKonran),
 			new getCureStrIDTable_t(WazaSick.WAZASICK_MEROMERO,     BTL_STRID_SET.MeromeroCure,    BTL_STRID_SET.UseItem_CureMero),
 		};
-		
-		// TODO
-		public static int getCureStrID(WazaSick sick, bool fUseItem) { return default; }
-		
-		// TODO
-		public static int getDefaultSickStrID(WazaSick sickID, in BTL_SICKCONT cont) { return default; }
-		
-		// TODO
-		public static int getWazaSickDamageStrID(WazaSick sick) { return default; }
+
+		public static int getCureStrID(WazaSick sick, bool fUseItem)
+		{
+			for (int i = 0; i < getCureStrIDTable.Length; i++)
+			{
+				if (getCureStrIDTable[i].sick == sick)
+				{
+					if (fUseItem)
+					{
+						return getCureStrIDTable[i].strID_useItem;
+					}
+					else
+					{
+						return getCureStrIDTable[i].strID_notItem;
+					}
+				}
+			}
+
+			return -1;
+		}
+
+		public static int getDefaultSickStrID(WazaSick sickID, in BTL_SICKCONT cont)
+		{
+			switch (sickID)
+			{
+				case WazaSick.WAZASICK_DOKU:
+					if (cont.turn_flag)
+					{
+						return BTL_STRID_SET.MoudokuGet;
+					}
+					return BTL_STRID_SET.DokuGet;
+				case WazaSick.WAZASICK_YAKEDO:       return BTL_STRID_SET.YakedoGet;
+				case WazaSick.WAZASICK_NEMURI:       return BTL_STRID_SET.NemuriGet;
+				case WazaSick.WAZASICK_KOORI:        return BTL_STRID_SET.KoriGet;
+				case WazaSick.WAZASICK_MAHI:         return BTL_STRID_SET.MahiGet;
+				case WazaSick.WAZASICK_KONRAN:       return BTL_STRID_SET.KonranGet;
+				case WazaSick.WAZASICK_MEROMERO:     return BTL_STRID_SET.MeromeroGet;
+				case WazaSick.WAZASICK_BIND:         return BTL_STRID_SET.Bind;
+				case WazaSick.WAZASICK_YADORIGI:     return BTL_STRID_SET.Yadorigi;
+				case WazaSick.WAZASICK_ENCORE:       return BTL_STRID_SET.Encore;
+				case WazaSick.WAZASICK_TYOUHATSU:    return BTL_STRID_SET.Chouhatu;
+				case WazaSick.WAZASICK_ICHAMON:      return BTL_STRID_SET.Ichamon;
+				case WazaSick.WAZASICK_KANASIBARI:   return BTL_STRID_SET.Kanasibari;
+				case WazaSick.WAZASICK_SASIOSAE:     return BTL_STRID_SET.Sasiosae;
+				case WazaSick.WAZASICK_FLYING:       return BTL_STRID_SET.DenjiFuyu;
+				case WazaSick.WAZASICK_TELEKINESIS:  return BTL_STRID_SET.Telekinesis;
+				case WazaSick.WAZASICK_KAIHUKUHUUJI: return BTL_STRID_SET.KaifukuFuji;
+				default:                             return -1;
+			}
+		}
+
+		public static int getWazaSickDamageStrID(WazaSick sick)
+		{
+			switch (sick)
+			{
+				case WazaSick.WAZASICK_DOKU:    return BTL_STRID_SET.DokuDamage;
+				case WazaSick.WAZASICK_YAKEDO:  return BTL_STRID_SET.YakedoDamage;
+				case WazaSick.WAZASICK_AKUMU:   return BTL_STRID_SET.AkumuDamage;
+				default:                        return -1;
+			}
+		}
 
 		private class getCureStrIDTable_t
 		{
 			public WazaSick sick;
 			public short strID_notItem;
 			public short strID_useItem;
-			
+
 			public getCureStrIDTable_t(WazaSick sick, short strID_notItem, short strID_useItem)
 			{
 				this.sick = sick;
