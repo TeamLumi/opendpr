@@ -6,10 +6,18 @@
         public byte memberIdx;
         public bool depleteFlag;
 
-        // TODO
-        public void CopyFrom(PokeActionParam_PokeChange src) { }
+        public void CopyFrom(PokeActionParam_PokeChange src)
+        {
+            posIdx = src.posIdx;
+            memberIdx = src.memberIdx;
+            depleteFlag = src.depleteFlag;
+        }
 
-        // TODO
-        public void Clear() { }
+        public void Clear()
+        {
+            posIdx = 0;
+            memberIdx = 0;
+            depleteFlag = false;
+        }
     }
 }

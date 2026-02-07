@@ -8,10 +8,18 @@ namespace Dpr.Battle.Logic
         public ItemNo number;
         public byte param;
 
-        // TODO
-        public void CopyFrom(PokeActionParam_Item src) { }
+        public void CopyFrom(PokeActionParam_Item src)
+        {
+            targetID = src.targetID;
+            number = src.number;
+            param = src.param;
+        }
 
-        // TODO
-        public void Clear() { }
+        public void Clear()
+        {
+            targetID = 0;
+            number = ItemNo.DUMMY_DATA;
+            param = 0;
+        }
     }
 }

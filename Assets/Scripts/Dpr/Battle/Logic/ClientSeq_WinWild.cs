@@ -39,11 +39,93 @@
             return m_isFinished;
         }
 
-        // TODO
-        public void Update() { }
+        public void Update()
+        {
+            switch ((Sequence)m_seq)
+            {
+                case Sequence.SEQ_MONEY_MESSAGE_START:
+                {
+                    BATTLE_SETUP_PARAM sp = m_mainModule.GetBattleSetupParam();
+                    uint money = calc.CalcWinMoney(sp);
+                    BTLV_STRPARAM.Setup(m_strParam, BtlStrType.BTL_STRTYPE_STD, (ushort)BTL_STRID_STD.GetMoney);
+                    BTLV_STRPARAM.AddArg(m_strParam, (int)money);
+                    m_viewSystem.CMD_StartMsg(m_strParam);
+                    m_seq = (int)Sequence.SEQ_MONEY_MESSAGE_WAIT;
+                    break;
+                }
+                case Sequence.SEQ_MONEY_MESSAGE_WAIT:
+                {
+                    if (m_viewSystem.CMD_WaitMsg())
+                    {
+                        if (IsNusiWinEffectEnable())
+                        {
+                            m_seq = (int)Sequence.SEQ_WIN_VS_NUSI_EFFECT_START;
+                        }
+                        else
+                        {
+                            m_seq = (int)Sequence.SEQ_EXIT;
+                        }
+                    }
+                    break;
+                }
+                case Sequence.SEQ_WIN_VS_NUSI_EFFECT_START:
+                {
+                    m_viewSystem.CMD_VsNusiWinEffect_Start();
+                    m_seq = (int)Sequence.SEQ_WIN_VS_NUSI_EFFECT_WAIT;
+                    break;
+                }
+                case Sequence.SEQ_WIN_VS_NUSI_EFFECT_WAIT:
+                {
+                    if (m_viewSystem.CMD_VsNusiWinEffect_Wait())
+                    {
+                        m_seq = (int)Sequence.SEQ_WIN_VS_NUSI_MESSAGE_START;
+                    }
+                    break;
+                }
+                case Sequence.SEQ_WIN_VS_NUSI_MESSAGE_START:
+                {
+                    BTLV_STRPARAM.Setup(m_strParam, BtlStrType.BTL_STRTYPE_STD, (ushort)BTL_STRID_STD.WinNusi);
+                    m_viewSystem.CMD_StartMsg(m_strParam);
+                    m_seq = (int)Sequence.SEQ_WIN_VS_NUSI_MESSAGE_WAIT;
+                    break;
+                }
+                case Sequence.SEQ_WIN_VS_NUSI_MESSAGE_WAIT:
+                {
+                    if (m_viewSystem.CMD_WaitMsg())
+                    {
+                        m_seq = (int)Sequence.SEQ_EXIT;
+                    }
+                    break;
+                }
+                case Sequence.SEQ_EXIT:
+                {
+                    m_isFinished = true;
+                    break;
+                }
+            }
+        }
 
-        // TODO
-        private bool IsNusiWinEffectEnable() { return false; }
+        private bool IsNusiWinEffectEnable()
+        {
+            BATTLE_SETUP_PARAM sp = m_mainModule.GetBattleSetupParam();
+            if (sp == null)
+            {
+                return false;
+            }
+            for (int i = 0; i < sp.partyDesc.Length; i++)
+            {
+                PartyDesc partyDesc = sp.partyDesc[i];
+                if (partyDesc == null) continue;
+                for (int j = 0; j < partyDesc.pokeDesc.Length; j++)
+                {
+                    if (partyDesc.pokeDesc[j].defaultPowerUpDesc.reason == DefaultPowerUpReason.DEFAULT_POWERUP_REASON_NUSI)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
 
         public class SetupParam
         {

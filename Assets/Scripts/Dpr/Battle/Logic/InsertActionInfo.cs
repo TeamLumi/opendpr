@@ -5,10 +5,16 @@
         public bool isTokuseiWindowDisplay;
         public StrParam prevActionMessage = new StrParam();
 
-        // TODO
-        public void CopyFrom(InsertActionInfo src) { }
+        public void CopyFrom(InsertActionInfo src)
+        {
+            isTokuseiWindowDisplay = src.isTokuseiWindowDisplay;
+            prevActionMessage.CopyFrom(src.prevActionMessage);
+        }
 
-        // TODO
-        public void Clear() { }
+        public void Clear()
+        {
+            isTokuseiWindowDisplay = false;
+            prevActionMessage.Clear();
+        }
     }
 }

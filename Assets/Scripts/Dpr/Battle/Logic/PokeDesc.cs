@@ -5,10 +5,16 @@
         public DefaultPowerUpDesc defaultPowerUpDesc = new DefaultPowerUpDesc();
         public bool isGEnableByNPC;
 
-        // TODO
-        public static void Clear(PokeDesc desc) { }
+        public static void Clear(PokeDesc desc)
+        {
+            DEFAULT_POWERUP_DESC.Clear(desc.defaultPowerUpDesc);
+            desc.isGEnableByNPC = false;
+        }
 
-        // TODO
-        public static void Copy(PokeDesc dest, in PokeDesc src) { }
+        public static void Copy(PokeDesc dest, in PokeDesc src)
+        {
+            DEFAULT_POWERUP_DESC.Copy(dest.defaultPowerUpDesc, src.defaultPowerUpDesc);
+            dest.isGEnableByNPC = src.isGEnableByNPC;
+        }
     }
 }

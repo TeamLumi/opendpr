@@ -20,10 +20,25 @@ namespace Dpr.Battle.Logic
 			m_partyAllDeadOrder[4] = DEAD_ORDER_NONE;
 		}
 		
-		// TODO
-		public void RecordPartyAllDead(byte clientID) { }
-		
-		// TODO
-		public byte GetAllDeadOrder(byte clientID) { return default; }
+		public void RecordPartyAllDead(byte clientID)
+		{
+			if (m_partyAllDeadOrder[clientID] == DEAD_ORDER_NONE)
+			{
+				byte order = 0;
+				for (int i = 0; i < m_partyAllDeadOrder.Length; i++)
+				{
+					if (m_partyAllDeadOrder[i] != DEAD_ORDER_NONE)
+					{
+						order++;
+					}
+				}
+				m_partyAllDeadOrder[clientID] = order;
+			}
+		}
+
+		public byte GetAllDeadOrder(byte clientID)
+		{
+			return m_partyAllDeadOrder[clientID];
+		}
 	}
 }

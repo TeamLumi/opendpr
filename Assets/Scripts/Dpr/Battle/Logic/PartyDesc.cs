@@ -6,10 +6,20 @@ namespace Dpr.Battle.Logic
     {
         public PokeDesc[] pokeDesc = Arrays.InitializeWithDefaultInstances<PokeDesc>(PokeParty.MAX_MEMBERS);
 
-        // TODO
-        public static void Clear(PartyDesc desc) { }
+        public static void Clear(PartyDesc desc)
+        {
+            for (int i = 0; i < desc.pokeDesc.Length; i++)
+            {
+                PokeDesc.Clear(desc.pokeDesc[i]);
+            }
+        }
 
-        // TODO
-        public static void Copy(PartyDesc dest, in PartyDesc src) { }
+        public static void Copy(PartyDesc dest, in PartyDesc src)
+        {
+            for (int i = 0; i < dest.pokeDesc.Length; i++)
+            {
+                PokeDesc.Copy(dest.pokeDesc[i], src.pokeDesc[i]);
+            }
+        }
     }
 }

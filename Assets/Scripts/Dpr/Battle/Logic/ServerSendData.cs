@@ -2,11 +2,24 @@
 {
     public static class ServerSendData
     {
-        // TODO
-        public static void CLIENT_LIMIT_TIME_Copy(ref CLIENT_LIMIT_TIME dest, in CLIENT_LIMIT_TIME src) { }
+        public static unsafe void CLIENT_LIMIT_TIME_Copy(ref CLIENT_LIMIT_TIME dest, in CLIENT_LIMIT_TIME src)
+        {
+            for (int i = 0; i < (int)BTL_CLIENT_ID.BTL_CLIENT_NUM; i++)
+            {
+                dest.limitTime[i] = src.limitTime[i];
+            }
+        }
 
-        // TODO
-        public static void RAIDBOSS_CAPTURE_RESULT_Copy(ref RAIDBOSS_CAPTURE_RESULT dest, in RAIDBOSS_CAPTURE_RESULT src) { }
+        public static unsafe void RAIDBOSS_CAPTURE_RESULT_Copy(ref RAIDBOSS_CAPTURE_RESULT dest, in RAIDBOSS_CAPTURE_RESULT src)
+        {
+            for (int i = 0; i < (int)BTL_CLIENT_ID.BTL_CLIENT_NUM; i++)
+            {
+                dest.isThrow[i] = src.isThrow[i];
+                dest.itemno[i] = src.itemno[i];
+                dest.isCaptured[i] = src.isCaptured[i];
+                dest.yureCount[i] = src.yureCount[i];
+            }
+        }
 
         public struct CLIENT_LIMIT_TIME
         {
