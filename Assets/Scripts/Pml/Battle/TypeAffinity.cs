@@ -4,8 +4,6 @@ namespace Pml.Battle
 {
     public static class TypeAffinity
     {
-        // TODO: cctor
-
         private const byte x0 = 0;
         private const byte xH = 2;
         private const byte x1 = 4;
@@ -27,32 +25,158 @@ namespace Pml.Battle
         private const uint VALUE_64 = 4096;
         private static readonly uint[] VALUE_TABLE;
 
-        // TODO
-        private static uint calcLSB(uint value) { return 0; }
+        static TypeAffinity()
+        {
+            VALUE_TABLE = new uint[]
+            {
+                VALUE_0, VALUE_1_64, VALUE_1_32, VALUE_1_16, VALUE_1_8, VALUE_1_4, VALUE_1_2,
+                VALUE_1, VALUE_2, VALUE_4, VALUE_8, VALUE_16, VALUE_32, VALUE_64
+            };
 
-        // TODO
-        public static AffinityID CalcAffinity(PokeType wazaType, PokeType pokeType, bool isSakasaBattle) { return AffinityID.TYPEAFF_0; }
+            // Row = attacking type, Col = defending type
+            // Order: NORMAL, KAKUTOU, HIKOU, DOKU, JIMEN, IWA, MUSHI, GHOST, HAGANE,
+            //        HONOO, MIZU, KUSA, DENKI, ESPER, KOORI, DRAGON, AKU, FAIRY
+            TYPE_AFF_TBL = new byte[][]
+            {
+                //                NOR  KAK  HIK  DOK  JIM  IWA  MUS  GHO  HAG  HON  MIZ  KUS  DEN  ESP  KOO  DRA  AKU  FAI
+                new byte[] { x1,  x1,  x1,  x1,  x1, xH,  x1,  x0, xH,  x1,  x1,  x1,  x1,  x1,  x1,  x1,  x1,  x1 }, // NORMAL
+                new byte[] { x2,  x1, xH,  xH,  x1,  x2, xH,  x0,  x2,  x1,  x1,  x1,  x1, xH,  x2,  x1,  x2, xH  }, // KAKUTOU
+                new byte[] { x1,  x2,  x1,  x1,  x1, xH,  x2,  x1, xH,  x1,  x1,  x2, xH,  x1,  x1,  x1,  x1,  x1 }, // HIKOU
+                new byte[] { x1,  x1,  x1, xH, xH, xH,  x1, xH,  x0,  x1,  x1,  x2,  x1,  x1,  x1,  x1,  x1,  x2 }, // DOKU
+                new byte[] { x1,  x1,  x0,  x2,  x1,  x2, xH,  x1,  x2,  x2,  x1, xH,  x2,  x1,  x1,  x1,  x1,  x1 }, // JIMEN
+                new byte[] { x1, xH,  x2,  x1, xH,  x1,  x2,  x1, xH,  x2,  x1,  x1,  x1,  x1,  x2,  x1,  x1,  x1 }, // IWA
+                new byte[] { x1, xH, xH, xH,  x1,  x1,  x1, xH, xH, xH,  x1,  x2,  x1,  x2,  x1,  x1,  x2, xH  }, // MUSHI
+                new byte[] { x0,  x1,  x1,  x1,  x1,  x1,  x1,  x2,  x1,  x1,  x1,  x1,  x1,  x2,  x1,  x1, xH,  x1 }, // GHOST
+                new byte[] { x1,  x1,  x1,  x1,  x1,  x2,  x1,  x1, xH, xH, xH,  x1, xH,  x1,  x2,  x1,  x1,  x2 }, // HAGANE
+                new byte[] { x1,  x1,  x1,  x1,  x1, xH,  x2,  x1,  x2, xH, xH,  x2,  x1,  x1,  x2, xH,  x1,  x1 }, // HONOO
+                new byte[] { x1,  x1,  x1,  x1,  x2,  x2,  x1,  x1,  x1,  x2, xH, xH,  x1,  x1,  x1, xH,  x1,  x1 }, // MIZU
+                new byte[] { x1,  x1, xH, xH,  x2,  x2, xH,  x1, xH, xH,  x2, xH,  x1,  x1,  x1, xH,  x1,  x1 }, // KUSA
+                new byte[] { x1,  x1,  x2,  x1,  x0,  x1,  x1,  x1,  x1,  x1,  x2, xH, xH,  x1,  x1, xH,  x1,  x1 }, // DENKI
+                new byte[] { x1,  x2,  x1,  x2,  x1,  x1,  x1,  x1, xH,  x1,  x1,  x1,  x1, xH,  x1,  x1,  x0,  x1 }, // ESPER
+                new byte[] { x1,  x1,  x2,  x1,  x2,  x1,  x1,  x1, xH, xH, xH,  x2,  x1,  x1, xH,  x2,  x1,  x1 }, // KOORI
+                new byte[] { x1,  x1,  x1,  x1,  x1,  x1,  x1,  x1, xH,  x1,  x1,  x1,  x1,  x1,  x1,  x2,  x1,  x0 }, // DRAGON
+                new byte[] { x1, xH,  x1,  x1,  x1,  x1,  x1,  x2,  x1,  x1,  x1,  x1,  x1,  x2,  x1,  x1, xH, xH  }, // AKU
+                new byte[] { x1,  x2,  x1, xH,  x1,  x1,  x1,  x1, xH, xH,  x1,  x1,  x1,  x1,  x1,  x2,  x2,  x1 }, // FAIRY
+            };
+        }
 
-        // TODO
-        public static AffinityID CalcAffinity(PokeType wazaType, PokeType pokeType1, PokeType pokeType2, bool isSakasaBattle) { return AffinityID.TYPEAFF_0; }
+        private static uint calcLSB(uint value)
+        {
+            if (value == 0)
+            {
+                return 0;
+            }
+            uint n = 0;
+            while ((value & 1) == 0)
+            {
+                value >>= 1;
+                n++;
+            }
+            return n;
+        }
 
-        // TODO
-        public static AffinityID CalcAffinity(PokeType wazaType, PokemonParam pokeParam, bool isSakasaBattle) { return AffinityID.TYPEAFF_0; }
+        public static AffinityID CalcAffinity(PokeType wazaType, PokeType pokeType, bool isSakasaBattle)
+        {
+            if (wazaType >= PokeType.MAX || pokeType >= PokeType.MAX)
+            {
+                return AffinityID.TYPEAFF_1;
+            }
+            byte aff = TYPE_AFF_TBL[(int)wazaType][(int)pokeType];
+            if (isSakasaBattle)
+            {
+                switch (aff)
+                {
+                    case x0:
+                        return AffinityID.TYPEAFF_0;
+                    case xH:
+                        return AffinityID.TYPEAFF_2;
+                    case x2:
+                        return AffinityID.TYPEAFF_1_2;
+                    default:
+                        return AffinityID.TYPEAFF_1;
+                }
+            }
+            else
+            {
+                switch (aff)
+                {
+                    case x0:
+                        return AffinityID.TYPEAFF_0;
+                    case xH:
+                        return AffinityID.TYPEAFF_1_2;
+                    case x2:
+                        return AffinityID.TYPEAFF_2;
+                    default:
+                        return AffinityID.TYPEAFF_1;
+                }
+            }
+        }
 
-        // TODO
-        public static AffinityID MulAffinity(AffinityID aff1, AffinityID aff2) { return AffinityID.TYPEAFF_0; }
+        public static AffinityID CalcAffinity(PokeType wazaType, PokeType pokeType1, PokeType pokeType2, bool isSakasaBattle)
+        {
+            AffinityID aff1 = CalcAffinity(wazaType, pokeType1, isSakasaBattle);
+            if (pokeType1 == pokeType2)
+            {
+                return aff1;
+            }
+            AffinityID aff2 = CalcAffinity(wazaType, pokeType2, isSakasaBattle);
+            return MulAffinity(aff1, aff2);
+        }
 
-        // TODO
-        public static AboutAffinityID ConvAboutAffinity(AffinityID aff) { return AboutAffinityID.NONE; }
+        public static AffinityID CalcAffinity(PokeType wazaType, PokemonParam pokeParam, bool isSakasaBattle)
+        {
+            return CalcAffinity(wazaType, pokeParam.GetType1(), pokeParam.GetType2(), isSakasaBattle);
+        }
 
-        // TODO
-        public static AboutAffinityID TCalcAffinityAbout(PokeType wazaType, PokeType pokeType, bool isSakasaBattle) { return AboutAffinityID.NONE; }
+        public static AffinityID MulAffinity(AffinityID aff1, AffinityID aff2)
+        {
+            if (aff1 == AffinityID.TYPEAFF_0 || aff2 == AffinityID.TYPEAFF_0)
+            {
+                return AffinityID.TYPEAFF_0;
+            }
+            uint val = VALUE_TABLE[(int)aff1] * VALUE_TABLE[(int)aff2];
+            uint lsb = calcLSB(val);
+            if (lsb >= (uint)AffinityID.TYPEAFF_MAX)
+            {
+                lsb = (uint)AffinityID.TYPEAFF_MAX - 1;
+            }
+            return (AffinityID)lsb;
+        }
 
-        // TODO
-        public static AboutAffinityID CalcAffinityAbout(PokeType wazaType, PokeType pokeType1, PokeType pokeType2, bool isSakasaBattle) { return AboutAffinityID.NONE; }
+        public static AboutAffinityID ConvAboutAffinity(AffinityID aff)
+        {
+            if (aff == AffinityID.TYPEAFF_0)
+            {
+                return AboutAffinityID.NONE;
+            }
+            if (aff < AffinityID.TYPEAFF_1)
+            {
+                return AboutAffinityID.DISADVANTAGE;
+            }
+            if (aff > AffinityID.TYPEAFF_1)
+            {
+                return AboutAffinityID.ADVANTAGE;
+            }
+            return AboutAffinityID.NORMAL;
+        }
 
-        // TODO
-        public static AboutAffinityID CalcAffinityAbout(PokeType wazaType, PokemonParam pokeParam, bool isSakasaBattle) { return AboutAffinityID.NONE; }
+        public static AboutAffinityID TCalcAffinityAbout(PokeType wazaType, PokeType pokeType, bool isSakasaBattle)
+        {
+            AffinityID aff = CalcAffinity(wazaType, pokeType, isSakasaBattle);
+            return ConvAboutAffinity(aff);
+        }
+
+        public static AboutAffinityID CalcAffinityAbout(PokeType wazaType, PokeType pokeType1, PokeType pokeType2, bool isSakasaBattle)
+        {
+            AffinityID aff = CalcAffinity(wazaType, pokeType1, pokeType2, isSakasaBattle);
+            return ConvAboutAffinity(aff);
+        }
+
+        public static AboutAffinityID CalcAffinityAbout(PokeType wazaType, PokemonParam pokeParam, bool isSakasaBattle)
+        {
+            AffinityID aff = CalcAffinity(wazaType, pokeParam, isSakasaBattle);
+            return ConvAboutAffinity(aff);
+        }
 
         public enum AffinityID : int
         {
