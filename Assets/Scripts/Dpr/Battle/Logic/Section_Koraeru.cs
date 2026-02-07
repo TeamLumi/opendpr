@@ -4,17 +4,40 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_Koraeru(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result result, in Description description) { }
-		
-		// TODO
-		private void onKoraeru_ByDefender(BTL_POKEPARAM poke) { }
-		
-		// TODO
-		private void onKoraeru_ByFriendship(BTL_POKEPARAM poke) { }
-		
-		// TODO
-		private void onKoraeru_ByOthers(BTL_POKEPARAM poke, KoraeruCause cause) { }
+		public void Execute(Result result, in Description description)
+		{
+			BTL_POKEPARAM poke = description.poke;
+			KoraeruCause cause = description.cause;
+
+			switch (cause)
+			{
+				case KoraeruCause.WAZA_DEFENDER:
+				case KoraeruCause.WAZA_ATTACKER:
+					onKoraeru_ByDefender(poke);
+					break;
+				case KoraeruCause.FRIENDSHIP:
+					onKoraeru_ByFriendship(poke);
+					break;
+				default:
+					onKoraeru_ByOthers(poke, cause);
+					break;
+			}
+		}
+
+		private void onKoraeru_ByDefender(BTL_POKEPARAM poke)
+		{
+			GetEventLauncher().Event_KoraeruExe(poke, KoraeruCause.WAZA_DEFENDER);
+		}
+
+		private void onKoraeru_ByFriendship(BTL_POKEPARAM poke)
+		{
+			GetEventLauncher().Event_KoraeruExe(poke, KoraeruCause.FRIENDSHIP);
+		}
+
+		private void onKoraeru_ByOthers(BTL_POKEPARAM poke, KoraeruCause cause)
+		{
+			GetEventLauncher().Event_KoraeruExe(poke, cause);
+		}
 
 		public class Description
 		{
