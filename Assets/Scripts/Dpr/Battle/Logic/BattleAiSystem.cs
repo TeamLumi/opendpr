@@ -13,19 +13,34 @@
                 s_isTokuseiOpened[i] = false;
         }
 
-        // TODO
-        public static void QuitSystem() { }
+        public static void QuitSystem()
+        {
+            for (int i = 0; i < PokeID.NUM; i++)
+                s_isTokuseiOpened[i] = false;
+            s_commonRandValue = 0;
+        }
 
-        // TODO
-        public static void NotifyTokuseiOpen(byte pokeID) { }
+        public static void NotifyTokuseiOpen(byte pokeID)
+        {
+            if (pokeID < PokeID.NUM)
+                s_isTokuseiOpened[pokeID] = true;
+        }
 
-        // TODO
-        public static bool IsTokuseiOpened(byte pokeID) { return false; }
+        public static bool IsTokuseiOpened(byte pokeID)
+        {
+            if (pokeID < PokeID.NUM)
+                return s_isTokuseiOpened[pokeID];
+            return false;
+        }
 
-        // TODO
-        public static void SetCommonRand(ulong randValue) { }
+        public static void SetCommonRand(ulong randValue)
+        {
+            s_commonRandValue = randValue;
+        }
 
-        // TODO
-        public static ulong GetCommonRand() { return 0; }
+        public static ulong GetCommonRand()
+        {
+            return s_commonRandValue;
+        }
     }
 }
