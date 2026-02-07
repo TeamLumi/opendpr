@@ -3,12 +3,22 @@ namespace Dpr.Battle.Logic
 	public sealed class Section_FromEvent_QuitBattle : Section
 	{
 		public Section_FromEvent_QuitBattle(in CommonParam commonParam) : base(commonParam) { }
-		
-		// TODO
-		public void Execute(Result result, in Description description) { }
-		
-		// TODO
-		private bool escape(BTL_POKEPARAM poke, bool isForceSuccess) { return default; }
+
+		public void Execute(Result result, in Description description)
+		{
+			BTL_POKEPARAM poke = GetPokeParam(description.userPokeID);
+			result.isSucceeded = escape(poke, description.isForceSuccess);
+		}
+
+		private bool escape(BTL_POKEPARAM poke, bool isForceSuccess)
+		{
+			if (poke.IsDead())
+				return false;
+
+			BTL_CLIENT_ID clientID = PokeID.PokeIdToClientId(poke.GetID());
+			GetServerCommandPutter().AddEscapeInfo(clientID);
+			return true;
+		}
 
 		public class Description
 		{

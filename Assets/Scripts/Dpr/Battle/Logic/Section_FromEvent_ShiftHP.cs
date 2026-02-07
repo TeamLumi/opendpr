@@ -3,12 +3,39 @@ namespace Dpr.Battle.Logic
 	public sealed class Section_FromEvent_ShiftHP : Section
 	{
 		public Section_FromEvent_ShiftHP(in CommonParam commonParam) : base(commonParam) { }
-		
-		// TODO
-		public void Execute(Result result, in Description description) { }
-		
-		// TODO
-		private void checkItemReaction(BTL_POKEPARAM poke) { }
+
+		public void Execute(Result result, in Description description)
+		{
+			result.isSuccessed = false;
+
+			BTL_POKEPARAM userPoke = GetPokeParam(description.pokeID);
+			if (userPoke.IsDead())
+				return;
+
+			for (byte i = 0; i < description.targetPokeCount; i++)
+			{
+				BTL_POKEPARAM targetPoke = GetPokeParam(description.targetPokeID[i]);
+				if (targetPoke.IsDead())
+					continue;
+
+				int volume = description.volume[i];
+				if (volume == 0)
+					continue;
+
+				GetServerCommandPutter().SimpleHp(targetPoke, volume, description.damageCause, description.pokeID, !description.isEffectDisable);
+				result.isSuccessed = true;
+
+				if (!description.isItemReactionDisable)
+				{
+					checkItemReaction(targetPoke);
+				}
+			}
+		}
+
+		private void checkItemReaction(BTL_POKEPARAM poke)
+		{
+			GetEventLauncher().Event_CheckItemReaction(poke, 0);
+		}
 
 		public class Description
 		{

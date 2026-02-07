@@ -3,12 +3,30 @@ namespace Dpr.Battle.Logic
 	public sealed class Section_FromEvent_TameHideCancel : Section
 	{
 		public Section_FromEvent_TameHideCancel(in CommonParam commonParam) : base(commonParam) { }
-		
-		// TODO
-		public void Execute(Result result, in Description description) { }
-		
-		// TODO
-		private bool cancelHide(BTL_POKEPARAM poke, ContFlag flag) { return default; }
+
+		public void Execute(Result result, in Description description)
+		{
+			BTL_POKEPARAM poke = GetPokeParam(description.targetPokeID);
+			result.isSucceeded = cancelHide(poke, description.flag, in description.successMessage);
+		}
+
+		private bool cancelHide(BTL_POKEPARAM poke, ContFlag flag, in StrParam successMessage)
+		{
+			if (poke.IsDead())
+				return false;
+
+			if (!poke.CONTFLAG_Get(flag))
+				return false;
+
+			GetServerCommandPutter().ResetContFlag(poke, flag);
+
+			if (successMessage.IsEnable())
+			{
+				GetServerCommandPutter().Message(in successMessage);
+			}
+
+			return true;
+		}
 
 		public class Description
 		{
