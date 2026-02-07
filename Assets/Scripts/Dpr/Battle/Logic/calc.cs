@@ -35,32 +35,56 @@ namespace Dpr.Battle.Logic
         private static readonly byte[] CheckCriticalTable = new byte[4] { 1, 2, 8, 16 };
         private static readonly byte[] PENALTY_COEF = new byte[9] { 2, 4, 6, 9, 12, 16, 20, 25, 30 };
 
-        // TODO
-        public static void BITFLG_Construction(byte[] flags) { }
+        public static void BITFLG_Construction(byte[] flags)
+        {
+            for (int i = 0; i < flags.Length; i++)
+                flags[i] = 0;
+        }
 
-        // TODO
-        public static void BITFLG_Set(byte[] flags, uint index) { }
+        public static void BITFLG_Set(byte[] flags, uint index)
+        {
+            flags[index / 8] |= (byte)(1 << (int)(index % 8));
+        }
 
-        // TODO
-        public static bool BITFLG_Check(byte[] flags, uint index) { return false; }
+        public static bool BITFLG_Check(byte[] flags, uint index)
+        {
+            return (flags[index / 8] & (1 << (int)(index % 8))) != 0;
+        }
 
-        // TODO
-        public static void BITFLG_Off(byte[] flags, uint index) { }
+        public static void BITFLG_Off(byte[] flags, uint index)
+        {
+            flags[index / 8] &= (byte)~(1 << (int)(index % 8));
+        }
 
-        // TODO
-        public static uint ABS(int value) { return 0; }
+        public static uint ABS(int value)
+        {
+            return (uint)(value < 0 ? -value : value);
+        }
 
-        // TODO
-        public static void InitSys(Random randSys, bool bSakasaBtl) { }
+        public static void InitSys(Random randSys, bool bSakasaBtl)
+        {
+            g_RandSys = randSys;
+            g_PublicRand = new Random();
+            g_SakasaBtlFlag = bSakasaBtl;
+            g_WazaStoreWork = new WazaNo[826];
+        }
 
-        // TODO
-        public static void ResetSys(ulong randSeed) { }
+        public static void ResetSys(ulong randSeed)
+        {
+            g_RandSys.Initialize(randSeed);
+        }
 
-        // TODO
-        public static void QuitSys() { }
+        public static void QuitSys()
+        {
+            g_RandSys = null;
+            g_PublicRand = null;
+            g_WazaStoreWork = null;
+        }
 
-        // TODO
-        public static Random GetRandGenerator() { return null; }
+        public static Random GetRandGenerator()
+        {
+            return g_RandSys;
+        }
 
         // TODO
         public static TypeAffinity.AffinityID TypeAff(PokeType wazaType, PokeType pokeType) { return TypeAffinity.AffinityID.TYPEAFF_0; }
@@ -80,23 +104,38 @@ namespace Dpr.Battle.Logic
         // TODO
         public static uint AffDamage(uint rawDamage, TypeAffinity.AffinityID aff) { return 0; }
 
-        // TODO
-        public static uint GetPublicRand(uint range) { return 0; }
+        public static uint GetPublicRand(uint range)
+        {
+            return (uint)Random.GetPublicRand((int)range);
+        }
 
-        // TODO
-        public static uint GetRand(uint range) { return 0; }
+        public static uint GetRand(uint range)
+        {
+            return (uint)g_RandSys.GetValue(range);
+        }
 
-        // TODO
-        public static uint RandRange(uint min, uint max) { return 0; }
+        public static uint RandRange(uint min, uint max)
+        {
+            return GetRand(max - min) + min;
+        }
 
-        // TODO
-        public static uint MulRatio(uint value, int ratio) { return 0; }
+        public static uint MulRatio(uint value, int ratio)
+        {
+            return (uint)(value * ratio / 4096);
+        }
 
-        // TODO
-        public static uint MulRatio_OverZero(uint value, int ratio) { return 0; }
+        public static uint MulRatio_OverZero(uint value, int ratio)
+        {
+            uint result = MulRatio(value, ratio);
+            if (result == 0)
+                result = 1;
+            return result;
+        }
 
-        // TODO
-        public static uint MulRatioInt(uint value, uint ratio) { return 0; }
+        public static uint MulRatioInt(uint value, uint ratio)
+        {
+            return value * ratio / 100;
+        }
 
         // TODO
         public static void MakeDefaultWazaSickCont(WazaSick sick, BTL_POKEPARAM attacker, out BTL_SICKCONT cont)
@@ -110,8 +149,10 @@ namespace Dpr.Battle.Logic
         // TODO
         public static BTL_SICKCONT MakeDefaultPokeSickCont(Sick sick, byte causePokeID, bool isCantUseRand = false) { return default(BTL_SICKCONT); }
 
-        // TODO
-        public static ushort StatusRank(ushort defaultVal, byte rank) { return 0; }
+        public static ushort StatusRank(ushort defaultVal, byte rank)
+        {
+            return (ushort)(defaultVal * StatusRankTable[rank].num / StatusRankTable[rank].denom);
+        }
 
         // TODO
         public static uint QuotMaxHP_Zero(BTL_POKEPARAM bpp, uint denom, bool useBeforeGParam = false) { return 0; }
@@ -119,11 +160,17 @@ namespace Dpr.Battle.Logic
         // TODO
         public static uint QuotMaxHP(BTL_POKEPARAM bpp, uint denom, bool useBeforeGParam = false) { return 0; }
 
-        // TODO
-        public static byte HitPer(byte defPer, byte rank) { return 0; }
+        public static byte HitPer(byte defPer, byte rank)
+        {
+            return (byte)(defPer * HitPerTable[rank].num / HitPerTable[rank].denom);
+        }
 
-        // TODO
-        public static bool CheckCritical(byte rank, int ratio) { return false; }
+        public static bool CheckCritical(byte rank, int ratio)
+        {
+            if (rank >= CheckCriticalTable.Length)
+                return true;
+            return GetRand(CheckCriticalTable[rank]) < ratio;
+        }
 
         // TODO
         public static int ITEM_GetParam(ushort item, Pml.Item.ItemData.PrmID paramID) { return 0; }
@@ -146,8 +193,10 @@ namespace Dpr.Battle.Logic
         // TODO
         public static bool PERSONAL_IsEvoCancelPokemon(int mons_no, ushort formno, byte level) { return false; }
 
-        // TODO
-        public static bool IsBasicSickID(WazaSick sickID) { return false; }
+        public static bool IsBasicSickID(WazaSick sickID)
+        {
+            return sickID >= WazaSick.WAZASICK_MAHI && sickID <= WazaSick.WAZASICK_DOKU;
+        }
 
         // TODO
         public static ushort RecvWeatherDamage(BTL_POKEPARAM bpp, BtlWeather weather) { return 0; }
@@ -155,11 +204,15 @@ namespace Dpr.Battle.Logic
         // TODO
         public static int GetWeatherDmgRatio(BtlWeather weather, byte wazaType) { return 0; }
 
-        // TODO
-        public static bool IsShineWeather(BtlWeather weather) { return false; }
+        public static bool IsShineWeather(BtlWeather weather)
+        {
+            return weather == BtlWeather.BTL_WEATHER_SHINE || weather == BtlWeather.BTL_WEATHER_DAY;
+        }
 
-        // TODO
-        public static bool IsRainWeather(BtlWeather weather) { return false; }
+        public static bool IsRainWeather(BtlWeather weather)
+        {
+            return weather == BtlWeather.BTL_WEATHER_RAIN || weather == BtlWeather.BTL_WEATHER_STORM;
+        }
 
         // TODO
         public static void WazaSickContToBppSickCont(SickContParam wazaSickCont, BTL_POKEPARAM attacker, out BTL_SICKCONT sickCont)
@@ -192,17 +245,27 @@ namespace Dpr.Battle.Logic
         // TODO
         public static TypeAffinity.AboutAffinityID TypeAffAbout(TypeAffinity.AffinityID aff) { return TypeAffinity.AboutAffinityID.NONE; }
 
-        // TODO
-        public static bool IsOccurPer(uint per) { return false; }
+        public static bool IsOccurPer(uint per)
+        {
+            return GetRand(100) < per;
+        }
 
-        // TODO
-        public static int Roundup(int value, int min) { return 0; }
+        public static int Roundup(int value, int min)
+        {
+            return value < min ? min : value;
+        }
 
-        // TODO
-        public static int Rounddown(int val, int max) { return 0; }
+        public static int Rounddown(int val, int max)
+        {
+            return val > max ? max : val;
+        }
 
-        // TODO
-        public static int RoundValue(int val, int min, int max) { return 0; }
+        public static int RoundValue(int val, int min, int max)
+        {
+            if (val < min) return min;
+            if (val > max) return max;
+            return val;
+        }
 
         // TODO
         public static WazaTarget GetWazaTarget(WazaNo waza, BTL_POKEPARAM attacker) { return WazaTarget.TARGET_OTHER_SELECT; }
@@ -219,8 +282,15 @@ namespace Dpr.Battle.Logic
         // TODO
         public static void PokeIDx6_Unpack32bit(uint pack, byte[] pokeIDList) { }
 
-        // TODO
-        public static bool is_include(WazaNo[] tbl, uint tblElems, WazaNo wazaID) { return false; }
+        public static bool is_include(WazaNo[] tbl, uint tblElems, WazaNo wazaID)
+        {
+            for (uint i = 0; i < tblElems; i++)
+            {
+                if (tbl[i] == wazaID)
+                    return true;
+            }
+            return false;
+        }
 
         // TODO
         public static WazaNo RandWaza(WazaNo[] omitWazaTbl, ushort tblElems) { return WazaNo.NULL; }
