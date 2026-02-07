@@ -14,7 +14,19 @@ namespace Dpr.Battle.Logic
 		public uint Pointup;
 		public uint Dendou;
 		
-		// TODO
-		public void Clear() { }
+		public void Clear()
+		{
+			CommBattle = 0;
+			Egg = 0;
+			BattleHouse = 0;
+			TrialHouse = 0;
+			CaptureNum = 0;
+			Evolution = 0;
+			Bp = 0;
+			Judge = 0;
+			Sparing = 0;
+			Pointup = 0;
+			Dendou = 0;
+		}
 	}
 }

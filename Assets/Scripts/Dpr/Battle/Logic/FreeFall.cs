@@ -1,11 +1,17 @@
+using Pml.WazaData;
+
 namespace Dpr.Battle.Logic
 {
 	public static class FreeFall
 	{
-		// TODO
-		public static bool CheckFreeFallUserPoke(BTL_POKEPARAM poke) { return default; }
-		
-		// TODO
-		public static bool CheckFreeFallPoke(BTL_POKEPARAM poke) { return default; }
+		public static bool CheckFreeFallUserPoke(BTL_POKEPARAM poke)
+		{
+			return poke.IsUsingFreeFall();
+		}
+
+		public static bool CheckFreeFallPoke(BTL_POKEPARAM poke)
+		{
+			return poke.CheckSick(WazaSick.WAZASICK_FREEFALL);
+		}
 	}
 }

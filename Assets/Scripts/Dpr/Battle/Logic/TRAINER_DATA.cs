@@ -22,7 +22,26 @@ namespace Dpr.Battle.Logic
 		public string modelID;
 		public int colorID;
 		
-		// TODO
-		public void Clear() { }
+		public void Clear()
+		{
+			playerStatus = null;
+			trainerData = null;
+			instTrainerData = null;
+			name = null;
+			name_label = null;
+			trtype_name_label = null;
+			trainerID = 0;
+			trainerType = 0;
+			trainerGroup = 0;
+			trainerSex = 0;
+			trainerGold = 0;
+			ai_bit = 0;
+			for (int i = 0; i < useItem.Length; i++)
+			{
+				useItem[i] = 0;
+			}
+			modelID = null;
+			colorID = 0;
+		}
 	}
 }

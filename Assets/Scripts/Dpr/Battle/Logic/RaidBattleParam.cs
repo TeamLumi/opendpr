@@ -9,7 +9,17 @@ namespace Dpr.Battle.Logic
 		public RaidBossCaptureDifficulty bossCaptureDifficulty;
 		public bool needApplyCaptureCoefForSpGDuplication;
 		
-		// TODO
-		public void CopyFrom(RaidBattleParam src) { }
+		public void CopyFrom(RaidBattleParam src)
+		{
+			bossGrade = src.bossGrade;
+			isBossRare = src.isBossRare;
+			for (int i = 0; i < rewards.Length; i++)
+			{
+				rewards[i].CopyFrom(src.rewards[i]);
+			}
+			bossDesc.CopyFrom(src.bossDesc);
+			bossCaptureDifficulty = src.bossCaptureDifficulty;
+			needApplyCaptureCoefForSpGDuplication = src.needApplyCaptureCoefForSpGDuplication;
+		}
 	}
 }

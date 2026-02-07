@@ -85,7 +85,76 @@ namespace Dpr.Battle.Logic
 
         public int throwBallNum { get; set; }
 
-        // TODO
-        public void Clear() { }
+        public void Clear()
+        {
+            competitor = 0;
+            rule = 0;
+            commMode = 0;
+            multiMode = 0;
+            commPos = 0;
+            recordDataMode = 0;
+            isPlayerRatingDisplay = false;
+            isLiveRecSendEnable = false;
+            bGakusyuSouti = false;
+            LimitTimeGame = 0;
+            LimitTimeClient = 0;
+            LimitTimeCommand = 0;
+            bEnableTimeStop = false;
+            reduceHighLevelCaptureRate = false;
+            maxFollowPokeLevel = 0;
+            captureLevelCap = 0;
+            expLevelCap = 0;
+            commNetIDBit = 0;
+            btl_status_flag = 0;
+            wildPokeAiBitFlag = 0;
+            moneyRate = 0;
+            forceQuitTurnCount = 0;
+            bSkyBattle = false;
+            bSakasaBattle = false;
+            bMustCapture = false;
+            bNoGainBattle = false;
+            safariBallNum = 0;
+            bVoiceChat = false;
+            getMoney = 0;
+            result = 0;
+            fairyGymResult = 0;
+            honooGymResult_wonByPlayer = false;
+            capturedPokeIdx = 0;
+            capturedClientID = 0;
+            commServerVer = 0;
+            commError = 0;
+            isDisplayedCommError = false;
+            recDataSize = 0;
+            recRandSeed = 0;
+            cmdIllegalFlag = false;
+            recPlayCompleteFlag = false;
+            WifiBadNameFlag = false;
+            isDisconnectOccur = false;
+            isWatchMember = false;
+            throwBallNum = 0;
+            for (int i = 0; i < (int)BTL_CLIENT_ID.BTL_CLIENT_NUM; i++)
+            {
+                stations[i] = 0;
+                party[i] = null;
+                playerStatus[i] = null;
+                playerRating[i] = 0;
+                tr_data[i] = null;
+            }
+            for (int i = 0; i < conventionInfo.Length; i++)
+            {
+                conventionInfo[i].Clear();
+            }
+            kenteiResult.Clear();
+            tvNaviData.Clear();
+            for (int i = 0; i < fightPokeIndex.Length; i++)
+            {
+                fightPokeIndex[i] = false;
+                turnedLvUpPokeIndex[i] = false;
+            }
+            for (int i = 0; i < restHPRatio.Length; i++)
+            {
+                restHPRatio[i] = 0;
+            }
+        }
     }
 }

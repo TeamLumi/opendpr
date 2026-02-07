@@ -28,8 +28,17 @@ namespace Dpr.Battle.Logic
 			new ELEM(BtlSideEffect.BTL_SIDEEFF_GSHOCK_IWA, 1),
 		};
 		
-		// TODO
-		public static uint GetMaxAddCount(BtlSideEffect sideEffect) { return default; }
+		public static uint GetMaxAddCount(BtlSideEffect sideEffect)
+		{
+			for (int i = 0; i < SIDE_EFFECT_DESC.Length; i++)
+			{
+				if (SIDE_EFFECT_DESC[i].sideEffect == sideEffect)
+				{
+					return SIDE_EFFECT_DESC[i].maxAddCount;
+				}
+			}
+			return 0;
+		}
 
 		private struct ELEM
 		{

@@ -23,7 +23,10 @@
             return mainEffectCmd != INVALID_VALUE;
         }
 
-        // TODO
-        public void Reserve(ServerCommandQueue queue) { }
+        public void Reserve(ServerCommandQueue queue)
+        {
+            prevEffectCmd = queue.ReservePutPos(ServerCommand.ACT_WAZA_EFFECT);
+            mainEffectCmd = queue.ReservePutPos(ServerCommand.ACT_WAZA_EFFECT);
+        }
     }
 }

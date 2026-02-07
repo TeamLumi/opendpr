@@ -7,7 +7,10 @@ namespace Dpr.Battle.Logic
         public WazaNo wazaID;
         public BtlPokePos targetPos;
 
-        // TODO
-        public REQWAZA_WORK() { }
+        public REQWAZA_WORK()
+        {
+            wazaID = WazaNo.NULL;
+            targetPos = BtlPokePos.POS_NULL;
+        }
     }
 }

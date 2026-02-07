@@ -9,7 +9,9 @@
             _ = string.Format("■PAWN allowanceAI score = {0}\n", p_Score);
         }
 		
-		// TODO
-		private void main_proc() { }
+		private void main_proc()
+		{
+			// Allowance AI does not modify scores - intentionally empty
+		}
 	}
 }

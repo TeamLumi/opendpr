@@ -10,13 +10,31 @@
         public bool isSaihaiReaction;
         public InsertActionInfo insertInfo = new InsertActionInfo();
 
-        // TODO
-        public void CopyFrom(ActionDesc src) { }
+        public void CopyFrom(ActionDesc src)
+        {
+            serialNo = src.serialNo;
+            isOiutiInterruptAction = src.isOiutiInterruptAction;
+            isYokodoriRobAction = src.isYokodoriRobAction;
+            isMagicCoatReaction = src.isMagicCoatReaction;
+            isOdorikoReaction = src.isOdorikoReaction;
+            isSaihaiReaction = src.isSaihaiReaction;
+            insertInfo.CopyFrom(src.insertInfo);
+        }
 
-        // TODO
-        public void Clear() { }
+        public void Clear()
+        {
+            serialNo = 0;
+            isOiutiInterruptAction = false;
+            isYokodoriRobAction = false;
+            isMagicCoatReaction = false;
+            isOdorikoReaction = false;
+            isSaihaiReaction = false;
+            insertInfo.Clear();
+        }
 
-        // TODO
-        public static void Clear(ActionDesc desc) { }
+        public static void Clear(ActionDesc desc)
+        {
+            desc.Clear();
+        }
     }
 }
