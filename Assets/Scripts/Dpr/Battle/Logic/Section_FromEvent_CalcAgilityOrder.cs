@@ -4,11 +4,16 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_CalcAgilityOrder(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result result, in Description description) { }
-		
-		// TODO
-		private ushort calcAgility(BTL_POKEPARAM poke, bool isTrickRoomApply) { return default; }
+		public void Execute(Result result, in Description description)
+		{
+			ushort agility = calcAgility(description.target, description.isTrickRoomApply);
+			result.order = (byte)(agility >> 8);
+		}
+
+		private ushort calcAgility(BTL_POKEPARAM poke, bool isTrickRoomApply)
+		{
+			return GetEventLauncher().Event_CalcAgility(poke, isTrickRoomApply);
+		}
 
 		public class Description
 		{

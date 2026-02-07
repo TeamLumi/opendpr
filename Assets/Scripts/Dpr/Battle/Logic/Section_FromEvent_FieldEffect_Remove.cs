@@ -4,11 +4,24 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_FieldEffect_Remove(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result result, in Description description) { }
-		
-		// TODO
-		private bool removeFieldEffect(EffectType effect, BTL_POKEPARAM pDependPoke) { return default; }
+		public void Execute(Result result, in Description description)
+		{
+			result.isSuccessed = removeFieldEffect(description.effect, description.pDependPoke);
+		}
+
+		private bool removeFieldEffect(EffectType effect, BTL_POKEPARAM pDependPoke)
+		{
+			ServerCommandPutter scp = GetServerCommandPutter();
+
+			if (pDependPoke != null)
+			{
+				return scp.RemoveFieldEffect_DependPoke(pDependPoke, effect);
+			}
+			else
+			{
+				return scp.RemoveFieldEffect(effect);
+			}
+		}
 
 		public class Description
 		{
