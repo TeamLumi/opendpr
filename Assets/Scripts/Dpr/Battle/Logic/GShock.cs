@@ -39,14 +39,59 @@ namespace Dpr.Battle.Logic
 			new GSHOCK_EFFECT_TABLE_SP_ELEM(MonsNo.KINGURAA,  0, (byte)PokeType.MIZU,    Effect.RANKDOWN_AGI2,         24),
 		};
 		
-		// TODO
-		public static Effect GetEffect(BTL_POKEPARAM poke, WazaNo wazano) { return default; }
-		
-		// TODO
-		public static int GetSpecialWazaNameIndex(MonsNo monsno, ushort formno, bool isG, bool isSpGEnable, WazaNo wazano) { return default; }
-		
-		// TODO
-		public static byte GetSpecialGWazaBaseType(MonsNo monsno, ushort formno) { return default; }
+		public static Effect GetEffect(BTL_POKEPARAM poke, WazaNo wazano)
+		{
+			MonsNo monsno = (MonsNo)poke.GetMonsNo();
+			ushort formno = poke.GetFormNo();
+
+			for (int i = 0; i < GSHOCK_EFFECT_TABLE_SP.Length; i++)
+			{
+				if (GSHOCK_EFFECT_TABLE_SP[i].monsno == monsno && GSHOCK_EFFECT_TABLE_SP[i].formno == formno)
+				{
+					byte wazaType = (byte)WAZADATA.GetType(wazano);
+					if (GSHOCK_EFFECT_TABLE_SP[i].wazaType == wazaType)
+						return GSHOCK_EFFECT_TABLE_SP[i].shockEffect;
+				}
+			}
+
+			for (int i = 0; i < GSHOCK_EFFECT_TABLE.Length; i++)
+			{
+				if (GSHOCK_EFFECT_TABLE[i].wazano == wazano)
+					return GSHOCK_EFFECT_TABLE[i].effect;
+			}
+
+			return Effect.NONE;
+		}
+
+		public static int GetSpecialWazaNameIndex(MonsNo monsno, ushort formno, bool isG, bool isSpGEnable, WazaNo wazano)
+		{
+			if (!isG || !isSpGEnable)
+				return -1;
+
+			byte wazaType = (byte)WAZADATA.GetType(wazano);
+
+			for (int i = 0; i < GSHOCK_EFFECT_TABLE_SP.Length; i++)
+			{
+				if (GSHOCK_EFFECT_TABLE_SP[i].monsno == monsno && GSHOCK_EFFECT_TABLE_SP[i].formno == formno
+					&& GSHOCK_EFFECT_TABLE_SP[i].wazaType == wazaType)
+				{
+					return GSHOCK_EFFECT_TABLE_SP[i].specialWazaNameIndex;
+				}
+			}
+
+			return -1;
+		}
+
+		public static byte GetSpecialGWazaBaseType(MonsNo monsno, ushort formno)
+		{
+			for (int i = 0; i < GSHOCK_EFFECT_TABLE_SP.Length; i++)
+			{
+				if (GSHOCK_EFFECT_TABLE_SP[i].monsno == monsno && GSHOCK_EFFECT_TABLE_SP[i].formno == formno)
+					return GSHOCK_EFFECT_TABLE_SP[i].wazaType;
+			}
+
+			return (byte)PokeType.NULL;
+		}
 
 		public enum Effect : byte
 		{

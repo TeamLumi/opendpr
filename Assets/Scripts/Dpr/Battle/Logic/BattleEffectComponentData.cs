@@ -38,13 +38,33 @@ namespace Dpr.Battle.Logic
         }
         public int fadeType { get => data?.FadeType ?? -1; }
 
-        // TODO
-        private string ChooseCmdSeq(int index) { return null; }
+        private string ChooseCmdSeq(int index)
+        {
+            if (data?.CmdSeqName == null || data.CmdSeqName.Length == 0)
+                return null;
 
-        // TODO
-        public void SetUpBattleEffectComponentData(BattleSetupEffectId setupEffectId, [Optional, DefaultParameterValue(EffectBattleID.NONE)] EffectBattleID effectBattleId, [Optional, DefaultParameterValue(0)] int cmdSeqIndex, [Optional] string soundEventName) { }
+            if (index < 0 || index >= data.CmdSeqName.Length)
+                return data.CmdSeqName[0];
 
-        // TODO
-        public void SetUpBattleEffectComponentData_Tutorial() { }
+            return data.CmdSeqName[index];
+        }
+
+        public void SetUpBattleEffectComponentData(BattleSetupEffectId setupEffectId, [Optional, DefaultParameterValue(EffectBattleID.NONE)] EffectBattleID effectBattleId, [Optional, DefaultParameterValue(0)] int cmdSeqIndex, [Optional] string soundEventName)
+        {
+            var battleDataTable = BattleDataTableManager.Instance.BattleDataTable;
+            if (battleDataTable != null && (int)setupEffectId >= 0 && (int)setupEffectId < battleDataTable.BattleSetupEffectData.Length)
+                data = battleDataTable.BattleSetupEffectData[(int)setupEffectId];
+            else
+                data = null;
+
+            cmdSeqName = ChooseCmdSeq(cmdSeqIndex);
+            _effectBattleID = effectBattleId;
+            _soundEventName = soundEventName;
+        }
+
+        public void SetUpBattleEffectComponentData_Tutorial()
+        {
+            SetUpBattleEffectComponentData(BattleSetupEffectId.WILD_SINGLE_TUTORIAL);
+        }
     }
 }

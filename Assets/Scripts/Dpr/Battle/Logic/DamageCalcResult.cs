@@ -26,14 +26,38 @@ namespace Dpr.Battle.Logic
 				record[i].CopyFrom(src.record[i]);
         }
 		
-		// TODO
-		public void Merge(in DamageCalcResult src) { }
-		
-		// TODO
-		public uint GetTargetCount() { return default; }
-		
-		// TODO
-		public uint GetDamageSum() { return default; }
+		public void Merge(in DamageCalcResult src)
+		{
+			for (int i = 0; i < src.record.Length; i++)
+			{
+				if (src.record[i].damage > 0 || src.record[i].pokeID != 0)
+				{
+					int idx = realHitCount + migawariHitCount;
+					if (idx < record.Length)
+					{
+						record[idx].CopyFrom(src.record[i]);
+						if (src.record[i].isMigawari)
+							migawariHitCount++;
+						else
+							realHitCount++;
+					}
+				}
+			}
+		}
+
+		public uint GetTargetCount()
+		{
+			return (uint)(realHitCount + migawariHitCount);
+		}
+
+		public uint GetDamageSum()
+		{
+			uint sum = 0;
+			uint count = GetTargetCount();
+			for (uint i = 0; i < count; i++)
+				sum += record[i].damage;
+			return sum;
+		}
 
 		public class RECORD
 		{

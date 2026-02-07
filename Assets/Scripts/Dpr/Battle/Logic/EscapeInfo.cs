@@ -27,14 +27,36 @@
             clear();
         }
 
-        // TODO
-        public void Add(byte clientID) { }
+        public void Add(byte clientID)
+        {
+            if (m_param.count < m_param.clientID.Length)
+            {
+                m_param.clientID[m_param.count] = clientID;
+                m_param.count++;
+            }
+        }
 
-        // TODO
-        public BtlResult CheckWinner(in MainModule mainModule, byte myClientID, BtlCompetitor competitorType) { return BtlResult.BTL_RESULT_LOSE; }
+        public BtlResult CheckWinner(in MainModule mainModule, byte myClientID, BtlCompetitor competitorType)
+        {
+            for (uint i = 0; i < m_param.count; i++)
+            {
+                byte escapedClientID = m_param.clientID[i];
+                if (escapedClientID == myClientID)
+                    return BtlResult.BTL_RESULT_RUN;
 
-        // TODO
-        public void Copy(EscapeInfo dst) { }
+                if (mainModule.IsOpponentClientID(myClientID, escapedClientID))
+                    return BtlResult.BTL_RESULT_RUN_ENEMY;
+            }
+
+            return BtlResult.BTL_RESULT_LOSE;
+        }
+
+        public void Copy(EscapeInfo dst)
+        {
+            dst.m_param.count = m_param.count;
+            for (int i = 0; i < m_param.clientID.Length; i++)
+                dst.m_param.clientID[i] = m_param.clientID[i];
+        }
 
         private class PARAM
         {

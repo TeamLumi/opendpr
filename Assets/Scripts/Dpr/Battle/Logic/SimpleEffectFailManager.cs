@@ -25,12 +25,29 @@ namespace Dpr.Battle.Logic
             m_isAvailable = false;
         }
 		
-		// TODO
-		public void AddCause(Cause cause) { }
-		
-		// TODO
-		public Result GetResult() { return default; }
-		
+		public void AddCause(Cause cause)
+		{
+			if (m_isAvailable && m_numCause < NUM_CAUSE_PER_WAZA)
+			{
+				m_causes[m_numCause] = cause;
+				m_numCause++;
+			}
+		}
+
+		public Result GetResult()
+		{
+			if (!m_isAvailable || m_numCause == 0)
+				return Result.RESULT_STD;
+
+			if (countFailCode(Cause.CAUSE_OTHER_EFFECTS) > 0)
+				return Result.RESULT_OTHER_EFFECTS;
+
+			if (countFailCode(Cause.CAUSE_SELF) == m_numCause)
+				return Result.RESULT_NO_EFFECT;
+
+			return Result.RESULT_STD;
+		}
+
 		private void init()
 		{
 			for (int i=0; i<m_causes.Length; i++)
@@ -38,9 +55,17 @@ namespace Dpr.Battle.Logic
 
 			m_numCause = 0;
 		}
-		
-		// TODO
-		private uint countFailCode(Cause failCode) { return default; }
+
+		private uint countFailCode(Cause failCode)
+		{
+			uint count = 0;
+			for (uint i = 0; i < m_numCause; i++)
+			{
+				if (m_causes[i] == failCode)
+					count++;
+			}
+			return count;
+		}
 
 		public enum Cause : int
 		{

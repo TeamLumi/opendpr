@@ -97,13 +97,46 @@ namespace Dpr.Battle.Logic
             Sequencer.update -= OnAfterLoadAll_Update;
         }
 
-        // TODO
-        public static BattleSetupEffectLots.SheetArenaEffTable GetArenaEff(ArenaID arenaID) { return null; }
+        public static BattleSetupEffectLots.SheetArenaEffTable GetArenaEff(ArenaID arenaID)
+        {
+            var table = Instance.BattleSetupEffectLots?.ArenaEffTable;
+            if (table != null)
+            {
+                for (int i = 0; i < table.Length; i++)
+                {
+                    if (table[i].ArenaID == arenaID)
+                        return table[i];
+                }
+            }
+            return null;
+        }
 
-        // TODO
-        public static BattleSetupEffectLots.SheetAttEffTable GetAttEff(MapAttributeEx mapAttributeEx, ArenaID arenaID) { return null; }
+        public static BattleSetupEffectLots.SheetAttEffTable GetAttEff(MapAttributeEx mapAttributeEx, ArenaID arenaID)
+        {
+            var table = Instance.BattleSetupEffectLots?.AttEffTable;
+            if (table != null)
+            {
+                for (int i = 0; i < table.Length; i++)
+                {
+                    if (table[i].AttributeEx == mapAttributeEx && table[i].ArenaID == arenaID)
+                        return table[i];
+                }
+            }
+            return null;
+        }
 
-        // TODO
-        public static BattleSetupEffectLots.SheetRuleEffTable GetRuleEff(BattleSetupEffectLot lot) { return null; }
+        public static BattleSetupEffectLots.SheetRuleEffTable GetRuleEff(BattleSetupEffectLot lot)
+        {
+            var table = Instance.BattleSetupEffectLots?.RuleEffTable;
+            if (table != null)
+            {
+                for (int i = 0; i < table.Length; i++)
+                {
+                    if (table[i].Rule == lot)
+                        return table[i];
+                }
+            }
+            return null;
+        }
     }
 }
