@@ -4,8 +4,17 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_Message(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result result, in Description description) { }
+        public void Execute(Result result, in Description description)
+        {
+            if (description.isDisplayTokuseiWindow)
+            {
+                GetServerCommandPutter().InsertWazaInfo(description.pokeID, true, description.message);
+            }
+            else
+            {
+                GetServerCommandPutter().Message(description.message);
+            }
+        }
 
 		public class Description
 		{

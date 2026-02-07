@@ -4,8 +4,30 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_ChangePokeType(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result result, in Description description) { }
+		public void Execute(Result result, in Description description)
+		{
+			BTL_POKEPARAM poke = GetPokeParam(description.pokeID);
+			PokeTypePair currentType = poke.GetPokeType();
+
+			if (currentType.value == description.nextType.value)
+			{
+				if (description.isFailMessageEnable)
+				{
+					GetServerCommandPutter().Message(description.changedMessage);
+				}
+				result.isSuccessed = false;
+				return;
+			}
+
+			result.isSuccessed = GetServerCommandPutter().ChangePokeType(description.pokeID, description.nextType, description.exTypeCause);
+			if (result.isSuccessed)
+			{
+				if (!description.isStandardMessageDisable)
+				{
+					GetServerCommandPutter().Message(description.changedMessage);
+				}
+			}
+		}
 
 		public class Description
 		{

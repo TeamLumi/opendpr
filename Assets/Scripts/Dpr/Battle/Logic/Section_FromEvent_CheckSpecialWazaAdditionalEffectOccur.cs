@@ -4,8 +4,11 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_CheckSpecialWazaAdditionalEffectOccur(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result result, in Description description) { }
+        public void Execute(Result result, in Description description)
+        {
+            uint per = GetEventLauncher().Event_CheckSpecialWazaAdditionalPer(description.atkPokeID, description.defPokeID, description.defaultPer);
+            result.isOccur = calc.IsOccurPer(per);
+        }
 
 		public class Description
 		{

@@ -6,8 +6,11 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_DecideWazaTargetAuto(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result result, in Description description) { }
+        public void Execute(Result result, in Description description)
+        {
+            BTL_POKEPARAM poke = GetPokeParam(description.pokeID);
+            result.targetPos = calc.DecideWazaTargetAuto(GetMainModule(), GetBattleEnv().GetPokeCon(), poke, description.waza);
+        }
 
 		public class Description
 		{

@@ -4,8 +4,17 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_ExtendPokeType(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result result, in Description description) { }
+        public void Execute(Result result, in Description description)
+        {
+            BTL_POKEPARAM poke = GetPokeParam(description.pokeID);
+            if (poke.HaveExType())
+            {
+                result.isSuccessed = false;
+                return;
+            }
+            GetServerCommandPutter().ExPokeType(description.pokeID, description.exType, description.exTypeCause);
+            result.isSuccessed = true;
+        }
 
 		public class Description
 		{

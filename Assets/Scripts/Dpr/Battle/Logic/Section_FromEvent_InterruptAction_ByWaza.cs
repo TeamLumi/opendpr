@@ -6,8 +6,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_InterruptAction_ByWaza(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result result, in Description description) { }
+		public void Execute(Result result, in Description description)
+		{
+			result.isSucceeded = GetPokemonActionContainer().ReserveInterruptActionByWaza(description.waza);
+		}
 
 		public class Description
 		{

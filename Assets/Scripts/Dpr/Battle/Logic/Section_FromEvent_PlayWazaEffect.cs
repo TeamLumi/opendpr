@@ -6,8 +6,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_PlayWazaEffect(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result result, in Description description) { }
+		public void Execute(Result result, in Description description)
+		{
+			GetServerCommandPutter().Act_WazaEffect(description.atkPos, description.defPos, description.waza, description.wazaType, (byte)description.turnType, description.pluralHitIndex, description.isSyncEffect, false);
+		}
 
 		public class Description
 		{

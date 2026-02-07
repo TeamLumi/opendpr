@@ -4,8 +4,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_CalcAgility(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result result, in Description description) { }
+		public void Execute(Result result, in Description description)
+		{
+			result.agility = GetEventLauncher().Event_CalcAgility(description.poke, description.isTrickRoomApply);
+		}
 
 		public class Description
 		{
