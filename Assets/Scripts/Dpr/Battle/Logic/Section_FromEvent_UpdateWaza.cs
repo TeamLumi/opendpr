@@ -6,8 +6,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_UpdateWaza(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result result, in Description description) { }
+		public void Execute(Result result, in Description description)
+		{
+			GetServerCommandPutter().UpdateWazaNo(description.pokeID, description.wazaIdx, description.waza, description.ppMax, description.isPermanent);
+		}
 
 		public class Description
 		{

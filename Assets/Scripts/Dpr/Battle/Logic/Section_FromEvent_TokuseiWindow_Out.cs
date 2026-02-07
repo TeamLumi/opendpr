@@ -4,8 +4,11 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_TokuseiWindow_Out(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result result, in Description description) { }
+		public void Execute(Result result, in Description description)
+		{
+			GetServerCommandPutter().TokWin_Out(description.pokeID);
+			result.isVanished = true;
+		}
 
 		public class Description
 		{

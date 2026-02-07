@@ -101,6 +101,16 @@ namespace Dpr.Battle.Logic
             return m_viewCore;
         }
 
+        public BattleEnv GetBattleEnvForServer()
+        {
+            return m_battleEnvForServer;
+        }
+
+        public BattleEnv GetBattleEnvForClient()
+        {
+            return m_battleEnvForClient;
+        }
+
         // TODO
         public MainModule(BATTLE_SETUP_PARAM setupParam) { }
 

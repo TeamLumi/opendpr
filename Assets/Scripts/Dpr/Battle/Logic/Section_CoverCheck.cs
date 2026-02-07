@@ -4,11 +4,16 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_CoverCheck(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result pResult, in Description description) { }
-		
-		// TODO
-		private void requestPokeChangeForServer() { }
+		public void Execute(Result pResult, in Description description)
+		{
+			requestPokeChangeForServer();
+		}
+
+		private void requestPokeChangeForServer()
+		{
+			PokeChangeRequest pokeChangeRequest = GetPokeChangeRequest();
+			pokeChangeRequest.RequestEmptyPos(GetBattleEnv().GetPosPoke());
+		}
 
 		public class Description { }
 

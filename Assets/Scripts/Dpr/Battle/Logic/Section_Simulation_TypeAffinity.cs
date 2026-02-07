@@ -7,11 +7,25 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_Simulation_TypeAffinity(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result result, in Description description) { }
-		
-		// TODO
-		private TypeAffinity.AffinityID checkTypeAffinity(BTL_POKEPARAM attacker, BTL_POKEPARAM defender, WazaParam wazaParam, bool checkOnlyAttacker) { return default; }
+		public void Execute(Result result, in Description description)
+		{
+			BTL_POKEPARAM attacker = GetPokeParam(description.atkPokeID);
+			BTL_POKEPARAM defender = GetPokeParam(description.defPokeID);
+
+			WazaParam wazaParam = new WazaParam();
+			WazaParam.Init(wazaParam);
+			wazaParam.wazaID = description.waza;
+			wazaParam.wazaType = (byte)WAZADATA.GetType(description.waza);
+
+			result.affinity = checkTypeAffinity(attacker, defender, wazaParam, description.onlyAttacker);
+		}
+
+		private TypeAffinity.AffinityID checkTypeAffinity(BTL_POKEPARAM attacker, BTL_POKEPARAM defender, WazaParam wazaParam, bool checkOnlyAttacker)
+		{
+			TypeAffinity.AffinityID aff = GetEventLauncher().Event_CheckDamageAffinity(attacker, defender, wazaParam.wazaType, checkOnlyAttacker);
+			aff = GetEventLauncher().Event_RewriteWazaAffinity(attacker, defender, wazaParam.wazaType, aff);
+			return aff;
+		}
 
 		public class Description
 		{

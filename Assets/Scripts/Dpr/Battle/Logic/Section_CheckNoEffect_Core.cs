@@ -4,11 +4,39 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_CheckNoEffect_Core(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result pResult, in Description description) { }
-		
-		// TODO
-		private void displayMessage(byte pokeID, bool isTokuseiWindowDisplay, in StrParam strParam) { }
+		public void Execute(Result pResult, in Description description)
+		{
+			pResult.isNoEffect = false;
+			StrParam customMessage = new StrParam();
+
+			GetEventLauncher().Event_CheckNotEffect(
+				description.wazaParam, description.attacker, description.target,
+				description.affinityRecorder, description.eventID,
+				out bool isNoEffect, out bool isNoReaction, out bool isNoEffectMessageDisplayed,
+				out bool isTokuseiWindowDisplay, customMessage);
+
+			if (isNoEffect)
+			{
+				pResult.isNoEffect = true;
+				if (description.fEnableMessage && !isNoEffectMessageDisplayed)
+				{
+					displayMessage(description.target.GetID(), isTokuseiWindowDisplay, customMessage);
+				}
+			}
+		}
+
+		private void displayMessage(byte pokeID, bool isTokuseiWindowDisplay, in StrParam strParam)
+		{
+			if (isTokuseiWindowDisplay)
+			{
+				GetServerCommandPutter().TokWin_In(pokeID);
+			}
+			GetServerCommandPutter().Message(strParam);
+			if (isTokuseiWindowDisplay)
+			{
+				GetServerCommandPutter().TokWin_Out(pokeID);
+			}
+		}
 
 		public class Description
 		{

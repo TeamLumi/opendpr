@@ -4,8 +4,11 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_VanishMessageWindow(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result result, in Description description) { }
+		public void Execute(Result result, in Description description)
+		{
+			GetServerCommandPutter().Act_HideMessageWindow();
+			result.isSucceeded = true;
+		}
 
 		public class Description { }
 

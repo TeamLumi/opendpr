@@ -17,14 +17,51 @@
             m_seq = 0;
         }
 
-        // TODO
-        public void StartScript(ScriptStartParam startParam) { }
+        public void StartScript(ScriptStartParam startParam)
+        {
+            m_script = startParam.script;
+            m_scriptNo = startParam.scriptNo;
+            m_commandHandler = startParam.commandHandler;
+            m_commandParam.CopyFrom(startParam.commandParam);
+            m_seq = (uint)SeqWaitScript.SEQ_LOAD_START;
+        }
 
-        // TODO
-        public bool WaitScript() { return false; }
+        public bool WaitScript()
+        {
+            switch ((SeqWaitScript)m_seq)
+            {
+                case SeqWaitScript.SEQ_LOAD_START:
+                    m_script.StartLoadScript(m_scriptNo);
+                    m_seq = (uint)SeqWaitScript.SEQ_LOAD_WAIT;
+                    break;
+                case SeqWaitScript.SEQ_LOAD_WAIT:
+                    if (m_script.WaitLoadScript())
+                    {
+                        m_seq = (uint)SeqWaitScript.SEQ_EXEC_START;
+                    }
+                    break;
+                case SeqWaitScript.SEQ_EXEC_START:
+                    m_script.SetExecParameter(m_commandHandler);
+                    m_seq = (uint)SeqWaitScript.SEQ_EXEC_WAIT;
+                    break;
+                case SeqWaitScript.SEQ_EXEC_WAIT:
+                    if (m_script.Execute())
+                    {
+                        m_script.GetResult(m_result);
+                        m_script.UnLoadScript();
+                        m_seq = (uint)SeqWaitScript.SEQ_END;
+                    }
+                    break;
+                case SeqWaitScript.SEQ_END:
+                    return true;
+            }
+            return false;
+        }
 
-        // TODO
-        public AiScript.Result GetScriptResult() { return null; }
+        public AiScript.Result GetScriptResult()
+        {
+            return m_result;
+        }
 
         public class ScriptStartParam
         {

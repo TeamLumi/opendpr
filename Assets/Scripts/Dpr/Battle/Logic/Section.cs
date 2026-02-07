@@ -33,6 +33,24 @@ namespace Dpr.Battle.Logic
 			m_pSectionContainer = param.pSectionContainer;
 		}
 		
+		protected CommonParam GetCommonParam()
+		{
+			CommonParam param = new CommonParam();
+			param.pMainModule = m_pMainModule;
+			param.pBattleEnv = m_pBattleEnv;
+			param.pServerCmdQueue = m_pServerCmdQueue;
+			param.pServerCmdPutter = m_pServerCmdPutter;
+			param.pWazaCmdPutter = m_pWazaCmdPutter;
+			param.pEventSystem = m_pEventSystem;
+			param.pEventLauncher = m_pEventLauncher;
+			param.pSharedData = m_pSharedData;
+			param.pPokemonActionContainer = m_pPokemonActionContainer;
+			param.pPokeChangeRequest = m_pPokeChangeRequest;
+			param.pCaptureInfo = m_pCaptureInfo;
+			param.pSectionContainer = m_pSectionContainer;
+			return param;
+		}
+
 		// TODO
 		protected MainModule GetMainModule() { return default; }
 		

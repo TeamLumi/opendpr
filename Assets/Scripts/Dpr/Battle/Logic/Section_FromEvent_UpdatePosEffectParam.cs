@@ -4,8 +4,12 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FromEvent_UpdatePosEffectParam(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result result, in Description description) { }
+		public void Execute(Result result, in Description description)
+		{
+			PosEffectStatus posEffectStatus = GetBattleEnv().GetPosEffectStatus(description.pos, description.effect);
+			posEffectStatus.SetEffectParam(description.effectParam);
+			ServerCommandPutter.SCQUE_OP_UpdatePosEffectParam(GetServerCommandQueue(), description.effect, description.pos, description.effectParam.Raw_param1);
+		}
 
 		public class Description
 		{
