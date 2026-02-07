@@ -6,8 +6,11 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_WazaExec_NotEffective(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result pResult, in Description description) { }
+		public void Execute(Result pResult, in Description description)
+		{
+			BTL_POKEPARAM poke = GetPokeParam(description.pokeID);
+			GetServerCommandPutter().Message_NoEffect(poke);
+		}
 
 		public class Description
 		{

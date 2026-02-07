@@ -4,8 +4,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_Root_RaidResult(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result pResult, in Description description) { }
+		public void Execute(Result pResult, in Description description)
+		{
+			GetServerCommandPutter().Act_RaidResult();
+		}
 
 		public class Description { }
 

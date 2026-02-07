@@ -4,8 +4,22 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_SideEffect_Swap(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result result, in Description description) { }
+        public void Execute(Result result, in Description description)
+        {
+            result.isChanged = false;
+            for (int i = (int)BtlSideEffect.BTL_SIDEEFF_START; i < (int)BtlSideEffect.BTL_SIDEEFF_MAX; i++)
+            {
+                BtlSideEffect effect = (BtlSideEffect)i;
+                if (description.checkFunc != null && !description.checkFunc(effect))
+                {
+                    continue;
+                }
+                if (GetServerCommandPutter().SideEffect_Swap(description.side1, description.side2, effect))
+                {
+                    result.isChanged = true;
+                }
+            }
+        }
 
 		public delegate bool SidefEffectSwapCheck(BtlSideEffect effect);
 

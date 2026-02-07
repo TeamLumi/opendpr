@@ -4,8 +4,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_SimpleDamage_CheckEnable(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result pResult, in Description description) { }
+        public void Execute(Result pResult, in Description description)
+        {
+            pResult.isEnable = GetEventLauncher().Event_CheckEnableSimpleDamage(description.poke, description.damage, description.damageCause);
+        }
 
 		public class Description
 		{

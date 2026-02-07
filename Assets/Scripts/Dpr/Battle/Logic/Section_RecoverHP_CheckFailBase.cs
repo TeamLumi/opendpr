@@ -4,8 +4,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_RecoverHP_CheckFailBase(in CommonParam commonParam) : base(commonParam) { }
 
-        // TODO
-        public void Execute(Result pResult, in Description description) { }
+        public void Execute(Result pResult, in Description description)
+        {
+            pResult.isFailed = description.poke.IsHPFull();
+        }
 
 		public class Description
 		{

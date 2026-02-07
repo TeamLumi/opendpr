@@ -6,8 +6,10 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_WazaDamageReaction(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result pResult, in Description desc) { }
+		public void Execute(Result pResult, in Description desc)
+		{
+			GetEventLauncher().Event_WazaDamageReaction(desc.attacker, desc.defender, desc.wazaParam, desc.affinity, desc.damage, desc.critical_flag, desc.fMigawari);
+		}
 
 		public class Description
 		{

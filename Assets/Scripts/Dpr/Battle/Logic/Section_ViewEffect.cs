@@ -8,8 +8,32 @@ namespace Dpr.Battle.Logic
 		
 		public Section_ViewEffect(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result pResult, in Description description) { }
+		public void Execute(Result pResult, in Description description)
+		{
+			int type = EFF_SIMPLE;
+			if (description.pos_from != description.pos_to)
+			{
+				type = EFF_VECTOR;
+			}
+			else if (description.pos_from != BtlPokePos.POS_NULL)
+			{
+				type = EFF_POS;
+			}
+
+			ServerCommandPutter scp = GetServerCommandPutter();
+			switch (type)
+			{
+				case EFF_SIMPLE:
+					scp.Act_EffectSimple(description.effectNo);
+					break;
+				case EFF_POS:
+					scp.EffectByPos(description.pos_from, description.effectNo);
+					break;
+				case EFF_VECTOR:
+					scp.EffectBySide(description.pos_from, description.pos_to, description.effectNo);
+					break;
+			}
+		}
 
 		public class Description
 		{

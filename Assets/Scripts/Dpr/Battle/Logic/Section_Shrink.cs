@@ -4,8 +4,14 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_Shrink(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result pResult, in Description description) { }
+		public void Execute(Result pResult, in Description description)
+		{
+			pResult.isSuccess = GetEventLauncher().Event_CheckShrink(description.target, description.percentage);
+			if (pResult.isSuccess)
+			{
+				description.target.TURNFLAG_Set(BTL_POKEPARAM.TurnFlag.TURNFLG_SHRINK);
+			}
+		}
 
 		public class Description
 		{
