@@ -29,17 +29,48 @@
             m_pMessageManager = setupParam.pMessageManager;
         }
 
-        // TODO
-        public void Start(byte clientId, TrainerMessageID messageId) { }
+        public void Start(byte clientId, TrainerMessageID messageId)
+        {
+            m_clientId = clientId;
+            m_messageId = messageId;
+            m_isFinished = false;
+            m_seq = 0;
+        }
 
-        // TODO
-        public void Update() { }
+        public void Update()
+        {
+            switch (m_seq)
+            {
+                case 0:
+                    StartView();
+                    m_seq = 1;
+                    break;
 
-        // TODO
-        private void StartView() { }
+                case 1:
+                    if (WaitView())
+                    {
+                        m_pMessageManager.Done(m_clientId, m_messageId);
+                        m_isFinished = true;
+                    }
+                    break;
+            }
+        }
 
-        // TODO
-        private bool WaitView() { return false; }
+        private void StartView()
+        {
+            var strParam = new BTLV_STRPARAM();
+            string msgLabel = m_pMainModule.GetClientTrainerMsg(m_clientId, m_messageId);
+            if (msgLabel != null)
+            {
+                BTLV_STRPARAM.Setup(strParam, BtlStrType.BTL_STRTYPE_STD, 0);
+            }
+            m_pViewSystem.CMD_StartMsg(strParam);
+        }
+
+        private bool WaitView()
+        {
+            return m_pViewSystem.CMD_WaitMsg();
+        }
 
         public bool IsFinished()
         {

@@ -22,17 +22,32 @@
             ClearTurnData(m_turnData[1]);
         }
 
-        // TODO
-        private void ClearTurnData(TurnData turnData) { }
+        private void ClearTurnData(TurnData turnData)
+        {
+            for (int i = 0; i < turnData.pokeData.Length; i++)
+                turnData.pokeData[i].actionFlag = 0;
+        }
 
-        // TODO
-        public void StartTurn() { }
+        public void StartTurn()
+        {
+            for (int i = (int)(RECORD_TURN_NUM - 1); i > 0; i--)
+                m_turnData[i].CopyFrom(m_turnData[i - 1]);
 
-        // TODO
-        public bool CheckAction(byte pokeId, byte backTurnCount, ActionID actionId) { return false; }
+            ClearTurnData(m_turnData[0]);
+        }
 
-        // TODO
-        public void SetAction(byte pokeId, ActionID actionId) { }
+        public bool CheckAction(byte pokeId, byte backTurnCount, ActionID actionId)
+        {
+            if (backTurnCount >= RECORD_TURN_NUM)
+                return false;
+
+            return (m_turnData[backTurnCount].pokeData[pokeId].actionFlag & (1u << (int)actionId)) != 0;
+        }
+
+        public void SetAction(byte pokeId, ActionID actionId)
+        {
+            m_turnData[0].pokeData[pokeId].actionFlag |= (1u << (int)actionId);
+        }
 
         public enum ActionID : byte
         {

@@ -34,17 +34,75 @@ namespace Dpr.Battle.Logic
             m_scriptCommandHandler = new AiScriptCommandHandler(mainModule, pBattleSimulator, pBattleEnv, randSeed);
         }
 
-        // TODO
-        public override void Dispose() { }
+        public override void Dispose()
+        {
+            m_scriptCommandHandler = null;
+            m_scriptHandler = null;
+        }
 
-        // TODO
-        public void StartJudge(BTL_POKEPARAM poke, ushort itemNo) { }
+        public void StartJudge(BTL_POKEPARAM poke, ushort itemNo)
+        {
+            m_poke = poke;
+            m_itemNo = itemNo;
+            m_score = 0;
+            m_isFinished = false;
+            m_seq = (uint)UpdateJudgeSeq.SEQ_SCRIPT_START;
 
-        // TODO
-        public override void UpdateJudge() { }
+            ResetScriptNo();
+        }
 
-        // TODO
-        private void StartScript() { }
+        public override void UpdateJudge()
+        {
+            switch ((UpdateJudgeSeq)m_seq)
+            {
+                case UpdateJudgeSeq.SEQ_SCRIPT_START:
+                    if (IsAllScriptFinished())
+                    {
+                        m_seq = (uint)UpdateJudgeSeq.SEQ_END;
+                    }
+                    else
+                    {
+                        StartScript();
+                        m_seq = (uint)UpdateJudgeSeq.SEQ_SCRIPT_WAIT;
+                    }
+                    break;
+
+                case UpdateJudgeSeq.SEQ_SCRIPT_WAIT:
+                    if (m_scriptHandler.WaitScript())
+                    {
+                        RegisterScriptResult();
+                        m_seq = (uint)UpdateJudgeSeq.SEQ_TO_NEXT_SCRIPT;
+                    }
+                    break;
+
+                case UpdateJudgeSeq.SEQ_TO_NEXT_SCRIPT:
+                    UpdateScriptNo();
+                    m_seq = (uint)UpdateJudgeSeq.SEQ_SCRIPT_START;
+                    break;
+
+                case UpdateJudgeSeq.SEQ_END:
+                    m_isFinished = true;
+                    break;
+            }
+        }
+
+        private void StartScript()
+        {
+            var startParam = new AiScriptHandler.ScriptStartParam();
+            startParam.script = m_script;
+            startParam.scriptNo = GetCurrentScriptNo();
+            startParam.commandHandler = m_scriptCommandHandler;
+            startParam.commandParam.clientID = GetMyClientID();
+            startParam.commandParam.attackPoke = m_poke;
+            startParam.commandParam.defensePoke = null;
+            startParam.commandParam.currentWazaIndex = 0;
+            startParam.commandParam.currentWazaNo = WazaNo.NULL;
+            startParam.commandParam.currentItemNo = m_itemNo;
+            startParam.commandParam.currentBenchPoke = null;
+            startParam.commandParam.isGWazaUseTurn = false;
+
+            m_scriptHandler.StartScript(startParam);
+        }
 
         private void RegisterScriptResult()
         {

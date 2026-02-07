@@ -9,14 +9,21 @@ namespace Dpr.Battle.Logic
 		public ClientParam[] clientParam = Arrays.InitializeWithDefaultInstances<ClientParam>((int)BTL_CLIENT_ID.BTL_CLIENT_NUM);
 		private static DebugParam s_uPtrDebugParam;
 		
-		// TODO
-		public static void CreateInstance() { }
-		
-		// TODO
-		public static void DeleteInstance() { }
-		
-		// TODO
-		public static DebugParam GetInstance() { return default; }
+		public static void CreateInstance()
+		{
+			if (s_uPtrDebugParam == null)
+				s_uPtrDebugParam = new DebugParam();
+		}
+
+		public static void DeleteInstance()
+		{
+			s_uPtrDebugParam = null;
+		}
+
+		public static DebugParam GetInstance()
+		{
+			return s_uPtrDebugParam;
+		}
 		
 		public DebugParam()
 		{
@@ -27,8 +34,10 @@ namespace Dpr.Battle.Logic
 				yubiWoHuruWaza[i] = 0;
 		}
 		
-		// TODO
-		public void IncYubiWoHuruWaza(BtlPokePos pos) { }
+		public void IncYubiWoHuruWaza(BtlPokePos pos)
+		{
+			yubiWoHuruWaza[(int)pos]++;
+		}
 
 		public struct ClientParam
 		{

@@ -2,16 +2,32 @@
 {
     public sealed class PosEffect
     {
-        // TODO: cctor
-
         public const int POSEFF_PARAM_MAX = 4;
         private static readonly EffectParamType[] ParamTypeTable;
 
-        // TODO
-        public static EffectParamType GetEffectParamType(BtlPosEffect posEffect) { return EffectParamType.PARAM_TYPE_NONE; }
+        static PosEffect()
+        {
+            ParamTypeTable = new EffectParamType[(int)BtlPosEffect.BTL_POSEFF_MAX]
+            {
+                EffectParamType.PARAM_TYPE_NONE,           // NEGAIGOTO
+                EffectParamType.PARAM_TYPE_NONE,           // MIKADUKINOMAI
+                EffectParamType.PARAM_TYPE_DELAY_RECOVER,  // IYASINONEGAI
+                EffectParamType.PARAM_TYPE_DELAY_ATTACK,   // DELAY_ATTACK
+                EffectParamType.PARAM_TYPE_NONE,           // BATONTOUCH
+            };
+        }
 
-        // TODO
-        public PosEffect() { }
+        public static EffectParamType GetEffectParamType(BtlPosEffect posEffect)
+        {
+            if (posEffect < BtlPosEffect.BTL_POSEFF_MAX)
+                return ParamTypeTable[(int)posEffect];
+
+            return EffectParamType.PARAM_TYPE_NONE;
+        }
+
+        public PosEffect()
+        {
+        }
 
         public enum EffectParamType : int
         {
@@ -36,11 +52,29 @@
             private const int mask3 = -16777216;
             private int raw;
 
-            // TODO
-            public uint Raw_param1 { get; set; }
-            public ushort DelayAttack_wazaNo { get; set; }
-            public byte DelayAttack_execTurnMax { get; set; }
-            public byte DelayAttack_execTurnCount { get; set; }
+            public uint Raw_param1
+            {
+                get { return (uint)raw; }
+                set { raw = (int)value; }
+            }
+
+            public ushort DelayAttack_wazaNo
+            {
+                get { return (ushort)((raw & mask0) >> loc0); }
+                set { raw = (raw & ~mask0) | ((value << loc0) & mask0); }
+            }
+
+            public byte DelayAttack_execTurnMax
+            {
+                get { return (byte)((raw & mask1) >> loc1); }
+                set { raw = (raw & ~mask1) | ((value << loc1) & mask1); }
+            }
+
+            public byte DelayAttack_execTurnCount
+            {
+                get { return (byte)((raw & mask2) >> loc2); }
+                set { raw = (raw & ~mask2) | ((value << loc2) & mask2); }
+            }
         }
     }
 }
