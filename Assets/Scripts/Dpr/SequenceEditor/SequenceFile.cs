@@ -11,8 +11,10 @@ namespace Dpr.SequenceEditor
 		private List<Group> _groupData = new List<Group>();
 		private List<CommandParam> _cachedCommandParams;
 		
-		// TODO
-		public static Macro Cast(Macro macro) { return default; }
+		public static Macro Cast(Macro macro)
+		{
+			return macro._groupData;
+		}
 		
 		public List<Group> GroupData { get => _groupData; set => _groupData = value; }
 		public int MaxFrame { get => GetCommandParams().Max(x => x.EndFrame) + 1; }

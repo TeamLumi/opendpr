@@ -53,11 +53,15 @@ namespace Dpr.Contest
 		public int Index { get => playerData.index; }
 		public PlayerType PlayerType { get => playerData.playerType; }
 		
-		// TODO
-		public Sprite GetPmIconSpr() { return default; }
+		public Sprite GetPmIconSpr()
+		{
+			return this.pmIconSpr;
+		}
 		
-		// TODO
-		public Sprite GetWazaTypeIconSpr() { return default; }
+		public Sprite GetWazaTypeIconSpr()
+		{
+			return this.wazaTypeIconSpr;
+		}
 		
 		public BOTrainer BoTrainer { get => boTrainer; }
 		public BOPokemon BoPokemon { get => boPokemon; }
@@ -66,8 +70,12 @@ namespace Dpr.Contest
 		public bool IsActiveBOPokemon { get => boPokemon.IsActive(); }
 		public bool IsActiveWazaPokemon { get => wazaPoke.IsActive(); }
 		
-		// TODO
-		public int CalcTotalScore() { return default; }
+		public int CalcTotalScore()
+		{
+			return this.playerData.danceDataModel.danceScore + this.playerData.visualDataModel.heartNum +
+			       this.playerData.danceDataModel.skillScore;
+			return 0;
+		}
 		
 		// TODO
 		public void AppendLoadResource(Transform cluster, Transform parent, Vector3 trainerPos, Vector3 pokemonPos, int colorID, TrainerType trainerType, bool isUser) { }
@@ -110,11 +118,17 @@ namespace Dpr.Contest
 		// TODO
 		public void OnLaunchWazaAnimation(Vector3 pos) { }
 		
-		// TODO
-		public void OnFinishWazaAnimation() { }
+		public void OnFinishWazaAnimation()
+		{
+			this.wazaPoke.SetVisible(0);
+			this.wazaPoke.SetVisibleTame(0);
+			BattlePokemonEntity.SetRenderActive(this.wazaPoke.Entity,0,0);
+		}
 		
-		// TODO
-		public void SetModelRenderActive(bool active) { }
+		public void SetModelRenderActive(bool active)
+		{
+			BattlePokemonEntity.SetRenderActive(this.boPokemon.Entity,(active ? 1 : 0) & 1,0);
+		}
 		
 		// TODO
 		private void UnloadAssetBundle() { }

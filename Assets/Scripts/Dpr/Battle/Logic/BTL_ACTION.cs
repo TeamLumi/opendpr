@@ -4,85 +4,168 @@ namespace Dpr.Battle.Logic
 {
 	public static class BTL_ACTION
 	{
-		// TODO
-		public static void SetFightParam(ref BTL_ACTION_PARAM p, byte pokeID, WazaNo waza, BtlPokePos targetPos, bool forbidGWaza = false, bool forceGWaza = false) { }
+		public static void SetFightParam(ref BTL_ACTION_PARAM p, byte pokeID, WazaNo waza, BtlPokePos targetPos, bool forbidGWaza = false, bool forceGWaza = false)
+		{
+			var uVar1 = 0x100000000;
+			if (!forbidGWaza) {
+			  uVar1 = 0;
+			}
+			var uVar2 = 0x200000000;
+			if (!forceGWaza) {
+			  uVar2 = 0;
+			}
+			p = (ulong)(uint)(pokeID << 4) & 0x1f0 | (ulong)(((int)waza & 0xffff) << 0xd) | uVar1 |
+			           (ulong)(uint)((int)targetPos << 9) & 0x1e00 | uVar2 | 1;
+		}
 		
-		// TODO
-		public static void ChangeFightTargetPos(ref BTL_ACTION_PARAM p, BtlPokePos nextTargetPos) { }
+		public static void ChangeFightTargetPos(ref BTL_ACTION_PARAM p, BtlPokePos nextTargetPos)
+		{
+			ulong uVar1 = default;
+			if ((((int)nextTargetPos & 0xff) != 5) && (uVar1 = p, (uVar1 & 0xf) == 1)) {
+			  p = uVar1 & 0xffffffffffffe000 | uVar1 & 0x1ff | ((ulong)((int)nextTargetPos & 0x7fffff) & 0xf) << 9
+			  ;
+			}
+		}
 		
-		// TODO
-		public static void FightParamToWazaInfoMode(ref BTL_ACTION_PARAM p) { }
+		public static void FightParamToWazaInfoMode(ref BTL_ACTION_PARAM p)
+		{
+			if ((p & 0xf) == 1) {
+			  p = p | 0x20000000;
+			}
+		}
 		
-		// TODO
-		public static bool IsWazaInfoMode(ref BTL_ACTION_PARAM p) { return default; }
+		public static bool IsWazaInfoMode(ref BTL_ACTION_PARAM p)
+		{
+			return (p & 0x2000000f) == 0x20000001;
+		}
 		
-		// TODO
-		public static bool IsFight(ref BTL_ACTION_PARAM p) { return default; }
+		public static bool IsFight(ref BTL_ACTION_PARAM p)
+		{
+			return (p & 0xf) == 1;
+		}
 		
-		// TODO
-		public static bool IsFightWithG(ref BTL_ACTION_PARAM p) { return default; }
+		public static bool IsFightWithG(ref BTL_ACTION_PARAM p)
+		{
+			return (p & 0x8000000f) == 0x80000001;
+		}
 		
-		// TODO
-		public static bool IsGStart(ref BTL_ACTION_PARAM p) { return default; }
+		public static bool IsGStart(ref BTL_ACTION_PARAM p)
+		{
+			return (p & 0xf) == 6;
+		}
 		
-		// TODO
-		public static bool IsItem(ref BTL_ACTION_PARAM p) { return default; }
+		public static bool IsItem(ref BTL_ACTION_PARAM p)
+		{
+			return (p & 0xf) == 2;
+		}
 		
-		// TODO
-		public static bool IsCheer(ref BTL_ACTION_PARAM p) { return default; }
+		public static bool IsCheer(ref BTL_ACTION_PARAM p)
+		{
+			return (p & 0xf) == 7;
+		}
 		
-		// TODO
-		public static WazaNo GetWazaID(ref BTL_ACTION_PARAM act) { return default; }
+		public static WazaNo GetWazaID(ref BTL_ACTION_PARAM act)
+		{
+			var uVar1 = (uint)act >> 0xd & 0xffff;
+			if ((act & 0xf) != 1) {
+			  uVar1 = 0;
+			}
+			return uVar1;
+		}
 		
-		// TODO
-		public static BtlPokePos GetWazaTargetPos(ref BTL_ACTION_PARAM act) { return default; }
+		public static BtlPokePos GetWazaTargetPos(ref BTL_ACTION_PARAM act)
+		{
+			var uVar1 = (uint)act >> 9 & 0xf;
+			if ((act & 0xf) != 1) {
+			  uVar1 = 5;
+			}
+			return uVar1;
+		}
 		
-		// TODO
-		public static WazaNo GetOriginalWazaID(ref BTL_ACTION_PARAM act) { return default; }
+		public static WazaNo GetOriginalWazaID(ref BTL_ACTION_PARAM act)
+		{
+			var uVar1 = (uint)act >> 0xd & 0xffff;
+			if ((act & 0xf) != 1) {
+			  uVar1 = 0;
+			}
+			return uVar1;
+		}
 		
-		// TODO
-		public static void SetItemParam(ref BTL_ACTION_PARAM p, byte pokeID, ushort itemNumber, byte targetID, byte wazaIdx) { }
+		public static void SetItemParam(ref BTL_ACTION_PARAM p, byte pokeID, ushort itemNumber, byte targetID, byte wazaIdx)
+		{
+			p = (itemNumber & 0xffff) << 0x11 |
+			           (ulong)(uint)(pokeID << 4) & 0x1f0 | (targetID & 0xff) << 9 |
+			           (ulong)(wazaIdx & 0xff) << 0x21 | 2;
+		}
 		
-		// TODO
-		public static void SetChangeParam(ref BTL_ACTION_PARAM p, byte posIdx, byte memberIdx) { }
+		public static void SetChangeParam(ref BTL_ACTION_PARAM p, byte posIdx, byte memberIdx)
+		{
+			p = (ulong)(uint)(posIdx << 9) & 0xe00 | (ulong)(uint)(memberIdx << 0xc) & 0x7000 | 3;
+		}
 		
-		// TODO
-		public static void SetChangeDepleteParam(ref BTL_ACTION_PARAM p) { }
+		public static void SetChangeDepleteParam(ref BTL_ACTION_PARAM p)
+		{
+			p = 0x81f3;
+		}
 		
-		// TODO
-		public static bool IsDeplete(in BTL_ACTION_PARAM p) { return default; }
+		public static bool IsDeplete(in BTL_ACTION_PARAM p)
+		{
+			return (p & 0x800f) == 0x8003;
+		}
 		
-		// TODO
-		public static void SetEscapeParam(ref BTL_ACTION_PARAM p, byte pokeID) { }
+		public static void SetEscapeParam(ref BTL_ACTION_PARAM p, byte pokeID)
+		{
+			p = (ulong)(uint)(pokeID << 4) & 0x1f0 | p & 0xfffffffffffffe00 | 4;
+		}
 		
-		// TODO
-		public static void SetCheer(ref BTL_ACTION_PARAM p) { }
+		public static void SetCheer(ref BTL_ACTION_PARAM p)
+		{
+			p = p & 0xfffffffffffffe00 | 0x1f7;
+		}
 		
-		// TODO
-		public static void SetSafariBall(ref BTL_ACTION_PARAM p, byte pokeID) { }
+		public static void SetSafariBall(ref BTL_ACTION_PARAM p, byte pokeID)
+		{
+			p = (ulong)(uint)(pokeID << 4) & 0x1f0 | p & 0xfffffffffffffe00 | 10;
+		}
 		
-		// TODO
-		public static void SetSafariEsa(ref BTL_ACTION_PARAM p, byte pokeID) { }
+		public static void SetSafariEsa(ref BTL_ACTION_PARAM p, byte pokeID)
+		{
+			p = (ulong)(uint)(pokeID << 4) & 0x1f0 | p & 0xfffffffffffffe00 | 0xb;
+		}
 		
-		// TODO
-		public static void SetSafariDoro(ref BTL_ACTION_PARAM p, byte pokeID) { }
+		public static void SetSafariDoro(ref BTL_ACTION_PARAM p, byte pokeID)
+		{
+			p = (ulong)(uint)(pokeID << 4) & 0x1f0 | p & 0xfffffffffffffe00 | 0xc;
+		}
 		
-		// TODO
-		public static void SetSafariYousumi(ref BTL_ACTION_PARAM p, byte pokeID) { }
+		public static void SetSafariYousumi(ref BTL_ACTION_PARAM p, byte pokeID)
+		{
+			p = (ulong)(uint)(pokeID << 4) & 0x1f0 | p & 0xfffffffffffffe00 | 0xd;
+		}
 		
-		// TODO
-		public static void SetNULL(ref BTL_ACTION_PARAM p) { }
+		public static void SetNULL(ref BTL_ACTION_PARAM p)
+		{
+			p = null;
+		}
 		
-		// TODO
-		public static void SetSkip(ref BTL_ACTION_PARAM p, byte pokeID) { }
+		public static void SetSkip(ref BTL_ACTION_PARAM p, byte pokeID)
+		{
+			p = (ulong)(uint)(pokeID << 4) & 0x1f0 | p & 0xfffffffffffffe00 | 5;
+		}
 		
-		// TODO
-		public static BtlAction GetAction(in BTL_ACTION_PARAM p) { return default; }
+		public static BtlAction GetAction(in BTL_ACTION_PARAM p)
+		{
+			return p & 0xf;
+		}
 		
-		// TODO
-		public static void SetRecPlayOver(ref BTL_ACTION_PARAM act) { }
+		public static void SetRecPlayOver(ref BTL_ACTION_PARAM act)
+		{
+			act = act & 0x1f0 | 8;
+		}
 		
-		// TODO
-		public static void SetRecPlayError(ref BTL_ACTION_PARAM act) { }
+		public static void SetRecPlayError(ref BTL_ACTION_PARAM act)
+		{
+			act = act & 0x1f0 | 9;
+		}
 	}
 }

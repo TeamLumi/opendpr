@@ -44,7 +44,9 @@ namespace Dpr.SecretBase
 		// TODO
 		public void SetDisableForce(bool isDisable) { }
 		
-		// TODO
-		public bool IsDisable() { return default; }
+		public bool IsDisable()
+		{
+			return this.isDisable;
+		}
 	}
 }

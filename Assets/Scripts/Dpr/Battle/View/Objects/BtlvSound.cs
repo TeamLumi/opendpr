@@ -31,11 +31,15 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		public static BtlvSound CreatePerpetuateSound(uint playEventId) { return default; }
 		
-		// TODO
-		public void SetVoiceFlag() { }
+		public void SetVoiceFlag()
+		{
+			this.isVoice = true;
+		}
 		
-		// TODO
-		public void SetSEFlag() { }
+		public void SetSEFlag()
+		{
+			this.isVoice = false;
+		}
 		
 		// TODO
 		public bool Register(string name, bool isVoice) { return default; }
@@ -43,8 +47,12 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		public bool Unregister() { return default; }
 		
-		// TODO
-		public void SetRTPC(uint trpcName, float value, int interpolationMs) { }
+		public void SetRTPC(uint trpcName, float value, int interpolationMs)
+		{
+			if (this._instance != null) {
+			  this._instance.SetRTPCValue(trpcName);
+			}
+		}
 		
 		// TODO
 		public bool SetSwitch(string switchGroup, string switchName) { return default; }

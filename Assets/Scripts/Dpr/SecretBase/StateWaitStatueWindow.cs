@@ -11,8 +11,10 @@ namespace Dpr.SecretBase
 			// Empty
 		}
 		
-		// TODO
-		public void Enter_WaitStatueWindow(PlacementData statue) { }
+		public void Enter_WaitStatueWindow(PlacementData statue)
+		{
+			this.placement = statue;
+		}
 		
 		// TODO
 		public override void Enter(StatuePlacementEditController owner) { }

@@ -29,8 +29,10 @@ namespace Dpr.DigFossil
 		// TODO
 		public void ShowUgItemMaxMessage(Action onFinishedShowAllMessage, Action onFinishedCloseWindow) { }
 		
-		// TODO
-		public void Close() { }
+		public void Close()
+		{
+			MsgWindowManager.CloseMsg(0);
+		}
 		
 		// TODO
 		private MsgWindowParam CreateParam(string labelName, Action onFinishedShowAllMessage, Action onFinishedCloseWindow) { return default; }

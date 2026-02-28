@@ -4,8 +4,14 @@ namespace Dpr.Battle.Logic
 {
 	public sealed class Section_WazaExec_CheckWazaInvalid : Section
 	{
-		// TODO
-		private static bool isHitMigawari(WazaNo waza) { return default; }
+		private static bool isHitMigawari(WazaNo waza)
+		{
+			var uVar1 = WAZADATA.GetCategory(waza);
+			if (uVar1 < 10) {
+			  return 0x3d1U >> (int)(uVar1 & 0x1f) & 1;
+			}
+			return false;
+		}
 		
 		public Section_WazaExec_CheckWazaInvalid(in CommonParam commonParam) : base(commonParam) { }
 		

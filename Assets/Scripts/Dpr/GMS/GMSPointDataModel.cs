@@ -7,9 +7,9 @@ namespace Dpr.GMS
 		private Vector2 screenPos;
 		private Vector3 normal;
 		private int dataCount;
-		private int markIndex;
+		internal int markIndex;
 		private bool bIsView;
-		private bool bHasData;
+		internal bool bHasData;
 		private bool bHasNewData;
 		
 		// TODO
@@ -22,8 +22,10 @@ namespace Dpr.GMS
 		public bool HasNewData { get => bHasNewData; }
 		public int MarkIndex { get => markIndex; }
 		
-		// TODO
-		public void ResetMarkIndex() { }
+		public void ResetMarkIndex()
+		{
+			this.markIndex = 0;
+		}
 		
 		// TODO
 		public void ResetAllNewFlag() { }
@@ -31,8 +33,14 @@ namespace Dpr.GMS
 		// TODO
 		public PointHistoryDataModel GetHistoryDataByIndex(int index) { return default; }
 		
-		// TODO
-		public PointHistoryDataModel GetMarkHistoryData() { return default; }
+		public PointHistoryDataModel GetMarkHistoryData()
+		{
+			if (this.markIndex < this.historyDataArray.Length) {
+			  return *
+			          (this.historyDataArray + (int)this.markIndex * 8 + 0x20);
+			}
+			return null;
+		}
 		
 		// TODO
 		public void SetHistoryData(int index, PointHistoryDataModel newHistoryData) { }
@@ -58,15 +66,26 @@ namespace Dpr.GMS
 		// TODO
 		public void SortHistoryData() { }
 		
-		// TODO
-		public Sprite GetPointMarkIconSpr() { return default; }
+		public Sprite GetPointMarkIconSpr()
+		{
+			if (this.markIndex < this.historyDataArray.Length) {
+			  return *
+			          (this.historyDataArray + (int)this.markIndex * 8[0]
+			          + 0x18);
+			}
+			return null;
+		}
 		
 		public Vector3 Normal { get => normal; }
 		public bool IsView { get => bIsView; }
 		public Vector2 ScreenPos { get => screenPos; }
 		
-		// TODO
-		public void ChangeViewStatus(bool canView) { }
+		public void ChangeViewStatus(bool canView)
+		{
+			if (((!this.bIsView ^ canView) & 1) == 0) {
+			  this.bIsView = (canView ? 1 : 0) & 1;
+			}
+		}
 		
 		// TODO
 		public void SetScreenPosition(Vector2 screenPos) { }

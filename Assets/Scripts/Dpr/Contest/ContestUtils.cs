@@ -12,8 +12,17 @@ namespace Dpr.Contest
 		// TODO
 		public static string CreateTrainerModelPath(int playerFashion) { return default; }
 		
-		// TODO
-		public static TrainerType CreateTrainerType(bool isOwner, Sex playerSex) { return default; }
+		public static TrainerType CreateTrainerType(bool isOwner, Sex playerSex)
+		{
+			if (isOwner) {
+			  var uVar1 = 100;
+			  if ((int)playerSex != 0) {
+			    uVar1 = 0x65;
+			  }
+			  return uVar1;
+			}
+			return (int)playerSex != 0;
+		}
 		
 		// TODO
 		public static TrainerSimpleParam CreateTrainerSimpleParam(TrainerType trainerType, int colorID) { return default; }
@@ -36,8 +45,45 @@ namespace Dpr.Contest
 		// TODO
 		public static string CreateWazaSequencePath(MonsNo monsNo, WazaNo wazaNo, int formNo, PokeType type1, PokeType type2) { return default; }
 		
-		// TODO
-		public static bool CheckUniqueWaza(MonsNo monsNo, WazaNo wazaNo, int formNo, PokeType type1, PokeType type2) { return default; }
+		public static bool CheckUniqueWaza(MonsNo monsNo, WazaNo wazaNo, int formNo, PokeType type1, PokeType type2)
+		{
+			if ((int)wazaNo < 0xb2) {
+			  if ((int)wazaNo == 0xae) {
+			    if ((type1 != '\a') && (type2 != '\a')) {
+			      return false;
+			    }
+			    return true;
+			  }
+			  if ((int)wazaNo != 0xb1) {
+			    return false;
+			  }
+			  if ((int)monsNo != 0xf9) {
+			    return false;
+			  }
+			}
+			else if ((int)wazaNo == 0x1cb) {
+			  if ((int)monsNo != 0x1e3) {
+			    return false;
+			  }
+			}
+			else if ((int)wazaNo == 0x1cc) {
+			  if ((int)monsNo != 0x1e4) {
+			    return false;
+			  }
+			}
+			else {
+			  if ((int)wazaNo != 0x26c) {
+			    return false;
+			  }
+			  if ((int)monsNo != 0x180) {
+			    return false;
+			  }
+			}
+			if (formNo != 0) {
+			  return false;
+			}
+			return true;
+		}
 		
 		// TODO
 		public static ArenaInfo.SheetArenaData FindArenaDataByID(ArenaID arenaID) { return default; }

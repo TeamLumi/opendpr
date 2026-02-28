@@ -268,14 +268,32 @@ namespace Dpr.Item
         // TODO
         public bool IsAddItem(int num = 1) { return false; }
 
-        // TODO
-        public bool IsCategory(CategoryType category) { return false; }
+        public bool IsCategory(CategoryType category)
+        {
+        	if ((int)this._categoryType == 9) {
+        	  this._categoryType = (CategoryType)(GetParam(0xe));
+        	  this._categoryType = (CategoryType)(this._categoryType);
+        	}
+        	return this._categoryType == category;
+        }
 
-        // TODO
-        public bool IsWazaMachine() { return false; }
+        public bool IsWazaMachine()
+        {
+        	if ((int)this._categoryType == 9) {
+        	  this._categoryType = (CategoryType)(GetParam(0xe));
+        	  this._categoryType = (CategoryType)(this._categoryType);
+        	}
+        	return (int)this._categoryType == 5;
+        }
 
-        // TODO
-        public eItemType GetItemType() { return eItemType.Pocket; }
+        public eItemType GetItemType()
+        {
+        	if (this._type != -1) {
+        	}
+        	var uVar1 = GetParam(0x12);
+        	this._type = uVar1;
+        	return (eItemType)0;
+        }
 
         // TODO
         public FieldFunctionType GetFieldFunctionType() { return FieldFunctionType.NONE; }

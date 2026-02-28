@@ -39,8 +39,13 @@ namespace Dpr
 		// TODO
 		private static void MakeLevelRevise(PokemonParam iPtrPokePara, int level) { }
 		
-		// TODO
-		private static uint ModifyLevelCalc(Regulation.LevelRangeType levelRangeType, uint level, uint modify_level = 50) { return default; }
+		private static uint ModifyLevelCalc(Regulation.LevelRangeType levelRangeType, uint level, uint modify_level = 50)
+		{
+			if (((int)levelRangeType != 0) && ((levelRangeType != '\x01' || (level <= modify_level)))) {
+			  modify_level = level;
+			}
+			return modify_level;
+		}
 		
 		// TODO
 		public static bool CheckBothPoke(PokeParty iPtrPokeParty, [Optional] List<MonsNo> bothPoke) { return default; }

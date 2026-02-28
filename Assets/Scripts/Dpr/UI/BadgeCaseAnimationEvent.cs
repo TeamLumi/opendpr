@@ -9,8 +9,10 @@ namespace Dpr.UI
 		// TODO
 		public void PlayOpenCloseSe(int state) { }
 		
-		// TODO
-		public void Register(BadgeCaseObject badgeCaseObject) { }
+		public void Register(BadgeCaseObject badgeCaseObject)
+		{
+			this.badgeCaseObject = badgeCaseObject;
+		}
 		
 		// TODO
 		public void PlayBadgeConditionEffects() { }

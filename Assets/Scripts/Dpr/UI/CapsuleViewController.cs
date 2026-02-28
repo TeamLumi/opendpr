@@ -42,8 +42,10 @@ namespace Dpr.UI
 		// TODO
 		public void Set3DCapsuleActive(bool isAvtive) { }
 		
-		// TODO
-		public void SetDisablePreviewGuide(bool isEnable) { }
+		public void SetDisablePreviewGuide(bool isEnable)
+		{
+			this.subKeyGuide.SetDisablePreviewGuide((isEnable ? 1 : 0) & 1);
+		}
 		
 		// TODO
 		public IEnumerator ShowPreviewScene(CapsuleInfo capsuleInfo, CapsuleInfo subCapsuleInfo, IEnumerator playFadeWindow, Action onBeforeFadeIn, bool isCallStopScript = true) { return default; }
@@ -54,10 +56,28 @@ namespace Dpr.UI
 		// TODO
 		public void UpdatePreviewKeyGuide(Keyguide keyguide) { }
 		
-		// TODO
-		public bool CheckWaitFade() { return default; }
+		public bool CheckWaitFade()
+		{
+			var uVar1 = 0.isBusy;
+			if ((uVar1 & 1) != 0) {
+			  this.isFading = true;
+			  return true;
+			}
+			if (this.isFading) {
+			  var fVar2 = (float)0.fadeInProgress;
+			  if (fVar2 == 1.0) {
+			    this.isFading = false;
+			    return false;
+			  }
+			  return this.isFading;
+			}
+			return false;
+		}
 		
-		// TODO
-		private void SetupRawImage(Transform parent) { }
+		private void SetupRawImage(Transform parent)
+		{
+			Transform.SetParent(this.capsule3DViewRawImage.transform,parent,1,0);
+			Transform.SetAsFirstSibling(this.capsule3DViewRawImage.transform,0);
+		}
 	}
 }

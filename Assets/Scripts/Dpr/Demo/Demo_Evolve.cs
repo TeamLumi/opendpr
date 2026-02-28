@@ -57,8 +57,10 @@ namespace Dpr.Demo
             isDisableMainCamera = true;
         }
 
-        // TODO
-        public override void Destroy() { }
+        public override void Destroy()
+        {
+        	this.pokemonParam = null;
+        }
 
         // TODO
         public override void Init() { }

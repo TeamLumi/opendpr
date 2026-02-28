@@ -68,8 +68,12 @@ namespace Dpr.Contest
 		// TODO
 		private void CreateBarLine(float moveSpeed, float beatSec, int bgmSigunature, int lineNum) { }
 		
-		// TODO
-		private void LoadFx() { }
+		private void LoadFx()
+		{
+			this.loadCount = 0;
+			LoadTapGradeFx();
+			LoadLongTapFx();
+		}
 		
 		// TODO
 		private void LoadTapGradeFx() { }
@@ -136,8 +140,16 @@ namespace Dpr.Contest
 		// TODO
 		public float OnReleaseHold() { return default; }
 		
-		// TODO
-		public void DeactiveHoldFx() { }
+		public void DeactiveHoldFx()
+		{
+			var uVar2 = GameObject.get_activeSelf(this.holdFxInst.gameObject,0);
+			if (uVar2) {
+			  GameObject.SetActive(this.holdFxInst.gameObject,0,0);
+			  if (this.onStopHoldFx != null) {
+			    this.onStopHoldFx.Invoke();
+			  }
+			}
+		}
 		
 		// TODO
 		public void FailedTapLongStart() { }
@@ -148,8 +160,10 @@ namespace Dpr.Contest
 		// TODO
 		public void DeactiveNotesBg(int endNoteId) { }
 		
-		// TODO
-		public void SetHeartGaugeRatio(float ratio) { }
+		public void SetHeartGaugeRatio(float ratio)
+		{
+			this.heartGaugeImage.set_fillAmount();
+		}
 		
 		// TODO
 		public void ShowTimingGrade(NoteTapTimingID timingID) { }

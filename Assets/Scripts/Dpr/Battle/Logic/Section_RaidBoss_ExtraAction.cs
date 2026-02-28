@@ -12,8 +12,13 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private bool canExtraAttack() { return default; }
 		
-		// TODO
-		private void effectOnExtraAttack() { }
+		private void effectOnExtraAttack()
+		{
+			var uVar2 = 4.GetPokeParam();
+			var uVar1 = uVar2.GetID();
+			this.m_pServerCmdPutter.Message_Std(0x17e,uVar1);
+			this.m_pServerCmdPutter.EffectByPos(uVar2,0x82);
+		}
 		
 		// TODO
 		private void rankUp() { }
@@ -33,8 +38,12 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void wazaExec(BTL_POKEPARAM target, WazaParam wazaParam) { }
 		
-		// TODO
-		private void initGWall() { }
+		private void initGWall()
+		{
+			var uVar2 = 4.GetPokeParam();
+			var uVar1 = uVar2.GetID();
+			this.m_pServerCmdPutter.InitGWallGauge(uVar1);
+		}
 		
 		// TODO
 		private void repairGWall() { }

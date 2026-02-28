@@ -81,8 +81,32 @@ namespace Pml.WazaData
         // TODO
         public static byte GetCriticalRank(WazaNo id) { return 0; }
 
-        // TODO
-        public static WazaWeather GetWeather(WazaNo wazano) { return default; }
+        public static WazaWeather GetWeather(WazaNo wazano)
+        {
+        	var iVar1 = 0xf0;
+        	if (0xf0 < (int)wazano) {
+        	  iVar1 = 0x102;
+        	}
+        	var iVar3 = 0xc9;
+        	if (0xf0 < (int)wazano) {
+        	  iVar3 = 0xf1;
+        	}
+        	var uVar2 = 2;
+        	if (0xf0 < (int)wazano) {
+        	  uVar2 = 3;
+        	}
+        	var uVar4 = 4;
+        	if (0xf0 < (int)wazano) {
+        	  uVar4 = 1;
+        	}
+        	if (iVar1 != wazano) {
+        	  uVar2 = 0;
+        	}
+        	if (iVar3 != wazano) {
+        	  uVar4 = uVar2;
+        	}
+        	return uVar4;
+        }
 
         // TODO
         public static WazaSick GetSick(WazaNo id) { return WazaSick.WAZASICK_NONE; }
@@ -124,8 +148,10 @@ namespace Pml.WazaData
         // TODO
         public static byte GetHPReactionRatio(WazaNo id) { return 0; }
 
-        // TODO
-        public static byte GetGPower(WazaNo id) { return 0; }
+        public static byte GetGPower(WazaNo id)
+        {
+        	return 0;
+        }
 
         // TODO
         public static ushort[] GetYubiWoHuruPermitWazaTable() { return null; }

@@ -10,11 +10,15 @@ namespace Dpr.Contest.Dbg
 		// TODO
 		public void OnFinalize() { }
 		
-		// TODO
-		private void AssignInputGoNextScene() { }
+		private void AssignInputGoNextScene()
+		{
+			this.localInput.Assign(0,0x800,0);
+		}
 		
-		// TODO
-		private void AssignInputOpenMenu() { }
+		private void AssignInputOpenMenu()
+		{
+			this.localInput.Assign(1,0x400,0);
+		}
 		
 		// TODO
 		public bool IsInputGoNextScene() { return default; }

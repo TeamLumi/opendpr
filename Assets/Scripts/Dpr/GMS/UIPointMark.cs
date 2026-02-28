@@ -45,11 +45,31 @@ namespace Dpr.GMS
 		// TODO
 		public void ShowPoint(GMSPointDataModel targetPointData, bool isModeBrowsing, bool isMaxZoom) { }
 		
-		// TODO
-		public void HidePointIcon() { }
+		public void HidePointIcon()
+		{
+			this.refPointData = null;
+			this.isModeBrowsing = false;
+			if ((this.iconContent.activeSelf & 1) != 0) {
+			  this.iconContent.SetActive(0);
+			}
+			ExtensionMethods.SetActive(0);
+		}
 		
-		// TODO
-		public void OnChangeDistance(bool isMaxZoom) { }
+		public void OnChangeDistance(bool isMaxZoom)
+		{
+			if (this.isModeBrowsing) {
+			  this.isMaxZoom = (isMaxZoom ? 1 : 0) & 1;
+			  if (this.isSelect) {
+			    ChangeIconScale((isMaxZoom ? 1 : 0) & 1);
+			  }
+			  if ((this.refPointData != null) && (this.refPointData.bHasData != 0)) {
+			    SetIconImageVisible((isMaxZoom ? 1 : 0) & 1);
+			  }
+			  if ((this.iconContent.activeSelf & 1) != 0) {
+			    this.iconContent.SetActive(0);
+			  }
+			}
+		}
 		
 		// TODO
 		public void UpdateView() { }
@@ -57,8 +77,18 @@ namespace Dpr.GMS
 		// TODO
 		private void SetIconImageVisible(bool visible) { }
 		
-		// TODO
-		private void UpdateMonsIcon() { }
+		private void UpdateMonsIcon()
+		{
+			if ((this.refPointData != null) && (this.refPointData.bHasData != 0)) {
+			  if (this.refPointData.markIndex < this.refPointData.historyDataArray.Length) {
+			    var uVar3 = *
+			             (this.refPointData.historyDataArray + (int)this.refPointData.markIndex * 8[0] +
+			             0x18);
+			    this.monsIconImage.sprite = uVar3;
+			    this.monsShadowImage.sprite = uVar3;
+			  }
+			}
+		}
 		
 		// TODO
 		public void OnSelect(bool isMaxZoom) { }

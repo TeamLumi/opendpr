@@ -23,8 +23,13 @@ namespace Dpr.UI
 		private Townmap.NoticeType _noticeType = Townmap.NoticeType.None;
 		private Param _param;
 		
-		// TODO
-		public override void OnCreate() { }
+		public override void OnCreate()
+		{
+			UIWindow.OnCreate();
+			var uVar1 = UnityEngine_Component__GetComponentInChildren<object>
+			                  (this,1);
+			this._animator = uVar1;
+		}
 		
 		// TODO
 		public void Open(Param param, UIWindowID prevWindowId) { }
@@ -35,8 +40,14 @@ namespace Dpr.UI
 		// TODO
 		private void SetupKeyguide(Townmap.Cell cell) { }
 		
-		// TODO
-		protected override bool IsFly(Townmap.Cell cell) { return default; }
+		protected override bool IsFly(Townmap.Cell cell)
+		{
+			if (this._param.type == 1) {
+			  return false;
+			}
+			var uVar1 = TownmapWindowBase.IsFly();
+			return uVar1;
+		}
 		
 		// TODO
 		public override void Close(UnityAction<UIWindow> onClosed_, UIWindowID nextWindowId) { }

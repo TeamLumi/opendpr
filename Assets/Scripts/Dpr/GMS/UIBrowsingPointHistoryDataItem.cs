@@ -33,8 +33,12 @@ namespace Dpr.GMS
 		// TODO
 		public void ShowEmptyDataItem(string emptyStr) { }
 		
-		// TODO
-		private void SetNewImageEnabled(bool enabled) { }
+		private void SetNewImageEnabled(bool enabled)
+		{
+			if (((this.newIconImage.enabled ^ enabled) & 1) != 0) {
+			  this.newIconImage.enabled = (enabled ? 1 : 0) & 1;
+			}
+		}
 		
 		// TODO
 		private void SetSprite(Image target, Sprite spr) { }

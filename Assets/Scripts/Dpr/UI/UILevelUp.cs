@@ -42,8 +42,16 @@ namespace Dpr.UI
 		private bool isPlayLevelUpSe;
 		private bool isWaitExit;
 		
-		// TODO
-		public override void OnCreate() { }
+		public override void OnCreate()
+		{
+			UIWindow.OnCreate();
+			var uVar1 = UnityEngine_Component__GetComponentInChildren<object>
+			                  (this);
+			this._animator = uVar1;
+			uVar1 = new UIMsgWindowController();
+			uVar1 = new UIMsgWindowController();
+			this.msgWindowController = uVar1;
+		}
 		
 		// TODO
 		public void Open(Param param, UIWindowID prevWindowId = WINDOWID_PARENT) { }

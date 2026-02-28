@@ -19,7 +19,9 @@ namespace Dpr.SecretBase
 		// TODO
 		public override void Execute(StatuePlacementEditController owner) { }
 		
-		// TODO
-		public override void Exit(StatuePlacementEditController owner) { }
+		public override void Exit(StatuePlacementEditController owner)
+		{
+			MsgWindowManager.CloseMsg(0);
+		}
 	}
 }

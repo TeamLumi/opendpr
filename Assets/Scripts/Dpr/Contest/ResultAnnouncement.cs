@@ -19,18 +19,25 @@ namespace Dpr.Contest
 		private ShowMessageWindow resultMsg = new ShowMessageWindow();
 		private ResultSettings settingsData;
 		private Sprite rankLogoSpr;
-		private AnimStateID currentState;
+		internal AnimStateID currentState;
 		private ResultID resultId;
 		private float waitTimer;
 		private float gaugeTimer;
 		private int nextRankPoint;
 		private int addValue;
-		private bool bRunning;
+		internal bool bRunning;
 		private bool isRankup;
 		private bool isMultiMode;
 		
-		// TODO
-		public void Initialize(ResultSettings setting) { }
+		public void Initialize(ResultSettings setting)
+		{
+			this.settingsData = setting;
+			this.waitTimer = 0;
+			this.currentState = (AnimStateID)0;
+			InitResultTitle();
+			InitRankGauge();
+			ExtensionMethods.SetActive(0);
+		}
 		
 		// TODO
 		private void InitResultTitle() { }
@@ -52,17 +59,36 @@ namespace Dpr.Contest
 		// TODO
 		public void StartAnimation() { }
 		
-		// TODO
-		public bool OnUpdate(float deltaTime) { return default; }
+		public bool OnUpdate(float deltaTime)
+		{
+			if ((int)this.currentState == 3) {
+			  UpdateWait();
+			  return this.bRunning;
+			}
+			if ((int)this.currentState != 2) {
+			  if ((int)this.currentState == 1) {
+			    UpdateGauge();
+			  }
+			  return this.bRunning;
+			}
+			UpdateRankupAnim();
+			return this.bRunning;
+		}
 		
 		// TODO
 		private void UpdateGauge(float deltaTime) { }
 		
-		// TODO
-		private bool CheckRankUp() { return default; }
+		private bool CheckRankUp()
+		{
+			return this.nextRankPoint <=
+			       this.addValue + this.gaugeData.startPoint;
+			return false;
+		}
 		
-		// TODO
-		private void SetGaugeRatio(float gaugeRatio) { }
+		private void SetGaugeRatio(float gaugeRatio)
+		{
+			this.rankGaugeImage.set_fillAmount();
+		}
 		
 		// TODO
 		private void SetGaugeAnimParam() { }
@@ -70,8 +96,16 @@ namespace Dpr.Contest
 		// TODO
 		private int GetNextRankPoint() { return default; }
 		
-		// TODO
-		private bool IsMaxRank() { return default; }
+		private bool IsMaxRank()
+		{
+			var uVar1 = this.gaugeData.rankDataArray.Length;
+			if ((int)uVar1 <= (int)this.gaugeData.userRank) {
+			  return true;
+			}
+			if (this.gaugeData.userRank < uVar1) {
+			  return this.gaugeData.rankDataArray + (int)this.gaugeData.userRank * 8[0].Length >> 0x1f;
+			}
+		}
 		
 		// TODO
 		private void StopGaugeSE() { }
@@ -94,13 +128,15 @@ namespace Dpr.Contest
 		// TODO
 		private float CalcInitGaugeRatio() { return default; }
 		
-		// TODO
-		public void OnCompleteTitleFadeBackWards() { }
+		public void OnCompleteTitleFadeBackWards()
+		{
+			this.bRunning = false;
+		}
 		
 		// TODO
 		public void OnCompleteRankInfoFade() { }
 
-		private enum AnimStateID : int
+		internal enum AnimStateID : int
 		{
 			TweenAnim = 0,
 			GaugeAnim = 1,

@@ -36,14 +36,25 @@
         // TODO
         public static void Initialize() { }
 
-        // TODO
-        public void AttachDecodedData(byte[] coreData, byte[] calcData) { }
+        public void AttachDecodedData(byte[] coreData, byte[] calcData)
+        {
+        	this.m_pCoreData = coreData;
+        	this.m_pCalcData = calcData;
+        	this.m_accessState = null;
+        	UpdateChecksumAndEncode();
+        }
 
-        // TODO
-        public void AttachEncodedData(byte[] coreData, byte[] calcData) { }
+        public void AttachEncodedData(byte[] coreData, byte[] calcData)
+        {
+        	this.m_pCoreData = coreData;
+        	this.m_pCalcData = calcData;
+        	this.m_accessState = 1;
+        }
 
-        // TODO
-        public bool HaveCalcData() { return false; }
+        public bool HaveCalcData()
+        {
+        	return this.m_pCalcData != null;
+        }
 
         // TODO
         public void ClearData() { }
@@ -60,8 +71,10 @@
         // TODO
         public bool IsFastMode() { return false; }
 
-        // TODO
-        public bool IsEncoded() { return false; }
+        public bool IsEncoded()
+        {
+        	return this.m_accessState;
+        }
 
         // TODO
         public void Serialize_FullData(byte[] buffer) { }
@@ -140,8 +153,24 @@
         // TODO
         public uint GetEffortAtk() { return 0; }
 
-        // TODO
-        public uint GetEffortDef() { return 0; }
+        public uint GetEffortDef()
+        {
+        	long lVar3;
+        	if (this.m_pCoreData == null) {
+        	  lVar3 = 0;
+        	}
+        	else {
+        	  lVar3 = 0;
+        	  if (this.m_pCoreData.Length != 0) {
+        	    lVar3 = this.m_pCoreData + 0x20;
+        	  }
+        	}
+        	DecodeAndCheckIllegalWrite();
+        	this.m_pCoreData = GetCoreDataBlockA(lVar3);
+        	var uVar1 = this.m_pCoreData[0];
+        	UpdateChecksumAndEncode();
+        	return uVar1;
+        }
 
         // TODO
         public uint GetEffortSpAtk() { return 0; }
@@ -224,8 +253,24 @@
         // TODO
         public ushort GetFormNo() { return 0; }
 
-        // TODO
-        public uint GetSeikaku() { return 0; }
+        public uint GetSeikaku()
+        {
+        	long lVar3;
+        	if (this.m_pCoreData == null) {
+        	  lVar3 = 0;
+        	}
+        	else {
+        	  lVar3 = 0;
+        	  if (this.m_pCoreData.Length != 0) {
+        	    lVar3 = this.m_pCoreData + 0x20;
+        	  }
+        	}
+        	DecodeAndCheckIllegalWrite();
+        	this.m_pCoreData = GetCoreDataBlockA(lVar3);
+        	var uVar1 = this.m_pCoreData.Length;
+        	UpdateChecksumAndEncode();
+        	return uVar1;
+        }
 
         // TODO
         public uint GetSeikakuHosei() { return 0; }
@@ -257,8 +302,23 @@
         // TODO
         public uint GetCassetteVersion() { return 0; }
 
-        // TODO
-        public string GetOyaName() { return ""; }
+        public string GetOyaName()
+        {
+        	if (this.m_pCoreData == null) {
+        	  var lVar3 = 0;
+        	}
+        	else {
+        	  lVar3 = 0;
+        	  if (this.m_pCoreData.Length != 0) {
+        	    lVar3 = this.m_pCoreData + 0x20;
+        	  }
+        	}
+        	DecodeAndCheckIllegalWrite();
+        	var uVar1 = GetCoreDataBlockD(lVar3);
+        	uVar1 = 0.CreateString(uVar1);
+        	UpdateChecksumAndEncode();
+        	return uVar1;
+        }
 
         // TODO
         public uint GetTamagoGetYear() { return 0; }
@@ -338,8 +398,24 @@
         // TODO
         public byte GetOriginalFriendship() { return 0; }
 
-        // TODO
-        public byte GetOthersFriendship() { return 0; }
+        public byte GetOthersFriendship()
+        {
+        	long lVar3;
+        	if (this.m_pCoreData == null) {
+        	  lVar3 = 0;
+        	}
+        	else {
+        	  lVar3 = 0;
+        	  if (this.m_pCoreData.Length != 0) {
+        	    lVar3 = this.m_pCoreData + 0x20;
+        	  }
+        	}
+        	DecodeAndCheckIllegalWrite();
+        	this.m_pCoreData = GetCoreDataBlockC(lVar3);
+        	var uVar1 = this.m_pCoreData[0];
+        	UpdateChecksumAndEncode();
+        	return (byte)(uVar1);
+        }
 
         // TODO
         public byte GetMemoriesLevel() { return 0; }
@@ -350,8 +426,24 @@
         // TODO
         public ushort GetMemoriesData() { return 0; }
 
-        // TODO
-        public byte GetMemoriesFeel() { return 0; }
+        public byte GetMemoriesFeel()
+        {
+        	long lVar3;
+        	if (this.m_pCoreData == null) {
+        	  lVar3 = 0;
+        	}
+        	else {
+        	  lVar3 = 0;
+        	  if (this.m_pCoreData.Length != 0) {
+        	    lVar3 = this.m_pCoreData + 0x20;
+        	  }
+        	}
+        	DecodeAndCheckIllegalWrite();
+        	this.m_pCoreData = GetCoreDataBlockD(lVar3);
+        	var uVar1 = this.m_pCoreData[0];
+        	UpdateChecksumAndEncode();
+        	return (byte)(uVar1);
+        }
 
         // TODO
         public byte GetOthersMemoriesLevel() { return 0; }
@@ -365,8 +457,23 @@
         // TODO
         public byte GetOthersMemoriesFeel() { return 0; }
 
-        // TODO
-        public string GetPastParentsName() { return ""; }
+        public string GetPastParentsName()
+        {
+        	if (this.m_pCoreData == null) {
+        	  var lVar3 = 0;
+        	}
+        	else {
+        	  lVar3 = 0;
+        	  if (this.m_pCoreData.Length != 0) {
+        	    lVar3 = this.m_pCoreData + 0x20;
+        	  }
+        	}
+        	DecodeAndCheckIllegalWrite();
+        	var uVar1 = GetCoreDataBlockC(lVar3);
+        	uVar1 = 0.CreateString(uVar1);
+        	UpdateChecksumAndEncode();
+        	return uVar1;
+        }
 
         // TODO
         public Sex GetPastParentsSex() { return Sex.NUM; }
@@ -374,8 +481,24 @@
         // TODO
         public byte GetPastParentsLangID() { return 0; }
 
-        // TODO
-        public bool CompareOyaName(string cmpName) { return false; }
+        public bool CompareOyaName(string cmpName)
+        {
+        	if (this.m_pCoreData == null) {
+        	  var lVar3 = 0;
+        	}
+        	else {
+        	  lVar3 = 0;
+        	  if (this.m_pCoreData.Length != 0) {
+        	    lVar3 = this.m_pCoreData + 0x20;
+        	  }
+        	}
+        	DecodeAndCheckIllegalWrite();
+        	var uVar1 = GetCoreDataBlockD(lVar3);
+        	uVar1 = 0.CreateString(uVar1);
+        	UpdateChecksumAndEncode();
+        	cmpName.Equals(uVar1);
+        	return false;
+        }
 
         // TODO
         public uint GetMultiPurposeWork() { return 0; }
@@ -455,8 +578,23 @@
         // TODO
         public void SetEffortAtk(byte value) { }
 
-        // TODO
-        public void SetEffortDef(byte value) { }
+        public void SetEffortDef(byte value)
+        {
+        	long lVar2;
+        	if (this.m_pCoreData == null) {
+        	  lVar2 = 0;
+        	}
+        	else {
+        	  lVar2 = 0;
+        	  if (this.m_pCoreData.Length != 0) {
+        	    lVar2 = this.m_pCoreData + 0x20;
+        	  }
+        	}
+        	DecodeAndCheckIllegalWrite();
+        	this.m_pCoreData = GetCoreDataBlockA(lVar2,1);
+        	this.m_pCoreData[0] = value;
+        	UpdateChecksumAndEncode();
+        }
 
         // TODO
         public void SetEffortSpAtk(byte value) { }
@@ -542,8 +680,23 @@
         // TODO
         public void SetFormNo(ushort formno) { }
 
-        // TODO
-        public void SetSeikaku(uint seikaku) { }
+        public void SetSeikaku(uint seikaku)
+        {
+        	long lVar2;
+        	if (this.m_pCoreData == null) {
+        	  lVar2 = 0;
+        	}
+        	else {
+        	  lVar2 = 0;
+        	  if (this.m_pCoreData.Length != 0) {
+        	    lVar2 = this.m_pCoreData + 0x20;
+        	  }
+        	}
+        	DecodeAndCheckIllegalWrite();
+        	this.m_pCoreData = GetCoreDataBlockA(lVar2,1);
+        	this.m_pCoreData.Length = seikaku;
+        	UpdateChecksumAndEncode();
+        }
 
         // TODO
         public void SetSeikakuHosei(uint seikaku) { }
@@ -659,8 +812,23 @@
         // TODO
         public void SetOriginalFriendship(byte friendship) { }
 
-        // TODO
-        public void SetOthersFriendship(byte friendship) { }
+        public void SetOthersFriendship(byte friendship)
+        {
+        	long lVar2;
+        	if (this.m_pCoreData == null) {
+        	  lVar2 = 0;
+        	}
+        	else {
+        	  lVar2 = 0;
+        	  if (this.m_pCoreData.Length != 0) {
+        	    lVar2 = this.m_pCoreData + 0x20;
+        	  }
+        	}
+        	DecodeAndCheckIllegalWrite();
+        	this.m_pCoreData = GetCoreDataBlockC(lVar2,1);
+        	this.m_pCoreData[0] = friendship;
+        	UpdateChecksumAndEncode();
+        }
 
         // TODO
         public void SetMemoriesLevel(byte level) { }
@@ -671,8 +839,23 @@
         // TODO
         public void SetMemoriesData(ushort data) { }
 
-        // TODO
-        public void SetMemoriesFeel(byte feel) { }
+        public void SetMemoriesFeel(byte feel)
+        {
+        	long lVar2;
+        	if (this.m_pCoreData == null) {
+        	  lVar2 = 0;
+        	}
+        	else {
+        	  lVar2 = 0;
+        	  if (this.m_pCoreData.Length != 0) {
+        	    lVar2 = this.m_pCoreData + 0x20;
+        	  }
+        	}
+        	DecodeAndCheckIllegalWrite();
+        	this.m_pCoreData = GetCoreDataBlockD(lVar2,1);
+        	this.m_pCoreData[0] = feel;
+        	UpdateChecksumAndEncode();
+        }
 
         // TODO
         public void SetOthersMemoriesLevel(byte level) { }
@@ -704,8 +887,23 @@
         // TODO
         public void SetWazaRecordFlag(byte recordIndex, bool set) { }
 
-        // TODO
-        public void ClearWazaRecordFlag() { }
+        public void ClearWazaRecordFlag()
+        {
+        	long lVar2;
+        	if (this.m_pCoreData == null) {
+        	  lVar2 = 0;
+        	}
+        	else {
+        	  lVar2 = 0;
+        	  if (this.m_pCoreData.Length != 0) {
+        	    lVar2 = this.m_pCoreData + 0x20;
+        	  }
+        	}
+        	DecodeAndCheckIllegalWrite();
+        	this.m_pCoreData = GetCoreDataBlockD(lVar2,1);
+        	UnsafeUtility.MemClear(this.m_pCoreData + 0x2f,0xe);
+        	UpdateChecksumAndEncode();
+        }
 
         // TODO
         public ulong GetBankUniqueID() { return 0; }
@@ -713,14 +911,44 @@
         // TODO
         public void SetBankUniqueID(ulong value) { }
 
-        // TODO
-        public void ClearBankUniqueID() { }
+        public void ClearBankUniqueID()
+        {
+        	long lVar2;
+        	if (this.m_pCoreData == null) {
+        	  lVar2 = 0;
+        	}
+        	else {
+        	  lVar2 = 0;
+        	  if (this.m_pCoreData.Length != 0) {
+        	    lVar2 = this.m_pCoreData + 0x20;
+        	  }
+        	}
+        	DecodeAndCheckIllegalWrite();
+        	this.m_pCoreData = GetCoreDataBlockD(lVar2,1);
+        	UnsafeUtility.MemClear(this.m_pCoreData + 0x3d,8);
+        	UpdateChecksumAndEncode();
+        }
 
         // TODO
         public void SetPokeJobFlag(byte jobIndex, bool set) { }
 
-        // TODO
-        public void ClearPokeJobFlag() { }
+        public void ClearPokeJobFlag()
+        {
+        	long lVar2;
+        	if (this.m_pCoreData == null) {
+        	  lVar2 = 0;
+        	}
+        	else {
+        	  lVar2 = 0;
+        	  if (this.m_pCoreData.Length != 0) {
+        	    lVar2 = this.m_pCoreData + 0x20;
+        	  }
+        	}
+        	DecodeAndCheckIllegalWrite();
+        	this.m_pCoreData = GetCoreDataBlockC(lVar2,1);
+        	UnsafeUtility.MemClear(this.m_pCoreData + 0x26,0xe);
+        	UpdateChecksumAndEncode();
+        }
 
         // TODO
         public void SetCampFriendship(byte value) { }
@@ -776,21 +1004,50 @@
         // TODO
         private unsafe void Serialize(void* bufferForCore, void* bufferForCalc) { }
 
-        // TODO
-        private unsafe void Deserialize(void* serializedCoreData, void* serializedCalcData) { }
-
-        // TODO
-        private static void CalcWazaRecordBitPos(out byte arrayIndex, out byte bitFlag, byte recordIndex)
+        private unsafe void Deserialize(void* serializedCoreData, void* serializedCalcData)
         {
-            arrayIndex = 0;
-            bitFlag = 0;
+        	long lVar1;
+        	if (serializedCoreData != 0) {
+        	  GFL.ASSERT(this.m_pCoreData != null);
+        	  if (this.m_pCoreData == null) {
+        	    lVar1 = 0;
+        	  }
+        	  else {
+        	    lVar1 = 0;
+        	    if (this.m_pCoreData.Length != 0) {
+        	      lVar1 = this.m_pCoreData + 0x20;
+        	    }
+        	  }
+        	  UnsafeUtility.MemCpy(lVar1,serializedCoreData,0x148);
+        	}
+        	if (serializedCalcData != 0) {
+        	  GFL.ASSERT(this.m_pCalcData != null);
+        	  if (this.m_pCalcData == null) {
+        	    lVar1 = 0;
+        	  }
+        	  else {
+        	    lVar1 = 0;
+        	    if (this.m_pCalcData.Length != 0) {
+        	      lVar1 = this.m_pCalcData + 0x20;
+        	    }
+        	  }
+        	  UnsafeUtility.MemCpy(lVar1,serializedCalcData,0x10);
+        	}
+        	this.m_accessState = 1;
+        	DecodeAndCheckIllegalWrite();
+        	UpdateChecksumAndEncode();
         }
 
-        // TODO
+        private static void CalcWazaRecordBitPos(out byte arrayIndex, out byte bitFlag, byte recordIndex)
+        {
+        	arrayIndex = (byte)(recordIndex >> 3) & 0x1f;
+        	bitFlag = (byte)((char)(1 << ((ulong)recordIndex & 7)));
+        }
+
         private static void CalcPokeJobBitPos(out byte arrayIndex, out byte bitFlag, byte jobIndex)
         {
-            arrayIndex = 0;
-            bitFlag = 0;
+        	arrayIndex = (byte)(jobIndex >> 3) & 0x1f;
+        	bitFlag = (byte)((char)(1 << ((ulong)jobIndex & 7)));
         }
 
         private struct AccessState

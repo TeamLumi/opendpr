@@ -42,11 +42,18 @@ namespace Dpr.Battle.Logic
         // TODO
         private void OnInitialized() { }
 
-        // TODO
-        private void OnUpdate(float deltaTime) { }
+        private void OnUpdate(float deltaTime)
+        {
+        	if (this.updateCore != null) {
+        	  UpdateCoreFunc.Invoke();
+        	}
+        }
 
-        // TODO
-        private void SetUpdateCore(UpdateCoreFunc func) { }
+        private void SetUpdateCore(UpdateCoreFunc func)
+        {
+        	this.updateCore = func;
+        	this.subSeq = 0;
+        }
 
         // TODO
         private void UpdateInitialze(float deltaTime) { }

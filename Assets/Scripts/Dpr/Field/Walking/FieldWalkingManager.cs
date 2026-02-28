@@ -140,11 +140,17 @@ namespace Dpr.Field.Walking
         // TODO
         public bool IsCanTurearukiPoke(PokemonParam param) { return false; }
 
-        // TODO
-        public void Turearuki_Talk() { }
+        public void Turearuki_Talk()
+        {
+        	if (this.pokeTalkModel != null) {
+        	  FieldPokeTalkModel.StartTalk();
+        	}
+        }
 
-        // TODO
-        public static void ResetMonohiroiTime() { }
+        public static void ResetMonohiroiTime()
+        {
+        	FlagWork.SetWork(0x1a0,0);
+        }
 
         public enum TalkState : int
         {

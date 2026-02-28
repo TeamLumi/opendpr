@@ -34,11 +34,20 @@ namespace Dpr.UI
 		private bool bIsAllMemberDpClear;
 		private bool bIsAlreadySelected;
 		
-		// TODO
-		public void Initialize(ContestMatchingUI contestMatchingUI, ContestMatchingNetwork network, Action onFinishState, Action<ContestMatching.FinishPattern> onFinishMatching) { }
+		public void Initialize(ContestMatchingUI contestMatchingUI, ContestMatchingNetwork network, Action onFinishState, Action<ContestMatching.FinishPattern> onFinishMatching)
+		{
+			this.contestMatchingUIPtr = contestMatchingUI;
+			this.networkPtr = network;
+			this.onFinishState = onFinishState;
+			this.onFinish = onFinishMatching;
+		}
 		
-		// TODO
-		public void OnFinalize() { }
+		public void OnFinalize()
+		{
+			this.initSelectPlayerIndex = 0;
+			this.onFinishState = null;
+			this.onFinish = null;
+		}
 		
 		// TODO
 		private void Reset() { }
@@ -64,8 +73,16 @@ namespace Dpr.UI
 		// TODO
 		private void OnSelectLeaveYes() { }
 		
-		// TODO
-		private void OnSelectLeaveNo() { }
+		private void OnSelectLeaveNo()
+		{
+			if (this.bLockPlayerAction) {
+			}
+			this.bIsOpenConfirmMsg = false;
+			var uVar1 = StringLiteral_11295;
+			var uVar2 = String.Concat(StringLiteral_11377,uVar1,StringLiteral_423);
+			ContestUtils.EmitLog(uVar2,3);
+			this.contestMatchingUIPtr.msgWindow.ShowMessage(uVar1,0,1,0);
+		}
 		
 		// TODO
 		private void StartSelectCategoryAndRank() { }

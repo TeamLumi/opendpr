@@ -88,8 +88,10 @@ namespace Dpr.FureaiHiroba
 		// TODO
 		private void EndCooking() { }
 		
-		// TODO
-		public void SetKinomi(List<ItemInfo> kinomiList) { }
+		public void SetKinomi(List<ItemInfo> kinomiList)
+		{
+			this.kinomiList = kinomiList;
+		}
 		
 		// TODO
 		public Tweener CameraMove() { return default; }
@@ -103,8 +105,12 @@ namespace Dpr.FureaiHiroba
 		// TODO
 		private void EndPofinResult() { }
 		
-		// TODO
-		public void SetFureaiPoke(List<FureaiPokeModel> fureaiPokes) { }
+		public void SetFureaiPoke(List<FureaiPokeModel> fureaiPokes)
+		{
+			var uVar1 = new PofinPlayingPokeManager(fureaiPokes,this.PosList,this.PofinMachineParent,0);
+			this.pokeManager = uVar1;
+			this.calc.SetPokeModel(fureaiPokes);
+		}
 		
 		// TODO
 		public void DebugCreatePofin() { }

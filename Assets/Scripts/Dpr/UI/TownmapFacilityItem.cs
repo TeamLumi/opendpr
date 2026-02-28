@@ -7,7 +7,9 @@ namespace Dpr.UI
 		[SerializeField]
 		private UIText _text;
 		
-		// TODO
-		public void Setup(string messageLabel) { }
+		public void Setup(string messageLabel)
+		{
+			this._text.SetupMessage(0,messageLabel);
+		}
 	}
 }

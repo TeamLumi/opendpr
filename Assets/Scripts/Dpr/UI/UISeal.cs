@@ -157,8 +157,11 @@ namespace Dpr.UI
 		// TODO
 		private void OnReverseCapsule2D() { }
 		
-		// TODO
-		private void CopyOnlyDecide() { }
+		private void CopyOnlyDecide()
+		{
+			var uVar1 = new Action(this);
+			this.msgWindowController.OpenMsgWindow(2,_StringLiteral_11890,1,0,uVar1,0);
+		}
 		
 		// TODO
 		private void CopyCapsule(CapsuleInfo sourceCapsule, CapsuleInfo destCapsule, bool isQuestionBeforeCopy, Action onCancel, Action onEnd) { }

@@ -34,11 +34,28 @@ namespace Dpr.UI
         // TODO
         public bool ChangeAmount(int value) { return false; }
 
-        // TODO
-        public void ResumeChangeAmount() { }
+        public void ResumeChangeAmount()
+        {
+        	uint uVar2;
+        	if (this.indexSelector.moveState == 1) {
+        	  uVar2 = 0;
+        	}
+        	else {
+        	  if (this.indexSelector.moveState != 2) {
+        	  }
+        	  uVar2 = 3;
+        	}
+        	this.indexSelector.moveState = uVar2;
+        }
 
-        // TODO
-        protected bool AddAmount(int value) { return false; }
+        protected bool AddAmount(int value)
+        {
+        	if ((this.indexSelector.Move() & 1) != 0) {
+        	  UpdateAmountValueText();
+        	  return true;
+        	}
+        	return false;
+        }
 
         // TODO
         protected void UpdateAmountValueText() { }

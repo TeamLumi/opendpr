@@ -11,8 +11,13 @@ namespace Dpr.GMS
 		public int DataNum { get => pointDataModelArray.Length; }
 		public int HasDataNum { get => hasDataNum; }
 		
-		// TODO
-		public void SetPointDatas(GMSPointDataModel[] pointDataModelArray) { }
+		public void SetPointDatas(GMSPointDataModel[] pointDataModelArray)
+		{
+			this.pointDataModelArray = pointDataModelArray;
+			var uVar1 = new int[pointDataModelArray.Length];
+			this.refDataIndexArray = uVar1;
+			RemapRefDataIndex();
+		}
 		
 		// TODO
 		public void RemapRefDataIndex() { }

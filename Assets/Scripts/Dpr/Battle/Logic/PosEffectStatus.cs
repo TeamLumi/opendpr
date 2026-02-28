@@ -16,26 +16,45 @@
             m_data.CopyFrom(src.m_data);
         }
 
-        // TODO
-        public bool SetEffect(in PosEffect.EffectParam effectParam) { return false; }
+        public bool SetEffect(in PosEffect.EffectParam effectParam)
+        {
+        	if (this.m_data.isEffective != 0) {
+        	  return false;
+        	}
+        	this.m_data.effectParam = effectParam;
+        	this.m_data.isEffective = 1;
+        	return true;
+        }
 
-        // TODO
-        public void RemoveEffect() { }
+        public void RemoveEffect()
+        {
+        	this.m_data.isEffective = 0;
+        }
 
-        // TODO
-        public bool IsEffective() { return false; }
+        public bool IsEffective()
+        {
+        	return this.m_data.isEffective;
+        }
 
-        // TODO
-        public PosEffect.EffectParam GetEffectParam() { return default; }
+        public PosEffect.EffectParam GetEffectParam()
+        {
+        	return this.m_data.effectParam;
+        }
 
-        // TODO
-        public void SetEffectParam(in PosEffect.EffectParam effectParam) { }
+        public void SetEffectParam(in PosEffect.EffectParam effectParam)
+        {
+        	this.m_data.effectParam = effectParam;
+        }
 
-        // TODO
-        public BtlPokePos GetPokePos() { return BtlPokePos.POS_1ST_0; }
+        public BtlPokePos GetPokePos()
+        {
+        	return this.m_data.pos;
+        }
 
-        // TODO
-        public BtlPosEffect GetPosEffect() { return BtlPosEffect.BTL_POSEFF_NEGAIGOTO; }
+        public BtlPosEffect GetPosEffect()
+        {
+        	return this.m_data.posEffect;
+        }
 
         private class Data
         {

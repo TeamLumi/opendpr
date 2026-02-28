@@ -12,8 +12,10 @@ namespace Dpr.SecretBase
 		// TODO
 		private void Update() { }
 		
-		// TODO
-		public void SetRotateNode(Transform node) { }
+		public void SetRotateNode(Transform node)
+		{
+			this.rotateNode = node;
+		}
 		
 		// TODO
 		public void SetSpeed(float speed) { }

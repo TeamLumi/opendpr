@@ -23,8 +23,10 @@
         // TODO
         public bool WaitScript() { return false; }
 
-        // TODO
-        public AiScript.Result GetScriptResult() { return null; }
+        public AiScript.Result GetScriptResult()
+        {
+        	return this.m_result;
+        }
 
         public class ScriptStartParam
         {

@@ -29,8 +29,12 @@ namespace Dpr.UI
 		private VoiceRTPC.VoiceRTPCDataList _voiceRtpcData;
 		private CanvasRenderer _canvasRenderer;
 		
-		// TODO
-		private void Awake() { }
+		private void Awake()
+		{
+			var uVar1 = UnityEngine_Component__GetComponent<object>
+			                  (this);
+			this._canvasRenderer = uVar1;
+		}
 		
 		// TODO
 		private void OnEnable() { }
@@ -44,8 +48,12 @@ namespace Dpr.UI
 		// TODO
 		public void Setup(VoiceRTPC.VoiceRTPCDataList voiceRtpcData) { }
 		
-		// TODO
-		private void CreateMesh() { }
+		private void CreateMesh()
+		{
+			var uVar1 = new Mesh();
+			uVar1.MarkDynamic();
+			this._mesh = uVar1;
+		}
 		
 		// TODO
 		private float GetRTPCValue(AudioInstance audioInstance, uint paramId) { return default; }
@@ -56,8 +64,10 @@ namespace Dpr.UI
 		// TODO
 		private void UpdateMesh() { }
 		
-		// TODO
-		private float ToLevelValue(float value, float min = _minDecibel, float max = _maxDecibel) { return default; }
+		private float ToLevelValue(float value, float min = _minDecibel, float max = _maxDecibel)
+		{
+			return (value - min) / (max - min);
+		}
 		
 		// TODO
 		private void OnWillRenderCanvases() { }

@@ -16,8 +16,13 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private bool checkKodawariSick(BTL_POKEPARAM poke, WazaSick sick) { return default; }
 		
-		// TODO
-		private void putSpecialMessage(in StrParam strParam) { }
+		private void putSpecialMessage(in StrParam strParam)
+		{
+			var uVar1 = strParam.IsEnable();
+			if ((uVar1 & 1) != 0) {
+			  this.m_pServerCmdPutter.Message(strParam);
+			}
+		}
 		
 		// TODO
 		private void putStandardMessage(WazaSick sick, in BTL_SICKCONT sickCont, BTL_POKEPARAM poke, ushort itemID) { }

@@ -12,8 +12,10 @@ namespace Dpr.Contest
 		private bool bRestart;
 		private bool bRunning;
 		
-		// TODO
-		public void OnFinalize() { }
+		public void OnFinalize()
+		{
+			this.resultMsg.OnFinalize();
+		}
 		
 		public bool IsSelectRestart { get => bRestart; }
 		

@@ -13,8 +13,15 @@ namespace Dpr.Battle.Logic
 			m_reservedPos_Message = 0;
 		}
 		
-		// TODO
-		public void Reserve() { }
+		public void Reserve()
+		{
+			var uVar1 = this.m_pQueue.ReservePutPos(0xb5)
+			;
+			this.m_reservedPos_Effect = (ushort)(uVar1);
+			uVar1 = this.m_pQueue.ReservePutPos(0xb9)
+			;
+			this.m_reservedPos_Message = (ushort)(uVar1);
+		}
 		
 		// TODO
 		public void Put(in GShockEffectParam param) { }

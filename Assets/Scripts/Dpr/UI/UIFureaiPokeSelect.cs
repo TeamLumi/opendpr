@@ -60,8 +60,10 @@ namespace Dpr.UI
 		// TODO
 		private void UpdateInput() { }
 		
-		// TODO
-		private void OpenMsgWindow() { }
+		private void OpenMsgWindow()
+		{
+			this.msgWindowPtr = MsgWindowManager.OpenMsg(this.msgWindowParam);
+		}
 		
 		// TODO
 		private void UpdateInpuInOpenWindow() { }

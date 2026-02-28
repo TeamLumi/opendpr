@@ -19,14 +19,26 @@ namespace Dpr.UI
 		private float _readyProgressTime;
 		private int nowSelectPlayerIndex;
 		
-		// TODO
-		public void Initialize(Action onFinishState, Action onSelectMember, Action onDecideMember, Action onRule, Action onLeave) { }
+		public void Initialize(Action onFinishState, Action onSelectMember, Action onDecideMember, Action onRule, Action onLeave)
+		{
+			this._onFinishState = onFinishState;
+			this._onSelectMember = onSelectMember;
+			this._onDecideMember = onDecideMember;
+			this._onRule = onRule;
+			this._onLeave = onLeave;
+			this._opendLeaveMsg = false;
+			this.currentState = (SelectRuleState)0;
+		}
 		
 		// TODO
 		public void Setup(UIBattleMatching battleMatchingUI) { }
 		
-		// TODO
-		public void PreClose() { }
+		public void PreClose()
+		{
+			this._closed = true;
+			this._battleMatchingUIPtr.CloseMessageWindow();
+			this._battleMatchingUIPtr.CloseContextMenu();
+		}
 		
 		// TODO
 		public void Close() { }
@@ -49,8 +61,14 @@ namespace Dpr.UI
 		// TODO
 		private void WaitSelectMember() { }
 		
-		// TODO
-		private void SelectRule() { }
+		private void SelectRule()
+		{
+			this._battleMatchingUIPtr.CloseMessageWindow();
+			this._battleMatchingUIPtr.CloseContextMenu();
+			this._battleMatchingUIPtr.OpenSelectRuleWindow();
+			this.currentState = (SelectRuleState)1;
+			this._opendLeaveMsg = 0x100;
+		}
 		
 		// TODO
 		public void WaitSelectRule(int stationIndex) { }
@@ -61,8 +79,11 @@ namespace Dpr.UI
 		// TODO
 		private void UpdateReady(float deltaTime) { }
 		
-		// TODO
-		private void CloseAllMsg() { }
+		private void CloseAllMsg()
+		{
+			this._battleMatchingUIPtr.CloseMessageWindow();
+			this._battleMatchingUIPtr.CloseContextMenu();
+		}
 
 		private enum SelectRuleState : int
 		{

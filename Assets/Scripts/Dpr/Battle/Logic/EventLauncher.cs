@@ -112,26 +112,62 @@ namespace Dpr.Battle.Logic
         // TODO
         public bool Event_CheckIchigekiGuard(BTL_POKEPARAM attacker, BTL_POKEPARAM defender, WazaParam wazaParam) { return false; }
 
-        // TODO
-        public void Event_IchigekiSucceed(BTL_POKEPARAM attacker, BTL_POKEPARAM target) { }
+        public void Event_IchigekiSucceed(BTL_POKEPARAM attacker, BTL_POKEPARAM target)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = attacker.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(3,uVar1);
+        	uVar1 = target.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetRewriteOnceValue(4,uVar1);
+        	this.m_pEventSystem.CallEvent(0xdb);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public bool Event_SkipNigeruCalc(BTL_POKEPARAM bpp) { return false; }
 
-        // TODO
-        public void Event_ChangePokeBefore(BTL_POKEPARAM bpp) { }
+        public void Event_ChangePokeBefore(BTL_POKEPARAM bpp)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = bpp.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(2,uVar1);
+        	this.m_pEventSystem.CallEvent(0xd1);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
-        // TODO
-        public void Event_ChangeTokuseiAfter(byte pokeID) { }
+        public void Event_ChangeTokuseiAfter(byte pokeID)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(2,pokeID);
+        	this.m_pEventSystem.CallEvent(0xac);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public void Event_WazaExeEnd_Common(byte pokeID, WazaNo waza, in ActionDesc actionDesc, EventID eventID) { }
 
-        // TODO
         public void Event_GetWazaRankEffectValue(WazaNo waza, uint waza_effect_index, BTL_POKEPARAM attacker, BTL_POKEPARAM target, out WazaRankEffect effect, out int volume)
         {
-            effect = WazaRankEffect.NONE;
-            volume = 0;
+        	var iVar2 = WAZADATA.GetRankEffect(waza,waza_effect_index,volume);
+        	effect = (WazaRankEffect)(iVar2);
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = attacker.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(3,uVar1);
+        	uVar1 = target.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(4,uVar1);
+        	this.m_pEventSystem.EVENTVAR_SetValue(0x22,effect);
+        	this.m_pEventSystem.EVENTVAR_SetValue(0x23,volume);
+        	this.m_pEventSystem.EVENTVAR_SetValue(0x38,1);
+        	this.m_pEventSystem.CallEvent(0x71);
+        	effect = (WazaRankEffect)(this.m_pEventSystem.EVENTVAR_GetValue(0x22));
+        	volume = this.m_pEventSystem.EVENTVAR_GetValue(0x23);
+        	if (1 < (this.m_pEventSystem.EVENTVAR_GetValue(0x38) & 0xff)) {
+        	  volume = volume * (this.m_pEventSystem.EVENTVAR_GetValue(0x38) & 0xff);
+        	}
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        	if ((int)effect == 8) {
+        	  effect = (WazaRankEffect)0;
+        	}
         }
 
         // TODO
@@ -158,8 +194,12 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Event_UnDamageProcEnd(WazaParam wazaParam, BTL_POKEPARAM attacker) { }
 
-        // TODO
-        public void Event_TurnEnd() { }
+        public void Event_TurnEnd()
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	this.m_pEventSystem.CallEvent(0xdf);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public byte Event_GetWazaPriority(WazaNo waza, BTL_POKEPARAM bpp) { return 0; }
@@ -179,8 +219,14 @@ namespace Dpr.Battle.Logic
         // TODO
         public bool Event_CheckInemuriFail(BTL_POKEPARAM bpp) { return false; }
 
-        // TODO
-        public void Event_AfterMove(BTL_POKEPARAM bpp) { }
+        public void Event_AfterMove(BTL_POKEPARAM bpp)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = bpp.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetValue(2,uVar1);
+        	this.m_pEventSystem.CallEvent(200);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public bool Event_CheckNigeruForbid(BTL_POKEPARAM bpp) { return false; }
@@ -188,20 +234,46 @@ namespace Dpr.Battle.Logic
         // TODO
         public bool Event_NigeruExMessage(BTL_POKEPARAM bpp) { return false; }
 
-        // TODO
-        public void Event_AfterMemberIn(BTL_POKEPARAM bpp, EventID eventID) { }
+        public void Event_AfterMemberIn(BTL_POKEPARAM bpp, EventID eventID)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = bpp.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(2,uVar1);
+        	this.m_pEventSystem.CallEvent(eventID);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
-        // TODO
-        public void Event_AfterMemberInForce(BTL_POKEPARAM bpp, EventID eventID) { }
+        public void Event_AfterMemberInForce(BTL_POKEPARAM bpp, EventID eventID)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = bpp.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(2,uVar1);
+        	this.m_pEventSystem.CallEvent_Force(eventID);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
-        // TODO
-        public void Event_AfterMemberInComp() { }
+        public void Event_AfterMemberInComp()
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	this.m_pEventSystem.CallEvent(0x6f);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
-        // TODO
-        public void Event_DasshutuPackLaunch() { }
+        public void Event_DasshutuPackLaunch()
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	this.m_pEventSystem.CallEvent(0x70);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
-        // TODO
-        public void Event_MemberOutFixed(BTL_POKEPARAM outPoke) { }
+        public void Event_MemberOutFixed(BTL_POKEPARAM outPoke)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = outPoke.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(2,uVar1);
+        	this.m_pEventSystem.CallEvent(0x68);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public void Event_ReplaceActWaza(BTL_POKEPARAM attacker, WazaNo originWaza, WazaNo nextWaza) { }
@@ -225,8 +297,14 @@ namespace Dpr.Battle.Logic
             isSuccessed = false;
         }
 
-        // TODO
-        public void Event_DecideDelayWaza(in BTL_POKEPARAM attacker) { }
+        public void Event_DecideDelayWaza(in BTL_POKEPARAM attacker)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = attacker.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(3,uVar1);
+        	this.m_pEventSystem.CallEvent(7);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public void Event_StartWazaSeq(BTL_POKEPARAM attacker, WazaNo waza) { }
@@ -310,8 +388,14 @@ namespace Dpr.Battle.Logic
         // TODO
         public KoraeruCause Event_CheckKoraeru(BTL_POKEPARAM attacker, BTL_POKEPARAM defender, bool isWazaDamage, ref ushort damage) { return KoraeruCause.NONE; }
 
-        // TODO
-        public void Event_KoraeruExe(BTL_POKEPARAM poke, KoraeruCause cause) { }
+        public void Event_KoraeruExe(BTL_POKEPARAM poke, KoraeruCause cause)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = poke.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(2,uVar1);
+        	this.m_pEventSystem.CallEvent(0x90);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public void Event_WazaDamageSideAfter(BTL_POKEPARAM attacker, WazaParam wazaParam, uint damage) { }
@@ -337,8 +421,15 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Event_AfterItemEquip(BTL_POKEPARAM bpp, ushort itemID, bool bCheckKinomi) { }
 
-        // TODO
-        public void Event_KillHandler(BTL_POKEPARAM target, byte atkPokeID) { }
+        public void Event_KillHandler(BTL_POKEPARAM target, byte atkPokeID)
+        {
+        	var uVar1 = target.GetID();
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(4,uVar1);
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(3,atkPokeID);
+        	this.m_pEventSystem.CallEvent(0xcf);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public WazaSick Event_CheckWazaAddSick(WazaNo waza, BTL_POKEPARAM attacker, BTL_POKEPARAM defender, out BTL_SICKCONT pSickCont)
@@ -347,8 +438,16 @@ namespace Dpr.Battle.Logic
             return WazaSick.WAZASICK_NONE;
         }
 
-        // TODO
-        public uint Event_CheckSpecialWazaAdditionalPer(byte atkPokeID, byte defPokeID, uint defaultPer) { return 0; }
+        public uint Event_CheckSpecialWazaAdditionalPer(byte atkPokeID, byte defPokeID, uint defaultPer)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(4,defPokeID);
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(3,atkPokeID);
+        	this.m_pEventSystem.EVENTVAR_SetValue(0x29,defaultPer);
+        	this.m_pEventSystem.CallEvent(0xcd);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        	return this.m_pEventSystem.EVENTVAR_GetValue(0x29);
+        }
 
         // TODO
         public void Event_CheckRecoverMsgCustom(StrParam pCustomMsg, BTL_POKEPARAM pAttacker, BTL_POKEPARAM pTarget, WazaNo wazano) { }
@@ -377,8 +476,14 @@ namespace Dpr.Battle.Logic
         // TODO
         public bool Event_CheckKodawariFactorExist(BTL_POKEPARAM poke) { return false; }
 
-        // TODO
-        public void Event_TokuseiDisabled(BTL_POKEPARAM target) { }
+        public void Event_TokuseiDisabled(BTL_POKEPARAM target)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = target.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(2,uVar1);
+        	this.m_pEventSystem.CallEvent_Force(0x83);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public bool Event_CheckAddRankEffectOccur(WazaParam wazaParam, BTL_POKEPARAM attacker, BTL_POKEPARAM target) { return false; }
@@ -405,8 +510,17 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Event_ChangeGroundAfter(byte pokeID, byte ground) { }
 
-        // TODO
-        public bool Event_FieldEffectCall(BTL_POKEPARAM attacker, WazaNo waza) { return false; }
+        public bool Event_FieldEffectCall(BTL_POKEPARAM attacker, WazaNo waza)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = attacker.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetValue(3,uVar1);
+        	this.m_pEventSystem.EVENTVAR_SetValue(0x12,waza);
+        	this.m_pEventSystem.EVENTVAR_SetValue(0x78,0);
+        	this.m_pEventSystem.CallEvent(0xc2);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        	return this.m_pEventSystem.EVENTVAR_GetValue(0x78) != 0;
+        }
 
         // TODO
         public void Event_ChangeFieldAfter(byte pokeID, EffectType field) { }
@@ -421,8 +535,13 @@ namespace Dpr.Battle.Logic
             return false;
         }
 
-        // TODO
-        public void Event_TurnCheck(byte pokeID, EventID event_type) { }
+        public void Event_TurnCheck(byte pokeID, EventID event_type)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(2,pokeID);
+        	this.m_pEventSystem.CallEvent(event_type);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public uint Event_SickDamage(BTL_POKEPARAM bpp, WazaSick sickID, uint damage) { return 0; }
@@ -430,14 +549,30 @@ namespace Dpr.Battle.Logic
         // TODO
         public int Event_CheckWeatherReaction(BTL_POKEPARAM bpp, BtlWeather weather, uint damage) { return 0; }
 
-        // TODO
-        public void Event_PokeDeadActionAfter(byte deadPokeID) { }
+        public void Event_PokeDeadActionAfter(byte deadPokeID)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	this.m_pEventSystem.EVENTVAR_SetValue(2,deadPokeID);
+        	this.m_pEventSystem.CallEvent(0xd5);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
-        // TODO
-        public void Event_PokeDeadAfter(byte deadPokeID) { }
+        public void Event_PokeDeadAfter(byte deadPokeID)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	this.m_pEventSystem.EVENTVAR_SetValue(2,deadPokeID);
+        	this.m_pEventSystem.CallEvent(0xd6);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
-        // TODO
-        public void Event_BeforeDead(BTL_POKEPARAM bpp) { }
+        public void Event_BeforeDead(BTL_POKEPARAM bpp)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = bpp.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetValue(2,uVar1);
+        	this.m_pEventSystem.CallEvent(199);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public void Event_AfterCritical(WazaParam wazaParam, BTL_POKEPARAM attacker, BTL_POKEPARAM defender) { }
@@ -448,14 +583,45 @@ namespace Dpr.Battle.Logic
         // TODO
         public byte Event_CheckSpecialActPriority(BTL_POKEPARAM attacker) { return 0; }
 
-        // TODO
-        public void Event_BeforeFight(BTL_POKEPARAM bpp, WazaNo waza) { }
+        public void Event_BeforeFight(BTL_POKEPARAM bpp, WazaNo waza)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = bpp.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetValue(2,uVar1);
+        	this.m_pEventSystem.EVENTVAR_SetValue(0x12,waza);
+        	this.m_pEventSystem.CallEvent(0x17);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
-        // TODO
-        public void Event_FixConfDamage(BTL_POKEPARAM poke, ref ushort damage) { }
+        public void Event_FixConfDamage(BTL_POKEPARAM poke, ref ushort damage)
+        {
+        	var uVar2 = damage;
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = poke.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(2,uVar1);
+        	this.m_pEventSystem.EVENTVAR_SetValue(0x3a,uVar2);
+        	this.m_pEventSystem.EVENTVAR_SetValue(0x3b,0);
+        	this.m_pEventSystem.EVENTVAR_SetValue(0x3c,0);
+        	this.m_pEventSystem.CallEvent(0x15);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        	if (this.m_pEventSystem.EVENTVAR_GetValue(0x3b) != 0 || EventSystem.EVENTVAR_GetValue(this.m_pEventSystem,0x3c) != 0) {
+        	  if (this.m_pEventSystem.EVENTVAR_GetValue(0x3c) != 0) {
+        	    this.m_pEventSystem.EVENTVAR_GetValue(0x3a) = 0;
+        	  }
+        	  damage = (ushort)(this.m_pEventSystem.EVENTVAR_GetValue(0x3a));
+        	}
+        }
 
-        // TODO
-        public void Event_ConfDamageReaction(BTL_POKEPARAM attacker, BTL_POKEPARAM defender) { }
+        public void Event_ConfDamageReaction(BTL_POKEPARAM attacker, BTL_POKEPARAM defender)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = attacker.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(3,uVar1);
+        	uVar1 = defender.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(4,uVar1);
+        	this.m_pEventSystem.CallEvent(0x16);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public bool Event_CheckWazaMsgCustom(BTL_POKEPARAM attacker, WazaNo orgWazaID, WazaNo actWazaID, StrParam str) { return false; }
@@ -466,8 +632,16 @@ namespace Dpr.Battle.Logic
         // TODO
         public WazaForceEnableMode Event_WazaExecuteStart(ActionDesc actionDesc, BTL_POKEPARAM attacker, WazaParam wazaParam, PokeSet rec, WazaEffectParams pWazaEffectParams) { return default; }
 
-        // TODO
-        public bool Event_CheckMamoruBreak(BTL_POKEPARAM attacker, BTL_POKEPARAM defender, WazaNo waza) { return false; }
+        public bool Event_CheckMamoruBreak(BTL_POKEPARAM attacker, BTL_POKEPARAM defender, WazaNo waza)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = attacker.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetValue(3,uVar1);
+        	this.m_pEventSystem.EVENTVAR_SetValue(0x59,0);
+        	this.m_pEventSystem.CallEvent(0x3a);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        	return this.m_pEventSystem.EVENTVAR_GetValue(0x59) != 0;
+        }
 
         // TODO
         public bool Event_CheckTameFail(BTL_POKEPARAM attacker, PokeSet targetRec) { return false; }
@@ -478,11 +652,23 @@ namespace Dpr.Battle.Logic
         // TODO
         public bool Event_TameStart(BTL_POKEPARAM attacker, PokeSet targetRec, WazaParam wazaParam, ref byte hideTargetPokeID, ref bool fFailMsgDisped) { return false; }
 
-        // TODO
-        public void Event_TameStartFixed(BTL_POKEPARAM attacker) { }
+        public void Event_TameStartFixed(BTL_POKEPARAM attacker)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = attacker.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(3,uVar1);
+        	this.m_pEventSystem.CallEvent(0xb9);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
-        // TODO
-        public void Event_TameSkip(BTL_POKEPARAM attacker, WazaNo waza) { }
+        public void Event_TameSkip(BTL_POKEPARAM attacker, WazaNo waza)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = attacker.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(3,uVar1);
+        	this.m_pEventSystem.CallEvent(0xba);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public bool Event_TameRelease(BTL_POKEPARAM attacker, PokeSet rec, WazaNo waza) { return false; }
@@ -496,8 +682,16 @@ namespace Dpr.Battle.Logic
         // TODO
         public bool Event_CheckDmgToRecover(BTL_POKEPARAM attacker, BTL_POKEPARAM defender, WazaParam wazaParam) { return false; }
 
-        // TODO
-        public void Event_DmgToRecover(BTL_POKEPARAM attacker, BTL_POKEPARAM defender) { }
+        public void Event_DmgToRecover(BTL_POKEPARAM attacker, BTL_POKEPARAM defender)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = attacker.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(3,uVar1);
+        	uVar1 = defender.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(4,uVar1);
+        	this.m_pEventSystem.CallEvent(0x3d);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public bool Event_CheckKinomiEffectUp(BTL_POKEPARAM poke, out bool pNeedTokuseiWindowDisplayOnItemUseAct)
@@ -607,8 +801,14 @@ namespace Dpr.Battle.Logic
         // TODO
         public bool Event_CheckShrink(BTL_POKEPARAM target, uint percentage) { return false; }
 
-        // TODO
-        public void Event_FailShrink(BTL_POKEPARAM target) { }
+        public void Event_FailShrink(BTL_POKEPARAM target)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = target.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetValue(2,uVar1);
+        	this.m_pEventSystem.CallEvent(0x87);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public ushort Event_RecalcDrainVolume(BTL_POKEPARAM attacker, BTL_POKEPARAM target, ushort volume) { return 0; }
@@ -622,14 +822,26 @@ namespace Dpr.Battle.Logic
         // TODO
         public bool Event_CheckItemSet(BTL_POKEPARAM bpp, ushort itemID) { return false; }
 
-        // TODO
-        public void Event_ItemSetFailed(BTL_POKEPARAM bpp) { }
+        public void Event_ItemSetFailed(BTL_POKEPARAM bpp)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = bpp.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(2,uVar1);
+        	this.m_pEventSystem.CallEvent(0xbf);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public void Event_ItemSetDecide(BTL_POKEPARAM bpp, ushort nextItemID) { }
 
-        // TODO
-        public void Event_ItemSetFixed(BTL_POKEPARAM bpp) { }
+        public void Event_ItemSetFixed(BTL_POKEPARAM bpp)
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	var uVar1 = bpp.GetID();
+        	this.m_pEventSystem.EVENTVAR_SetConstValue(2,uVar1);
+        	this.m_pEventSystem.CallEvent(0xc1);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public void Event_ChangeTokuseiBefore(byte pokeID, TokuseiNo prev_tokuseiID, ushort next_tokuseiID) { }
@@ -637,8 +849,12 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Event_CheckSideEffectParam(byte userPokeID, BtlSideEffect effect, BtlSide side, BTL_SICKCONTOBJ cont) { }
 
-        // TODO
-        public void Event_NotifyAirLock() { }
+        public void Event_NotifyAirLock()
+        {
+        	this.m_pEventSystem.EVENTVAR_Push();
+        	this.m_pEventSystem.CallEvent(0x94);
+        	this.m_pEventSystem.EVENTVAR_Pop();
+        }
 
         // TODO
         public bool Event_CheckTokuseiChangeEnable(byte targetPokeID, TokuseiNo nextTokusei, TokuseiChangeCause cause) { return false; }

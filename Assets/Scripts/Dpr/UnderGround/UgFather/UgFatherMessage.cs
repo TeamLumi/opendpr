@@ -14,8 +14,10 @@ namespace Dpr.UnderGround.UgFather
 		// TODO
 		public static void ShowHealingEnd(Action onFinishedShowAllMessage, Action onFinishedCloseWindow) { }
 		
-		// TODO
-		public static void Close() { }
+		public static void Close()
+		{
+			MsgWindowManager.CloseMsg(0);
+		}
 		
 		// TODO
 		private static MsgWindowParam CreateParam(string labelName, Action onFinishedShowAllMessage, Action onFinishedCloseWindow) { return default; }

@@ -13,8 +13,14 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void clearPokeDependEffect(BTL_POKEPARAM poke) { }
 		
-		// TODO
-		private void endGMode(BTL_POKEPARAM poke) { }
+		private void endGMode(BTL_POKEPARAM poke)
+		{
+			var uVar2 = poke.IsGMode();
+			if (uVar2) {
+			  var uVar1 = poke.GetID();
+			  this.m_pServerCmdPutter.EndGMode(uVar1);
+			}
+		}
 
 		public class Description
 		{

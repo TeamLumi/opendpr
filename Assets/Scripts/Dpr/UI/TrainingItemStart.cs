@@ -5,11 +5,17 @@ namespace Dpr.UI
 		// TODO
 		public override void Setup() { }
 		
-		// TODO
-		public override void Enable(bool enabled) { }
+		public override void Enable(bool enabled)
+		{
+			this._isEnabled = (enabled ? 1 : 0) & 1;
+			SetAnimState();
+		}
 		
-		// TODO
-		public override void Select(bool enabled) { }
+		public override void Select(bool enabled)
+		{
+			this._isSelected = (enabled ? 1 : 0) & 1;
+			SetAnimState();
+		}
 		
 		// TODO
 		private void SetAnimState() { }

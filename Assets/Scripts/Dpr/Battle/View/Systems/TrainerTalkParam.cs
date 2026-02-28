@@ -6,7 +6,9 @@ namespace Dpr.Battle.View.Systems
 		public uint param;
 		public bool isKeyWait;
 		
-		// TODO
-		public static TrainerTalkParam Factory() { return default; }
+		public static TrainerTalkParam Factory()
+		{
+			return ZEXT816(0);
+		}
 	}
 }

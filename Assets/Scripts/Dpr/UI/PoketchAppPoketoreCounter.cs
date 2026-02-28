@@ -27,8 +27,11 @@ namespace Dpr.UI
 		// TODO
 		protected override void OnInitialize() { }
 		
-		// TODO
-		protected override void OnOpen() { }
+		protected override void OnOpen()
+		{
+			ApplyRanking();
+			this._prevCount = 0;
+		}
 		
 		// TODO
 		protected override void OnClose() { }

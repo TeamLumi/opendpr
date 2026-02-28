@@ -49,8 +49,13 @@ namespace Dpr.Contest
 		// TODO
 		public void Initialize() { }
 		
-		// TODO
-		public void OnFinalize() { }
+		public void OnFinalize()
+		{
+			UnloadResource();
+			UnloadAssetBundle();
+			this.nameMsgFile = null;
+			this.wazaNameMsgFile = null;
+		}
 		
 		// TODO
 		private void UnloadResource() { }
@@ -79,8 +84,10 @@ namespace Dpr.Contest
 		// TODO
 		public int GetValueData(int dataID) { return default; }
 		
-		// TODO
-		public ContestConfigDatas GetConfigData() { return default; }
+		public ContestConfigDatas GetConfigData()
+		{
+			return this.contestConfigDatas;
+		}
 		
 		// TODO
 		public Vector3 CreateInitMainCameraDofTargetPos() { return default; }
@@ -94,11 +101,15 @@ namespace Dpr.Contest
 		// TODO
 		public string GetSequenceFilePath() { return default; }
 		
-		// TODO
-		public DanceSectionData GetDanceSectionData() { return default; }
+		public DanceSectionData GetDanceSectionData()
+		{
+			return this.danceSectionData;
+		}
 		
-		// TODO
-		public uint GetMainBgmEventID() { return default; }
+		public uint GetMainBgmEventID()
+		{
+			return this.mainBgmEventID;
+		}
 		
 		// TODO
 		public string GetStagePath() { return default; }
@@ -130,8 +141,10 @@ namespace Dpr.Contest
 		// TODO
 		public void SetQuaritySettings() { }
 		
-		// TODO
-		public void ResetQuaritySettings() { }
+		public void ResetQuaritySettings()
+		{
+			QualitySettings.shadowResolution = this.backupShadowResolution;
+		}
 		
 		// TODO
 		public MonsNo GetPlayerMonsNo() { return default; }
@@ -148,8 +161,10 @@ namespace Dpr.Contest
 		// TODO
 		public PokeType GetPlayerPokeType2() { return default; }
 		
-		// TODO
-		public uint GetUserRank() { return default; }
+		public uint GetUserRank()
+		{
+			return this.userContestRank;
+		}
 		
 		// TODO
 		public AContestPlayerData[] CreateContestEntryPlayerDataArray() { return default; }
@@ -220,8 +235,15 @@ namespace Dpr.Contest
 		// TODO
 		private int GetCaptureCommandFrame(CaptureData target) { return default; }
 		
-		// TODO
-		private bool CheckCaptureProbability(int persent) { return default; }
+		private bool CheckCaptureProbability(int persent)
+		{
+			this.captureCommandNum = this.captureCommandNum + -1;
+			if (0 < this.captureCommandNum + -1) {
+			  this.captureCommandNum + -1 = Random.Range(0,1000);
+			  return this.captureCommandNum + -1 < persent;
+			}
+			return true;
+		}
 		
 		// TODO
 		public ContestConfigDatas.SheetTapScoreData[] GetScoreDataArray() { return default; }
@@ -295,8 +317,16 @@ namespace Dpr.Contest
 		// TODO
 		private bool IsAllMasterRankClear(PokemonParam targetPokeParam) { return default; }
 		
-		// TODO
-		private void CheckMasterContestReward(PokemonParam targetPokeParam) { }
+		private void CheckMasterContestReward(PokemonParam targetPokeParam)
+		{
+			ulong uVar1 = default;
+			if (((this.contestResultDataModel.categoryID == 7) &&
+			    (this.contestResultDataModel.rankID == 4)) &&
+			   (uVar1 = targetPokeParam.HaveRibbon(99), (uVar1 & 1) == 0)) {
+			  targetPokeParam.SetRibbon(99);
+			  this.contestResultDataModel.twinkleStarRibbon = 99;
+			}
+		}
 		
 		// TODO
 		private void CheckCaptureData() { }

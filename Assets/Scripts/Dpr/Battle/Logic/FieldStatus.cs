@@ -40,41 +40,94 @@ namespace Dpr.Battle.Logic
         // TODO
         public void CopyFrom(in FieldStatus src) { }
 
-        // TODO
-        public BtlWeather GetWeather() { return BtlWeather.BTL_WEATHER_NONE; }
+        public BtlWeather GetWeather()
+        {
+        	return this.m_data.weather;
+        }
 
-        // TODO
-        public uint GetWeatherPassedTurn() { return 0; }
+        public uint GetWeatherPassedTurn()
+        {
+        	return this.m_data.weatherTurnCount;
+        }
 
         // TODO
         public uint GetWeatherRemainingTurn() { return 0; }
 
-        // TODO
-        public byte GetWeatherCausePokeID() { return 0; }
+        public byte GetWeatherCausePokeID()
+        {
+        	return (byte)(this.m_data.weatherCausePokeID);
+        }
 
-        // TODO
-        public uint GetWeatherWholeTurn() { return 0; }
+        public uint GetWeatherWholeTurn()
+        {
+        	var iVar1 = this.m_data.weatherTurnCount;
+        	if (this.m_data.weather != 0) {
+        	  var iVar2 = this.m_data.weatherTurn;
+        	  if (iVar2 != 0xff) {
+        	    iVar2 = iVar2 - iVar1;
+        	  }
+        	  return iVar2 + iVar1;
+        	}
+        	return iVar1;
+        }
 
-        // TODO
-        public uint GetWeatherTurnUpCount() { return 0; }
+        public uint GetWeatherTurnUpCount()
+        {
+        	return this.m_data.weatherTurnUpCount;
+        }
 
-        // TODO
-        public void SetWeather(BtlWeather weather, ushort turn, ushort turnUpCount, byte causePokeID) { }
+        public void SetWeather(BtlWeather weather, ushort turn, ushort turnUpCount, byte causePokeID)
+        {
+        	this.m_data.weather = weather;
+        	this.m_data.weatherTurn = turn & 0xffff;
+        	this.m_data.weatherTurnUpCount = turnUpCount & 0xffff;
+        	this.m_data.weatherTurnCount = 0;
+        	this.m_data.weatherCausePokeID = causePokeID;
+        }
 
-        // TODO
-        public void EndWeather() { }
+        public void EndWeather()
+        {
+        	this.m_data.weather = 0;
+        	this.m_data.weatherTurn = 0;
+        	this.m_data.weatherTurnCount = 0;
+        	this.m_data.weatherCausePokeID = 0x1f;
+        }
 
-        // TODO
-        public BtlWeather TurnCheckWeather() { return BtlWeather.BTL_WEATHER_NONE; }
+        public BtlWeather TurnCheckWeather()
+        {
+        	if ((this.m_data.weather != 0) && (this.m_data.weatherTurn != 0xff)) {
+        	  this.m_data.weatherTurnCount = this.m_data.weatherTurnCount + 1;
+        	  if (this.m_data.weatherTurn <= this.m_data.weatherTurnCount) {
+        	    var uVar1 = this.m_data.weather;
+        	    this.m_data.weather = 0;
+        	    this.m_data.weatherCausePokeID = 0x1f;
+        	    return uVar1;
+        	  }
+        	}
+        	return (BtlWeather)0;
+        }
 
-        // TODO
-        public bool AddEffect(EffectType effect, in BTL_SICKCONT cont) { return false; }
+        public bool AddEffect(EffectType effect, in BTL_SICKCONT cont)
+        {
+        	addEffectCore();
+        	return false;
+        }
 
         // TODO
         private bool addEffectCore(EffectType effect, in BTL_SICKCONT cont, ushort sub_param) { return false; }
 
-        // TODO
-        public bool RemoveEffect(EffectType effect) { return false; }
+        public bool RemoveEffect(EffectType effect)
+        {
+        	if ((int)(int)effect < 10) {
+        	  if (this.m_data.enableFlag.Length <= effect) {
+        	  }
+        	  if (this.m_data.enableFlag + (int)effect[0] != 0) {
+        	    clearFactorWork();
+        	    return true;
+        	  }
+        	}
+        	return false;
+        }
 
         // TODO
         public bool AddDependPoke(EffectType effect, byte pokeID) { return false; }
@@ -124,8 +177,10 @@ namespace Dpr.Battle.Logic
         // TODO
         public bool ChangeGround(byte ground, BTL_SICKCONT cont) { return false; }
 
-        // TODO
-        public byte GetGround() { return 0; }
+        public byte GetGround()
+        {
+        	return (byte)(this.m_data.currentGround);
+        }
 
         // TODO
         public uint GetGroundPassedTurn() { return 0; }

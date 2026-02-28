@@ -19,7 +19,7 @@ namespace Dpr.NetworkUtils
         private IlcaNetSessionSetting sessionSetting = new IlcaNetSessionSetting();
         private IlcaNetSessionState nowSessionState;
         private MonoBehaviour callObjPtr;
-        private bool bRunningSession;
+        internal bool bRunningSession;
         private bool canCallOnFinishedSession = true;
         
         // TODO
@@ -72,14 +72,18 @@ namespace Dpr.NetworkUtils
         // TODO
         private void ResetParam() { }
         
-        // TODO
-        public void SetCallOnFinishedSessionFlag(bool flag) { }
+        public void SetCallOnFinishedSessionFlag(bool flag)
+        {
+        	this.canCallOnFinishedSession = (flag ? 1 : 0) & 1;
+        }
 
         // TODO
         public void StartSession(NetworkParam networkParam, [Optional] Action<StartSessionResult> onCompleteStartSession) { }
         
-        // TODO
-        private bool CanPerformStartSession() { return default; }
+        private bool CanPerformStartSession()
+        {
+        	return (int)this.nowSessionState != 1;
+        }
         
         // TODO
         public void JoinRandomSession([Optional] Action<StartSessionResult> onSessionEventCallback) { }
@@ -117,11 +121,19 @@ namespace Dpr.NetworkUtils
         // TODO
         public IlcaNetSessionProperty[] GetAllSessionProperty() { return default; }
         
-        // TODO
-        private bool CheckSessionStateWait() { return default; }
+        private bool CheckSessionStateWait()
+        {
+        	if ((int)this.nowSessionState == 2) {
+        	  return true;
+        	}
+        	NetworkHelper.EmitNetworkLog(_StringLiteral_10064,2);
+        	return false;
+        }
         
-        // TODO
-        private bool CheckProcessing() { return default; }
+        private bool CheckProcessing()
+        {
+        	return (int)this.nowSessionState == 1;
+        }
         
         // TODO
         public int SendTo(PacketWriter pw, IlcaNetPacketType sendType, int sendStationIndex, TransportType transportType = TransportType.Station) { return default; }

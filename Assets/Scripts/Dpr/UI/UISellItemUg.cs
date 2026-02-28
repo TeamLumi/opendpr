@@ -101,14 +101,18 @@ namespace Dpr.UI
 		// TODO
 		private void OnSelectYes() { }
 		
-		// TODO
-		private void OnFinishSellProcess() { }
+		private void OnFinishSellProcess()
+		{
+			this.state = (MenuState)1;
+		}
 		
 		// TODO
 		private bool CheckIsEmptySelectItem() { return default; }
 		
-		// TODO
-		private bool CheckIsEmptySellItemData() { return default; }
+		private bool CheckIsEmptySellItemData()
+		{
+			return this.sellItemData == null;
+		}
 		
 		// TODO
 		private void OnSelectCategoryButton(IUIButton button) { }

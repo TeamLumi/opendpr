@@ -7,8 +7,11 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Execute(Result result, in Description description) { }
 		
-		// TODO
-		private void onKoraeru_ByDefender(BTL_POKEPARAM poke) { }
+		private void onKoraeru_ByDefender(BTL_POKEPARAM poke)
+		{
+			var uVar1 = poke.GetID();
+			this.m_pServerCmdPutter.Message_Set(0x2b6,uVar1);
+		}
 		
 		// TODO
 		private void onKoraeru_ByFriendship(BTL_POKEPARAM poke) { }

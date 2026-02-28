@@ -23,8 +23,10 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		public virtual void Initialize(BtlvPos vPos) { }
 		
-		// TODO
-		protected override void InitializeMember() { }
+		protected override void InitializeMember()
+		{
+			this.m_adjustHeight = 0x3f8000003f800000;
+		}
 		
 		// TODO
 		public virtual void SetRenderActive(bool isActive) { }
@@ -59,8 +61,10 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		public void SetAnimSpeed(float speed) { }
 		
-		// TODO
-		public float GetAnimSpeed() { return default; }
+		public float GetAnimSpeed()
+		{
+			return this._animSpeed;
+		}
 		
 		// TODO
 		protected virtual void UpdateAnimSpeed() { }
@@ -82,8 +86,11 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		public void DetachObject(GameObject obj) { }
 		
-		// TODO
-		public override void OnUpdatePreJob(float deltaTime) { }
+		public override void OnUpdatePreJob(float deltaTime)
+		{
+			UpdateWaitB();
+			deltaTime.UpdateSTR();
+		}
 
 		public enum HappyType : int
 		{

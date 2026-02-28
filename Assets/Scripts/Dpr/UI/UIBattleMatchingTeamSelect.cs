@@ -56,8 +56,10 @@ namespace Dpr.UI
 		// TODO
 		public IEnumerator OpOpenTeam(UIWindowID prevWindowId) { return default; }
 		
-		// TODO
-		public bool CanClose() { return default; }
+		public bool CanClose()
+		{
+			return (int)this._currentState == 0 || (int)this._currentState == 3;
+		}
 		
 		// TODO
 		public void PreClose() { }
@@ -68,8 +70,15 @@ namespace Dpr.UI
 		// TODO
 		public IEnumerator OpClose(bool isCloseCB = false) { return default; }
 		
-		// TODO
-		private void OnUpdate(float deltaTime) { }
+		private void OnUpdate(float deltaTime)
+		{
+			if ((int)this._currentState == 2) {
+			  OnUpdateClosingUIMenu();
+			}
+			if ((int)this._currentState == 0) {
+			  OnUpdateMatchingMenu();
+			}
+		}
 		
 		// TODO
 		private void OnUpdateMatchingMenu() { }
@@ -86,11 +95,15 @@ namespace Dpr.UI
 		// TODO
 		private void SetActiveArrow(bool active) { }
 		
-		// TODO
-		public void RemainingWarningText(bool warning = true) { }
+		public void RemainingWarningText(bool warning = true)
+		{
+			this._timer.RemainingWarningText((warning ? 1 : 0) & 1);
+		}
 		
-		// TODO
-		public void UpdateUITimeText(string minutes, string seconds) { }
+		public void UpdateUITimeText(string minutes, string seconds)
+		{
+			this._timer.SetTimer(minutes,seconds);
+		}
 		
 		// TODO
 		private void OpenBox() { }
@@ -104,11 +117,22 @@ namespace Dpr.UI
 		// TODO
 		private void SelectTeam(int index) { }
 		
-		// TODO
-		private int GetPrevIndex() { return default; }
+		private int GetPrevIndex()
+		{
+			var iVar1 = 5;
+			if (this._currentIndex < 0 == SCARRY4(this._currentIndex + -1,1)) {
+			  iVar1 = this._currentIndex + -1;
+			}
+			return iVar1;
+		}
 		
-		// TODO
-		private int GetNextIndex() { return default; }
+		private int GetNextIndex()
+		{
+			var iVar1 = -1;
+			if (this._currentIndex + 1 < 6) {
+			}
+			return this._currentIndex + 1;
+		}
 		
 		// TODO
 		private void SetTeam() { }
@@ -152,8 +176,17 @@ namespace Dpr.UI
 		// TODO
 		private PokemonParam[] CreateModifyLevelParty(in PokemonParam[] pokemonParams) { return default; }
 		
-		// TODO
-		private void Decide() { }
+		private void Decide()
+		{
+			if ((this._msgWindow.IsOpen & 1) != 0) {
+			  this._msgWindow.CloseMsgWindow();
+			}
+			this._cancelFade = false;
+			Close();
+			if (this._onDecide != null) {
+			  this._onDecide.Invoke();
+			}
+		}
 		
 		// TODO
 		private void Back() { }
@@ -167,8 +200,12 @@ namespace Dpr.UI
 		// TODO
 		private void ShowConfirmYesNoMsg(string message, [Optional] Action onSelectYes, [Optional] Action onSelectNo) { }
 		
-		// TODO
-		private void CloseMessageWindow() { }
+		private void CloseMessageWindow()
+		{
+			if ((this._msgWindow.IsOpen & 1) != 0) {
+			  this._msgWindow.CloseMsgWindow();
+			}
+		}
 		
 		// TODO
 		private void OpenContextMenu(string[] contextLabels, Action<int> onSelect) { }

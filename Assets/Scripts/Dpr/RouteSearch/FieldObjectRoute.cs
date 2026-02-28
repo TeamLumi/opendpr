@@ -23,8 +23,12 @@ namespace Dpr.RouteSearch
         // TODO
         public static Vector3[] Search(ObjectType characterType, in Vector3 start, in Vector3 goal, AttributeMatrix matrix, NodeData nodeData) { return null; }
 
-        // TODO
-        public static NodeData CreateNodeData(int width, int height) { return null; }
+        public static NodeData CreateNodeData(int width, int height)
+        {
+        	var uVar1 = new RouteSearch_NodeData();
+        	uVar1.Initialize(width,height);
+        	return uVar1;
+        }
 
         // TODO
         private static Vector3[] SearchCore(ObjectType characterType, in Vector3 startPos, in Vector3 goalPos, AttributeMatrix matrix, NodeData nodeData) { return null; }

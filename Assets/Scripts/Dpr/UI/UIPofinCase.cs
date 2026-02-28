@@ -122,7 +122,9 @@ namespace Dpr.UI
 		// TODO
 		private void LoadPoffin3DModel(PoffinData data) { }
 		
-		// TODO
-		private void HidePoffin3DModel() { }
+		private void HidePoffin3DModel()
+		{
+			this.poffin3DModel.ChangeModel(StringLiteral_398,1);
+		}
 	}
 }

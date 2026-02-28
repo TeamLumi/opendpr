@@ -9,8 +9,10 @@ namespace Dpr.Battle.Logic
 		// TODO
 		public void Execute(Result pResult, in Description description) { }
 		
-		// TODO
-		private void event_WazaRob(BTL_POKEPARAM robPoke, BTL_POKEPARAM originalPoke, WazaNo waza) { }
+		private void event_WazaRob(BTL_POKEPARAM robPoke, BTL_POKEPARAM originalPoke, WazaNo waza)
+		{
+			this.m_pEventLauncher.Event_WazaRob();
+		}
 		
 		// TODO
 		private void getWazaParam(WazaParam pWazaParam, BTL_POKEPARAM attacker, WazaNo waza) { }

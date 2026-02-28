@@ -74,7 +74,12 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		protected override void UpdateSRT() { }
 		
-		// TODO
-		public void SetMultiplyColor(Vector4 color) { }
+		public void SetMultiplyColor(Vector4 color)
+		{
+			if (this._effect != null) {
+			  Color.op_Implicit(0);
+			  this._effect.SetMultiplyColor();
+			}
+		}
 	}
 }

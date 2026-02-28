@@ -70,14 +70,18 @@ namespace Dpr.UI
 		// TODO
 		public void SetRemoveNewEnable(bool isEnable) { }
 		
-		// TODO
-		public void SetShowDescriptionContestWaza(bool isShowWazaContest) { }
+		public void SetShowDescriptionContestWaza(bool isShowWazaContest)
+		{
+			this.bagItemDescriptionPanel.isShowWazaContest = (isShowWazaContest ? 1 : 0) & 1;
+		}
 		
 		// TODO
 		public void MoveCategorySelect(int value) { }
 		
-		// TODO
-		public void ResumeCategoryMoveSelect() { }
+		public void ResumeCategoryMoveSelect()
+		{
+			this.categoryButtonSelector.ResumeMoveSelect();
+		}
 		
 		// TODO
 		public void MoveItemListSelect(int value) { }
@@ -85,14 +89,18 @@ namespace Dpr.UI
 		// TODO
 		public void MoveItemListPage(bool isNext) { }
 		
-		// TODO
-		public void ResumeItemListMoveSelect() { }
+		public void ResumeItemListMoveSelect()
+		{
+			this.itemListScrollView.ResumeMoveSelect();
+		}
 		
 		// TODO
 		public void ChangeSelectAmount(bool isAdd, bool isLot) { }
 		
-		// TODO
-		public void ResumeSelectAmountChange() { }
+		public void ResumeSelectAmountChange()
+		{
+			this.selectAmount.ResumeChangeAmount();
+		}
 		
 		// TODO
 		public void DecideSelectAmount() { }
@@ -106,14 +114,24 @@ namespace Dpr.UI
 		// TODO
 		public void SetMoneyText(int money) { }
 		
-		// TODO
-		public void ShowSelectAmount(int min, int max, Action<int> onDecide, Action onCancel, [Optional] Action<int> onAmountValueChanged) { }
+		public void ShowSelectAmount(int min, int max, Action<int> onDecide, Action onCancel, [Optional] Action<int> onAmountValueChanged)
+		{
+			this.onDecideSelectAmountCallback = onDecide;
+			this.onCancelSelectAmountCallback = onCancel;
+			this.onSelectAmountValueChangedCallback = onAmountValueChanged;
+			this.selectAmount.Set(min,max);
+			this.selectAmount.Show();
+		}
 		
-		// TODO
-		public void SetSelectAmountDescriptionText(string text) { }
+		public void SetSelectAmountDescriptionText(string text)
+		{
+			this.selectAmount.SetDescriptionText(text);
+		}
 		
-		// TODO
-		public void SwitchItemDescriptionWazaPanel() { }
+		public void SwitchItemDescriptionWazaPanel()
+		{
+			this.bagItemDescriptionPanel.SwitchWazaDescrption();
+		}
 		
 		// TODO
 		public void PlayCursorDecideAnimation() { }

@@ -25,8 +25,17 @@ namespace Dpr.Battle.Logic
             m_isAvailable = false;
         }
 		
-		// TODO
-		public void AddCause(Cause cause) { }
+		public void AddCause(Cause cause)
+		{
+			if (this.m_isAvailable) {
+			  if ((long)(ulong)this.m_numCause < (long)this.m_causes.Length) {
+			    this.m_numCause = this.m_numCause + 1;
+			    if (this.m_causes.Length <= this.m_numCause) {
+			    }
+			    this.m_causes + (ulong)this.m_numCause * 4[0] = cause;
+			  }
+			}
+		}
 		
 		// TODO
 		public Result GetResult() { return default; }

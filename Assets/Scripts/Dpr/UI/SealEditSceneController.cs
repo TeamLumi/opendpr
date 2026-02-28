@@ -70,8 +70,10 @@ namespace Dpr.UI
 		// TODO
 		public IEnumerator Initialize(UIInputController input, UIMsgWindowController msgWindowController) { return default; }
 		
-		// TODO
-		public void SetKeyguid(Keyguide keyguide) { }
+		public void SetKeyguid(Keyguide keyguide)
+		{
+			this.keyguide = keyguide;
+		}
 		
 		// TODO
 		public void Show(CapsuleInfo capsuleInfo) { }
@@ -82,8 +84,31 @@ namespace Dpr.UI
 		// TODO
 		public void PlayReportCurrentCapsuleData() { }
 		
-		// TODO
-		public bool OnUpdate(float deltaTime) { return default; }
+		public bool OnUpdate(float deltaTime)
+		{
+			long uVar1;
+			if (this.isAnimation) {
+			  return false;
+			}
+			if (this.isBindCategoryTab) {
+			  OnUpdateCategoryTab();
+			  uVar1 = OnUpdateDefault();
+			  return uVar1;
+			}
+			if (this.isShowPullDown) {
+			  OnUpdatePullDown();
+			  uVar1 = OnUpdateDefault();
+			  return uVar1;
+			}
+			if ((this.currentCapsuleInfo.Is3DEditMode & 1) != 0) {
+			  OnUpdate3DMode();
+			  uVar1 = OnUpdateDefault();
+			  return uVar1;
+			}
+			OnUpdate2DMode();
+			uVar1 = OnUpdateDefault();
+			return uVar1;
+		}
 		
 		// TODO
 		private bool OnUpdateDefault(float deltaTime) { return default; }
@@ -166,8 +191,12 @@ namespace Dpr.UI
 		// TODO
 		private void SetPickedSeal(Seal3DObject seal3DObject) { }
 		
-		// TODO
-		private void ClearPickedSeal() { }
+		private void ClearPickedSeal()
+		{
+			this.pickedCapsule2DGridCell = null;
+			this.pickedSeal3DObject = null;
+			this.pickedAffixSealId = 0xffffffff;
+		}
 		
 		// TODO
 		private void OnReverseCapsule2D() { }

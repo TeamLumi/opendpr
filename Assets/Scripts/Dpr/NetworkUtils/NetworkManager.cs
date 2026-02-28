@@ -91,8 +91,13 @@ namespace Dpr.NetworkUtils
         public static NetworkParam NetworkParam { get; }
         public static bool IsInternetMode { get; }
 
-        // TODO
-        public bool ProcessingInternetGo() { return false; }
+        public bool ProcessingInternetGo()
+        {
+        	if ((this.networkParam != null) && (this.networkParam.networkType == 1)) {
+        	  return this.processingInternetGo;
+        	}
+        	return false;
+        }
 
         // TODO
         public static void CallInternetGo(bool ngsLogin, bool isShowMessage, Action<bool, SessionErrorType> onFinishedInternetGo, bool freePass = false, bool isNetworkMode = false) { }
@@ -222,8 +227,13 @@ namespace Dpr.NetworkUtils
         // TODO
         public static void SetAutoLogoutControl(bool on) { }
 
-        // TODO
-        public void OnUpdate(float deltaTime) { }
+        public void OnUpdate(float deltaTime)
+        {
+        	if (this.sessionConnector.bRunningSession != 0) {
+        	  this.sessionConnector.OnUpdate();
+        	  CheckReceivePacket();
+        	}
+        }
 
         // TODO
         public void CheckReceivePacket() { }
@@ -231,8 +241,12 @@ namespace Dpr.NetworkUtils
         // TODO
         private void CheckReceivePacketImpl(TransportType transportType, int receiveStationIndex, ReceivePacketCallback _onReceivePacket, ReceivePacketExCallback _onReceivePacketEx) { }
 
-        // TODO
-        private void OnLateUpdate(float deltaTime) { }
+        private void OnLateUpdate(float deltaTime)
+        {
+        	if (this.sessionConnector.bRunningSession != 0) {
+        	  this.sessionConnector.OnLateUpdate();
+        	}
+        }
 
         // TODO
         private void OnSessionEvent(SessionEventData sessionEvent) { }

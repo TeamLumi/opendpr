@@ -2,7 +2,9 @@ namespace Dpr.Contest
 {
 	public sealed class ResultPlayerDataModel : ResultPlayerData
 	{
-		// TODO
-		public int GetTotalScore() { return default; }
+		public int GetTotalScore()
+		{
+			return this.danceScore + this.visualScore + this.wazaScore;
+		}
 	}
 }

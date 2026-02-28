@@ -20,8 +20,27 @@ namespace Dpr.UI
 		
 		public bool isOpen { get => msgWindow != null; }
 		
-		// TODO
-		public static string GetMessageFileName(MessageFileType messageFileType) { return default; }
+		public static string GetMessageFileName(MessageFileType messageFileType)
+		{
+			switch(messageFileType) {
+			case 0:
+			  return StringLiteral_9892;
+			case 1:
+			  return _StringLiteral_11468;
+			case 2:
+			  return StringLiteral_11569;
+			case 3:
+			  return _StringLiteral_11853;
+			case 4:
+			  return StringLiteral_11662;
+			case 5:
+			  return _StringLiteral_10022;
+			case 6:
+			  return _StringLiteral_9013;
+			default:
+			  return 0;
+			}
+		}
 		
 		// TODO
 		public void OpenMsgWindow(MessageFileType messageFileType, string labelName, [Optional] [DefaultParameterValue(true)] bool isWait, [Optional] [DefaultParameterValue(false)] bool isBatchDisplay, [Optional] Action onFinishedMessage, [Optional] Action onCloseWindow) { }

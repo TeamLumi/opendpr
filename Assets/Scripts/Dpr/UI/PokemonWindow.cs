@@ -23,8 +23,13 @@ namespace Dpr.UI
 		private Coroutine _coroutineFormChangeLoadModel;
 		private Param _param;
 		
-		// TODO
-		public override void OnCreate() { }
+		public override void OnCreate()
+		{
+			UIWindow.OnCreate();
+			var uVar1 = UnityEngine_Component__GetComponentInChildren<object>
+			                  (this,1);
+			this._animator = uVar1;
+		}
 		
 		// TODO
 		public void Open(Param param, UIWindowID prevWindowId) { }
@@ -41,11 +46,18 @@ namespace Dpr.UI
 		// TODO
 		private void OnUpdate(float deltaTime) { }
 		
-		// TODO
-		private bool IsFieldWazaSelectMode() { return default; }
+		private bool IsFieldWazaSelectMode()
+		{
+			return (int)this._fieldWazaNo != 0;
+		}
 		
-		// TODO
-		private bool IsSwapMode() { return default; }
+		private bool IsSwapMode()
+		{
+			if (((this._party.IsSwapMode() & 1) == 0) && (!this._itemSwapSelect)) {
+			  return false;
+			}
+			return true;
+		}
 		
 		// TODO
 		private bool IsEnableBox() { return default; }

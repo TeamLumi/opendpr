@@ -14,11 +14,19 @@ namespace Dpr.Contest
 		// TODO
 		public void OnFinalize() { }
 		
-		// TODO
-		public ResultPlayerDataModel GetPlayerData() { return default; }
+		public ResultPlayerDataModel GetPlayerData()
+		{
+			if (this.userIndex < this.playerDataModelArray.Length) {
+			  return *
+			          (this.playerDataModelArray + (int)this.userIndex * 8 + 0x20);
+			}
+			return null;
+		}
 		
-		// TODO
-		public int GetPersonalTotalScore() { return default; }
+		public int GetPersonalTotalScore()
+		{
+			return (int)(this.playerNumDivid * (float)this.maxTotalScore);
+		}
 		
 		// TODO
 		public bool IsUserWin() { return default; }
@@ -41,8 +49,14 @@ namespace Dpr.Contest
 		// TODO
 		private uint CalcAddRankPoint() { return default; }
 		
-		// TODO
-		private float CalcRatio(float a, float b) { return default; }
+		private float CalcRatio(float a, float b)
+		{
+			a = a / b;
+			if (1.0 < a) {
+			  a = 1.0;
+			}
+			return a;
+		}
 		
 		// TODO
 		public void SetPlayerDataModelArray(ResultPlayerDataModel[] playerDataModelArray) { }

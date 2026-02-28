@@ -17,26 +17,74 @@ namespace Dpr.Contest
 		private Image tensionIconImage;
 		private Vector3 startPos = Vector3.zero;
 		
-		// TODO
-		public Transform GetTransform() { return default; }
+		public Transform GetTransform()
+		{
+			return this.statusIconRect;
+		}
 		
-		// TODO
-		public Vector3 GetPmIconPos() { return default; }
+		public Vector3 GetPmIconPos()
+		{
+			this.pmIconRect.position;
+			return null;
+		}
 		
 		// TODO
 		public void Initialize(int index) { }
 		
-		// TODO
-		private void SetComponents() { }
+		private void SetComponents()
+		{
+			var uVar1 = UnityEngine_Component__GetComponent<object>
+			                  (this);
+			this.statusIconRect = uVar1;
+			uVar1 = ComponentExtensions.FindDeep(_StringLiteral_8913,1);
+			uVar1 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar1);
+			this.iconContent = uVar1;
+			uVar1 = ComponentExtensions.FindDeep(_StringLiteral_8914,1);
+			uVar1 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar1);
+			this.wazaTypeIconImage = uVar1;
+			uVar1 = ComponentExtensions.FindDeep(_StringLiteral_8915,1);
+			uVar1 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar1);
+			this.tensionIconImage = uVar1;
+			uVar1 = ComponentExtensions.FindDeep(_StringLiteral_8916,1);
+			uVar1 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar1);
+			this.wazaMaskObj = uVar1;
+			uVar1 = ComponentExtensions.FindDeep(_StringLiteral_8917,1);
+			uVar1 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar1);
+			this.wazaNameText = uVar1;
+			uVar1 = ComponentExtensions.FindDeep(StringLiteral_8918,1);
+			uVar1 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar1);
+			this.playerNameText = uVar1;
+			uVar1 = ComponentExtensions.FindDeep(_StringLiteral_8919,1);
+			var uVar2 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar1);
+			this.pmIconImage = uVar2;
+			uVar1 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar1);
+			this.pmIconRect = uVar1;
+		}
 		
-		// TODO
-		public void ResetIcon() { }
+		public void ResetIcon()
+		{
+			var uVar2 = GameObject.get_activeSelf(this.tensionIconImage.gameObject,0);
+			if (uVar2) {
+			  GameObject.SetActive(this.tensionIconImage.gameObject,0,0);
+			}
+			ExtensionMethods.SetActive(this.wazaMaskObj,0);
+		}
 		
 		// TODO
 		public void SetWazaName(string wazaName, Sprite wazaTypeIconSpr) { }
 		
-		// TODO
-		public void SetMonsterIconSpr(Sprite iconSpr) { }
+		public void SetMonsterIconSpr(Sprite iconSpr)
+		{
+			this.pmIconImage.sprite = iconSpr;
+		}
 		
 		// TODO
 		public void SetPlayerName(string name) { }
@@ -47,19 +95,39 @@ namespace Dpr.Contest
 		// TODO
 		public void ShowTension(Sprite spr, float duration, float jumpPower) { }
 		
-		// TODO
-		public void HideTension() { }
+		public void HideTension()
+		{
+			var uVar2 = GameObject.get_activeSelf(this.tensionIconImage.gameObject,0);
+			if (uVar2) {
+			  GameObject.SetActive(this.tensionIconImage.gameObject,0,0);
+			}
+		}
 		
-		// TODO
-		private void SetTensionImageActive(bool active) { }
+		private void SetTensionImageActive(bool active)
+		{
+			var uVar1 = GameObject.get_activeSelf(this.tensionIconImage.gameObject,0);
+			if (((uVar1 ^ active) & 1) != 0) {
+			  GameObject.SetActive(this.tensionIconImage.gameObject,(active ? 1 : 0) & 1,0);
+			}
+		}
 		
-		// TODO
-		public void ShowWazaMask() { }
+		public void ShowWazaMask()
+		{
+			ExtensionMethods.SetActive(this.wazaMaskObj,1);
+		}
 		
-		// TODO
-		public void HideWazaMask() { }
+		public void HideWazaMask()
+		{
+			ExtensionMethods.SetActive(this.wazaMaskObj,0);
+		}
 		
-		// TODO
-		public void StartContestSkill() { }
+		public void StartContestSkill()
+		{
+			var uVar2 = GameObject.get_activeSelf(this.tensionIconImage.gameObject,0);
+			if (uVar2) {
+			  GameObject.SetActive(this.tensionIconImage.gameObject,0,0);
+			}
+			ExtensionMethods.SetActive(this.wazaMaskObj,1);
+		}
 	}
 }

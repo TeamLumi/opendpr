@@ -19,35 +19,55 @@ namespace Dpr.GMS
 		// TODO
 		public void Remove() { }
 		
-		// TODO
-		private void AssignKeyLeft() { }
+		private void AssignKeyLeft()
+		{
+			this.localInput.Assign(0,0x11000,0);
+		}
 		
-		// TODO
-		private void AssignKeyRight() { }
+		private void AssignKeyRight()
+		{
+			this.localInput.Assign(1,0x44000,0);
+		}
 		
-		// TODO
-		private void AssignKeyUp() { }
+		private void AssignKeyUp()
+		{
+			this.localInput.Assign(2,0x22000,0);
+		}
 		
-		// TODO
-		private void AssignKeyDown() { }
+		private void AssignKeyDown()
+		{
+			this.localInput.Assign(3,0x88000,0);
+		}
 		
-		// TODO
-		private void AssignKeyDecide() { }
+		private void AssignKeyDecide()
+		{
+			this.localInput.Assign(4,0x301,0);
+		}
 		
-		// TODO
-		private void AssignKeyCancel() { }
+		private void AssignKeyCancel()
+		{
+			this.localInput.Assign(5,2,0);
+		}
 		
-		// TODO
-		private void AssignKeyFarCamera() { }
+		private void AssignKeyFarCamera()
+		{
+			this.localInput.Assign(6,8,0);
+		}
 		
-		// TODO
-		private void AssignKeyNearCamera() { }
+		private void AssignKeyNearCamera()
+		{
+			this.localInput.Assign(7,4,0);
+		}
 		
-		// TODO
-		private void AssignKeySpeed() { }
+		private void AssignKeySpeed()
+		{
+			this.localInput.Assign(8,0x40,0);
+		}
 		
-		// TODO
-		private void AssignKeyPlayCry() { }
+		private void AssignKeyPlayCry()
+		{
+			this.localInput.Assign(9,0x80,0);
+		}
 		
 		// TODO
 		public static bool RepeatLeft() { return default; }

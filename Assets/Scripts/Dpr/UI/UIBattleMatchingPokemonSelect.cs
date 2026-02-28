@@ -83,8 +83,13 @@ namespace Dpr.UI
 		// TODO
 		private void SelectComplete(bool complete) { }
 		
-		// TODO
-		private void SetCursorDecide(bool decide) { }
+		private void SetCursorDecide(bool decide)
+		{
+			if (decide) {
+			  this._cursor.SetActive(1);
+			}
+			GameObject.SetActive(this._cursor.gameObject,0,0);
+		}
 		
 		// TODO
 		private void OpenContextMenu() { }

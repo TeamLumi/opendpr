@@ -62,7 +62,19 @@ namespace Dpr.UI
 		// TODO
 		private string GetNumStr(PokemonNum num) { return default; }
 		
-		// TODO
-		private void SetCursorAnchor(RectTransform rectTr) { }
+		private void SetCursorAnchor(RectTransform rectTr)
+		{
+			ExtensionMethods.SetActive(this._cursor,1);
+			rectTr.anchorMin;
+			this._cursor.set_anchorMin();
+			rectTr.anchorMax;
+			this._cursor.set_anchorMax();
+			rectTr.pivot;
+			this._cursor.set_pivot();
+			rectTr.position;
+			this._cursor.set_position();
+			rectTr.sizeDelta;
+			this._cursor.set_sizeDelta();
+		}
 	}
 }

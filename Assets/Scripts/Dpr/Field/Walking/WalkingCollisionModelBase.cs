@@ -30,8 +30,12 @@ namespace Dpr.Field.Walking
         // TODO
         public virtual bool ObjectCollisionUpdate(float deltaTime, bool isIgnoreJump = false) { return false; }
 
-        // TODO
-        public void UpdateCollisionCount() { }
+        public void UpdateCollisionCount()
+        {
+        	if (this.isCollidedAdd) {
+        	}
+        	this.walkData.CollidedCount = this.walkData.CollidedCount + 1;
+        }
 
         // TODO
         public bool CheckCollision(FieldObjectEntity target, float radius, float speed, bool CheckWeight = false, bool isCheckOnly = false, int targetPriority = 999, bool isCheckHeight = false) { return false; }

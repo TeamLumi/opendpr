@@ -48,8 +48,18 @@ namespace Dpr.UI
 		// TODO
 		private void UpdateInput() { }
 		
-		// TODO
-		private bool CheckValidContestWaza() { return default; }
+		private bool CheckValidContestWaza()
+		{
+			if (this.selectPokeParam != null) {
+			  var uVar1 = Pml_PokePara_CoreParam__GetWazaNo
+			                    (this.selectPokeParam,this._wazaPanel.selectIndex,0
+			                    );
+			  uVar1 = WazaDataSystem.IsValid(uVar1);
+			  return uVar1;
+			}
+			ContestUtils.EmitLog(StringLiteral_11793,3);
+			return false;
+		}
 		
 		// TODO
 		public void CloseWindow() { }
@@ -57,8 +67,10 @@ namespace Dpr.UI
 		// TODO
 		private IEnumerator OpClose() { return default; }
 		
-		// TODO
-		public void SetTimeCount(string minutStr, string secondStr) { }
+		public void SetTimeCount(string minutStr, string secondStr)
+		{
+			this._header.SetTime(minutStr,secondStr);
+		}
 		
 		// TODO
 		private void ResetContestParam() { }

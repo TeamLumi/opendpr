@@ -7,8 +7,13 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Execute(Result result, in Description description) { }
 		
-		// TODO
-		private void afterMoveEvent(BTL_POKEPARAM poke) { }
+		private void afterMoveEvent(BTL_POKEPARAM poke)
+		{
+			var uVar1 = poke.IsDead();
+			if (uVar1) {
+			}
+			this.m_pEventLauncher.Event_AfterMove(poke);
+		}
 
 		public class Description
 		{

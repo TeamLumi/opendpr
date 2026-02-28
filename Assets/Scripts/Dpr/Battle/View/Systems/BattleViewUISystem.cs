@@ -218,44 +218,59 @@ namespace Dpr.Battle.View.Systems
             _wazaList.Hide(false, null);
         }
 
-        // TODO
-        public void CMD_UI_SelectTarget_Start(byte poke_index, BTL_POKEPARAM bpp, BTL_ACTION_PARAM_OBJ dest) { }
+        public void CMD_UI_SelectTarget_Start(byte poke_index, BTL_POKEPARAM bpp, BTL_ACTION_PARAM_OBJ dest)
+        {
+        	this._targetSelect.Initialize();
+        	this._targetSelect.Show(0);
+        }
 
         // TODO
         public BattleViewBase.BtlvResult CMD_UI_SelectTarget_Wait() { return default; }
 
-        // TODO
-        public void CMD_UI_SelectTarget_ForceQuit() { }
+        public void CMD_UI_SelectTarget_ForceQuit()
+        {
+        	this._targetSelect.Hide(0,0);
+        }
 
         // TODO
         public void CMD_StartPokeList(PokeSelParam param, BTL_POKEPARAM outMemberParam, uint outMemberIndex, bool fCantEsc, PokeSelResult result) { }
 
-        // TODO
-        public bool CMD_WaitPokeList() { return false; }
+        public bool CMD_WaitPokeList()
+        {
+        	return this._isMenuUIEnd;
+        }
 
         // TODO
         public void CMD_ForceQuitPokeList() { }
 
-        // TODO
-        public bool CMD_WaitForceQuitPokeList() { return false; }
+        public bool CMD_WaitForceQuitPokeList()
+        {
+        	return this._isMenuUIEnd;
+        }
 
         // TODO
         public void CMD_StartPokeSelect(PokeSelParam param, uint outMemberIndex, bool bCancelable, PokeSelResult result) { }
 
-        // TODO
-        public bool CMD_WaitPokeSelect() { return false; }
+        public bool CMD_WaitPokeSelect()
+        {
+        	return this._isMenuUIEnd;
+        }
 
         // TODO
         public void CMD_ForceQuitPokeSelect() { }
 
-        // TODO
-        public bool CMD_WaitForceQuitPokeSelect() { return false; }
+        public bool CMD_WaitForceQuitPokeSelect()
+        {
+        	return this._isMenuUIEnd;
+        }
 
         // TODO
         public void CMD_ExpGet_Start(in BattleViewBase.ExpGetDesc desc, BattleViewBase.ExpGetResult pResult) { }
 
-        // TODO
-        public bool CMD_ExpGet_Wait(ref BattleViewBase.ExpGetResult pResult) { return false; }
+        public bool CMD_ExpGet_Wait(ref BattleViewBase.ExpGetResult pResult)
+        {
+        	return this._isMenuUIEnd;
+        }
 
         // TODO
         public void MSG_Start(MessageTextParseDataModel pStrBuf, bool isKeyWait = true) { }
@@ -284,8 +299,10 @@ namespace Dpr.Battle.View.Systems
         // TODO
         public bool CMD_WaitMsg() { return false; }
 
-        // TODO
-        public bool CMD_WaitMsg_WithoutHide() { return false; }
+        public bool CMD_WaitMsg_WithoutHide()
+        {
+        	return this._isMsgEnd;
+        }
 
         // TODO
         public void CMD_HideMsg() { }
@@ -357,17 +374,25 @@ namespace Dpr.Battle.View.Systems
         // TODO
         public bool MSG_IsRunnning() { return false; }
 
-        // TODO
-        public bool MSG_WaitMenu(ref byte selectId) { return false; }
+        public bool MSG_WaitMenu(ref byte selectId)
+        {
+        	return true;
+        }
 
-        // TODO
-        public bool AutoPilot_EventTest(AutoPilotEventID id) { return false; }
+        public bool AutoPilot_EventTest(AutoPilotEventID id)
+        {
+        	return true;
+        }
 
-        // TODO
-        public bool HUD_StartingDemo_Wait() { return false; }
+        public bool HUD_StartingDemo_Wait()
+        {
+        	return true;
+        }
 
-        // TODO
-        public bool UIFog_Wait() { return false; }
+        public bool UIFog_Wait()
+        {
+        	return true;
+        }
 
         // TODO
         public bool HUD_IsPinch(BtlvPos vPos) { return false; }
@@ -478,8 +503,10 @@ namespace Dpr.Battle.View.Systems
         // TODO
         private void InitializeStatusWindow(BtlvPos pos, bool isEnableTokusei) { }
 
-        // TODO
-        public void SetVisible(BtlvPos vPos, bool isVibivle, bool isWithBallPlate, bool isForced = false) { }
+        public void SetVisible(BtlvPos vPos, bool isVibivle, bool isWithBallPlate, bool isForced = false)
+        {
+        	SetVisibleForced(vPos,isVibivle,(isWithBallPlate ? 1 : 0) & 1);
+        }
 
         // TODO
         public void SetVisibleForced(BtlvPos vPos, bool isVisible, bool isWithBallPlate) { }

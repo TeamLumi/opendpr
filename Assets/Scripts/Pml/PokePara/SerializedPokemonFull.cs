@@ -12,8 +12,13 @@ namespace Pml.PokePara
         // TODO
         public void CopyFrom(in SerializedPokemonFull src) { }
 
-        // TODO
-        public static void Swap(ref SerializedPokemonFull lhs, ref SerializedPokemonFull rhs) { }
+        public static void Swap(ref SerializedPokemonFull lhs, ref SerializedPokemonFull rhs)
+        {
+        	var uVar1 = new byte[0x158];
+        	lhs.CopyTo(uVar1,0);
+        	rhs.CopyTo(lhs,0);
+        	uVar1.CopyTo(rhs,0);
+        }
 
         // TODO
         public void CreateWorkIfNeed() { }

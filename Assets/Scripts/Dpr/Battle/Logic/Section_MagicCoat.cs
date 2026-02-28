@@ -12,8 +12,10 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void executeMagicCoat(byte robPokeID, byte targetPokeID, BtlPokePos targetPos, WazaNo waza) { }
 		
-		// TODO
-		private void event_WazaReflect(BTL_POKEPARAM robPoke, BTL_POKEPARAM targetPoke, WazaNo waza) { }
+		private void event_WazaReflect(BTL_POKEPARAM robPoke, BTL_POKEPARAM targetPoke, WazaNo waza)
+		{
+			this.m_pEventLauncher.Event_WazaReflect();
+		}
 		
 		// TODO
 		private void getWazaParam(WazaParam wazaParam, BTL_POKEPARAM attacker, WazaNo waza) { }

@@ -49,8 +49,10 @@ namespace Dpr.SubContents
 		// TODO
 		public void SetBatchDisplayFlag(bool flag) { }
 		
-		// TODO
-		public void SetNetworkMode(bool isNetwork) { }
+		public void SetNetworkMode(bool isNetwork)
+		{
+			this.isNetworkMode = (isNetwork ? 1 : 0) & 1;
+		}
 		
 		// TODO
 		public void HideKeywaitIcon() { }
@@ -73,8 +75,18 @@ namespace Dpr.SubContents
 		// TODO
 		public void ShowInputCloseItemPocketMessage(string labelName, int itemNo, [Optional] Action onFinishMessage, [Optional] Action onClosedWindow) { }
 		
-		// TODO
-		private void OnUpdate(float deltaTime) { }
+		private void OnUpdate(float deltaTime)
+		{
+			if ((int)this.currentMode == 2) {
+			  WaitCloseWindow();
+			}
+			if ((int)this.currentMode != 1) {
+			  if ((int)this.currentMode == 0) {
+			    UpdateAutoClose();
+			  }
+			}
+			UpdateInputClose();
+		}
 		
 		// TODO
 		private void UpdateAutoClose(float deltaTime) { }
@@ -88,8 +100,14 @@ namespace Dpr.SubContents
 		// TODO
 		private void WaitCloseWindow() { }
 		
-		// TODO
-		public void CloseMsgWindow() { }
+		public void CloseMsgWindow()
+		{
+			this.currentMode = (ShowMode)2;
+			var uVar1 = 0.IsOpen;
+			if ((uVar1 & 1) != 0) {
+			  MsgWindowManager.CloseMsg(0);
+			}
+		}
 
 		private enum ShowMode : int
 		{

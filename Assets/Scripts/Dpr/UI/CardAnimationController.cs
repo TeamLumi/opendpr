@@ -29,8 +29,10 @@ namespace Dpr.UI
 		// TODO
 		public void RegisterAnimator(Animator animator, bool isMain) { }
 		
-		// TODO
-		public void RegisterCardModelViewController(CardModelViewController cardModelViewController) { }
+		public void RegisterCardModelViewController(CardModelViewController cardModelViewController)
+		{
+			this.cardModelViewController = cardModelViewController;
+		}
 		
 		// TODO
 		public void ShowCard() { }
@@ -47,11 +49,15 @@ namespace Dpr.UI
 		// TODO
 		public void CloseCover() { }
 		
-		// TODO
-		public void SetEnviromentLight(int isEnable) { }
+		public void SetEnviromentLight(int isEnable)
+		{
+			this.cardModelViewController.SetEnviromentLight(isEnable == 1);
+		}
 		
-		// TODO
-		public void RebindMain() { }
+		public void RebindMain()
+		{
+			this.mainAnimator.Rebind();
+		}
 		
 		// TODO
 		private void SetAnimatorParams(int fromCard, int toCard, int fromCase, int toCase) { }

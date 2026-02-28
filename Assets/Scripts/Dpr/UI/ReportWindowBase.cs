@@ -32,8 +32,13 @@ namespace Dpr.UI
         private DateTime _prevNow;
         private PLAYTIME _prevPlayTime;
 
-        // TODO
-        public override void OnCreate() { }
+        public override void OnCreate()
+        {
+        	UIWindow.OnCreate();
+        	var uVar1 = UnityEngine_Component__GetComponentInChildren<object>
+        	                  (this,1);
+        	this._animator = uVar1;
+        }
 
         // TODO
         public virtual void Open(UIWindowID prevWindowId) { }

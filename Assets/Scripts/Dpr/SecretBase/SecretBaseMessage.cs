@@ -5,20 +5,34 @@ namespace Dpr.SecretBase
 {
 	public static class SecretBaseMessage
 	{
-		// TODO
-		public static void ShowDontHaveStatue(Action onFinishedShowAllMessage, Action onFinishedCloseWindow) { }
+		public static void ShowDontHaveStatue(Action onFinishedShowAllMessage, Action onFinishedCloseWindow)
+		{
+			var uVar1 = CreateParam(_StringLiteral_10116,onFinishedShowAllMessage,onFinishedCloseWindow);
+			MsgWindowManager.OpenMsg(uVar1);
+		}
 		
-		// TODO
-		public static void ShowNothingStatueEffect(Action onFinishedShowAllMessage, Action onFinishedCloseWindow) { }
+		public static void ShowNothingStatueEffect(Action onFinishedShowAllMessage, Action onFinishedCloseWindow)
+		{
+			var uVar1 = CreateParam(_StringLiteral_10117,onFinishedShowAllMessage,onFinishedCloseWindow);
+			MsgWindowManager.OpenMsg(uVar1);
+		}
 		
-		// TODO
-		public static void ShowSetThisSecretBase(Action onFinishedShowAllMessage, Action onFinishedCloseWindow) { }
+		public static void ShowSetThisSecretBase(Action onFinishedShowAllMessage, Action onFinishedCloseWindow)
+		{
+			var uVar1 = CreateParam(_StringLiteral_10118,onFinishedShowAllMessage,onFinishedCloseWindow);
+			MsgWindowManager.OpenMsg(uVar1);
+		}
 		
-		// TODO
-		public static void ShowUnsetThisSecretBase(Action onFinishedShowAllMessage, Action onFinishedCloseWindow) { }
+		public static void ShowUnsetThisSecretBase(Action onFinishedShowAllMessage, Action onFinishedCloseWindow)
+		{
+			var uVar1 = CreateParam(_StringLiteral_10119,onFinishedShowAllMessage,onFinishedCloseWindow);
+			MsgWindowManager.OpenMsg(uVar1);
+		}
 		
-		// TODO
-		public static void Close() { }
+		public static void Close()
+		{
+			MsgWindowManager.CloseMsg(0);
+		}
 		
 		// TODO
 		private static MsgWindowParam CreateParam(string labelName, Action onFinishedShowAllMessage, Action onFinishedCloseWindow) { return default; }

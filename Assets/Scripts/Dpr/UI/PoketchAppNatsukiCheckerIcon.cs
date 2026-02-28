@@ -135,11 +135,19 @@ namespace Dpr.UI
 		// TODO
 		public void OnTouchDispaly(Vector2 touchPos) { }
 		
-		// TODO
-		public void OnReleaseDispaly() { }
+		public void OnReleaseDispaly()
+		{
+			this._isTouch = false;
+		}
 		
-		// TODO
-		public void OnDoubleTap() { }
+		public void OnDoubleTap()
+		{
+			if ((int)this._state != 4) {
+			  ExtensionMethods.SetActive(this._shadowImage,1);
+			  this._timeCounter = 0;
+			  this._state = (NatsukiCheckerIconState)4;
+			}
+		}
 		
 		// TODO
 		public bool IsColision(Vector2 pos) { return default; }

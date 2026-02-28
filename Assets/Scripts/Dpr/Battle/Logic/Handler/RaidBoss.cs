@@ -32,11 +32,35 @@
         // TODO
         public static EventFactor Add(EventSystem eventSystem, BTL_POKEPARAM poke, RaidBossHandlerType handlerType) { return null; }
 
-        // TODO
-        public static bool canAdd(EventSystem eventSystem, BTL_POKEPARAM poke, RaidBossHandlerType handlerType) { return false; }
+        public static bool canAdd(EventSystem eventSystem, BTL_POKEPARAM poke, RaidBossHandlerType handlerType)
+        {
+        	var uVar3 = eventSystem.GetFactorContainer();
+        	var uVar2 = poke.GetID();
+        	var lVar4 = uVar3.SeekFactor(7,uVar2);
+        	while( true ) {
+        	  if (lVar4 == null) {
+        	    return true;
+        	  }
+        	  var sVar1 = lVar4.GetSubID();
+        	  if (sVar1 == handlerType) break;
+        	  lVar4 = uVar3.GetNextFactor(lVar4,0);
+        	}
+        	return false;
+        }
 
-        // TODO
-        public static void Remove(EventSystem pEventSystem, BTL_POKEPARAM poke, RaidBossHandlerType handlerType) { }
+        public static void Remove(EventSystem pEventSystem, BTL_POKEPARAM poke, RaidBossHandlerType handlerType)
+        {
+        	var uVar2 = poke.GetID();
+        	var uVar3 = pEventSystem.GetFactorContainer();
+        	var lVar4 = uVar3.SeekFactor(7,uVar2);
+        	while (lVar4 != 0) {
+        	  var sVar1 = lVar4.GetSubID();
+        	  if (sVar1 == handlerType) {
+        	    pEventSystem.RemoveFactor(lVar4);
+        	  }
+        	  lVar4 = uVar3.SeekFactor(7,uVar2);
+        	}
+        }
 
         public static EventFactor.EventHandlerTable[] ADD_Reinforce()
         {

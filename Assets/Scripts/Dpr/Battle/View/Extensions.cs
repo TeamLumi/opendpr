@@ -62,8 +62,10 @@ namespace Dpr.Battle.View
         // TODO
         public static BattleWaitCameraData.SheetWaitCameraData[] GetDemoCaptureWaitCameraDatas(this BattleWaitCameraData self) { return null; }
 
-        // TODO
-        public static MaskPattern GetMaskPattern(this BattleWaitCameraData.SheetWaitCameraData self) { return default; }
+        public static MaskPattern GetMaskPattern(this BattleWaitCameraData.SheetWaitCameraData self)
+        {
+        	return (MaskPattern)0;
+        }
 
         // TODO
         public static BattleDataTable.SheetSetupIntroPlaySequenceData GetSetupIntroPlaySequenceData(this BattleDataTable self, BattleSetupIntroID id) { return null; }

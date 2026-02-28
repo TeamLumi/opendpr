@@ -15,7 +15,9 @@ namespace Dpr.UI
 		// TODO
 		public void Setup(BTL_POKEPARAM battlePokemonParam, int wazaIndex) { }
 		
-		// TODO
-		public void Select(bool enabled) { }
+		public void Select(bool enabled)
+		{
+			this._item.Select((enabled ? 1 : 0) & 1);
+		}
 	}
 }

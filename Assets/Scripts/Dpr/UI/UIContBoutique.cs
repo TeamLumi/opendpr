@@ -78,7 +78,9 @@ namespace Dpr.UI
 		// TODO
 		private IEnumerator OpClose(UnityAction<UIWindow> onClosed_) { return default; }
 		
-		// TODO
-		public void SetTimeCount(string minutStr, string secondStr) { }
+		public void SetTimeCount(string minutStr, string secondStr)
+		{
+			this._header.SetTime(minutStr,secondStr);
+		}
 	}
 }

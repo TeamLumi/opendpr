@@ -34,11 +34,15 @@ namespace Dpr.UI
 		public UIText NameText { get => nameText; }
 		public bool IsAllowShowDescription { get; private set; }
 		
-		// TODO
-		public int GetIndex() { return default; }
+		public int GetIndex()
+		{
+			return this.index;
+		}
 		
-		// TODO
-		public void SetIndex(int index) { }
+		public void SetIndex(int index)
+		{
+			this.index = index;
+		}
 		
 		// TODO
 		public RectTransform GetRectTransform() { return default; }
@@ -64,8 +68,10 @@ namespace Dpr.UI
 		// TODO
 		public void ChangeLanguage(MessageEnumData.MsgLangId langId) { }
 		
-		// TODO
-		public void UpdatePokemonIcon(PokemonParam pokemonParam) { }
+		public void UpdatePokemonIcon(PokemonParam pokemonParam)
+		{
+			this.pokemonIcon.Load(pokemonParam,0xffffffff,0xffffffff);
+		}
 		
 		// TODO
 		public void CopyTo(ZukanPokemonInfoButton button) { }

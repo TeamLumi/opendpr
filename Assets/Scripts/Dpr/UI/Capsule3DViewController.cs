@@ -71,8 +71,10 @@ namespace Dpr.UI
 		// TODO
 		public void SetActive(bool isActive) { }
 		
-		// TODO
-		public void SetCapsuleActive(bool isActive) { }
+		public void SetCapsuleActive(bool isActive)
+		{
+			this.capsuleObject.SetActive((isActive ? 1 : 0) & 1);
+		}
 		
 		// TODO
 		public IEnumerator Redraw() { return default; }
@@ -80,8 +82,12 @@ namespace Dpr.UI
 		// TODO
 		public void Setup(CapsuleInfo capsuleInfo, bool isResetView) { }
 		
-		// TODO
-		public void SetBG(RectTransform rectTransform) { }
+		public void SetBG(RectTransform rectTransform)
+		{
+			rectTransform.SetParent(this.bgRoot,0);
+			GameObject.SetActive(this.bgCamera.gameObject,0,0);
+			GameObject.SetActive(this.bgCamera.gameObject,1,0);
+		}
 		
 		// TODO
 		public void ShowListMode() { }

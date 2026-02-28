@@ -24,7 +24,11 @@ namespace Dpr.UI
 		// TODO
 		public void PlayCompareHeightSe(int id) { }
 		
-		// TODO
-		public void StopSe() { }
+		public void StopSe()
+		{
+			if (this.currentAudioInstance != null) {
+			  this.currentAudioInstance.Stop();
+			}
+		}
 	}
 }

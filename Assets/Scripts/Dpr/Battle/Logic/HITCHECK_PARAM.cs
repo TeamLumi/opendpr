@@ -12,17 +12,33 @@ namespace Dpr.Battle.Logic
         public bool isDeadMessageDisplay;
         public bool isAffinityMessageDisplay;
 
-        // TODO
-        public bool IsPluralHitWaza(byte max) { return false; }
+        public bool IsPluralHitWaza(byte max)
+        {
+        	if (this.isPluralHitWaza) {
+        	  return true;
+        	}
+        	return max == '\x01' && 1 < this.countMax;
+        }
 
-        // TODO
-        public bool IsPluralHitException() { return false; }
+        public bool IsPluralHitException()
+        {
+        	if ((!this.isPluralHitWaza) && (1 < this.countMax)) {
+        	  return true;
+        	}
+        	return false;
+        }
 
-        // TODO
-        public bool IsFirstTime() { return false; }
+        public bool IsFirstTime()
+        {
+        	return this.count == 0;
+        }
 
-        // TODO
-        public void SetPluralHitAffinity(TypeAffinity.AffinityID affinity) { }
+        public void SetPluralHitAffinity(TypeAffinity.AffinityID affinity)
+        {
+        	if ((int)this.pluralHitAffinity == 7) {
+        	  this.pluralHitAffinity = (AffinityID)(affinity);
+        	}
+        }
 
         // TODO
         public HITCHECK_PARAM() { }

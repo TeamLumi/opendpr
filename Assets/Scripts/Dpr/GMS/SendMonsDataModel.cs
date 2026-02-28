@@ -19,7 +19,9 @@ namespace Dpr.GMS
 		// TODO
 		public void CreateDemoPokeParam(in byte[] coreData) { }
 		
-		// TODO
-		public void CopySendCoreData(in byte[] coreData) { }
+		public void CopySendCoreData(in byte[] coreData)
+		{
+			Array.Copy(coreData,this.coreData,0x148);
+		}
 	}
 }

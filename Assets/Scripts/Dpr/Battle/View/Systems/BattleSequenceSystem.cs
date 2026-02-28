@@ -1396,11 +1396,15 @@ namespace Dpr.Battle.View.Systems
 		// TODO
 		public override void Stop() { }
 		
-		// TODO
-		protected override void OnUpdate(float deltaTime, int step = 1) { }
+		protected override void OnUpdate(float deltaTime, int step = 1)
+		{
+			OnUpdateCore(deltaTime,step,1);
+		}
 		
-		// TODO
-		protected override void OnLateUpdate(float deltaTime, int step) { }
+		protected override void OnLateUpdate(float deltaTime, int step)
+		{
+			OnUpdateCore(deltaTime,step);
+		}
 		
 		// TODO
 		private void OnUpdateCore(float deltaTime, int step, bool isUpdate) { }
@@ -1717,8 +1721,13 @@ namespace Dpr.Battle.View.Systems
 		// TODO
 		private void OpenMsgWindow(MessageTextParseDataModel dataModel) { }
 		
-		// TODO
-		private void CNT_SEQ_FUNC_DEF_CloseMessage(SequenceFile pSeqFile, ISequenceViewSystem pViewSystem, CommandParam param) { }
+		private void CNT_SEQ_FUNC_DEF_CloseMessage(SequenceFile pSeqFile, ISequenceViewSystem pViewSystem, CommandParam param)
+		{
+			var uVar1 = 0.IsOpen;
+			if ((uVar1 & 1) != 0) {
+			  MsgWindowManager.CloseMsg(0);
+			}
+		}
 		
 		// TODO
 		private void CNT_SEQ_FUNC_DEF_SwitchMonitor(SequenceFile pSeqFile, ISequenceViewSystem pViewSystem, CommandParam param) { }

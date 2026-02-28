@@ -16,7 +16,9 @@ namespace Dpr.UI
 		// TODO
 		public void Setup(ushort itemNo) { }
 		
-		// TODO
-		public void SetBaseSprite(Sprite sprite) { }
+		public void SetBaseSprite(Sprite sprite)
+		{
+			this.baseImage.sprite = sprite;
+		}
 	}
 }

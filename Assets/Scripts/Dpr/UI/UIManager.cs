@@ -1149,8 +1149,10 @@ namespace Dpr.UI
         // TODO
         public Sprite GetSpriteMonsterBall(BallId ballId) { return null; }
 
-        // TODO
-        public Sprite GetSpriteIllegalMonsterBall() { return null; }
+        public Sprite GetSpriteIllegalMonsterBall()
+        {
+        	return this._spriteMonsterBallIllegal;
+        }
 
         // TODO
         public static uint GetParentId(PokemonParam pokemonParam) { return 0; }
@@ -1241,8 +1243,32 @@ namespace Dpr.UI
             // Empty
         }
 
-        // TODO
-        public static Taste GetLikeTaste(PokemonParam pokemonParam) { return Taste.KARAI; }
+        public static Taste GetLikeTaste(PokemonParam pokemonParam)
+        {
+        	var iVar1 = pokemonParam.JudgeTaste(0);
+        	var uVar2 = 0;
+        	if (iVar1 != 1) {
+        	  uVar2 = 1;
+        	  iVar1 = pokemonParam.JudgeTaste(1);
+        	  if (iVar1 != 1) {
+        	    uVar2 = 2;
+        	    iVar1 = pokemonParam.JudgeTaste(2);
+        	    if (iVar1 != 1) {
+        	      uVar2 = 3;
+        	      iVar1 = pokemonParam.JudgeTaste(3);
+        	      if (iVar1 != 1) {
+        	        iVar1 = pokemonParam.JudgeTaste(4);
+        	        uVar2 = 4;
+        	        if (iVar1 != 1) {
+        	          uVar2 = 5;
+        	        }
+        	        return uVar2;
+        	      }
+        	    }
+        	  }
+        	}
+        	return uVar2;
+        }
 
         // TODO
         public static BTL_POKEPARAM ToBattlePokemonParam(PokemonParam pokemonParam) { return null; }
@@ -1282,8 +1308,38 @@ namespace Dpr.UI
         // TODO
         public static List<PokemonParam> CreatePokemonParamsByBattle() { return null; }
 
-        // TODO
-        public static PokemonParam CreatePokemonParamByBattle(BTL_POKEPARAM battlePokemonParam) { return null; }
+        public static PokemonParam CreatePokemonParamByBattle(BTL_POKEPARAM battlePokemonParam)
+        {
+        	byte bVar2;
+        	var uVar4 = battlePokemonParam.GetSrcDataConst();
+        	var uVar5 = new PokemonParam(uVar4);
+        	var uVar3 = battlePokemonParam.GetValue(0xd);
+        	uVar5.SetHp(uVar3);
+        	uVar3 = (ushort)(battlePokemonParam.GetValue(0xf));
+        	uVar5.SetMaxHp(uVar3);
+        	uVar3 = (ushort)(battlePokemonParam.GetValue(0x17));
+        	uVar5.SetExp(uVar3);
+        	uVar3 = (ushort)(battlePokemonParam.GetPokeSick());
+        	uVar5.SetSick(uVar3);
+        	uVar3 = (ushort)(battlePokemonParam.GetItem());
+        	uVar5.SetItem(uVar3);
+        	var cVar1 = battlePokemonParam.WAZA_GetCount_Org();
+        	if (cVar1 != 0) {
+        	  var uVar6 = 0;
+        	  do {
+        	    uVar3 = (ushort)(battlePokemonParam.WAZA_GetID_Org(uVar6));
+        	    uVar5.SetWaza(uVar6,uVar3);
+        	    uVar4 = battlePokemonParam.GetSrcData();
+        	    uVar3 = (ushort)(uVar4.GetWazaPPUpCount(uVar6));
+        	    uVar5.SetWazaPPUpCount(uVar6,uVar3);
+        	    uVar3 = (ushort)(battlePokemonParam.WAZA_GetPP_Org(uVar6));
+        	    uVar5.SetWazaPP(uVar6,uVar3);
+        	    uVar6 = uVar6 + 1;
+        	    bVar2 = (byte)(battlePokemonParam.WAZA_GetCount_Org());
+        	  } while (uVar6 < bVar2);
+        	}
+        	return uVar5;
+        }
 
         public static PokemonParam GetTeamPokemon(int team, int pos)
         {
@@ -1646,8 +1702,10 @@ namespace Dpr.UI
             return Profiler.GetTotalUnusedReservedMemoryLong();
         }
 
-        // TODO
-        public static bool IsLumpingRibbon(int ribbonNo) { return false; }
+        public static bool IsLumpingRibbon(int ribbonNo)
+        {
+        	return ribbonNo - 0x25U < 2;
+        }
 
         // TODO
         public static int GetLumpingRibbonMaxNum(int ribbonNo) { return 0; }

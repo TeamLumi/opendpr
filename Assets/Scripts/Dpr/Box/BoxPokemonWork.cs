@@ -119,7 +119,26 @@ namespace Dpr.Box
         // TODO
         public static int UpdateTrayMax() { return 0; }
 
-        // TODO
-        public static void RecoverAll() { }
+        public static void RecoverAll()
+        {
+        	var uVar1 = new PokemonParam();
+        	var iVar3 = 0;
+        	var iVar4 = 0;
+        	while( true ) {
+        	  do {
+        	    GetPokemon(uVar1,iVar3,iVar4);
+        	    var uVar2 = uVar1.IsNull();
+        	    if (((uVar2 & 1) == 0) && (uVar2 = uVar1.IsEgg(2), (uVar2 & 1) == 0)
+        	       ) {
+        	      uVar1.RecoverAll();
+        	      UpdatePokemon(uVar1,iVar3,iVar4);
+        	    }
+        	    iVar4 = iVar4 + 1;
+        	  } while (iVar4 != 0x1e);
+        	  iVar3 = iVar3 + 1;
+        	  if (iVar3 == 0x28) break;
+        	  iVar4 = 0;
+        	}
+        }
     }
 }

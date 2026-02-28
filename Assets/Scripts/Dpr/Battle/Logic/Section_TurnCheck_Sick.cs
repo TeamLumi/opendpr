@@ -4,8 +4,13 @@ namespace Dpr.Battle.Logic
 {
 	public sealed class Section_TurnCheck_Sick : Section
 	{
-		// TODO
-		private static DamageCause getDamageCause(WazaSick sick) { return default; }
+		private static DamageCause getDamageCause(WazaSick sick)
+		{
+			if (sick - 4U < 7) {
+			  return 0x2b2a0000002829 >> (((ulong)(sick - 4U) & 7) << 3);
+			}
+			return (DamageCause)0;
+		}
 		
 		public Section_TurnCheck_Sick(in CommonParam commonParam) : base(commonParam) { }
 

@@ -5,10 +5,16 @@ namespace Pml.PokePara
 		private const ushort BOXMARK_UNIT_MASK = 3;
 		private const ushort BOXMARK_UNIT_BIT_COUNT = 2;
 		
-		// TODO
-		public static BoxMarkColor GetBoxMarkColor(ushort value, BoxMark mark) { return default; }
+		public static BoxMarkColor GetBoxMarkColor(ushort value, BoxMark mark)
+		{
+			var uVar1 = ((int)mark & 0xf) << 1;
+			return (value & 3 << (int)uVar1 & 0xffff) >> (int)uVar1;
+		}
 		
-		// TODO
-		public static ushort SetBoxMarkColor(ushort value, BoxMark mark, BoxMarkColor color) { return default; }
+		public static ushort SetBoxMarkColor(ushort value, BoxMark mark, BoxMarkColor color)
+		{
+			var uVar1 = ((int)mark & 0xf) << 1;
+			return (ushort)(value & (3 << (int)uVar1 ^ 0xffffffffU) & 0xffff | color << (int)uVar1);
+		}
 	}
 }

@@ -57,8 +57,18 @@ namespace Dpr.Contest
 		// TODO
 		public void ResetParam(DanceSectionData danceSectionData) { }
 		
-		// TODO
-		public void CreateGameParameterFromContestDataModel(ContestDataModel contestDataModel) { }
+		public void CreateGameParameterFromContestDataModel(ContestDataModel contestDataModel)
+		{
+			var uVar1 = contestDataModel.GetScoreDataArray();
+			CreateTapScoreTable(uVar1);
+			uVar1 = contestDataModel.GetTapTimingDataArray();
+			CreateTapTimingData(uVar1);
+			uVar1 = contestDataModel.GetScoreDataArray();
+			CreateChangeTensionDataTable(uVar1);
+			uVar1 = contestDataModel.GetComboBonusDataArray();
+			var uVar2 = new Contest_ComboBonusDataModel(uVar1);
+			this.comboBonus = uVar2;
+		}
 		
 		// TODO
 		private void CreateTapScoreTable(ContestConfigDatas.SheetTapScoreData[] scoreDataArray) { }
@@ -69,11 +79,16 @@ namespace Dpr.Contest
 		// TODO
 		private void CreateChangeTensionDataTable(ContestConfigDatas.SheetTapScoreData[] scoreDataArray) { }
 		
-		// TODO
-		private void CreateComboBonusData(ContestConfigDatas.SheetComboBonusData[] bonusDataArray) { }
+		private void CreateComboBonusData(ContestConfigDatas.SheetComboBonusData[] bonusDataArray)
+		{
+			var uVar1 = new Contest_ComboBonusDataModel(bonusDataArray);
+			this.comboBonus = uVar1;
+		}
 		
-		// TODO
-		public PlayerDanceDataModel GetUserDanceData() { return default; }
+		public PlayerDanceDataModel GetUserDanceData()
+		{
+			return this.userDataModel;
+		}
 		
 		// TODO
 		public PlayerDanceDataModel GetPlayerDanceDataByIndex(int index) { return default; }
@@ -114,8 +129,10 @@ namespace Dpr.Contest
 		// TODO
 		private int GetHeartGaugeScore(TensionID tensionID, NoteTapTimingID timingID) { return default; }
 		
-		// TODO
-		public float GetHeartGaugeRatio() { return default; }
+		public float GetHeartGaugeRatio()
+		{
+			return (float)this.userDataModel.heartGaugeValue / 100.0;
+		}
 		
 		public float BeatSec { get => ONE_MINUTE / musicBpm; }
 		public bool IsFinishCreate { get => currentNoteDataList.Count <= currentDataIndex; }
@@ -150,8 +167,11 @@ namespace Dpr.Contest
 		// TODO
 		public TapResultData OnReleaseHold(int playerIndex, NoteTapTimingID holdTimingID) { return default; }
 		
-		// TODO
-		public void FinishLongTap() { }
+		public void FinishLongTap()
+		{
+			this.longStartNote = null;
+			this.totalSec = 0;
+		}
 		
 		// TODO
 		public TapResultData OnNPCReleaseHold(int playerIndex, NoteTapTimingID holdTimingID) { return default; }
@@ -175,16 +195,29 @@ namespace Dpr.Contest
 			return default;
 		}
 		
-		// TODO
-		public float CalcTotalRatio() { return default; }
+		public float CalcTotalRatio()
+		{
+			var fVar1 = (float)(this.totalScore + this.totalVisualScore) /
+			        (float)this.maxScore;
+			if (1.0 < fVar1) {
+			  fVar1 = 1.0;
+			}
+			return fVar1;
+		}
 		
 		public bool CanUpdateAcceptChain { get => canUpdateChain; }
 		public int ChainCount { get => chainCount; }
 		public int LastUsePlayerIndex { get => lastUsePlayerIndex; }
 		public float DownVolumePersent { get => downVolumePersent; }
 		
-		// TODO
-		public bool IsShowChainCount() { return default; }
+		public unsafe bool IsShowChainCount()
+		{
+			if (this.objManager.userIndex < this.comboBonusDataArray.Length) {
+			  return *(byte *)
+			          (this.comboBonusDataArray + (int)this.objManager.userIndex * 8[0] + 0x10);
+			}
+			return false;
+		}
 		
 		// TODO
 		public void LaunchSkill(double elapsedTime, int playerIndex, bool isPrevSameWazaType) { }
@@ -211,8 +244,12 @@ namespace Dpr.Contest
 		
 		public bool IsAlreadyUseUserSkill { get => userDataModel.IsAlreadyUseSkill; }
 		
-		// TODO
-		public bool CheckSamePrevWazaType() { return default; }
+		public bool CheckSamePrevWazaType()
+		{
+			return this.comboBonus.prevWazaType ==
+			       this.userDataModel.contestSkill.wazaType;
+			return false;
+		}
 		
 		// TODO
 		public bool CheckSameUserWazaType(int palyerIndex) { return default; }

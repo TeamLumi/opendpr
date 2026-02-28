@@ -15,7 +15,7 @@ namespace Dpr.GMS
 		private Animator animator;
 		private AnimState currentAnimState;
 		private Sprite achieveTitleSpr;
-		private bool bIsActive;
+		internal bool bIsActive;
 		
 		// TODO
 		public void Initialize() { }

@@ -137,20 +137,26 @@ namespace Dpr.SequenceEditor
 		// TODO
 		public void SetPosition(Vector3 pos, Quaternion target) { }
 		
-		// TODO
-		public Vector3 GetPosition() { return default; }
+		public Vector3 GetPosition()
+		{
+			return this.m_position;
+		}
 		
 		// TODO
 		public void SetPositionOffset(Vector3 pos) { }
 		
-		// TODO
-		public Vector3 GetPositionOffset() { return default; }
+		public Vector3 GetPositionOffset()
+		{
+			return this.m_positionOffset;
+		}
 		
 		// TODO
 		public void SetRotation(Vector3 rotation) { }
 		
-		// TODO
-		public Vector3 GetRotation() { return default; }
+		public Vector3 GetRotation()
+		{
+			return this.m_rotation;
+		}
 		
 		// TODO
 		public void SetTarget(Vector3 value) { }
@@ -158,17 +164,23 @@ namespace Dpr.SequenceEditor
 		// TODO
 		public void SetTarget(float dist) { }
 		
-		// TODO
-		public Vector3 GetTarget() { return default; }
+		public Vector3 GetTarget()
+		{
+			return this.m_target;
+		}
 		
-		// TODO
-		public Transform GetTargetTransform() { return default; }
+		public Transform GetTargetTransform()
+		{
+			return this.m_targetTransform;
+		}
 		
 		// TODO
 		public void SetTargetOffset(Vector3 value) { }
 		
-		// TODO
-		public Vector3 GetTargetOffset() { return default; }
+		public Vector3 GetTargetOffset()
+		{
+			return this.m_targetOffset;
+		}
 		
 		// TODO
 		protected Vector3 CalcTarget() { return default; }
@@ -182,26 +194,39 @@ namespace Dpr.SequenceEditor
 		// TODO
 		public Vector3 CalcPseudoTarget(in Vector3 pos, in Vector3 rot) { return default; }
 		
-		// TODO
-		public PostEffects GetPostEffects() { return default; }
+		public PostEffects GetPostEffects()
+		{
+			return this._postEffects;
+		}
 		
-		// TODO
-		public void SetCameraAnimationCheckGround(bool value) { }
+		public void SetCameraAnimationCheckGround(bool value)
+		{
+			this.m_isCheckGround = (value ? 1 : 0) & 1;
+		}
 		
-		// TODO
-		public bool GetCameraAnimationCheckGround() { return default; }
+		public bool GetCameraAnimationCheckGround()
+		{
+			return this.m_isCheckGround;
+		}
 		
-		// TODO
-		public void SetCameraAnimationmFreezeOnGround(bool value) { }
+		public void SetCameraAnimationmFreezeOnGround(bool value)
+		{
+			this.m_isCheckFreezeOnGround = (value ? 1 : 0) & 1;
+			this.m_isTransformFreeze = false;
+		}
 		
-		// TODO
-		public bool GetCameraAnimationmFreezeOnGround() { return default; }
+		public bool GetCameraAnimationmFreezeOnGround()
+		{
+			return this.m_isCheckFreezeOnGround;
+		}
 		
 		// TODO
 		public void SetFreezeHeight(float height = DEFAULT_FREEZE_CAMERA_HEIGHT) { }
 		
-		// TODO
-		public float GetFreezeHeight() { return default; }
+		public float GetFreezeHeight()
+		{
+			return this.m_freezeHeight;
+		}
 		
 		// TODO
 		public void SyncOtherCamera(CameraCommander commander, bool isForceUpdate = false) { }

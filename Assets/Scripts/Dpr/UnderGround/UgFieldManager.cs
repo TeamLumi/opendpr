@@ -87,8 +87,10 @@ namespace Dpr.UnderGround
         private UgNetworkManager.UgOnlinePlayerData nowBasePlayerData;
         public UgSecretBase EffectiveBase;
 
-        // TODO
-        public UgFieldDataManager GetDataMng() { return default; }
+        public UgFieldDataManager GetDataMng()
+        {
+        	return this.dataMng;
+        }
 
         public UgNetworkManager.UgOnlinePlayerData nowBasePlayerInfo { get => nowBasePlayerIndex == -1 ? null : nowBasePlayerData; }
         public bool isOtherBase { get => nowBasePlayerInfo != null; }
@@ -326,8 +328,10 @@ namespace Dpr.UnderGround
         // TODO
         public float GetReturnYawAngle() { return 0.0f; }
 
-        // TODO
-        public ZoneID GetSecBaseReturnZoneID() { return ZoneID.UNKNOWN; }
+        public ZoneID GetSecBaseReturnZoneID()
+        {
+        	return (long)this.nowBaseModel;
+        }
 
         // TODO
         private void YmenuHandler(int selectIndex) { }
@@ -501,8 +505,15 @@ namespace Dpr.UnderGround
         // TODO
         private void ClearLeaveCheckTarget() { }
 
-        // TODO
-        private void OnLeaveOther(int LeavePlayerStationIndex) { }
+        private void OnLeaveOther(int LeavePlayerStationIndex)
+        {
+        	if (this.targetStationIndex == LeavePlayerStationIndex) {
+        	  if (this.OnLeaveTargetPlayer != null) {
+        	    this.OnLeaveTargetPlayer.Invoke();
+        	  }
+        	  ClearLeaveCheckTarget();
+        	}
+        }
 
         // TODO
         public void TEST() { }
@@ -516,8 +527,12 @@ namespace Dpr.UnderGround
         // TODO
         public bool AddKousekiCount(int num) { return false; }
 
-        // TODO
-        public void UpdateKousekiUI() { }
+        public void UpdateKousekiUI()
+        {
+        	if (this.miniMap != null) {
+        	  this.miniMap.UpdateLightStoneCount();
+        	}
+        }
 
         // TODO
         public void StartKousekiBonus(float RemainTime = 300.0f) { }

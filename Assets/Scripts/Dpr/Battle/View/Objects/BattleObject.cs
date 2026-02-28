@@ -43,24 +43,30 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		public void SetTranslationVec(Vector3 translation) { }
 		
-		// TODO
-		public Vector3 GetTranslationVec() { return default; }
+		public Vector3 GetTranslationVec()
+		{
+			return this.m_translation;
+		}
 		
 		public void SetTranslationOffset(Vector3 translation)
 		{
 			m_translationOffset = translation;
 		}
 		
-		// TODO
-		public Vector3 GetTranslationOffset() { return default; }
+		public Vector3 GetTranslationOffset()
+		{
+			return this.m_translationOffset;
+		}
 		
 		public void SetScaleVec(Vector3 scale)
 		{
 			m_scale = scale;
 		}
 		
-		// TODO
-		public Vector3 GetScaleVec() { return default; }
+		public Vector3 GetScaleVec()
+		{
+			return this.m_scale;
+		}
 		
 		// TODO
 		public void SetScaleOffset(Vector3 scale) { }
@@ -73,26 +79,34 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		public void SetNodeScaleTranslation(Vector3 translation) { }
 		
-		// TODO
-		public Vector3 GetNodeScaleTranslation() { return default; }
+		public Vector3 GetNodeScaleTranslation()
+		{
+			return this.m_nodeScaleTranslation;
+		}
 		
 		// TODO
 		public void SetNodeRotateTranslation(Vector3 translation) { }
 		
-		// TODO
-		public Vector3 GetNodeRotateTranslation() { return default; }
+		public Vector3 GetNodeRotateTranslation()
+		{
+			return this.m_nodeRotateTranslation;
+		}
 		
 		// TODO
 		public void SetRotationVec(Vector3 rot) { }
 		
-		// TODO
-		public Vector3 GetRotationVec() { return default; }
+		public Vector3 GetRotationVec()
+		{
+			return this.m_rotVec;
+		}
 		
 		// TODO
 		public void SetRotationVecOffset(Vector3 rot) { }
 		
-		// TODO
-		public Vector3 GetRotationVecOffset() { return default; }
+		public Vector3 GetRotationVecOffset()
+		{
+			return this.m_rotVecOffset;
+		}
 		
 		// TODO
 		public bool IsActive() { return default; }

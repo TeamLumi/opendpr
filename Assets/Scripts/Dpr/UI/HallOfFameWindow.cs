@@ -35,8 +35,13 @@ namespace Dpr.UI
 		private int _infoType;
 		private AudioInstance _voiceInstance;
 		
-		// TODO
-		public override void OnCreate() { }
+		public override void OnCreate()
+		{
+			UIWindow.OnCreate();
+			var uVar1 = UnityEngine_Component__GetComponentInChildren<object>
+			                  (this,1);
+			this._animator = uVar1;
+		}
 		
 		// TODO
 		public void Open(Param param, UIWindowID prevWindowId) { }
@@ -47,8 +52,12 @@ namespace Dpr.UI
 		// TODO
 		private void SetupKeyguide() { }
 		
-		// TODO
-		private void UpdateItems() { }
+		private void UpdateItems()
+		{
+			if ((-1 < this._delayFrameCount) && (this._delayFrameCount = this._delayFrameCount + -1, this._delayFrameCount == 0)) {
+			  SetupItems();
+			}
+		}
 		
 		// TODO
 		private void SetupItems() { }
@@ -71,8 +80,17 @@ namespace Dpr.UI
 		// TODO
 		private bool UpdateSelectParam() { return default; }
 		
-		// TODO
-		private bool SetParamIndex(int selectIndex, int move, bool isInitialize = false) { return default; }
+		private bool SetParamIndex(int selectIndex, int move, bool isInitialize = false)
+		{
+			if ((!isInitialize) && (this._paramIndex == selectIndex)) {
+			  return false;
+			}
+			this._paramIndex = selectIndex;
+			this._delayFrameCount = 4;
+			PlayAnimArrow(move);
+			SetupTitle();
+			return true;
+		}
 		
 		// TODO
 		private void PlayAnimArrow(int move) { }

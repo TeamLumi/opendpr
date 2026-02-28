@@ -13,8 +13,14 @@ namespace Dpr.SecretBase
 			// Empty
 		}
 		
-		// TODO
-		public void Enter_Placement(PlacementData statue, bool isField) { }
+		public void Enter_Placement(PlacementData statue, bool isField)
+		{
+			this.placement_dir = statue.Length;
+			var uVar1 = statue.Length;
+			this.placement = statue;
+			this.dir_backup = uVar1;
+			this.bIsPrevField = (isField ? 1 : 0) & 1;
+		}
 		
 		// TODO
 		public override void Enter(StatuePlacementEditController owner) { }

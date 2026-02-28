@@ -7,8 +7,10 @@ namespace Dpr.Battle.Logic
 		// TODO
 		public void Execute(Result pResult, in Description description) { }
 		
-		// TODO
-		private void event_DamageProcStart(BTL_POKEPARAM attacker, WazaParam wazaParam, PokeSet targets) { }
+		private void event_DamageProcStart(BTL_POKEPARAM attacker, WazaParam wazaParam, PokeSet targets)
+		{
+			this.m_pEventLauncher.Event_DamageProcStart();
+		}
 		
 		// TODO
 		private void event_GetHitCheckParam(HITCHECK_PARAM pHitCheckParam, BTL_POKEPARAM attacker, WazaParam wazaParam, bool isDelayAttack) { }

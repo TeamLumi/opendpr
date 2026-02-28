@@ -25,43 +25,81 @@ namespace Dpr.Battle.Logic
         // TODO
         public void CopyFrom(MyStatus src) { }
 
-        // TODO
-        public string GetNameString() { return string.Empty; }
+        public string GetNameString()
+        {
+        	return this.name;
+        }
 
-        // TODO
-        public Sex GetSex() { return Sex.MALE; }
+        public Sex GetSex()
+        {
+        	return this.sex ^ 1;
+        }
 
-        // TODO
-        public int GetHatVariation() { return 0; }
+        public int GetHatVariation()
+        {
+        	return this.hat;
+        }
 
-        // TODO
-        public int GetShoesVariation() { return 0; }
+        public int GetShoesVariation()
+        {
+        	return this.shoes;
+        }
 
-        // TODO
-        public MessageEnumData.MsgLangId GetPokeLanguageId() { return MessageEnumData.MsgLangId.JPN; }
+        public MessageEnumData.MsgLangId GetPokeLanguageId()
+        {
+        	return this.lang;
+        }
 
-        // TODO
-        public bool IsMyPokemon(CoreParam poke) { return false; }
+        public bool IsMyPokemon(CoreParam poke)
+        {
+        	uint uVar6;
+        	byte bVar2 = default;
+        	byte bVar3 = default;
+        	var uVar4 = poke.StartFastMode();
+        	var iVar5 = poke.GetID();
+        	if ((this.id == iVar5) &&
+        	   (bVar2 = this.sex, bVar3 = poke.GetParentSex(),
+        	   (bVar2 ^ 1) == bVar3)) {
+        	  var uVar7 = poke.GetParentName();
+        	  uVar6 = String.op_Equality(this.name,uVar7);
+        	}
+        	else {
+        	  uVar6 = 0;
+        	}
+        	poke.EndFastMode(uVar4 & 1);
+        	return uVar6 & 1;
+        }
 
         // TODO
         public string GetModelID() { return string.Empty; }
 
-        // TODO
-        public int GetColorID() { return 0; }
+        public int GetColorID()
+        {
+        	return this.body_type;
+        }
 
         private Sex _sex { get => sex ? Sex.MALE : Sex.FEMALE; }
 
-        // TODO
-        public bool HasGBand() { return false; }
+        public bool HasGBand()
+        {
+        	return false;
+        }
 
-        // TODO
-        public void SetCyclingRoad() { }
+        public void SetCyclingRoad()
+        {
+        	var uVar1 = 0xd;
+        	if (this.sex != '\x01') {
+        	  uVar1 = 0x71;
+        	}
+        	this.fashion = (byte)(uVar1);
+        }
 
-        // TODO
         public static void GetParamFromSysFlag(out byte hat, out byte shoes)
         {
-            hat = 0;
-            shoes = 0;
+        	var bVar1 = FlagWork.GetSysFlag(0x30b);
+        	var bVar2 = FlagWork.GetFlag(0x4a);
+        	hat = (byte)(~bVar1 & 1);
+        	shoes = (byte)(~bVar2 & 1);
         }
     }
 }

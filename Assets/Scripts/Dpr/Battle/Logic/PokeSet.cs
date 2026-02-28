@@ -30,11 +30,21 @@
         // TODO
         public BTL_POKEPARAM Get(uint idx) { return null; }
 
-        // TODO
-        public void SeekStart() { }
+        public void SeekStart()
+        {
+        	this.m_getIdx = (byte)0;
+        }
 
-        // TODO
-        public BTL_POKEPARAM SeekNext() { return null; }
+        public BTL_POKEPARAM SeekNext()
+        {
+        	if (this.m_count <= this.m_getIdx) {
+        	  return 0;
+        	}
+        	this.m_getIdx = (byte)(this.m_getIdx + 1);
+        	if ((uint)this.m_getIdx < this.m_bpp.Length) {
+        	  return this.m_bpp + (ulong)this.m_getIdx * 8[0];
+        	}
+        }
 
         // TODO
         public bool GetDamage(BTL_POKEPARAM bpp, out uint damage)
@@ -53,20 +63,31 @@
         // TODO
         public DamageType GetDamageType(BTL_POKEPARAM bpp) { return DamageType.DMGTYPE_NONE; }
 
-        // TODO
-        public uint GetCount() { return 0; }
+        public uint GetCount()
+        {
+        	return this.m_count;
+        }
 
-        // TODO
-        public uint GetCountMax() { return 0; }
+        public uint GetCountMax()
+        {
+        	return this.m_countMax;
+        }
 
         // TODO
         public uint GetAliveCount() { return 0; }
 
-        // TODO
-        public void SetDefaultTargetCount(byte cnt) { }
+        public void SetDefaultTargetCount(byte cnt)
+        {
+        	this.m_targetPosCount = (byte)(cnt);
+        }
 
-        // TODO
-        public bool IsRemovedAll() { return false; }
+        public bool IsRemovedAll()
+        {
+        	if ((this.m_countMax == 0) && (this.m_targetPosCount == 0)) {
+        	  return false;
+        	}
+        	return this.m_count == 0;
+        }
 
         // TODO
         public uint CopyAlive(PokeSet dst) { return 0; }

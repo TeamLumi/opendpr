@@ -564,23 +564,35 @@ namespace Dpr.Battle.Logic
         // TODO
         private static void SCQUE_PUT_MSG_WAZA_ToReservedPos(ServerCommandQueue queue, byte pokeID, ushort waza, BtlPokePos targetPos, bool needMsgDisplay, ushort reservedPos) { }
 
-        // TODO
-        private static void SCQUE_PUT_MSG_STD(ServerCommandQueue queue, int[] args) { }
+        private static void SCQUE_PUT_MSG_STD(ServerCommandQueue queue, int[] args)
+        {
+        	queue.Put_MsgImpl(0xb9,args);
+        }
 
-        // TODO
-        private static void SCQUE_PUT_MSG_SET(ServerCommandQueue queue, int[] args) { }
+        private static void SCQUE_PUT_MSG_SET(ServerCommandQueue queue, int[] args)
+        {
+        	queue.Put_MsgImpl(0xba,args);
+        }
 
-        // TODO
-        private static void SCQUE_PUT_MSG_STD_SE(ServerCommandQueue queue, int[] args) { }
+        private static void SCQUE_PUT_MSG_STD_SE(ServerCommandQueue queue, int[] args)
+        {
+        	queue.Put_MsgImpl(0xbb,args);
+        }
 
-        // TODO
-        private static void SCQUE_PUT_MSG_SET_SE(ServerCommandQueue queue, int[] args) { }
+        private static void SCQUE_PUT_MSG_SET_SE(ServerCommandQueue queue, int[] args)
+        {
+        	queue.Put_MsgImpl(0xbc,args);
+        }
 
-        // TODO
-        public static void SCQUE_PUT_MSG_STD_TO_RESERVED_POS(ServerCommandQueue queue, ushort pos, int[] args) { }
+        public static void SCQUE_PUT_MSG_STD_TO_RESERVED_POS(ServerCommandQueue queue, ushort pos, int[] args)
+        {
+        	queue.Put_ToReservedPos_Msg(pos,0xb9,args);
+        }
 
-        // TODO
-        public static void SCQUE_PUT_MSG_SET_TO_RESERVED_POS(ServerCommandQueue queue, ushort pos, int[] args) { }
+        public static void SCQUE_PUT_MSG_SET_TO_RESERVED_POS(ServerCommandQueue queue, ushort pos, int[] args)
+        {
+        	queue.Put_ToReservedPos_Msg(pos,0xba,args);
+        }
 
         // TODO
         private static void SCQUE_PUT_ACT_Safari(ServerCommandQueue queue, byte pokeID, byte param0, byte param1) { }
@@ -632,8 +644,10 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Message_SetSE(ushort strID, uint SENo, uint argsCount, int[] args) { }
 
-        // TODO
-        public void Message_Waza(byte attackerID, WazaNo waza, BtlPokePos targetPos, bool needMsgDisplay) { }
+        public void Message_Waza(byte attackerID, WazaNo waza, BtlPokePos targetPos, bool needMsgDisplay)
+        {
+        	SCQUE_PUT_MSG_WAZA(this.m_pQueue);
+        }
 
         // TODO
         public void Message_Waza_ToReservedPos(byte attackerID, WazaNo waza, BtlPokePos targetPos, bool needMsgDisplay, ushort reservedPos) { }
@@ -716,8 +730,10 @@ namespace Dpr.Battle.Logic
         // TODO
         public void EffectByClient(BTL_CLIENT_ID clientID, ushort effectNo) { }
 
-        // TODO
-        public void EffectBySide(BtlPokePos pos_from, BtlPokePos pos_to, ushort effectNo) { }
+        public void EffectBySide(BtlPokePos pos_from, BtlPokePos pos_to, ushort effectNo)
+        {
+        	SCQUE_PUT_ACT_EffectBySide(this.m_pQueue);
+        }
 
         // TODO
         public void ConfusionAct(BTL_POKEPARAM poke) { }
@@ -725,8 +741,13 @@ namespace Dpr.Battle.Logic
         // TODO
         public void MeromeroAct(BTL_POKEPARAM poke) { }
 
-        // TODO
-        public void UseItemAct(BTL_POKEPARAM poke) { }
+        public void UseItemAct(BTL_POKEPARAM poke)
+        {
+        	var uVar3 = poke.GetItem();
+        	var uVar1 = ItemData.IsNuts(uVar3);
+        	var uVar2 = poke.GetID();
+        	SCQUE_PUT_ACT_USE_ITEM(this.m_pQueue,uVar2,uVar1 & 1);
+        }
 
         // TODO
         public void CantAction(BTL_POKEPARAM poke) { }
@@ -752,8 +773,15 @@ namespace Dpr.Battle.Logic
         // TODO
         public void SetBppCounter(BTL_POKEPARAM poke, BTL_POKEPARAM.Counter counterID, byte value) { }
 
-        // TODO
-        public void IncBppCounter(BTL_POKEPARAM poke, BTL_POKEPARAM.Counter counterID) { }
+        public void IncBppCounter(BTL_POKEPARAM poke, BTL_POKEPARAM.Counter counterID)
+        {
+        	if (poke != null) {
+        	  poke.COUNTER_Inc(counterID);
+        	  var uVar1 = poke.COUNTER_Get(counterID);
+        	  var uVar2 = poke.GetID();
+        	  SCQUE_PUT_OP_SetPokeCounter(this.m_pQueue,uVar2,counterID,uVar1);
+        	}
+        }
 
         // TODO
         public void SetPokePermCounter(byte pokeID, BTL_POKEPARAM.PermCounter counterID, uint value) { }
@@ -940,8 +968,10 @@ namespace Dpr.Battle.Logic
         // TODO
         public void SwapPokePos(byte clientID, BtlPokePos pos1, BtlPokePos pos2) { }
 
-        // TODO
-        public void Act_SwapPokePos(byte clientID, BtlPokePos pos1, BtlPokePos pos2) { }
+        public void Act_SwapPokePos(byte clientID, BtlPokePos pos1, BtlPokePos pos2)
+        {
+        	SCQUE_PUT_ACT_MemberMove(this.m_pQueue);
+        }
 
         // TODO
         public void UpdateWazaNo(byte pokeID, byte wazaIdx, WazaNo wazaNo, byte ppMax, bool fPermanent) { }
@@ -1048,8 +1078,10 @@ namespace Dpr.Battle.Logic
         // TODO
         public void RaidBattleStatus_ResetTurnCountAfterAllDead(BTL_CLIENT_ID clientID) { }
 
-        // TODO
-        public void Act_RaidResult() { }
+        public void Act_RaidResult()
+        {
+        	SCQUE_PUT_ACT_RaidResult(this.m_pQueue);
+        }
 
         // TODO
         public void StartGMode(byte pokeID) { }
@@ -1105,11 +1137,15 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Act_IchigekiWaza(byte targetID) { }
 
-        // TODO
-        public void Act_WazaDamage(byte targetID, TypeAffinity.AboutAffinityID affAbout, WazaNo wazaID) { }
+        public void Act_WazaDamage(byte targetID, TypeAffinity.AboutAffinityID affAbout, WazaNo wazaID)
+        {
+        	SCQUE_PUT_ACT_WazaDamage(this.m_pQueue);
+        }
 
-        // TODO
-        public void Act_WazaEffect(BtlPokePos atPokePos, BtlPokePos defPokePos, WazaNo waza, byte wazaType, byte arg, byte pluralHitIndex, bool bSyncDamageEffect, bool isGShockOccur) { }
+        public void Act_WazaEffect(BtlPokePos atPokePos, BtlPokePos defPokePos, WazaNo waza, byte wazaType, byte arg, byte pluralHitIndex, bool bSyncDamageEffect, bool isGShockOccur)
+        {
+        	SCQUE_PUT_ACT_WazaEffect(this.m_pQueue);
+        }
 
         // TODO
         public void Act_EffectSimple(ushort effectNo) { }
@@ -1117,17 +1153,23 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Act_EffectByVector(BtlPokePos pos_from, BtlPokePos pos_to, ushort effectNo) { }
 
-        // TODO
-        public void Act_Hensin(byte userID, byte targetID) { }
+        public void Act_Hensin(byte userID, byte targetID)
+        {
+        	SCQUE_PUT_ACT_Hensin(this.m_pQueue);
+        }
 
         // TODO
         public void Op_Hensin(byte userID, byte targetID) { }
 
-        // TODO
-        public void Act_MemberIn(byte clientID, byte posIdx, byte memberIdx, bool fPutMsg) { }
+        public void Act_MemberIn(byte clientID, byte posIdx, byte memberIdx, bool fPutMsg)
+        {
+        	SCQUE_PUT_ACT_MemberIn(this.m_pQueue);
+        }
 
-        // TODO
-        public void Act_MemberOut(BtlPokePos pos, ushort effectNo) { }
+        public void Act_MemberOut(BtlPokePos pos, ushort effectNo)
+        {
+        	SCQUE_PUT_ACT_MemberOut(this.m_pQueue);
+        }
 
         // TODO
         public void Act_MigawariDamage(byte defPokeID, TypeAffinity.AffinityID affine, WazaNo waza) { }
@@ -1135,8 +1177,10 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Act_MigawariDelete(BtlPokePos pos) { }
 
-        // TODO
-        public void Act_BallThrow(BtlPokePos userPos, BtlPokePos targetPos, byte yureCnt, bool fSuccess, bool fZukanRegister, bool fCritical, ushort ballItemID) { }
+        public void Act_BallThrow(BtlPokePos userPos, BtlPokePos targetPos, byte yureCnt, bool fSuccess, bool fZukanRegister, bool fCritical, ushort ballItemID)
+        {
+        	SCQUE_PUT_ACT_BallThrow(this.m_pQueue);
+        }
 
         // TODO
         public void Act_BallThrow_Forbidden(BtlPokePos targetPos, ushort ballItemID, BallThrowForbiddenCause cause) { }
@@ -1147,8 +1191,10 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Act_PlayWinBGM(uint BGMNo) { }
 
-        // TODO
-        public void ActOp_SkillSwap(byte pokeID_1, byte pokeID_2, TokuseiNo tokID_1, TokuseiNo tokID_2) { }
+        public void ActOp_SkillSwap(byte pokeID_1, byte pokeID_2, TokuseiNo tokID_1, TokuseiNo tokID_2)
+        {
+        	SCQUE_PUT_ACTOP_SkillSwap(this.m_pQueue);
+        }
 
         // TODO
         public void ActOp_ChangeTokusei(byte pokeID, TokuseiNo tokuseiNo) { }
@@ -1159,8 +1205,10 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Act_AddExp_AddParam(byte pokeID, uint exp, uint effort_hp, uint effort_pow, uint effort_def, uint effort_sp_pow, uint effort_sp_def, uint effort_agi) { }
 
-        // TODO
-        public void Act_AddExp() { }
+        public void Act_AddExp()
+        {
+        	SCQUE_PUT_ACT_AddExp(this.m_pQueue);
+        }
 
         // TODO
         public void Op_AddExp(byte pokeID, uint exp) { }
@@ -1237,8 +1285,10 @@ namespace Dpr.Battle.Logic
         // TODO
         public void RemoveRaidBossHandler(byte pokeID, RaidBossHandlerType handlerType) { }
 
-        // TODO
-        public void SafariAct(byte pokeID, byte param0, byte param1) { }
+        public void SafariAct(byte pokeID, byte param0, byte param1)
+        {
+        	SCQUE_PUT_ACT_Safari(this.m_pQueue);
+        }
 
         public class SetupParam
         {

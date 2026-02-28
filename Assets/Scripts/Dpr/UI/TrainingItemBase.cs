@@ -16,8 +16,12 @@ namespace Dpr.UI
 		
 		public bool isEnabled { get => _isEnabled; }
 		
-		// TODO
-		protected virtual void Awake() { }
+		protected virtual void Awake()
+		{
+			var uVar1 = UnityEngine_Component__GetComponentInChildren<object>
+			                  (this);
+			this._animator = uVar1;
+		}
 		
 		// TODO
 		public virtual void Setup() { }

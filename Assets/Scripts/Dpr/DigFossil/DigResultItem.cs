@@ -19,8 +19,10 @@ namespace Dpr.DigFossil
 		// TODO
 		public void Show() { }
 		
-		// TODO
-		public void Hide() { }
+		public void Hide()
+		{
+			GameObject.SetActive(this.image.gameObject,0,0);
+		}
 		
 		public DigResultItem()
 		{

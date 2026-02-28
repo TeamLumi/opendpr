@@ -67,8 +67,13 @@ namespace Dpr.UI
 		// TODO
 		public override void OnCreate() { }
 		
-		// TODO
-		private void OnUpdate(float deltaTime) { }
+		private void OnUpdate(float deltaTime)
+		{
+			if ((!this.isEnd) && (!this.isSortSelect)) {
+			  OnUpdateDefault();
+			  this.msgWindowController.OnUpdate();
+			}
+		}
 		
 		// TODO
 		private void OnUpdateDefault() { }
@@ -121,8 +126,14 @@ namespace Dpr.UI
 		// TODO
 		public void ExitStartButton() { }
 		
-		// TODO
-		private void StartSortItems() { }
+		private void StartSortItems()
+		{
+			this.isSortSelect = true;
+			this.bagItemPanel.SetRemoveNewEnable(0);
+			var uVar2 = new Action(this);
+			var uVar1 = _StringLiteral_11687;
+			this.msgWindowController.OpenMsgWindow(StringLiteral_9892,uVar1,1,0,uVar2);
+		}
 		
 		// TODO
 		private void SortItems(ItemInfo.SortType sortType) { }

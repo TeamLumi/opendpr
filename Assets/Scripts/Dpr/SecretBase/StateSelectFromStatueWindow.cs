@@ -10,8 +10,10 @@ namespace Dpr.SecretBase
 			// Empty
 		}
 		
-		// TODO
-		public void Enter_SelectFromStatueWindow(PlacementData data) { }
+		public void Enter_SelectFromStatueWindow(PlacementData data)
+		{
+			this.placement = data;
+		}
 		
 		// TODO
 		public override void Enter(StatuePlacementEditController owner) { }
@@ -19,7 +21,9 @@ namespace Dpr.SecretBase
 		// TODO
 		public override void Execute(StatuePlacementEditController owner) { }
 		
-		// TODO
-		public override void Exit(StatuePlacementEditController owner) { }
+		public override void Exit(StatuePlacementEditController owner)
+		{
+			MsgWindowManager.CloseMsg(0);
+		}
 	}
 }

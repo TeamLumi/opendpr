@@ -9,62 +9,122 @@ namespace Dpr.Battle.Logic
         private BattleSimulator m_pBattleSimulator;
         private CommandParam m_commandParam;
         private WazaNo[][] m_usedWaza;
-        private bool m_isEscapeSelected;
+        internal bool m_isEscapeSelected;
         private Random m_randGenerator;
 
         // TODO
         public AiScriptCommandHandler(MainModule mainModule, BattleSimulator pBattleSimulator, BattleEnv pBattleEnv, ulong randSeed) { }
 
-        // TODO
-        public void Dispose() { }
+        public void Dispose()
+        {
+        	this.m_pBattleSimulator = null;
+        	if (this.m_commandParam != null) {
+        	  this.m_commandParam.clientID = 5;
+        	  this.m_commandParam.attackPoke = 0;
+        	  this.m_commandParam.defensePoke = 0;
+        	  this.m_commandParam.currentBenchPoke = 0;
+        	  this.m_commandParam.currentWazaIndex = 0;
+        	  this.m_commandParam.currentWazaNo = 0;
+        	  this.m_commandParam.currentItemNo = 0;
+        	  this.m_commandParam.isGWazaUseTurn = 0;
+        	}
+        	this.m_commandParam = null;
+        	this.m_usedWaza = null;
+        	this.m_randGenerator = null;
+        }
 
         // TODO
         public void SetCommandParam(in CommandParam commandParam) { }
 
-        // TODO
-        public CommandParam GetCommandParam() { return null; }
+        public CommandParam GetCommandParam()
+        {
+        	return this.m_commandParam;
+        }
 
-        // TODO
-        public Random GetRandGenerator() { return null; }
+        public Random GetRandGenerator()
+        {
+        	return this.m_randGenerator;
+        }
 
-        // TODO
-        public MainModule GetMainModule() { return null; }
+        public MainModule GetMainModule()
+        {
+        	return this.m_mainModule;
+        }
 
-        // TODO
-        public BattleSimulator GetBattleSimulator() { return null; }
+        public BattleSimulator GetBattleSimulator()
+        {
+        	return this.m_pBattleSimulator;
+        }
 
-        // TODO
-        public POKECON GetPokeCon() { return null; }
+        public POKECON GetPokeCon()
+        {
+        	return this.m_pBattleEnv.m_pokecon;
+        }
 
-        // TODO
-        public BattleEnv GetBattleEnv() { return null; }
+        public BattleEnv GetBattleEnv()
+        {
+        	return this.m_pBattleEnv;
+        }
 
-        // TODO
-        public BTL_POKEPARAM GetAttackPokeParam() { return null; }
+        public BTL_POKEPARAM GetAttackPokeParam()
+        {
+        	return this.m_commandParam.attackPoke;
+        }
 
-        // TODO
-        public BTL_POKEPARAM GetDefensePokeParam() { return null; }
+        public BTL_POKEPARAM GetDefensePokeParam()
+        {
+        	return this.m_commandParam.defensePoke;
+        }
 
-        // TODO
-        public BtlPokePos GetAttackPokePos() { return BtlPokePos.POS_1ST_0; }
+        public BtlPokePos GetAttackPokePos()
+        {
+        	if (this.m_commandParam.attackPoke != 0) {
+        	  var uVar1 = this.m_commandParam.attackPoke.GetID();
+        	  this.m_mainModule = this.m_mainModule.PokeIDtoPokePos(this.m_pBattleEnv.m_pokecon,uVar1);
+        	  return this.m_mainModule;
+        	}
+        	return (BtlPokePos)5;
+        }
 
-        // TODO
-        public BtlPokePos GetDefensePokePos() { return BtlPokePos.POS_1ST_0; }
+        public BtlPokePos GetDefensePokePos()
+        {
+        	if (this.m_commandParam.defensePoke != 0) {
+        	  var uVar1 = this.m_commandParam.defensePoke.GetID();
+        	  this.m_mainModule = this.m_mainModule.PokeIDtoPokePos(this.m_pBattleEnv.m_pokecon,uVar1);
+        	  return this.m_mainModule;
+        	}
+        	return (BtlPokePos)5;
+        }
 
-        // TODO
-        private BtlPokePos GetPokePos(BTL_POKEPARAM pokeParam) { return BtlPokePos.POS_1ST_0; }
+        private BtlPokePos GetPokePos(BTL_POKEPARAM pokeParam)
+        {
+        	if (pokeParam != null) {
+        	  var uVar1 = pokeParam.GetID();
+        	  this.m_mainModule = this.m_mainModule.PokeIDtoPokePos(this.m_pBattleEnv.m_pokecon,uVar1);
+        	  return this.m_mainModule;
+        	}
+        	return (BtlPokePos)5;
+        }
 
-        // TODO
-        public BTL_POKEPARAM GetBenchPokeParam() { return null; }
+        public BTL_POKEPARAM GetBenchPokeParam()
+        {
+        	return this.m_commandParam.currentBenchPoke;
+        }
 
-        // TODO
-        public byte GetCurrentWazaIndex() { return 0; }
+        public byte GetCurrentWazaIndex()
+        {
+        	return (byte)(this.m_commandParam.currentWazaIndex);
+        }
 
-        // TODO
-        public WazaNo GetCurrentWazaNo() { return WazaNo.NULL; }
+        public WazaNo GetCurrentWazaNo()
+        {
+        	return this.m_commandParam.currentWazaNo;
+        }
 
-        // TODO
-        public ushort GetCurrentItemNo() { return 0; }
+        public ushort GetCurrentItemNo()
+        {
+        	return (ushort)(this.m_commandParam.currentItemNo);
+        }
 
         // TODO
         public BTL_POKEPARAM GetBpp(BtlPokePos pos) { return null; }
@@ -72,8 +132,15 @@ namespace Dpr.Battle.Logic
         // TODO
         public BTL_POKEPARAM GetBppByAISide(uint ai_side) { return null; }
 
-        // TODO
-        public byte AISideToClientID(uint ai_side) { return 0; }
+        public byte AISideToClientID(uint ai_side)
+        {
+        	if (ai_side == 4) {
+        	  ai_side = 1;
+        	}
+        	var uVar1 = AISideToPokePos(ai_side);
+        	this.m_mainModule.BtlPosToClientID(uVar1);
+        	return 0;
+        }
 
         // TODO
         public BtlPokePos AISideToPokePos(uint ai_side) { return BtlPokePos.POS_1ST_0; }
@@ -90,14 +157,20 @@ namespace Dpr.Battle.Logic
         // TODO
         public bool CheckWazaStored(BTL_POKEPARAM bpp, WazaNo waza_no) { return false; }
 
-        // TODO
-        public void ResetEscape() { }
+        public void ResetEscape()
+        {
+        	this.m_isEscapeSelected = false;
+        }
 
-        // TODO
-        public void NotifyEscapeByAI() { }
+        public void NotifyEscapeByAI()
+        {
+        	this.m_isEscapeSelected = true;
+        }
 
-        // TODO
-        public bool IsEscapeSelected() { return false; }
+        public bool IsEscapeSelected()
+        {
+        	return this.m_isEscapeSelected;
+        }
 
         public class CommandParam
         {

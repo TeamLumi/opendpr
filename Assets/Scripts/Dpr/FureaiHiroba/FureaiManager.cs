@@ -486,8 +486,10 @@ namespace Dpr.FureaiHiroba
         // TODO
         public void PlayVoice_TemotiID(uint temoti) { }
 
-        // TODO
-        public List<FureaiPokeModel> GetWalkingPokes() { return null; }
+        public List<FureaiPokeModel> GetWalkingPokes()
+        {
+        	return this.pokeWalkMng.PokeWalkers;
+        }
 
         // TODO
         private void OnDestroy() { }

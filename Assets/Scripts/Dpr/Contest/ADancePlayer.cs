@@ -79,8 +79,15 @@ namespace Dpr.Contest
 		// TODO
 		public void ForceLaunchSkill(float reservedLaunchElapsedTime) { }
 		
-		// TODO
-		public bool CheckSendScore() { return default; }
+		public bool CheckSendScore()
+		{
+			if ((this.bIsMultiMode) &&
+			   (this.sendScoreDataSpan <= this.sendScoreDataTimer)) {
+			  this.sendScoreDataTimer = 0;
+			  return true;
+			}
+			return false;
+		}
 		
 		// TODO
 		public void ChangeMultiMode(bool isHost, float syncScoreSpan) { }

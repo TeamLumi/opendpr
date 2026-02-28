@@ -59,8 +59,12 @@ namespace Dpr.UI
 		// TODO
 		public override void Select(bool enabled) { }
 		
-		// TODO
-		public override bool OnUpdate(float deltaTime) { return default; }
+		public override bool OnUpdate(float deltaTime)
+		{
+			var uVar1 = deltaTime.gameObject;
+			uVar1.activeSelf;
+			return false;
+		}
 
 		[Serializable]
 		private class PanelParam

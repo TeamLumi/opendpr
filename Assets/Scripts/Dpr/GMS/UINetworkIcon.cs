@@ -8,8 +8,8 @@ namespace Dpr.GMS
 	{
 		private DOTweenAnimation[] matchingIconTweens;
 		private DOTweenAnimation[] attentionIconTweens;
-		private GameObject matchingIconObj;
-		private GameObject attentionIconObj;
+		internal GameObject matchingIconObj;
+		internal GameObject attentionIconObj;
 		private Image matchingIconImage;
 		private Image attentionIconImage;
 		private RectTransform matchingIconRect;
@@ -23,13 +23,17 @@ namespace Dpr.GMS
 		// TODO
 		public void ShowMatchingIcon() { }
 		
-		// TODO
-		public void HideMatchingIcon() { }
+		public void HideMatchingIcon()
+		{
+			this.matchingIconObj.SetActive(0);
+		}
 		
 		// TODO
 		public void ShowAttentionIcon() { }
 		
-		// TODO
-		public void HideAttentionIcon() { }
+		public void HideAttentionIcon()
+		{
+			this.attentionIconObj.SetActive(0);
+		}
 	}
 }

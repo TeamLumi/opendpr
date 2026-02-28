@@ -55,11 +55,21 @@ namespace Dpr.SecretBase
 		// TODO
 		public void Initialize(Action<FilterResult> OnApplied, Action<bool> OnCancel) { }
 		
-		// TODO
-		public void Show() { }
+		public void Show()
+		{
+			this.currentState = (State)0;
+			this.isReset = 0x100;
+			ShowTopItemList();
+			this.window.SetActive(1);
+			this.filterInfo.Apply(0xffffffff);
+		}
 		
-		// TODO
-		public void Close() { }
+		public void Close()
+		{
+			this.isDisplay = false;
+			this.currentState = (State)0;
+			this.window.SetActive(0);
+		}
 		
 		// TODO
 		private void InitializeDetail_Top(MessageMsgFile msgFile) { }
@@ -76,8 +86,17 @@ namespace Dpr.SecretBase
 		// TODO
 		private void AddDetail(TopItemType type, string[] subjects) { }
 		
-		// TODO
-		public void OnUpdate() { }
+		public void OnUpdate()
+		{
+			if (this.isDisplay) {
+			  if ((int)this.currentState == 1) {
+			    OnUpdate_DetailSelect();
+			  }
+			  if ((int)this.currentState == 0) {
+			    OnUpdate_TopSelect();
+			  }
+			}
+		}
 		
 		// TODO
 		private void OnUpdate_TopSelect() { }
@@ -91,8 +110,37 @@ namespace Dpr.SecretBase
 		// TODO
 		private void OnUpdate_DetailSelect() { }
 		
-		// TODO
-		private void CalcScroll() { }
+		private void CalcScroll()
+		{
+			float fVar6 = default;
+			int iVar10 = default;
+			int iVar4 = default;
+			var fVar8 = this.detailContentHeight;
+			if (this.itemSize + fVar6 <= this.detailContentHeight) {
+			  fVar8 = this.itemSize + fVar6;
+			}
+			if (this.dest <= this.itemSize * (float)iVar10 + (float)iVar4) {
+			  var bVar1 = false;
+			  var bVar2 = true;
+			  var bVar3 = false;
+			  if (fVar8 <= this.detailContentHeight) {
+			    bVar1 = false;
+			    bVar2 = false;
+			    bVar3 = true;
+			    if (!NAN(fVar8) && !NAN(this.dest + this.viewport)) {
+			      bVar1 = fVar8 < this.dest + this.viewport;
+			      bVar2 = fVar8 == this.dest + this.viewport;
+			      bVar3 = false;
+			    }
+			  }
+			  if (bVar2 || bVar1 != bVar3) {
+			  }
+			  this.dest + this.viewport = this.dest + (fVar8 - this.dest + this.viewport);
+			}
+			else if (this.dest + this.viewport < 0.0) {
+			}
+			this.dest = this.dest + this.viewport;
+		}
 		
 		// TODO
 		private void CalcScrollImmediate() { }

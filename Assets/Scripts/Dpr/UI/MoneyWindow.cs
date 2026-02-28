@@ -10,8 +10,13 @@ namespace Dpr.UI
 		private UIText _money;
 		private int _prevMoney = -1;
 		
-		// TODO
-		public override void OnCreate() { }
+		public override void OnCreate()
+		{
+			UIWindow.OnCreate();
+			var uVar1 = UnityEngine_Component__GetComponentInChildren<object>
+			                  (this,1);
+			this._animator = uVar1;
+		}
 		
 		// TODO
 		public void Open(UIWindowID prevWindowId) { }

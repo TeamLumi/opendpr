@@ -39,8 +39,13 @@ namespace Dpr.UI
 
         private Param _param;
 
-        // TODO
-        public override void OnCreate() { }
+        public override void OnCreate()
+        {
+        	UIWindow.OnCreate();
+        	var uVar1 = UnityEngine_Component__GetComponentInChildren<object>
+        	                  (this,1);
+        	this._animator = uVar1;
+        }
 
         // TODO
         public void Open(Param param, UIWindowID prevWindowId) { }
@@ -51,8 +56,10 @@ namespace Dpr.UI
         // TODO
         public static int GetRankingId(RECORD_ID recordId) { return default; }
 
-        // TODO
-        public static int GetRankingFlagIndex(int rankingId, Param.RankingType rankingType) { return default; }
+        public static int GetRankingFlagIndex(int rankingId, Param.RankingType rankingType)
+        {
+        	return rankingType + rankingId * 2;
+        }
 
         // TODO
         private void SetupRankParamRanks(List<TvRankingMenuItem.RankParam> rankParams) { }
@@ -81,8 +88,14 @@ namespace Dpr.UI
         // TODO
         private void SetActiveList(bool isActiveMenu) { }
 
-        // TODO
-        private bool UpdateSelect() { return default; }
+        private bool UpdateSelect()
+        {
+        	if (this._isActiveMenu) {
+        	  UpdateSelectMenu();
+        	}
+        	UpdateSelectRank();
+        	return false;
+        }
 
         // TODO
         private bool UpdateSelectMenu() { return default; }

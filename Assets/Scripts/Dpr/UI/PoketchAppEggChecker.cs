@@ -27,8 +27,13 @@ namespace Dpr.UI
 		// TODO
 		protected override void OnInitialize() { }
 		
-		// TODO
-		protected override void OnOpen() { }
+		protected override void OnOpen()
+		{
+			this._state = (EggCheckerState)0;
+			var uVar1 = Shader.PropertyToID(_StringLiteral_11548);
+			0.SetFloat(this._matBlur,uVar1);
+			UpdateAzukariyaInfo();
+		}
 		
 		// TODO
 		protected override void OnClose() { }
@@ -39,8 +44,12 @@ namespace Dpr.UI
 		// TODO
 		protected override void OnUpdateControl([Optional][DefaultParameterValue(false)] bool isAppControlEnable, [Optional] PoketchButton targetButton, PoketchWindow.TouchState state = PoketchWindow.TouchState.None) { }
 		
-		// TODO
-		private void StartBlur() { }
+		private void StartBlur()
+		{
+			if ((int)this._state != 0) {
+			}
+			this._state = (EggCheckerState)1;
+		}
 		
 		// TODO
 		private void UpdateAzukariyaInfo() { }

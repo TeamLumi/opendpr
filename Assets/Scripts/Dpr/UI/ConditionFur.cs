@@ -31,11 +31,21 @@ namespace Dpr.UI
 		// TODO
 		private void OnEnable() { }
 		
-		// TODO
-		private void OnDisable() { }
+		private void OnDisable()
+		{
+			if (this._opFurAnim != null) {
+			  this._opFurAnim.StopCoroutine();
+			  this._opFurAnim = null;
+			}
+		}
 		
-		// TODO
-		private void StopAnimKezuya() { }
+		private void StopAnimKezuya()
+		{
+			if (this._opFurAnim != null) {
+			  this._opFurAnim.StopCoroutine();
+			  this._opFurAnim = null;
+			}
+		}
 		
 		// TODO
 		private IEnumerator OpAnimKezuya() { return default; }

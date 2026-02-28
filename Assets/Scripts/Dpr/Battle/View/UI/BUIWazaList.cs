@@ -75,8 +75,11 @@ namespace Dpr.Battle.View.UI
         // TODO
         public void Initialize(BTL_POKEPARAM bpp, byte pokeIndex, BTL_ACTION_PARAM_OBJ dest) { }
 
-        // TODO
-        public void Remove() { }
+        public void Remove()
+        {
+        	this._btlPokeParam = null;
+        	this._destActionParam = null;
+        }
 
         public override void OnUpdate(float deltaTime)
         {

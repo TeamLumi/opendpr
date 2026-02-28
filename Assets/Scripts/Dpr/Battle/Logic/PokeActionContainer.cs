@@ -13,11 +13,15 @@ namespace Dpr.Battle.Logic
             m_count = 0;
         }
 
-        // TODO
-        public void Clear() { }
+        public void Clear()
+        {
+        	this.m_count = (byte)0;
+        }
 
-        // TODO
-        public byte GetCount() { return 0; }
+        public byte GetCount()
+        {
+        	return (byte)(this.m_count);
+        }
 
         // TODO
         public byte GetIndex(PokeAction action) { return 0; }

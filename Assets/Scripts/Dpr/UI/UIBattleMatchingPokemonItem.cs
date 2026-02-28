@@ -31,7 +31,9 @@ namespace Dpr.UI
 		// TODO
 		public void SetEnableNumber(int index) { }
 		
-		// TODO
-		public void SetDisableNumber() { }
+		public void SetDisableNumber()
+		{
+			this._objNo.SetActive(0);
+		}
 	}
 }

@@ -19,8 +19,12 @@ namespace Dpr.UI
 
 		protected float[] _values = new float[2]; // TODO: Find a constant for this?
 		
-		// TODO
-		public void Awake() { }
+		public void Awake()
+		{
+			var uVar1 = UnityEngine_Component__GetComponent<object>
+			                  (this);
+			this._animator = uVar1;
+		}
 		
 		// TODO
 		public void Setup() { }

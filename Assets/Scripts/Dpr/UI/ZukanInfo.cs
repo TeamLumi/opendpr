@@ -28,7 +28,7 @@ namespace Dpr.UI
 		public PokeType Type2 { get; private set; }
 		public GET_STATUS GetStatus { get; private set; }
 
-        private ModelParam[] modelParams;
+        internal ModelParam[] modelParams;
         private int formIndex;
         private IndexSelector modelIndexSelector;
 
@@ -79,7 +79,7 @@ namespace Dpr.UI
 			Both = 3,
 		}
 
-		private class ModelParam
+		internal class ModelParam
 		{
 			public int UniqueID;
 			public ModelSexType SexType;

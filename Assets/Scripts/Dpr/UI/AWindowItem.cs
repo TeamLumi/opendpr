@@ -29,13 +29,25 @@ namespace Dpr.UI
 		// TODO
 		protected virtual void OnInitialize() { }
 		
-		// TODO
-		public void OnFinalize() { }
+		public void OnFinalize()
+		{
+			this.onItemEvent = null;
+		}
 		
-		// TODO
-		public void Show() { }
+		public void Show()
+		{
+			if (this.isShow) {
+			}
+			this.isShow = true;
+			ExtensionMethods.SetActive(1);
+		}
 		
-		// TODO
-		public void Hide() { }
+		public void Hide()
+		{
+			if (this.isShow) {
+			  this.isShow = false;
+			  ExtensionMethods.SetActive(0);
+			}
+		}
 	}
 }

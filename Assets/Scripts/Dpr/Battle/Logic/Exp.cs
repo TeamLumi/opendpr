@@ -5,11 +5,23 @@ namespace Dpr.Battle.Logic
 		// TODO
 		public static void CalcExp(in CalcParam calcParam, CalcResult pResult) { }
 		
-		// TODO
-		private static uint CalcBaseExp(uint deadPokeExp, uint deadPokeLevel, uint pokeLevel) { return default; }
+		private static uint CalcBaseExp(uint deadPokeExp, uint deadPokeLevel, uint pokeLevel)
+		{
+			var uVar1 = 1;
+			if (4 < (uint)(deadPokeLevel * deadPokeExp)) {
+			  uVar1 = (uint)(deadPokeLevel * deadPokeExp) / 5;
+			}
+			return uVar1;
+		}
 		
-		// TODO
-		private static uint CalcGakusyusoutiExp(uint baseExp) { return default; }
+		private static uint CalcGakusyusoutiExp(uint baseExp)
+		{
+			var uVar1 = (uint)(baseExp >> 1) & 0x7fffffff;
+			if ((baseExp >> 1 & 0x7fffffff) == 0) {
+			  uVar1 = 1;
+			}
+			return uVar1;
+		}
 		
 		// TODO
 		private static uint getexp_calc_adjust_level(uint base_exp, ushort getpoke_lv, ushort deadpoke_lv) { return default; }

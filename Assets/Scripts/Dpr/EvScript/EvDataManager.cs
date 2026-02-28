@@ -1012,17 +1012,25 @@ namespace Dpr.EvScript
         // TODO
         public void RetireSafari() { }
 
-        // TODO
-        public void SetSafariScopeEvent() { }
+        public void SetSafariScopeEvent()
+        {
+        	this._callLabel_SceneChange = _StringLiteral_9186;
+        }
 
-        // TODO
-        public void SetSafariScopeEndEvent() { }
+        public void SetSafariScopeEndEvent()
+        {
+        	this._callLabel_SceneChange = _StringLiteral_9187;
+        }
 
-        // TODO
-        public void SetNagisaScopeEvent() { }
+        public void SetNagisaScopeEvent()
+        {
+        	this._callLabel_SceneChange = _StringLiteral_9188;
+        }
 
-        // TODO
-        public void SetNagisaScopeEndEvent() { }
+        public void SetNagisaScopeEndEvent()
+        {
+        	this._callLabel_SceneChange = _StringLiteral_9189;
+        }
 
         // TODO
         public void UpdatePartyEggHatchingCount(int step) { }
@@ -1048,8 +1056,13 @@ namespace Dpr.EvScript
         // TODO
         public void OnCloseMenu() { }
 
-        // TODO
-        public bool IsRunningEvent() { return false; }
+        public bool IsRunningEvent()
+        {
+        	if (-1 < this._eventListIndex) {
+        	  return true;
+        	}
+        	return ~this._battleReturnData >> 0x1f;
+        }
 
         public bool CheckPosEvent(out Vector3 outWorldPos, FieldPlayerEntity player)
         {
@@ -1111,8 +1124,18 @@ namespace Dpr.EvScript
             }
         }
 
-        // TODO
-        private void SetEventListIndex(int idx) { }
+        private void SetEventListIndex(int idx)
+        {
+        	if (idx == -1) {
+        	  SetCloudScaleEnd();
+        	  this._eventListIndex = 0xffffffff;
+        	}
+        	if (this._eventListIndex != -1) {
+        	  this._eventListIndex = idx;
+        	}
+        	SetCloudScaleStart();
+        	this._eventListIndex = idx;
+        }
 
         private void CloudScaleReset()
         {
@@ -1906,8 +1929,20 @@ namespace Dpr.EvScript
                 return "";
         }
 
-        // TODO
-        public int GetBadgeCount() { return 0; }
+        public int GetBadgeCount()
+        {
+        	var uVar1 = FlagWork.GetSysFlag(0x81);
+        	var uVar2 = FlagWork.GetSysFlag(0x7c);
+        	var uVar3 = FlagWork.GetSysFlag(0x7d);
+        	var uVar4 = FlagWork.GetSysFlag(0x80);
+        	var uVar5 = FlagWork.GetSysFlag(0x7f);
+        	var uVar6 = FlagWork.GetSysFlag(0x7e);
+        	var uVar7 = FlagWork.GetSysFlag(0x83);
+        	var uVar8 = FlagWork.GetSysFlag(0x82);
+        	return (uVar2 & 1) + (uVar1 & 1) + (uVar3 & 1) + (uVar4 & 1) + (uVar5 & 1) + (uVar6 & 1) +
+        	       (uVar7 & 1) + (uVar8 & 1);
+        	return 0;
+        }
 
         // TODO
         private string GetTrainerMsg(int tr_id, int kind) { return null; }
@@ -2702,17 +2737,76 @@ namespace Dpr.EvScript
         // TODO
         private void Cmd_If_Jump(string type, string label) { }
 
-        // TODO
-        private bool Cmd_TalkObjStart() { return false; }
+        private bool Cmd_TalkObjStart()
+        {
+        	if ((int)this._procCmd == 0x343) {
+        	  NeckRotateHero();
+        	  NeckRotateTarget();
+        	  this._procCmd = (NAME)0;
+        	  return true;
+        	}
+        	if ((int)this._procCmd == 0x8e) {
+        	  Cmd_ObjPauseAll();
+        	  this._procCmd = (NAME)0x343;
+        	  return false;
+        	}
+        	if ((int)this._procCmd == 0x6d) {
+        	  PlaySe(StringLiteral_9145);
+        	  this._procCmd = (NAME)0x8e;
+        	  return false;
+        	}
+        	this._procCmd = (NAME)0x6d;
+        	return false;
+        }
 
-        // TODO
-        private bool Cmd_TalkObjStartTurnNot() { return false; }
+        private bool Cmd_TalkObjStartTurnNot()
+        {
+        	uint uVar2;
+        	uint uVar3;
+        	if ((int)this._procCmd == 0x343) {
+        	  NeckRotateHero();
+        	  uVar3 = 1;
+        	  NeckRotateTarget(1);
+        	  uVar2 = 0;
+        	}
+        	else if ((int)this._procCmd == 0x8e) {
+        	  Cmd_ObjPauseAll();
+        	  uVar3 = 0;
+        	  uVar2 = 0x343;
+        	}
+        	else if ((int)this._procCmd == 0x6d) {
+        	  PlaySe(StringLiteral_9145);
+        	  uVar3 = 0;
+        	  uVar2 = 0x8e;
+        	}
+        	else {
+        	  uVar3 = 0;
+        	  uVar2 = 0x6d;
+        	}
+        	this._procCmd = (NAME)(uVar2);
+        	return uVar3;
+        }
 
-        // TODO
-        private bool Cmd_LastKeyWait() { return false; }
+        private bool Cmd_LastKeyWait()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool Cmd_TalkStart() { return false; }
+        private bool Cmd_TalkStart()
+        {
+        	if ((int)this._procCmd != 0x8e) {
+        	  if ((int)this._procCmd == 0x6d) {
+        	    PlaySe(StringLiteral_9145);
+        	    this._procCmd = (NAME)0x8e;
+        	    return false;
+        	  }
+        	  this._procCmd = (NAME)0x6d;
+        	  return false;
+        	}
+        	Cmd_ObjPauseAll();
+        	this._procCmd = (NAME)0;
+        	return true;
+        }
 
         // TODO
         public bool Cmd_ObjPauseAll() { return false; }
@@ -2738,8 +2832,11 @@ namespace Dpr.EvScript
         // TODO
         private bool CmdMapChange(EvScriptData ev) { return false; }
 
-        // TODO
-        private bool CmdMapChangeNoneFade(EvScriptData ev) { return false; }
+        private bool CmdMapChangeNoneFade(EvScriptData ev)
+        {
+        	CmdMapChange();
+        	return true;
+        }
 
         private bool StackMapChange()
         {
@@ -3998,8 +4095,10 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdMeWait() { return false; }
 
-        // TODO
-        private bool EvCmdSndInitialVolSet() { return false; }
+        private bool EvCmdSndInitialVolSet()
+        {
+        	return true;
+        }
 
         private bool EvCmdBgmPlay()
         {
@@ -4007,8 +4106,10 @@ namespace Dpr.EvScript
             return true;
         }
 
-        // TODO
-        private bool EvCmdBgmPlayCheck() { return false; }
+        private bool EvCmdBgmPlayCheck()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdBgmStop() { return false; }
@@ -4019,20 +4120,30 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdBgmSpecialSet() { return false; }
 
-        // TODO
-        private bool EvMacro_BGM_SPECIAL_CLR() { return false; }
+        private bool EvMacro_BGM_SPECIAL_CLR()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdBgmFadeOut() { return false; }
+        private bool EvCmdBgmFadeOut()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvMacro_BGM_FADEOUT_PLAY() { return false; }
+        private bool EvMacro_BGM_FADEOUT_PLAY()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdBgmFadeIn() { return false; }
+        private bool EvCmdBgmFadeIn()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdBgmPlayerPause() { return false; }
+        private bool EvCmdBgmPlayerPause()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdPlayerFieldDemoBgmPlay() { return false; }
@@ -4043,20 +4154,30 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdCtrlBgmFlagReSet() { return false; }
 
-        // TODO
-        private bool EvCmdPerapDataCheck() { return false; }
+        private bool EvCmdPerapDataCheck()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPerapRecStart() { return false; }
+        private bool EvCmdPerapRecStart()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPerapRecStop() { return false; }
+        private bool EvCmdPerapRecStop()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPerapSave() { return false; }
+        private bool EvCmdPerapSave()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSndClimaxDataLoad() { return false; }
+        private bool EvCmdSndClimaxDataLoad()
+        {
+        	return true;
+        }
 
         private bool EvCmdObjAnime()
         {
@@ -4085,28 +4206,41 @@ namespace Dpr.EvScript
             return true;
         }
 
-        // TODO
-        private bool EvCmdObjAnimePos() { return false; }
+        private bool EvCmdObjAnimePos()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvMacro_ANIME_LABEL() { return false; }
+        private bool EvMacro_ANIME_LABEL()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvMacro_ANIME_DATA() { return false; }
+        private bool EvMacro_ANIME_DATA()
+        {
+        	return true;
+        }
 
         private bool EvCmdObjAnimeWait()
         {
             return IsMoveEnd("");
         }
 
-        // TODO
-        private bool EvCmdTalkObjPauseAll() { return false; }
+        private bool EvCmdTalkObjPauseAll()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdObjPauseAll() { return false; }
+        private bool EvCmdObjPauseAll()
+        {
+        	Cmd_ObjPauseAll();
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdObjPauseClearAll() { return false; }
+        private bool EvCmdObjPauseClearAll()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdObjPause() { return false; }
@@ -4120,20 +4254,52 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdObjDel() { return false; }
 
-        // TODO
-        private bool EvCmdVanishDummyObjAdd() { return false; }
+        private bool EvCmdVanishDummyObjAdd()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdVanishDummyObjDel() { return false; }
+        private bool EvCmdVanishDummyObjDel()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdObjTurn() { return false; }
+        private bool EvCmdObjTurn()
+        {
+        	Turn_HitObjectToHero();
+        	return true;
+        }
 
         // TODO
         private bool EvMacro_TALK_OBJ_START() { return false; }
 
-        // TODO
-        private bool EvMacro_TALK_OBJ_START_TURN_NOT() { return false; }
+        private bool EvMacro_TALK_OBJ_START_TURN_NOT()
+        {
+        	uint uVar2;
+        	uint uVar3;
+        	if ((int)this._procCmd == 0x343) {
+        	  NeckRotateHero();
+        	  uVar3 = 1;
+        	  NeckRotateTarget(1);
+        	  uVar2 = 0;
+        	}
+        	else if ((int)this._procCmd == 0x8e) {
+        	  Cmd_ObjPauseAll();
+        	  uVar3 = 0;
+        	  uVar2 = 0x343;
+        	}
+        	else if ((int)this._procCmd == 0x6d) {
+        	  PlaySe(StringLiteral_9145);
+        	  uVar3 = 0;
+        	  uVar2 = 0x8e;
+        	}
+        	else {
+        	  uVar3 = 0;
+        	  uVar2 = 0x6d;
+        	}
+        	this._procCmd = (NAME)(uVar2);
+        	return uVar3;
+        }
 
         // TODO
         private bool EvMacro_TALK_OBJ_END() { return false; }
@@ -4161,11 +4327,17 @@ namespace Dpr.EvScript
         // TODO
         private bool EvMacro_EVENT_START() { return false; }
 
-        // TODO
-        private bool EvMacro_TALK_END() { return false; }
+        private bool EvMacro_TALK_END()
+        {
+        	Cmd_ObjPauseClearAll();
+        	return true;
+        }
 
-        // TODO
-        private bool EvMacro_EVENT_END() { return false; }
+        private bool EvMacro_EVENT_END()
+        {
+        	Cmd_ObjPauseClearAll();
+        	return true;
+        }
 
         // TODO
         private bool EvCmdPlayerPosGet() { return false; }
@@ -4173,29 +4345,39 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdObjPosGet() { return false; }
 
-        // TODO
-        private bool EvCmdPlayerPosOffsetSet() { return false; }
+        private bool EvCmdPlayerPosOffsetSet()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdPlayerDirGet() { return false; }
 
-        // TODO
-        private bool EvCmdNotZoneDelSet() { return false; }
+        private bool EvCmdNotZoneDelSet()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdMoveCodeChange() { return false; }
 
-        // TODO
-        private bool EvCmdMoveCodeGet() { return false; }
+        private bool EvCmdMoveCodeGet()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdPairObjIdSet() { return false; }
 
-        // TODO
-        private bool EvMacro_EVENT_DATA() { return false; }
+        private bool EvMacro_EVENT_DATA()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvMacro_EVENT_DATA_END() { return false; }
+        private bool EvMacro_EVENT_DATA_END()
+        {
+        	return true;
+        }
 
         private bool EvMacro_SP_EVENT_DATA_END()
         {
@@ -4253,38 +4435,58 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmd_GET_GOLD() { return false; }
 
-        // TODO
-        private bool EvCmdGoldWinWrite() { return false; }
+        private bool EvCmdGoldWinWrite()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdGoldWinDel() { return false; }
+        private bool EvCmdGoldWinDel()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdGoldWrite() { return false; }
+        private bool EvCmdGoldWrite()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCoinWinWrite() { return false; }
+        private bool EvCmdCoinWinWrite()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCoinWinDel() { return false; }
+        private bool EvCmdCoinWinDel()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCoinWrite() { return false; }
+        private bool EvCmdCoinWrite()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCheckCoin() { return false; }
+        private bool EvCmdCheckCoin()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdAddCoin() { return false; }
+        private bool EvCmdAddCoin()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSubCoin() { return false; }
+        private bool EvCmdSubCoin()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvMacro_FLD_ITEM_EVENT() { return false; }
 
-        // TODO
-        private bool EvMacro_HIDE_ITEM_EVENT() { return false; }
+        private bool EvMacro_HIDE_ITEM_EVENT()
+        {
+        	return true;
+        }
 
         private bool EvCmdAddItem()
         {
@@ -4320,62 +4522,100 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdPofinCheck() { return false; }
 
-        // TODO
-        private bool EvCmdAddPCBoxItem() { return false; }
+        private bool EvCmdAddPCBoxItem()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCheckPCBoxItem() { return false; }
+        private bool EvCmdCheckPCBoxItem()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdAddGoods() { return false; }
+        private bool EvCmdAddGoods()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSubGoods() { return false; }
+        private bool EvCmdSubGoods()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdAddGoodsChk() { return false; }
+        private bool EvCmdAddGoodsChk()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCheckGoods() { return false; }
+        private bool EvCmdCheckGoods()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdAddTrap() { return false; }
+        private bool EvCmdAddTrap()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSubTrap() { return false; }
+        private bool EvCmdSubTrap()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdAddTrapChk() { return false; }
+        private bool EvCmdAddTrapChk()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCheckTrap() { return false; }
+        private bool EvCmdCheckTrap()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdAddTreasure() { return false; }
+        private bool EvCmdAddTreasure()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSubTreasure() { return false; }
+        private bool EvCmdSubTreasure()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdAddTreasureChk() { return false; }
+        private bool EvCmdAddTreasureChk()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCheckTreasure() { return false; }
+        private bool EvCmdCheckTreasure()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdAddTama() { return false; }
+        private bool EvCmdAddTama()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSubTama() { return false; }
+        private bool EvCmdSubTama()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdAddTamaChk() { return false; }
+        private bool EvCmdAddTamaChk()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCheckTama() { return false; }
+        private bool EvCmdCheckTama()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCBSealKindNumGet() { return false; }
+        private bool EvCmdCBSealKindNumGet()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdCBItemNumGet() { return false; }
@@ -4398,8 +4638,10 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdAddTamago() { return false; }
 
-        // TODO
-        private bool EvCmdChgPokeWaza() { return false; }
+        private bool EvCmdChgPokeWaza()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdChkPokeWaza() { return false; }
@@ -4410,44 +4652,68 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdAddWaza() { return false; }
 
-        // TODO
-        private bool EvCmdApprovePoisonDead() { return false; }
+        private bool EvCmdApprovePoisonDead()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdRevengeTrainerSearch() { return false; }
 
-        // TODO
-        private bool EvCmdSetWeather() { return false; }
+        private bool EvCmdSetWeather()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdInitWeather() { return false; }
+        private bool EvCmdInitWeather()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUpdateWeather() { return false; }
+        private bool EvCmdUpdateWeather()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdGetMapPosition() { return false; }
+        private bool EvCmdGetMapPosition()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdGetTemotiPokeNum() { return false; }
+        private bool EvCmdGetTemotiPokeNum()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSetMapProc() { return false; }
+        private bool EvCmdSetMapProc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdFinishMapProc() { return false; }
+        private bool EvCmdFinishMapProc()
+        {
+        	return this._openTownMapSeq == 1;
+        }
 
-        // TODO
-        private bool EvCmdWiFiAutoReg() { return false; }
+        private bool EvCmdWiFiAutoReg()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdWiFiP2PMatchEventCall() { return false; }
+        private bool EvCmdWiFiP2PMatchEventCall()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdWiFiP2PMatchSetDel() { return false; }
+        private bool EvCmdWiFiP2PMatchSetDel()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCommGetCurrentID() { return false; }
+        private bool EvCmdCommGetCurrentID()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdDendouNumGet() { return false; }
@@ -4455,32 +4721,48 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdPokeWindowPut() { return false; }
 
-        // TODO
-        private bool EvCmdPokeWindowPutPP() { return false; }
+        private bool EvCmdPokeWindowPutPP()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPokeWindowDel() { return false; }
+        private bool EvCmdPokeWindowDel()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPokeWindowAnm() { return false; }
+        private bool EvCmdPokeWindowAnm()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPokeWindowAnmWait() { return false; }
+        private bool EvCmdPokeWindowAnmWait()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdBtlSearcherEventCall() { return false; }
 
-        // TODO
-        private bool EvCmdBtlSearcherDirMvSet() { return false; }
+        private bool EvCmdBtlSearcherDirMvSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdMsgBoyEvent() { return false; }
+        private bool EvCmdMsgBoyEvent()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdImageClipSetProc() { return false; }
+        private bool EvCmdImageClipSetProc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdImageClipPreviewTvProc() { return false; }
+        private bool EvCmdImageClipPreviewTvProc()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdImageClipPreviewConProc() { return false; }
@@ -4494,20 +4776,30 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdBoxSetProc() { return false; }
 
-        // TODO
-        private bool EvCmd_BOX_SEAL_UI_WAIT() { return false; }
+        private bool EvCmd_BOX_SEAL_UI_WAIT()
+        {
+        	return this._pc_window_close;
+        }
 
-        // TODO
-        private bool EvCmdOekakiBoardSetProc() { return false; }
+        private bool EvCmdOekakiBoardSetProc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCallTrCard() { return false; }
+        private bool EvCmdCallTrCard()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdTradeListSetProc() { return false; }
+        private bool EvCmdTradeListSetProc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdRecordCornerSetProc() { return false; }
+        private bool EvCmdRecordCornerSetProc()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdDendouSetProc() { return false; }
@@ -4515,23 +4807,33 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdPcDendouSetProc() { return false; }
 
-        // TODO
-        private bool EvCmdPcDendouSetProcOpenWait() { return false; }
+        private bool EvCmdPcDendouSetProcOpenWait()
+        {
+        	return !this._isOpenHallOfFame;
+        }
 
-        // TODO
-        private bool EvCmdWorldTradeSetProc() { return false; }
+        private bool EvCmdWorldTradeSetProc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdDPWInitProc() { return false; }
+        private bool EvCmdDPWInitProc()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdFirstPokeSelectProc() { return false; }
 
-        // TODO
-        private bool EvCmdFirstPokeSelectSetAndDel() { return false; }
+        private bool EvCmdFirstPokeSelectSetAndDel()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdBagSetProcNormal() { return false; }
+        private bool EvCmdBagSetProcNormal()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdBagSetProcKinomi() { return false; }
@@ -4542,26 +4844,38 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdPokeListSetProc() { return false; }
 
-        // TODO
-        private bool EvCmdNpcTradePokeListSetProc() { return false; }
+        private bool EvCmdNpcTradePokeListSetProc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionPokeListSetProc() { return false; }
+        private bool EvCmdUnionPokeListSetProc()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdPokeListGetResult() { return false; }
 
-        // TODO
-        private bool EvCmdConPokeListSetProc() { return false; }
+        private bool EvCmdConPokeListSetProc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConPokeListGetResult() { return false; }
+        private bool EvCmdConPokeListGetResult()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConPokeStatusSetProc() { return false; }
+        private bool EvCmdConPokeStatusSetProc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPokeStatusGetResult() { return false; }
+        private bool EvCmdPokeStatusGetResult()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdWifiEarthSetProc() { return false; }
@@ -4578,41 +4892,75 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdEyeTrainerIdGet() { return false; }
 
-        // TODO
-        private bool EvCmdNameIn() { return false; }
+        private bool EvCmdNameIn()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdNameInPoke() { return false; }
 
-        // TODO
-        private bool EvCmdWipeFadeStart() { return false; }
+        private bool EvCmdWipeFadeStart()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdWipeFadeCheck() { return false; }
+        private bool EvCmdWipeFadeCheck()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvMacro_WHITE_OUT() { return false; }
+        private bool EvMacro_WHITE_OUT()
+        {
+        	0.white;
+        	Fader.fillColor = 0;
+        	Fader.FadeOut(this._fadeSpeed);
+        	return true;
+        }
 
-        // TODO
-        private bool EvMacro_WHITE_IN() { return false; }
+        private bool EvMacro_WHITE_IN()
+        {
+        	0.white;
+        	Fader.fillColor = 0;
+        	Fader.FadeIn(this._fadeSpeed);
+        	return true;
+        }
 
-        // TODO
-        private bool EvMacro_BLACK_OUT() { return false; }
+        private bool EvMacro_BLACK_OUT()
+        {
+        	0.black;
+        	Fader.fillColor = 0;
+        	Fader.FadeOut(this._fadeSpeed);
+        	return true;
+        }
 
-        // TODO
-        private bool EvMacro_BLACK_IN() { return false; }
+        private bool EvMacro_BLACK_IN()
+        {
+        	0.black;
+        	Fader.fillColor = 0;
+        	Fader.FadeIn(this._fadeSpeed);
+        	return true;
+        }
 
-        // TODO
-        private bool EvMacro_MAP_CHANGE() { return false; }
+        private bool EvMacro_MAP_CHANGE()
+        {
+        	CmdMapChange(this._evData);
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdMapChange() { return false; }
+        private bool EvCmdMapChange()
+        {
+        	CmdMapChange(this._evData);
+        	return true;
+        }
 
         // TODO
         private bool EvCmdColosseumMapChangeIn() { return false; }
 
-        // TODO
-        private bool EvCmdColosseumMapChangeOut() { return false; }
+        private bool EvCmdColosseumMapChangeOut()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdGetBeforeZoneID() { return false; }
@@ -4635,11 +4983,15 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdBicycleReqNonBgm() { return false; }
 
-        // TODO
-        private bool EvCmdCyclingRoadSet() { return false; }
+        private bool EvCmdCyclingRoadSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPlayerFormGet() { return false; }
+        private bool EvCmdPlayerFormGet()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdPlayerReqBitOn() { return false; }
@@ -4677,8 +5029,10 @@ namespace Dpr.EvScript
         // TODO
         private bool CheckHidenWazaForceResetForm(WazaNo wazaNo) { return false; }
 
-        // TODO
-        private bool EvCmdConHeroChange() { return false; }
+        private bool EvCmdConHeroChange()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdPlayerName() { return false; }
@@ -4689,8 +5043,11 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdSupportName() { return false; }
 
-        // TODO
-        private bool EvCmdPokemonName() { return false; }
+        private bool EvCmdPokemonName()
+        {
+        	CmdPokemonName(this._evCommand);
+        	return true;
+        }
 
         // TODO
         private bool EvCmdItemName() { return false; }
@@ -4755,20 +5112,31 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdPartnerNameSet() { return false; }
 
-        // TODO
-        private bool EvCmdMyTrTypeName() { return false; }
+        private bool EvCmdMyTrTypeName()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdPokemonNameExtra() { return false; }
 
-        // TODO
-        private bool EvCmdFirstPokemonName() { return false; }
+        private bool EvCmdFirstPokemonName()
+        {
+        	CmdFirstPokemonName(this._evCommand);
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdRivalPokemonName() { return false; }
+        private bool EvCmdRivalPokemonName()
+        {
+        	CmdRivalPokemonName(this._evCommand);
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSupportPokemonName() { return false; }
+        private bool EvCmdSupportPokemonName()
+        {
+        	CmdSupportPokemonName(this._evCommand);
+        	return true;
+        }
 
         // TODO
         private bool EvCmdFirstPokeNoGet() { return false; }
@@ -4779,14 +5147,20 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdSeikakuName() { return false; }
 
-        // TODO
-        private bool EvCmdGoodsName() { return false; }
+        private bool EvCmdGoodsName()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdTrapName() { return false; }
+        private bool EvCmdTrapName()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdTamaName() { return false; }
+        private bool EvCmdTamaName()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdZoneName() { return false; }
@@ -4803,11 +5177,17 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdTrainerIdGet() { return false; }
 
-        // TODO
-        private bool EvCmdTrainerBattleSet() { return false; }
+        private bool EvCmdTrainerBattleSet()
+        {
+        	CmdTrainerBtlSet(this._evData);
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdTrainerMultiBattleSet() { return false; }
+        private bool EvCmdTrainerMultiBattleSet()
+        {
+        	CmdTrainerBtlSetMulti(this._evData);
+        	return true;
+        }
 
         // TODO
         private bool EvCmdTrainerMessageSet() { return false; }
@@ -4818,170 +5198,271 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdRevengeTrainerTalkTypeGet() { return false; }
 
-        // TODO
-        private bool EvCmdTrainerTypeGet() { return false; }
+        private bool EvCmdTrainerTypeGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdTrainerBgmSet() { return false; }
+        private bool EvCmdTrainerBgmSet()
+        {
+        	CmdTrainerBgmSet(this._evCommand);
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdTrainerLose() { return false; }
+        private bool EvCmdTrainerLose()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdTrainerLoseCheck() { return false; }
+        private bool EvCmdTrainerLoseCheck()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdNormalLose() { return false; }
+        private bool EvCmdNormalLose()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdNormalLoseCheck() { return false; }
+        private bool EvCmdNormalLoseCheck()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdSeacretPokeRetryCheck() { return false; }
 
-        // TODO
-        private bool EvCmdHaifuPokeRetryCheck() { return false; }
+        private bool EvCmdHaifuPokeRetryCheck()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmd2vs2BattleCheck() { return false; }
 
-        // TODO
-        private bool EvCmdDebugBattleSet() { return false; }
+        private bool EvCmdDebugBattleSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdDebugTrainerFlagSet() { return false; }
+        private bool EvCmdDebugTrainerFlagSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdDebugTrainerFlagOnJump() { return false; }
+        private bool EvCmdDebugTrainerFlagOnJump()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvMacro_DEBUG_TR_TALK_BTL() { return false; }
+        private bool EvMacro_DEBUG_TR_TALK_BTL()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConnectSelParentWin() { return false; }
+        private bool EvCmdConnectSelParentWin()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConnectSelChildWin() { return false; }
+        private bool EvCmdConnectSelChildWin()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConnectDebugParentWin() { return false; }
+        private bool EvCmdConnectDebugParentWin()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConnectDebugChildWin() { return false; }
+        private bool EvCmdConnectDebugChildWin()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdDebugSioEncount() { return false; }
+        private bool EvCmdDebugSioEncount()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdDebugSioContest() { return false; }
+        private bool EvCmdDebugSioContest()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConSioTimingSend() { return false; }
+        private bool EvCmdConSioTimingSend()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConSioTimingCheck() { return false; }
+        private bool EvCmdConSioTimingCheck()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConSystemCreate() { return false; }
+        private bool EvCmdConSystemCreate()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConSystemExit() { return false; }
+        private bool EvCmdConSystemExit()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConJudgeNameGet() { return false; }
+        private bool EvCmdConJudgeNameGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConBreederNameGet() { return false; }
+        private bool EvCmdConBreederNameGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConNickNameGet() { return false; }
+        private bool EvCmdConNickNameGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConNumTagSet() { return false; }
+        private bool EvCmdConNumTagSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConSioParamInitSet() { return false; }
+        private bool EvCmdConSioParamInitSet()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdContestProc() { return false; }
 
-        // TODO
-        private bool EvCmdConRankNameGet() { return false; }
+        private bool EvCmdConRankNameGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConTypeNameGet() { return false; }
+        private bool EvCmdConTypeNameGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConVictoryBreederNameGet() { return false; }
+        private bool EvCmdConVictoryBreederNameGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConVictoryItemNoGet() { return false; }
+        private bool EvCmdConVictoryItemNoGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConVictoryNickNameGet() { return false; }
+        private bool EvCmdConVictoryNickNameGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConRankingCheck() { return false; }
+        private bool EvCmdConRankingCheck()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConVictoryEntryNoGet() { return false; }
+        private bool EvCmdConVictoryEntryNoGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConMyEntryNoGet() { return false; }
+        private bool EvCmdConMyEntryNoGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConObjCodeGet() { return false; }
+        private bool EvCmdConObjCodeGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConPopularityGet() { return false; }
+        private bool EvCmdConPopularityGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConDeskModeGet() { return false; }
+        private bool EvCmdConDeskModeGet()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdConHaveRibbonCheck() { return false; }
 
-        // TODO
-        private bool EvCmdConRibbonNameGet() { return false; }
+        private bool EvCmdConRibbonNameGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConAcceNoGet() { return false; }
+        private bool EvCmdConAcceNoGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConEntryParamGet() { return false; }
+        private bool EvCmdConEntryParamGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConCameraFlashSet() { return false; }
+        private bool EvCmdConCameraFlashSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConCameraFlashCheck() { return false; }
+        private bool EvCmdConCameraFlashCheck()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConHBlankStop() { return false; }
+        private bool EvCmdConHBlankStop()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConHBlankStart() { return false; }
+        private bool EvCmdConHBlankStart()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConEndingSkipCheck() { return false; }
+        private bool EvCmdConEndingSkipCheck()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdConRecordDisp() { return false; }
 
-        // TODO
-        private bool EvCmdConMsgPrintFlagSet() { return false; }
+        private bool EvCmdConMsgPrintFlagSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdConMsgPrintFlagReset() { return false; }
+        private bool EvCmdConMsgPrintFlagReset()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSpLocationSet() { return false; }
+        private bool EvCmdSpLocationSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdElevatorNowFloorGet() { return false; }
+        private bool EvCmdElevatorNowFloorGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdElevatorFloorWrite() { return false; }
+        private bool EvCmdElevatorFloorWrite()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdGetShinouZukanSeeNum() { return false; }
@@ -4995,11 +5476,15 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdGetZenkokuZukanGetNum() { return false; }
 
-        // TODO
-        private bool EvCmdChkZenkokuZukan() { return false; }
+        private bool EvCmdChkZenkokuZukan()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdGetZukanHyoukaMsgID() { return false; }
+        private bool EvCmdGetZukanHyoukaMsgID()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdWildBattleSet() { return false; }
@@ -5022,14 +5507,20 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdHoneyTreeBattleSet() { return false; }
 
-        // TODO
-        private bool EvCmdHoneyAfterTreeBattleSet() { return false; }
+        private bool EvCmdHoneyAfterTreeBattleSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdTSignSetProc() { return false; }
+        private bool EvCmdTSignSetProc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdReportSaveCheck() { return false; }
+        private bool EvCmdReportSaveCheck()
+        {
+        	return this._cmdReportSaveCoroutine == null;
+        }
 
         // TODO
         private bool EvCmdReportSave() { return false; }
@@ -5037,23 +5528,36 @@ namespace Dpr.EvScript
         // TODO
         private IEnumerator evReportSaveCoroutine() { return null; }
 
-        // TODO
-        private bool EvCmdReportInfoWinOpen() { return false; }
+        private bool EvCmdReportInfoWinOpen()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdReportInfoWinClose() { return false; }
+        private bool EvCmdReportInfoWinClose()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdImageClipTvSaveDataCheck() { return false; }
+        private bool EvCmdImageClipTvSaveDataCheck()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdImageClipConSaveDataCheck() { return false; }
+        private bool EvCmdImageClipConSaveDataCheck()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdImageClipTvSaveTitle() { return false; }
+        private bool EvCmdImageClipTvSaveTitle()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdGetPoketch() { return false; }
+        private bool EvCmdGetPoketch()
+        {
+        	FlagWork.SetFlag(0xcb,1);
+        	return true;
+        }
 
         // TODO
         private bool EvCmdGetPoketchFlag() { return false; }
@@ -5067,77 +5571,123 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdPoketchAppCheck() { return false; }
 
-        // TODO
-        private bool EvCmdCommTimingSyncStart() { return false; }
+        private bool EvCmdCommTimingSyncStart()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCommTempDataReset() { return false; }
+        private bool EvCmdCommTempDataReset()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdUnionProc() { return false; }
 
-        // TODO
-        private bool EvCmdUnionParentCardTalkNo() { return false; }
+        private bool EvCmdUnionParentCardTalkNo()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionGetInfoTalkNo() { return false; }
+        private bool EvCmdUnionGetInfoTalkNo()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionBeaconChange() { return false; }
+        private bool EvCmdUnionBeaconChange()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionConnectTalkDenied() { return false; }
+        private bool EvCmdUnionConnectTalkDenied()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionConnectTalkOk() { return false; }
+        private bool EvCmdUnionConnectTalkOk()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionTrainerNameRegist() { return false; }
+        private bool EvCmdUnionTrainerNameRegist()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionReturnSetUp() { return false; }
+        private bool EvCmdUnionReturnSetUp()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionConnectCutRestart() { return false; }
+        private bool EvCmdUnionConnectCutRestart()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionGetTalkNumber() { return false; }
+        private bool EvCmdUnionGetTalkNumber()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionIdSet() { return false; }
+        private bool EvCmdUnionIdSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionResultGet() { return false; }
+        private bool EvCmdUnionResultGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionObjAllVanish() { return false; }
+        private bool EvCmdUnionObjAllVanish()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionScriptResultSet() { return false; }
+        private bool EvCmdUnionScriptResultSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionParentStartCommandSet() { return false; }
+        private bool EvCmdUnionParentStartCommandSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionChildSelectCommandSet() { return false; }
+        private bool EvCmdUnionChildSelectCommandSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionConnectStart() { return false; }
+        private bool EvCmdUnionConnectStart()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionMapChange() { return false; }
+        private bool EvCmdUnionMapChange()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionViewSetUpTrainerTypeSelect() { return false; }
+        private bool EvCmdUnionViewSetUpTrainerTypeSelect()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionViewGetTrainerType() { return false; }
+        private bool EvCmdUnionViewGetTrainerType()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionViewGetTrainerTypeNo() { return false; }
+        private bool EvCmdUnionViewGetTrainerTypeNo()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionViewMyStatusSet() { return false; }
+        private bool EvCmdUnionViewMyStatusSet()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdSysFlagZukanGet() { return false; }
@@ -5163,14 +5713,20 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdSysFlagBagGet() { return false; }
 
-        // TODO
-        private bool EvCmdSysFlagBagSet() { return false; }
+        private bool EvCmdSysFlagBagSet()
+        {
+        	FlagWork.SetSysFlag(1,1);
+        	return true;
+        }
 
         // TODO
         private bool EvCmdSysFlagPairGet() { return false; }
 
-        // TODO
-        private bool EvCmdSysFlagPairSet() { return false; }
+        private bool EvCmdSysFlagPairSet()
+        {
+        	FlagWork.SetSysFlag(2,1);
+        	return true;
+        }
 
         // TODO
         private bool EvCmdSysFlagPairReset() { return false; }
@@ -5178,23 +5734,38 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdSysFlagOneStepGet() { return false; }
 
-        // TODO
-        private bool EvCmdSysFlagOneStepSet() { return false; }
+        private bool EvCmdSysFlagOneStepSet()
+        {
+        	FlagWork.SetSysFlag(6,1);
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSysFlagOneStepReset() { return false; }
+        private bool EvCmdSysFlagOneStepReset()
+        {
+        	FlagWork.SetSysFlag(6,0);
+        	return true;
+        }
 
         // TODO
         private bool EvCmdSysFlagGameClearGet() { return false; }
 
-        // TODO
-        private bool EvCmdSysFlagGameClearSet() { return false; }
+        private bool EvCmdSysFlagGameClearSet()
+        {
+        	FlagWork.SetSysFlag(5,1);
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSysFlagKairikiSet() { return false; }
+        private bool EvCmdSysFlagKairikiSet()
+        {
+        	FlagWork.SetSysFlag(3,1);
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSysFlagKairikiReset() { return false; }
+        private bool EvCmdSysFlagKairikiReset()
+        {
+        	FlagWork.SetSysFlag(3,0);
+        	return true;
+        }
 
         // TODO
         private bool EvCmdSysFlagKairikiGet() { return false; }
@@ -5217,29 +5788,45 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdSysFlagKiribaraiGet() { return false; }
 
-        // TODO
-        private bool EvCmdShopCall() { return false; }
+        private bool EvCmdShopCall()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdFixShopCall() { return false; }
+        private bool EvCmdFixShopCall()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdFixGoodsCall() { return false; }
+        private bool EvCmdFixGoodsCall()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdFixSealCall() { return false; }
+        private bool EvCmdFixSealCall()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdAcceShopCall() { return false; }
+        private bool EvCmdAcceShopCall()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdReportDrawProcSet() { return false; }
+        private bool EvCmdReportDrawProcSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdReportDrawProcDel() { return false; }
+        private bool EvCmdReportDrawProcDel()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdGameOverCall() { return false; }
+        private bool EvCmdGameOverCall()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdSetWarpId() { return false; }
@@ -5253,29 +5840,44 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdPcKaifuku() { return false; }
 
-        // TODO
-        private bool EvCmdUgManShopNpcRandomPlace() { return false; }
+        private bool EvCmdUgManShopNpcRandomPlace()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCommDirectEnd() { return false; }
+        private bool EvCmdCommDirectEnd()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCommDirectEndTiming() { return false; }
+        private bool EvCmdCommDirectEndTiming()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCommDirectEnterBtlRoom() { return false; }
+        private bool EvCmdCommDirectEnterBtlRoom()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCommPlayerSetDir() { return false; }
+        private bool EvCmdCommPlayerSetDir()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSetUpDoorAnime() { return false; }
+        private bool EvCmdSetUpDoorAnime()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdWait3DAnime() { return false; }
 
-        // TODO
-        private bool EvCmdFree3DAnime() { return false; }
+        private bool EvCmdFree3DAnime()
+        {
+        	this._selectDoorObject = null;
+        	return true;
+        }
 
         // TODO
         private bool EvCmdOpenDoor() { return false; }
@@ -5283,14 +5885,20 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdCloseDoor() { return false; }
 
-        // TODO
-        private bool EvCmdPMSInputSingleProc() { return false; }
+        private bool EvCmdPMSInputSingleProc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPMSInputDoubleProc() { return false; }
+        private bool EvCmdPMSInputDoubleProc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPMSBuf() { return false; }
+        private bool EvCmdPMSBuf()
+        {
+        	return true;
+        }
 
         // TODO
         private FieldKinomiGrowEntity GetCurrentKinomiGrowEntity() { return null; }
@@ -5304,17 +5912,23 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdSeedGetType() { return false; }
 
-        // TODO
-        private bool EvCmdSeedGetCompost() { return false; }
+        private bool EvCmdSeedGetCompost()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSeedGetGroundStatus() { return false; }
+        private bool EvCmdSeedGetGroundStatus()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdSeedGetNutsCount() { return false; }
 
-        // TODO
-        private bool EvCmdSeedSetCompost() { return false; }
+        private bool EvCmdSeedSetCompost()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdSeedSetNuts() { return false; }
@@ -5352,11 +5966,16 @@ namespace Dpr.EvScript
             return true;
         }
 
-        // TODO
-        private bool EvCmdSxyExitPosChange() { return false; }
+        private bool EvCmdSxyExitPosChange()
+        {
+        	CmdSxyExitPosChange(this._evCommand);
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSxyBgPosChange() { return false; }
+        private bool EvCmdSxyBgPosChange()
+        {
+        	return true;
+        }
 
         private bool EvCmdObjDirChange()
         {
@@ -5366,17 +5985,23 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdReturnScriptWkSet() { return false; }
 
-        // TODO
-        private bool EvCmdMsgExpandBuf() { return false; }
+        private bool EvCmdMsgExpandBuf()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdGetSodateyaName() { return false; }
+        private bool EvCmdGetSodateyaName()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdGetSodateyaZiisan() { return false; }
 
-        // TODO
-        private bool EvCmdInitWaterGym() { return false; }
+        private bool EvCmdInitWaterGym()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdPushWaterGymButton() { return false; }
@@ -5387,20 +6012,27 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdResetWaterGymWaterLevel() { return false; }
 
-        // TODO
-        private bool EvCmdInitGhostGym() { return false; }
+        private bool EvCmdInitGhostGym()
+        {
+        	EvCmdInitFldLift();
+        	return true;
+        }
 
         // TODO
         private bool EvCmdMoveGhostGymLift() { return false; }
 
-        // TODO
-        private bool EvCmdInitSteelGym() { return false; }
+        private bool EvCmdInitSteelGym()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdInitCombatGym() { return false; }
 
-        // TODO
-        private bool EvCmdInitElecGym() { return false; }
+        private bool EvCmdInitElecGym()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdRotElecGymGear() { return false; }
@@ -5420,14 +6052,24 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdGetPokeCount5() { return false; }
 
-        // TODO
-        private bool EvCmdGetTamagoCount() { return false; }
+        private bool EvCmdGetTamagoCount()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdUgShopMenuInit() { return false; }
 
-        // TODO
-        private DayOfWeek GetShopUgWeek() { return DayOfWeek.Sunday; }
+        private DayOfWeek GetShopUgWeek()
+        {
+        	var iVar1 = FlagWork.GetWork(0x16d);
+        	if (0 < iVar1) {
+        	  return iVar1 + -1;
+        	}
+        	iVar1 = FlagWork.GetWork(0x1a2);
+        	FlagWork.SetWork(0x16d,iVar1 / 100000000);
+        	return iVar1 / 100000000 + -1;
+        }
 
         // TODO
         private bool EvCmdUgLevaeHyouta()
@@ -5485,47 +6127,75 @@ namespace Dpr.EvScript
             return false;
         }
 
-        // TODO
-        private bool EvCmdUgShopTalkStart() { return false; }
+        private bool EvCmdUgShopTalkStart()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUgShopTalkEnd() { return false; }
+        private bool EvCmdUgShopTalkEnd()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUgShopTalkRegisterItemName() { return false; }
+        private bool EvCmdUgShopTalkRegisterItemName()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUgShopTalkRegisterTrapName() { return false; }
+        private bool EvCmdUgShopTalkRegisterTrapName()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdDelSodateyaEgg() { return false; }
+        private bool EvCmdDelSodateyaEgg()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdGetSodateyaEgg() { return false; }
+        private bool EvCmdGetSodateyaEgg()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdMsgSodateyaAishou() { return false; }
+        private bool EvCmdMsgSodateyaAishou()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdMsgAzukeSet() { return false; }
+        private bool EvCmdMsgAzukeSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSetSodateyaPoke() { return false; }
+        private bool EvCmdSetSodateyaPoke()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSodateyaPokeList() { return false; }
+        private bool EvCmdSodateyaPokeList()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdHikitoriList() { return false; }
+        private bool EvCmdHikitoriList()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSodatePokeLevelStr() { return false; }
+        private bool EvCmdSodatePokeLevelStr()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdHikitoriRyoukin() { return false; }
+        private bool EvCmdHikitoriRyoukin()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdHikitoriPoke() { return false; }
+        private bool EvCmdHikitoriPoke()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdTamagoDemo() { return false; }
@@ -5539,8 +6209,10 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdChkTemotiPokerus() { return false; }
 
-        // TODO
-        private bool EvCmdTemotiPokeSexGet() { return false; }
+        private bool EvCmdTemotiPokeSexGet()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdSubMyGold() { return false; }
@@ -5554,11 +6226,15 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdObjInvisible() { return false; }
 
-        // TODO
-        private bool EvCmdMailBox() { return false; }
+        private bool EvCmdMailBox()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdGetMailBoxDataNum() { return false; }
+        private bool EvCmdGetMailBoxDataNum()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdRankingView() { return false; }
@@ -5583,17 +6259,25 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdAddNatsuki() { return false; }
 
-        // TODO
-        private bool EvCmdSubNatsuki() { return false; }
+        private bool EvCmdSubNatsuki()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdHikitoriListNameSet() { return false; }
+        private bool EvCmdHikitoriListNameSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdGetSodateyaAishou() { return false; }
+        private bool EvCmdGetSodateyaAishou()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdGetSodateyaTamagoCheck() { return false; }
+        private bool EvCmdGetSodateyaTamagoCheck()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdTemotiPokeChk() { return false; }
@@ -5622,14 +6306,21 @@ namespace Dpr.EvScript
         // TODO
         private void SetOokisaDigit(int idx0, int idx1, float size) { }
 
-        // TODO
-        private bool EvCmdOokisaKurabeInit() { return false; }
+        private bool EvCmdOokisaKurabeInit()
+        {
+        	FlagWork.SetWork(0xfd,0x8200);
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdWazaListSetProc() { return false; }
+        private bool EvCmdWazaListSetProc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdWazaListGetResult() { return false; }
+        private bool EvCmdWazaListGetResult()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdWazaCount() { return false; }
@@ -5637,41 +6328,61 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdWazaDel() { return false; }
 
-        // TODO
-        private bool EvCmdTemotiWazaNo() { return false; }
+        private bool EvCmdTemotiWazaNo()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdTemotiWazaName() { return false; }
 
-        // TODO
-        private bool EvCmdFNoteStartSet() { return false; }
+        private bool EvCmdFNoteStartSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdFNoteDataMake() { return false; }
+        private bool EvCmdFNoteDataMake()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdFNoteDataSave() { return false; }
+        private bool EvCmdFNoteDataSave()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdImcAcceAddItem() { return false; }
+        private bool EvCmdImcAcceAddItem()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdImcAcceAddItemChk() { return false; }
+        private bool EvCmdImcAcceAddItemChk()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdImcAcceCheckItem() { return false; }
+        private bool EvCmdImcAcceCheckItem()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdImcBgAddItem() { return false; }
+        private bool EvCmdImcBgAddItem()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdImcBgCheckItem() { return false; }
+        private bool EvCmdImcBgCheckItem()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdNutMixerProc() { return false; }
 
-        // TODO
-        private bool EvCmdNutMixerPlayStateCheck() { return false; }
+        private bool EvCmdNutMixerPlayStateCheck()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdZukanChkShinou() { return false; }
@@ -5688,32 +6399,47 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdRecongnizeTokikake() { return false; }
 
-        // TODO
-        private bool EvCmdRecongnizeOpenWait() { return false; }
+        private bool EvCmdRecongnizeOpenWait()
+        {
+        	return !this._isOpenCertificate;
+        }
 
-        // TODO
-        private bool EvCmdUrayamaEncountSet() { return false; }
+        private bool EvCmdUrayamaEncountSet()
+        {
+        	EncountDataWork.ChangeUrayamaIndex(1);
+        	return true;
+        }
 
         // TODO
         private bool EvCmdUrayamaEncountNoChk() { return false; }
 
-        // TODO
-        private bool EvCmdPokeMailChk() { return false; }
+        private bool EvCmdPokeMailChk()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPaperplaneSet() { return false; }
+        private bool EvCmdPaperplaneSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPokeMailDel() { return false; }
+        private bool EvCmdPokeMailDel()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdKasekiCount() { return false; }
 
-        // TODO
-        private bool EvCmdItemListSetProc() { return false; }
+        private bool EvCmdItemListSetProc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdItemListGetResult() { return false; }
+        private bool EvCmdItemListGetResult()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdItemNoToMonsNo() { return false; }
@@ -5727,56 +6453,88 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdBTowerAppSetProc() { return false; }
 
-        // TODO
-        private bool EvCmdBattleTowerRecordMenuWait() { return false; }
+        private bool EvCmdBattleTowerRecordMenuWait()
+        {
+        	return !this._isOpenBtlTowerRecode;
+        }
 
-        // TODO
-        private bool EvCmdBattleTowerWorkClear() { return false; }
+        private bool EvCmdBattleTowerWorkClear()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdBattleTowerWorkInit() { return false; }
+        private bool EvCmdBattleTowerWorkInit()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdBattleTowerWorkRelease() { return false; }
+        private bool EvCmdBattleTowerWorkRelease()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdBattleTowerTools() { return false; }
+        private bool EvCmdBattleTowerTools()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdBattleTowerGetSevenPokeData() { return false; }
+        private bool EvCmdBattleTowerGetSevenPokeData()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdBattleTowerIsPrizeGet() { return false; }
+        private bool EvCmdBattleTowerIsPrizeGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdBattleTowerIsPrizemanSet() { return false; }
+        private bool EvCmdBattleTowerIsPrizemanSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdBattleTowerSendBuf() { return false; }
+        private bool EvCmdBattleTowerSendBuf()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdBattleTowerRecvBuf() { return false; }
+        private bool EvCmdBattleTowerRecvBuf()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdBattleTowerGetLeaderRoomID() { return false; }
+        private bool EvCmdBattleTowerGetLeaderRoomID()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdBattleTowerIsLeaderDataExist() { return false; }
+        private bool EvCmdBattleTowerIsLeaderDataExist()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdRecordInc() { return false; }
 
-        // TODO
-        private bool EvCmdRecordGet() { return false; }
+        private bool EvCmdRecordGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdRecordAdd() { return false; }
+        private bool EvCmdRecordAdd()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdRecordSet() { return false; }
+        private bool EvCmdRecordSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdRecordSetIflarge() { return false; }
+        private bool EvCmdRecordSetIflarge()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdSafariControlStart() { return false; }
@@ -5787,11 +6545,15 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdCallSafariScope() { return false; }
 
-        // TODO
-        private bool EvCmdClimaxDemoCall() { return false; }
+        private bool EvCmdClimaxDemoCall()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdInitSafariTrain() { return false; }
+        private bool EvCmdInitSafariTrain()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdMoveSafariTrain() { return false; }
@@ -5811,26 +6573,36 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdChkPokeSeikakuAll() { return false; }
 
-        // TODO
-        private bool EvCmdUnderGroundTalkCount() { return false; }
+        private bool EvCmdUnderGroundTalkCount()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdNaturalParkWalkCountClear() { return false; }
 
-        // TODO
-        private bool EvCmdNaturalParkWalkCountGet() { return false; }
+        private bool EvCmdNaturalParkWalkCountGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdNaturalParkAccessoryNoGet() { return false; }
+        private bool EvCmdNaturalParkAccessoryNoGet()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdGetNewsPokeNo() { return false; }
 
-        // TODO
-        private bool EvCmdNewsCountSet() { return false; }
+        private bool EvCmdNewsCountSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdNewsCountChk() { return false; }
+        private bool EvCmdNewsCountChk()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdStartGenerate() { return false; }
@@ -5838,56 +6610,86 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdAddMovePoke() { return false; }
 
-        // TODO
-        private bool EvCmdOshieWazaCount() { return false; }
+        private bool EvCmdOshieWazaCount()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdRemaindWazaCount() { return false; }
 
-        // TODO
-        private bool EvCmdOshieWazaListSetProc() { return false; }
+        private bool EvCmdOshieWazaListSetProc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdRemaindWazaListSetProc() { return false; }
+        private bool EvCmdRemaindWazaListSetProc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdOshieWazaListGetResult() { return false; }
+        private bool EvCmdOshieWazaListGetResult()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdRemaindWazaListGetResult() { return false; }
+        private bool EvCmdRemaindWazaListGetResult()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdNormalWazaListSetProc() { return false; }
+        private bool EvCmdNormalWazaListSetProc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdNormalWazaListGetResult() { return false; }
+        private bool EvCmdNormalWazaListGetResult()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdFldTradeAlloc() { return false; }
+        private bool EvCmdFldTradeAlloc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdFldTradeMonsno() { return false; }
+        private bool EvCmdFldTradeMonsno()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdFldTradeChgMonsno() { return false; }
+        private bool EvCmdFldTradeChgMonsno()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdFldTradeEvent() { return false; }
+        private bool EvCmdFldTradeEvent()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdFldTradeDel() { return false; }
+        private bool EvCmdFldTradeDel()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdZukanTextVerUp() { return false; }
+        private bool EvCmdZukanTextVerUp()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdZukanSexVerUp() { return false; }
+        private bool EvCmdZukanSexVerUp()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdZenkokuZukanFlag() { return false; }
 
-        // TODO
-        private bool EvCmdChkRibbonCount() { return false; }
+        private bool EvCmdChkRibbonCount()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdChkRibbonCountAll() { return false; }
@@ -5913,8 +6715,10 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdTVEntryWatchChangeName() { return false; }
 
-        // TODO
-        private bool EvCmdRegulationListCall() { return false; }
+        private bool EvCmdRegulationListCall()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdAshiatoChk() { return false; }
@@ -5937,17 +6741,25 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdGetUsedPoketchAppID() { return false; }
 
-        // TODO
-        private bool EvCmdDebugPrintWork() { return false; }
+        private bool EvCmdDebugPrintWork()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdDebugPrintFlag() { return false; }
+        private bool EvCmdDebugPrintFlag()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdDebugPrintWorkStationed() { return false; }
+        private bool EvCmdDebugPrintWorkStationed()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdDebugPrintFlagStationed() { return false; }
+        private bool EvCmdDebugPrintFlagStationed()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdPMVersionGet() { return false; }
@@ -5958,20 +6770,30 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdTemotiPokeType() { return false; }
 
-        // TODO
-        private bool EvCmdAikotobaKabegamiSet() { return false; }
+        private bool EvCmdAikotobaKabegamiSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdGetUgHataNum() { return false; }
+        private bool EvCmdGetUgHataNum()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSetUpPasoAnime() { return false; }
+        private bool EvCmdSetUpPasoAnime()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdStartPasoOnAnime() { return false; }
+        private bool EvCmdStartPasoOnAnime()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdStartPasoOffAnime() { return false; }
+        private bool EvCmdStartPasoOffAnime()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdGetKujiAtariNum() { return false; }
@@ -5979,17 +6801,24 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdKujiAtariChk() { return false; }
 
-        // TODO
-        private bool EvCmdKujiAtariInit() { return false; }
+        private bool EvCmdKujiAtariInit()
+        {
+        	FieldLotteryWork.InitNumber(0);
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdNickNamePC() { return false; }
+        private bool EvCmdNickNamePC()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdTVInterviewerCheck() { return false; }
 
-        // TODO
-        private bool EvCmdTVInterviewerMsg() { return false; }
+        private bool EvCmdTVInterviewerMsg()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdTVInterviewerEntry() { return false; }
@@ -6051,8 +6880,10 @@ namespace Dpr.EvScript
         // TODO
         private IEnumerator OpOpenSubContentsWindow<T>(UIWindowID windowID, Action<T> onCompletedLoad) { return null; }
 
-        // TODO
-        private bool EvCmdConWaitContestMenu() { return false; }
+        private bool EvCmdConWaitContestMenu()
+        {
+        	return !this._isOpenSubContentsMenu;
+        }
 
         // TODO
         private bool EvCmdConMyEntryNumberWordSet() { return false; }
@@ -6081,8 +6912,10 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdConCategoryAndRankSet() { return false; }
 
-        // TODO
-        private bool EvCmdConRankSet() { return false; }
+        private bool EvCmdConRankSet()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdConCheckEntryPoke() { return false; }
@@ -6099,20 +6932,30 @@ namespace Dpr.EvScript
         // TODO
         private bool ExCmdImageClipViewConCheckProc() { return false; }
 
-        // TODO
-        private bool EvCmdPokeParkControl() { return false; }
+        private bool EvCmdPokeParkControl()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPokeParkDepositCount() { return false; }
+        private bool EvCmdPokeParkDepositCount()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPokeParkTransMons() { return false; }
+        private bool EvCmdPokeParkTransMons()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPokeParkGetScore() { return false; }
+        private bool EvCmdPokeParkGetScore()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdDendouBallAnm() { return false; }
+        private bool EvCmdDendouBallAnm()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdInitFldLift() { return false; }
@@ -6123,17 +6966,25 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdCheckFldLift() { return false; }
 
-        // TODO
-        private bool EvCmdSetupRAHCyl() { return false; }
+        private bool EvCmdSetupRAHCyl()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdStartRAHCyl() { return false; }
+        private bool EvCmdStartRAHCyl()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdAddScore() { return false; }
+        private bool EvCmdAddScore()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdAcceName() { return false; }
+        private bool EvCmdAcceName()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdPartyMonsNoCheck() { return false; }
@@ -6144,41 +6995,61 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdCheckMinomuchiComp() { return false; }
 
-        // TODO
-        private bool EvCmdPoketchHookSet() { return false; }
+        private bool EvCmdPoketchHookSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPoketchHookReset() { return false; }
+        private bool EvCmdPoketchHookReset()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSlotMachine() { return false; }
+        private bool EvCmdSlotMachine()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdGetNowHour() { return false; }
 
-        // TODO
-        private bool EvCmdObjShakeAnm() { return false; }
+        private bool EvCmdObjShakeAnm()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdObjBlinkAnm() { return false; }
+        private bool EvCmdObjBlinkAnm()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmd_D20R0106Legend_IsUnseal() { return false; }
 
-        // TODO
-        private bool EvCmdDressingImcAcceCheck() { return false; }
+        private bool EvCmdDressingImcAcceCheck()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdTalkMsgUnknownFont() { return false; }
+        private bool EvCmdTalkMsgUnknownFont()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdAgbCartridgeVerGet() { return false; }
+        private bool EvCmdAgbCartridgeVerGet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnderGroundTalkCountClear() { return false; }
+        private bool EvCmdUnderGroundTalkCountClear()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdHideMapStateChange() { return false; }
+        private bool EvCmdHideMapStateChange()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdNameInStone() { return false; }
@@ -6186,17 +7057,25 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdMonumantName() { return false; }
 
-        // TODO
-        private bool EvCmdImcBgNameSet() { return false; }
+        private bool EvCmdImcBgNameSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCompCoin() { return false; }
+        private bool EvCmdCompCoin()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSlotRentyanChk() { return false; }
+        private bool EvCmdSlotRentyanChk()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdAddCoinChk() { return false; }
+        private bool EvCmdAddCoinChk()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdLevelJijiiNo() { return false; }
@@ -6204,8 +7083,10 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdPokeLevelGet() { return false; }
 
-        // TODO
-        private bool EvCmdImcAcceSubItem() { return false; }
+        private bool EvCmdImcAcceSubItem()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdc08r0801ScopeCameraSet() { return false; }
@@ -6216,146 +7097,223 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdLevelJijiiInit() { return false; }
 
-        // TODO
-        private bool EvCmdNewNankaiWordSet() { return false; }
+        private bool EvCmdNewNankaiWordSet()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdRegularCheck() { return false; }
 
-        // TODO
-        private bool EvCmdNankaiWordCompleteCheck() { return false; }
+        private bool EvCmdNankaiWordCompleteCheck()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdTemotiPokeContestStatusGet() { return false; }
 
-        // TODO
-        private bool EvCmdD17SystemMapSelect() { return false; }
+        private bool EvCmdD17SystemMapSelect()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnderGroundToolGiveCount() { return false; }
+        private bool EvCmdUnderGroundToolGiveCount()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnderGroundKasekiDigCount() { return false; }
+        private bool EvCmdUnderGroundKasekiDigCount()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnderGroundTrapHitCount() { return false; }
+        private bool EvCmdUnderGroundTrapHitCount()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPofinAdd() { return false; }
+        private bool EvCmdPofinAdd()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdPofinAddCheck() { return false; }
+        private bool EvCmdPofinAddCheck()
+        {
+        	EvCmdPofinCheck();
+        	return true;
+        }
 
         // TODO
         private bool EvCmdIsHaihuEventEnable() { return false; }
 
-        // TODO
-        private bool EvCmdSodateyaPokeListSetProc() { return false; }
+        private bool EvCmdSodateyaPokeListSetProc()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSodateyaPokeListGetResult() { return false; }
+        private bool EvCmdSodateyaPokeListGetResult()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdGetRandomHit() { return false; }
 
-        // TODO
-        private bool EvCmdUnderGroundTalkCount2() { return false; }
+        private bool EvCmdUnderGroundTalkCount2()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdHidenEffStart() { return false; }
 
-        // TODO
-        private bool EvCmdZishin() { return false; }
+        private bool EvCmdZishin()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdBtlPointWinWrite() { return false; }
+        private bool EvCmdBtlPointWinWrite()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdBtlPointWinDel() { return false; }
+        private bool EvCmdBtlPointWinDel()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdBtlPointWrite() { return false; }
+        private bool EvCmdBtlPointWrite()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCheckBtlPoint() { return false; }
+        private bool EvCmdCheckBtlPoint()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdAddBtlPoint() { return false; }
+        private bool EvCmdAddBtlPoint()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSubBtlPoint() { return false; }
+        private bool EvCmdSubBtlPoint()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCompBtlPoint() { return false; }
+        private bool EvCmdCompBtlPoint()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdGetBtlPointGift() { return false; }
+        private bool EvCmdGetBtlPointGift()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUgBallCheck() { return false; }
+        private bool EvCmdUgBallCheck()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdAusuItemCheck() { return false; }
 
-        // TODO
-        private bool EvCmdCheckMyGSID() { return false; }
+        private bool EvCmdCheckMyGSID()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdGetFriendDataNum() { return false; }
+        private bool EvCmdGetFriendDataNum()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdGetCoinGift() { return false; }
+        private bool EvCmdGetCoinGift()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSubWkCoin() { return false; }
+        private bool EvCmdSubWkCoin()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdCompWkCoin() { return false; }
+        private bool EvCmdCompWkCoin()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdAikotobaOkurimonoChk() { return false; }
+        private bool EvCmdAikotobaOkurimonoChk()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdWifiHusiginaokurimonoOpenFlagSet() { return false; }
+        private bool EvCmdWifiHusiginaokurimonoOpenFlagSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionGetCardTalkNo() { return false; }
+        private bool EvCmdUnionGetCardTalkNo()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdWirelessIconEasy() { return false; }
+        private bool EvCmdWirelessIconEasy()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdWirelessIconEasyEnd() { return false; }
+        private bool EvCmdWirelessIconEasyEnd()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdSaveFieldObj() { return false; }
+        private bool EvCmdSaveFieldObj()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdSealName() { return false; }
 
-        // TODO
-        private bool EvCmdSetEscapeLocation() { return false; }
+        private bool EvCmdSetEscapeLocation()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdFieldObjBitSetFellowHit() { return false; }
+        private bool EvCmdFieldObjBitSetFellowHit()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdDameTamagoChkAll() { return false; }
 
-        // TODO
-        private bool EvCmdUnionBmpMenuStart() { return false; }
+        private bool EvCmdUnionBmpMenuStart()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdUnionBattleStartCheck() { return false; }
+        private bool EvCmdUnionBattleStartCheck()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdGetCardRank() { return false; }
 
-        // TODO
-        private bool EvCmdFieldScopeModeSet() { return false; }
+        private bool EvCmdFieldScopeModeSet()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmdFieldScopeModeReSet() { return false; }
+        private bool EvCmdFieldScopeModeReSet()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmd_SET_TURN_HERO_FRAME() { return false; }
@@ -6363,14 +7321,21 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmd_SET_TURN_OBJ_FRAME() { return false; }
 
-        // TODO
-        private bool EvCmd_DEBUG_PRINT() { return false; }
+        private bool EvCmd_DEBUG_PRINT()
+        {
+        	if (1 < this._evArg.Length) {
+        	  return true;
+        	}
+        }
 
         // TODO
         private bool EvCmd_FADE_WAIT() { return false; }
 
-        // TODO
-        private bool EvCmd_HERO_MOVE_GRID_CENTER() { return false; }
+        private bool EvCmd_HERO_MOVE_GRID_CENTER()
+        {
+        	CmdPlayerMoveGridCenter(this._evCommand);
+        	return false;
+        }
 
         // TODO
         private bool EvCmd_SET_POS_HERO_MATCH_X() { return false; }
@@ -6381,8 +7346,11 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmd_GET_LANGUAGE() { return false; }
 
-        // TODO
-        private bool EvCmd__GET_REL_POS_HERO() { return false; }
+        private bool EvCmd__GET_REL_POS_HERO()
+        {
+        	CmdGetRelPosHero(this._evData);
+        	return true;
+        }
 
         private bool EvCmd__CAMERA_TARGET_HERO()
         {
@@ -6414,31 +7382,46 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmd_ADD_CUSTUM_WIN_LABEL_TWO_WINDOW() { return false; }
 
-        // TODO
-        private bool EvCmd_OPEN_CUSTUM_WIN() { return false; }
+        private bool EvCmd_OPEN_CUSTUM_WIN()
+        {
+        	CustumWindow(this._evCommand);
+        	return false;
+        }
 
         // TODO
         private bool EvCmd_OPEN_CUSTUM_WIN_FIXED() { return false; }
 
-        // TODO
-        private bool EvCmd_VISIBLE_OBJ_PROP() { return false; }
+        private bool EvCmd_VISIBLE_OBJ_PROP()
+        {
+        	CmdVisibleObjProp(this._evData,1);
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmd_INVISIBLE_OBJ_PROP() { return false; }
+        private bool EvCmd_INVISIBLE_OBJ_PROP()
+        {
+        	CmdVisibleObjProp(this._evData);
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmd_EVENT_CAMERA_MODE() { return false; }
+        private bool EvCmd_EVENT_CAMERA_MODE()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmd_SET_EVENT_CAMERA_PARAM() { return false; }
+        private bool EvCmd_SET_EVENT_CAMERA_PARAM()
+        {
+        	return true;
+        }
 
         private bool EvCmd_EVENT_CAMERA_WAIT()
         {
             return true;
         }
 
-        // TODO
-        private bool EvCmd_EVENT_CAMERA_FRAME() { return false; }
+        private bool EvCmd_EVENT_CAMERA_FRAME()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmd_HIT_DOOR_ANIME() { return false; }
@@ -6478,17 +7461,24 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdEventGetTemotiPokeChkGetPos() { return false; }
 
-        // TODO
-        private bool EvCmd_TURN_HERO_TALK_OBJ() { return false; }
+        private bool EvCmd_TURN_HERO_TALK_OBJ()
+        {
+        	Turn_HeroToHitObject();
+        	return true;
+        }
 
         // TODO
         private bool EvCmd_FADE_SPEED() { return false; }
 
-        // TODO
-        private bool EvCmd_FADE_BALL() { return false; }
+        private bool EvCmd_FADE_BALL()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmd_FADE_DEFAULT() { return false; }
+        private bool EvCmd_FADE_DEFAULT()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmd_DOOR_FORCE_ANIME_END() { return false; }
@@ -6522,8 +7512,11 @@ namespace Dpr.EvScript
             return true;
         }
 
-        // TODO
-        private bool EvCmd_HERO_MOVE_GRID_CENTER_FRONT() { return false; }
+        private bool EvCmd_HERO_MOVE_GRID_CENTER_FRONT()
+        {
+        	HeroMoveGridCenterFront(this._deltatime);
+        	return false;
+        }
 
         // TODO
         private bool EvCmd_WARP_ENABLE_SET() { return false; }
@@ -6552,8 +7545,10 @@ namespace Dpr.EvScript
             return true;
         }
 
-        // TODO
-        private bool EvCmd_CAMERA_OFFSET_WAIT() { return false; }
+        private bool EvCmd_CAMERA_OFFSET_WAIT()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdNaminoriEnd() { return false; }
@@ -6780,8 +7775,10 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdShopOpen() { return false; }
 
-        // TODO
-        private bool EvCmdShopOpenWait() { return false; }
+        private bool EvCmdShopOpenWait()
+        {
+        	return !this._isShopOpen;
+        }
 
         // TODO
         private bool EvCmdDoorTransitionZoneSet() { return false; }
@@ -6962,8 +7959,11 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmd_ADD_CUSTUM_WIN_LABEL_WORD_SET() { return false; }
 
-        // TODO
-        private bool EvCmd_OPEN_CUSTUM_WIN_WORD_SET() { return false; }
+        private bool EvCmd_OPEN_CUSTUM_WIN_WORD_SET()
+        {
+        	CustumWindow(this._evCommand,1);
+        	return false;
+        }
 
         // TODO
         private bool EvCmd_BTL_ENCSEQ_LOAD() { return false; }
@@ -7031,14 +8031,29 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmd_CHARA_LOOK_RELEASE() { return false; }
 
-        // TODO
-        private bool EvCmd_TALK_OBJ_START_LOOK_NONE() { return false; }
+        private bool EvCmd_TALK_OBJ_START_LOOK_NONE()
+        {
+        	if ((int)this._procCmd != 0x8e) {
+        	  if ((int)this._procCmd == 0x6d) {
+        	    PlaySe(StringLiteral_9145);
+        	    this._procCmd = (NAME)0x8e;
+        	    return false;
+        	  }
+        	  this._procCmd = (NAME)0x6d;
+        	  return false;
+        	}
+        	Cmd_ObjPauseAll();
+        	this._procCmd = (NAME)0;
+        	return true;
+        }
 
         // TODO
         private bool EvCmdBoukennootoTipsOpen() { return false; }
 
-        // TODO
-        private bool EvCmdBoukennootoTipsOpenWait() { return false; }
+        private bool EvCmdBoukennootoTipsOpenWait()
+        {
+        	return !this._boukennootoTipsOpen;
+        }
 
         // TODO
         private bool EvCmdOpenSpecialWinLabel() { return false; }
@@ -7046,8 +8061,10 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdWaitSpecialWinLabel() { return false; }
 
-        // TODO
-        private bool EvCmdHidenEffWait() { return false; }
+        private bool EvCmdHidenEffWait()
+        {
+        	return this._hidenEffectWait;
+        }
 
         // TODO
         private bool EvCmd_GET_URAYAMA_ENCOUNT_INDEX() { return false; }
@@ -7076,8 +8093,10 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdCheckGMSOnlineAccount() { return false; }
 
-        // TODO
-        private bool EvCmdWaitCheckOnlineAccount() { return false; }
+        private bool EvCmdWaitCheckOnlineAccount()
+        {
+        	return this._isWaitCheckOnlineAccount;
+        }
 
         // TODO
         private bool EvCmdGMSEnd() { return false; }
@@ -7126,8 +8145,10 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdTemotiBoxPokemonName() { return false; }
 
-        // TODO
-        private bool EvCmd_BTWR_TOOL_CHK_ENTRY_POKE_NUM() { return false; }
+        private bool EvCmd_BTWR_TOOL_CHK_ENTRY_POKE_NUM()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmd_BTWR_TOOL_CLEAR_PLAY_DATA() { return false; }
@@ -7138,8 +8159,10 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmd_BTWR_TOOL_POP_NOW_LOCATION() { return false; }
 
-        // TODO
-        private bool EvCmd_BTWR_TOOL_GET_WIFI_RANK() { return false; }
+        private bool EvCmd_BTWR_TOOL_GET_WIFI_RANK()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmd_BTWR_TOOL_SET_PLAY_MODE() { return false; }
@@ -7162,8 +8185,10 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmd_BTWR_SUB_ADD_LOSE() { return false; }
 
-        // TODO
-        private bool EvCmd_BTWR_SUB_CHK_ENTRY_POKE() { return false; }
+        private bool EvCmd_BTWR_SUB_CHK_ENTRY_POKE()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmd_BTWR_SUB_GET_NOW_ROUND() { return false; }
@@ -7180,8 +8205,10 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmd_BTWR_SUB_SET_SCORE() { return false; }
 
-        // TODO
-        private bool EvCmd_BTWR_SUB_CHOICE_BTL_PARTNER() { return false; }
+        private bool EvCmd_BTWR_SUB_CHOICE_BTL_PARTNER()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmd_BTWR_SUB_LOCAL_BTL_CALL() { return false; }
@@ -7189,11 +8216,15 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmd_BTWR_SUB_GET_PLAY_MODE() { return false; }
 
-        // TODO
-        private bool EvCmd_BTWR_SUB_SET_LEADER_CLEAR_FLAG() { return false; }
+        private bool EvCmd_BTWR_SUB_SET_LEADER_CLEAR_FLAG()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmd_BTWR_SUB_GET_LEADER_CLEAR_FLAG() { return false; }
+        private bool EvCmd_BTWR_SUB_GET_LEADER_CLEAR_FLAG()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmd_BTWR_SUB_ADD_BATTLE_POINT() { return false; }
@@ -7201,17 +8232,23 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmd_BTWR_SUB_RENSHOU_RIBBON_SET() { return false; }
 
-        // TODO
-        private bool EvCmd_BTWR_SUB_GET_MINE_OBJ() { return false; }
+        private bool EvCmd_BTWR_SUB_GET_MINE_OBJ()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmd_BTWR_SUB_UPDATE_RANDOM() { return false; }
 
-        // TODO
-        private bool EvCmd_BTWR_DEB_IS_WORK_NULL() { return false; }
+        private bool EvCmd_BTWR_DEB_IS_WORK_NULL()
+        {
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmd_BTWR_SUB_BTL_TRAINER_SET() { return false; }
+        private bool EvCmd_BTWR_SUB_BTL_TRAINER_SET()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmd_BTWR_PLAYER_WIN_CHECK() { return false; }
@@ -7266,8 +8303,10 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmd_TUREARUKI_TAKE_ITEM() { return false; }
 
-        // TODO
-        private bool EvCmd_TUREARUKI_ITEM_TIMER_SET() { return false; }
+        private bool EvCmd_TUREARUKI_ITEM_TIMER_SET()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmd_TUREARUKI_POKE_CREATE() { return false; }
@@ -7341,8 +8380,15 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmd_AUTO_TANKEN_SET() { return false; }
 
-        // TODO
-        private bool EvCmd_AUTO_TANKEN_SET_WAIT() { return false; }
+        private bool EvCmd_AUTO_TANKEN_SET_WAIT()
+        {
+        	var iVar1 = FlagWork.GetWork(0xf2);
+        	if (iVar1 == 1) {
+        	  FlagWork.SetWork(0xf2,0);
+        	  return true;
+        	}
+        	return false;
+        }
 
         // TODO
         private bool EvCmd_USE_TANKENSET() { return false; }
@@ -7353,8 +8399,15 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmd_ZUKAN_TOUROKU() { return false; }
 
-        // TODO
-        private bool EvCmd_ZUKAN_TOUROKU_WAIT() { return false; }
+        private bool EvCmd_ZUKAN_TOUROKU_WAIT()
+        {
+        	var iVar1 = FlagWork.GetWork(0xf2);
+        	if (iVar1 == 1) {
+        	  FlagWork.SetWork(0xf2,0);
+        	  return true;
+        	}
+        	return false;
+        }
 
         // TODO
         private bool EvCmd_CHK_ZUKAN_TOUROKU() { return false; }
@@ -7463,8 +8516,10 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdFureaiTalkStart() { return false; }
 
-        // TODO
-        private bool EvCmdFureaiTalkEnd() { return false; }
+        private bool EvCmdFureaiTalkEnd()
+        {
+        	return true;
+        }
 
         // TODO
         private bool EvCmdPlayFureaiVoiceNakayoshiRank() { return false; }
@@ -7490,8 +8545,10 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmd_FADE_AREA_IN() { return false; }
 
-        // TODO
-        private bool EvCmdCustomBallTrainerOpenWait() { return false; }
+        private bool EvCmdCustomBallTrainerOpenWait()
+        {
+        	return !this._isOpenCustomBallTrainer;
+        }
 
         // TODO
         private bool EvCmd_EMBANKMENT() { return false; }
@@ -7532,8 +8589,12 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmd_CheckSecretBaseExpantion() { return false; }
 
-        // TODO
-        private bool EvCmd_END_LIGHTINTENSITY() { return false; }
+        private bool EvCmd_END_LIGHTINTENSITY()
+        {
+        	if (this._isRunningLight.Length != 0) {
+        	  return this._isRunningLight[0] == 0;
+        	}
+        }
 
         // TODO
         private bool EvCmd_END_LIGHTINTENSITY_CHARCTER() { return false; }
@@ -7582,8 +8643,11 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmd_AUTO_MSG() { return false; }
 
-        // TODO
-        private bool EvCmd_AUTO_MSG_STOP() { return false; }
+        private bool EvCmd_AUTO_MSG_STOP()
+        {
+        	this._isAutoMsg = false;
+        	return true;
+        }
 
         // TODO
         private bool EvCmd_GET_TAG_PATNER_ID() { return false; }
@@ -7685,11 +8749,17 @@ namespace Dpr.EvScript
         // TODO
         private bool EvCmdSavePlayReport() { return false; }
 
-        // TODO
-        private bool EvCmd_SET_STOP_EYE_ENCOUNT() { return false; }
+        private bool EvCmd_SET_STOP_EYE_ENCOUNT()
+        {
+        	FlagWork.SetSysFlag(0x3c4,1);
+        	return true;
+        }
 
-        // TODO
-        private bool EvCmd_RESET_STOP_EYE_ENCOUNT() { return false; }
+        private bool EvCmd_RESET_STOP_EYE_ENCOUNT()
+        {
+        	FlagWork.SetSysFlag(0x3c4,0);
+        	return true;
+        }
 
         // TODO
         private bool EvCmd_PLAY_REPORT_TRAINING() { return false; }

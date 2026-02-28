@@ -47,8 +47,10 @@ namespace Dpr.Battle.View.Systems
 		// TODO
 		public void OnUpdate(float deltaTime) { }
 		
-		// TODO
-		public void Finish() { }
+		public void Finish()
+		{
+			this._isFinished = true;
+		}
 
 		private enum Sequence : int
 		{

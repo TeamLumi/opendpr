@@ -5,8 +5,11 @@ namespace Dpr.UI
 {
 	public class ZukanMovingFilter : ZukanMovingEffecter
 	{
-		// TODO
-		public void OnUpdate(float deltaTime, [Optional] AudioInstance voiceInstance) { }
+		public void OnUpdate(float deltaTime, [Optional] AudioInstance voiceInstance)
+		{
+			GetSensorValue();
+			deltaTime.UpdateEffecter(0x4ffc13af,1,voiceInstance);
+		}
 		
 		// TODO
 		public float GetSensorValue() { return default; }

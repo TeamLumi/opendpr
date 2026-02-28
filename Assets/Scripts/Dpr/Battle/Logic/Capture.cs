@@ -9,8 +9,15 @@ namespace Dpr.Battle.Logic
 		// TODO
 		public static void JudgeCapture(JudgeResult result, in JudgeParam param) { }
 		
-		// TODO
-		private static bool isMustCapureSuccess(MainModule mainModule, ushort itemID) { return default; }
+		private static bool isMustCapureSuccess(MainModule mainModule, ushort itemID)
+		{
+			var iVar1 = mainModule.GetCompetitor(0);
+			if ((itemID != 1) && (iVar1 != 4)) {
+			  var uVar2 = mainModule.IsMustCaptureMode();
+			  return uVar2;
+			}
+			return true;
+		}
 		
 		// TODO
 		private static int calcCaptureIndicator(MainModule mainModule, BattleEnv battleEnv, BTL_POKEPARAM userPoke, BTL_POKEPARAM targetPoke, ushort itemID, int captureValueCoef) { return default; }
@@ -27,8 +34,15 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private static bool checkCaptureCritical(MainModule mainModule, int captureIndicator) { return default; }
 		
-		// TODO
-		private static int calcCaptureValue(int capture_value) { return default; }
+		private static int calcCaptureValue(int capture_value)
+		{
+			var uVar1 = FX32.Div(0xff000,capture_value);
+			var uVar2 = FX32.CONST(0x3e401ebd);
+			uVar1 = FX32.POW(uVar1,uVar2);
+			var uVar3 = FX32.Div(0x10000000,uVar1);
+			FX32.Whole(uVar3);
+			return 0;
+		}
 		
 		// TODO
 		private static void checkCapureSuccessByRandom(out bool pIsCaptured, out byte pYureCount, int captureValue, bool isCritical)

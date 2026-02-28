@@ -44,8 +44,10 @@ namespace Dpr
             return GridCollisionType.None;
         }
 
-        // TODO
-        private static float Vector2Cross(in Vector2 lhs, in Vector2 rhs) { return 0.0f; }
+        private static float Vector2Cross(in Vector2 lhs, in Vector2 rhs)
+        {
+        	return lhs * rhs[1] - lhs[1] * rhs;
+        }
 
         // TODO
         private static Vector2 Vector2Project(in Vector2 vector, in Vector2 normal) { return Vector2.zero; }

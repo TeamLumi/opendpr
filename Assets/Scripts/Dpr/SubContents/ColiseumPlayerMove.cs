@@ -14,11 +14,16 @@ namespace Dpr.SubContents
 		private float timeScale;
 		private int goalPointNumber;
 		
-		// TODO
-		public void Initialize(FieldPlayerEntity player) { }
+		public void Initialize(FieldPlayerEntity player)
+		{
+			this.player = player;
+			this.currentState = (MoveState)0;
+		}
 		
-		// TODO
-		public void OnFinalize() { }
+		public void OnFinalize()
+		{
+			this.player = null;
+		}
 		
 		public bool IsStateNone { get => currentState == MoveState.None; }
 		public bool IsStateFinishArrive { get => currentState == MoveState.FinishArrive; }
@@ -30,8 +35,11 @@ namespace Dpr.SubContents
 		// TODO
 		public void StopControlPlayer(bool isChangeMotionIdle = true) { }
 		
-		// TODO
-		public void StopPlayerMove() { }
+		public void StopPlayerMove()
+		{
+			this.currentState = (MoveState)0;
+			this.player.PlayIdle();
+		}
 		
 		// TODO
 		public void OnUpdate(float deltaTime) { }

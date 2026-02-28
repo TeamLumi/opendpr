@@ -38,8 +38,12 @@ namespace Dpr.SubContents
         // TODO
         public void TestSE() { }
 
-        // TODO
-        public void StopVoice() { }
+        public void StopVoice()
+        {
+        	if (this.instance != null) {
+        	  this.instance.Stop();
+        	}
+        }
 
         // TODO
         private void OnDestroy() { }

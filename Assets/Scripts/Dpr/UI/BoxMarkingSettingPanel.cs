@@ -20,8 +20,14 @@ namespace Dpr.UI
 		private int _posIndex;
 		private Action<PokemonParam, int, int> _onClosed;
 		
-		// TODO
-		public void Initialize(Action<PokemonParam, int, int> onClosed) { }
+		public void Initialize(Action<PokemonParam, int, int> onClosed)
+		{
+			0.alpha = this._canvasGroup;
+			this._onClosed = Action<PokemonParam;
+			var uVar1 = this.gameObject;
+			uVar1.SetActive(0);
+			this._cursor.SetActive(0);
+		}
 		
 		// TODO
 		public void Open(PokemonParam param, int trayIndex, int posIndex) { }

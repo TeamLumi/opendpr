@@ -8,8 +8,11 @@ namespace Dpr.GMS
 		private Sprite titleSpr;
 		private GMSMasterData.SheetPutRank currentRankData;
 		
-		// TODO
-		public void Clear() { }
+		public void Clear()
+		{
+			this.titleSpr = null;
+			this.currentRankData = null;
+		}
 		
 		// TODO
 		public Sprite TitleSpr { get => titleSpr; }

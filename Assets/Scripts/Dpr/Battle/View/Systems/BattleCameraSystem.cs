@@ -91,8 +91,12 @@ namespace Dpr.Battle.View.Systems
 			WaitCameraState = WaitCameraStateType.None;
 		}
 		
-		// TODO
-		public override void OnLateUpdate(float deltaTime) { }
+		public override void OnLateUpdate(float deltaTime)
+		{
+			if (this.Cameras != 0) {
+			  SequenceCameraSystem.OnLateUpdate();
+			}
+		}
 		
 		// TODO
 		private void InitializeWaitCamera() { }
@@ -118,8 +122,10 @@ namespace Dpr.Battle.View.Systems
 		// TODO
 		private bool CanPlayWaitCameraData(BattleWaitCameraData.SheetWaitCameraData data) { return default; }
 		
-		// TODO
-		private void StopCamera() { }
+		private void StopCamera()
+		{
+			this._lotteryCnt = 0;
+		}
 		
 		// TODO
 		public void EndWaitCamera() { }

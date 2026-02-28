@@ -50,8 +50,11 @@ namespace Dpr.UI
         // TODO
         protected override void OnInitialize() { }
 		
-		// TODO
-		protected override void OnOpen() { }
+		protected override void OnOpen()
+		{
+			InputClear();
+			ExtensionMethods.SetActive(this._cursor,0);
+		}
 		
 		// TODO
 		protected override void OnClose() { }

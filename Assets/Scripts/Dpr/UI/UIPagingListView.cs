@@ -40,16 +40,32 @@ namespace Dpr.UI
 		// TODO
 		private void UpdateSelectItem() { }
 		
-		// TODO
-		public bool MoveSelect(int value) { return default; }
+		public bool MoveSelect(int value)
+		{
+			if ((this.itemIndexSelector.Move(value) & 1) != 0) {
+			  UpdateSelectItem();
+			  return true;
+			}
+			return false;
+		}
 		
-		// TODO
-		public void ResumeSelectMove() { }
+		public void ResumeSelectMove()
+		{
+			this.itemIndexSelector.ResumeMoveState();
+		}
 		
-		// TODO
-		public bool MovePage(int value) { return default; }
+		public bool MovePage(int value)
+		{
+			if ((this.pagingIndexSelector.Move(value) & 1) != 0) {
+			  UpdatePageContents();
+			  return true;
+			}
+			return false;
+		}
 		
-		// TODO
-		public void ResumePageMove() { }
+		public void ResumePageMove()
+		{
+			this.pagingIndexSelector.ResumeMoveState();
+		}
 	}
 }

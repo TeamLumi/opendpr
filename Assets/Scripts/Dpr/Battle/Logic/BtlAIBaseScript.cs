@@ -625,11 +625,15 @@ namespace Dpr.Battle.Logic
         // TODO
         protected long Call(byte cmd, long[] args) { return 0; }
 
-        // TODO
-        protected void ScoreCtrl(int value) { }
+        protected void ScoreCtrl(int value)
+        {
+        	this.p_Score = this.p_Score + value;
+        }
 
-        // TODO
-        protected void SetPokeChangeEnable() { }
+        protected void SetPokeChangeEnable()
+        {
+        	this.p_PokeChangeEnable = 1;
+        }
 
         // TODO
         protected WazaNo CurrentWazaNo() { return WazaNo.NULL; }
@@ -637,8 +641,12 @@ namespace Dpr.Battle.Logic
         // TODO
         protected void PRINTF(string s) { }
 
-        // TODO
-        public void SetGlobalParameters(int clientID, int score, int pokeChangeEnable) { }
+        public void SetGlobalParameters(int clientID, int score, int pokeChangeEnable)
+        {
+        	this.p_Score = score;
+        	this.MyClientID = clientID;
+        	this.p_PokeChangeEnable = pokeChangeEnable;
+        }
 
         // TODO
         protected virtual void main() { }

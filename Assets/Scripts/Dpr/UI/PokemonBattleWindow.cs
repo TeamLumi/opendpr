@@ -53,8 +53,11 @@ namespace Dpr.UI
 		// TODO
 		private void OnSelectChangedPartyItem(PokemonPartyItem partyItem, int selectIndex) { }
 		
-		// TODO
-		private void OnClickPartyItem(PokemonPartyItem partyItem, int selectIndex) { }
+		private void OnClickPartyItem(PokemonPartyItem partyItem, int selectIndex)
+		{
+			this._party.SetActive(0,0);
+			OpenContextMenu(partyItem,selectIndex);
+		}
 		
 		// TODO
 		private void OpenContextMenu(PokemonPartyItem partyItem, int selectIndex) { }
@@ -86,8 +89,16 @@ namespace Dpr.UI
 		// TODO
 		private List<ContextMenuItem.Param> GetContextMenuItems(BTL_POKEPARAM pokeParam, PokemonPartyItem partyItem) { return default; }
 		
-		// TODO
-		private bool IsRecovery(BTL_POKEPARAM pokeParam) { return default; }
+		private bool IsRecovery(BTL_POKEPARAM pokeParam)
+		{
+			if ((((this._param.isBattleTower == 0) && (this._param.isNet == 0)) &&
+			    (this._param.isCancel != 0)) && (this._param.isSwapRuleSwap == 0)) {
+			  var uVar2 = pokeParam.GetSrcData();
+			  var uVar1 = uVar2.IsEgg(2);
+			  return (uVar1 ^ 1) & 1;
+			}
+			return false;
+		}
 		
 		// TODO
 		private bool IsSwapWaitPokemon(BTL_POKEPARAM param) { return default; }

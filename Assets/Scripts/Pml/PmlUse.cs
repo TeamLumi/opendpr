@@ -166,15 +166,20 @@ namespace Pml
             isInitialized = true;
         }
 
-        // TODO
-        public EvolveManager GetEvolveManager() { return evolveManager; }
+        public EvolveManager GetEvolveManager()
+        {
+        	return this.evolveManager;
+        }
 
         public int LangId { get => (int)MessageHelper.ConvertMsgId(PlayerWork.msgLangID); }
 
         public byte CassetVersion { get => (byte)PlayerWork.cassetVersion; }
 
-        // TODO
-        public uint RandFunc() { return 0; }
+        public uint RandFunc()
+        {
+        	Random.Range(0x80000000,0x7fffffff);
+        	return 0;
+        }
 
         // TODO
         public uint LimitRandFunc(uint max_range) { return 0; }

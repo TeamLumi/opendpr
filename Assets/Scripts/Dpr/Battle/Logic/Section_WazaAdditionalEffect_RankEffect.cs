@@ -7,8 +7,11 @@ namespace Dpr.Battle.Logic
 		// TODO
 		public void Execute(Result pResult, in Description description) { }
 		
-		// TODO
-		private bool isRankEffectOccur(WazaParam wazaParam, BTL_POKEPARAM attacker, BTL_POKEPARAM target) { return default; }
+		private bool isRankEffectOccur(WazaParam wazaParam, BTL_POKEPARAM attacker, BTL_POKEPARAM target)
+		{
+			this.m_pEventLauncher.Event_CheckAddRankEffectOccur();
+			return false;
+		}
 		
 		// TODO
 		private void addRankEffect(ActionDesc actionDesc, WazaParam wazaParam, BTL_POKEPARAM attacker, BTL_POKEPARAM target) { }

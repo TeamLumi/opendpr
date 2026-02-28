@@ -47,11 +47,17 @@ namespace Dpr.Contest
 		// TODO
 		public void OnFinalize() { }
 		
-		// TODO
-		private void Show() { }
+		private void Show()
+		{
+			ExtensionMethods.SetActive(1);
+			this.bIsActive = true;
+		}
 		
-		// TODO
-		public void Hide() { }
+		public void Hide()
+		{
+			ExtensionMethods.SetActive(0);
+			this.bIsActive = false;
+		}
 		
 		// TODO
 		public void OnUpdate(float elapsedTime, float progressRatio) { }

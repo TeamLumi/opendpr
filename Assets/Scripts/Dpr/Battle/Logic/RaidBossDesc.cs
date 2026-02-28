@@ -18,8 +18,10 @@ namespace Dpr.Battle.Logic
         // TODO
         public void CopyFrom(RaidBossDesc src) { }
 
-        // TODO
-        public static void Copy(RaidBossDesc pDesc, in RaidBossDesc src) { }
+        public static void Copy(RaidBossDesc pDesc, in RaidBossDesc src)
+        {
+        	CopyFrom(pDesc,src);
+        }
 
         // TODO
         public static void SetDefault(RaidBossDesc pDesc, MonsNo monsno, ushort formno, byte grade) { }

@@ -20,8 +20,10 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Dispose() { }
 
-        // TODO
-        public unsafe SEND_DATA_BUFFER* GetBuffer() { return null; }
+        public unsafe SEND_DATA_BUFFER* GetBuffer()
+        {
+        	return this.m_buffer;
+        }
 
         public void Clear()
         {
@@ -31,8 +33,10 @@ namespace Dpr.Battle.Logic
             }
         }
 
-        // TODO
-        public void CopyFrom(in SendData src) { }
+        public void CopyFrom(in SendData src)
+        {
+        	SEND_DATA_BUFFER.Copy(this.m_buffer,src + 0x10);
+        }
 
         // TODO
         public unsafe void Store(ushort serialNumber, ServerSequence serverSeq, ServerRequest serverReq, void* data, uint dataSize) { }
@@ -40,25 +44,46 @@ namespace Dpr.Battle.Logic
         // TODO
         public unsafe void Store(in SEND_DATA_BUFFER* buffer) { }
 
-        // TODO
-        public ushort GetSerialNumber() { return 0; }
+        public ushort GetSerialNumber()
+        {
+        	SEND_DATA_BUFFER.GetSerialNumber(ref this.m_buffer);
+        	return 0;
+        }
 
-        // TODO
-        public ServerSequence GetServerSequence() { return ServerSequence.BATTLE_START_SETUP; }
+        public ServerSequence GetServerSequence()
+        {
+        	SEND_DATA_BUFFER.GetServerSequence(ref this.m_buffer);
+        	return (ServerSequence)0;
+        }
 
-        // TODO
-        public ServerRequest GetServerRequest() { return ServerRequest.NONE; }
+        public ServerRequest GetServerRequest()
+        {
+        	SEND_DATA_BUFFER.GetServerRequest(ref this.m_buffer);
+        	return (ServerRequest)0;
+        }
 
-        // TODO
-        public unsafe void* GetData() { return null; }
+        public unsafe void* GetData()
+        {
+        	SEND_DATA_BUFFER.GetData(this.m_buffer);
+        	return default;
+        }
 
-        // TODO
-        public uint GetDataSize() { return 0; }
+        public uint GetDataSize()
+        {
+        	SEND_DATA_BUFFER.GetDataSize(ref this.m_buffer);
+        	return 0;
+        }
 
-        // TODO
-        public uint GetTotalSize() { return 0; }
+        public uint GetTotalSize()
+        {
+        	SEND_DATA_BUFFER.GetTotalSize(ref this.m_buffer);
+        	return 0;
+        }
 
-        // TODO
-        public string GetString() { return null; }
+        public string GetString()
+        {
+        	SEND_DATA_BUFFER.GetString(ref this.m_buffer);
+        	return default;
+        }
     }
 }

@@ -14,8 +14,11 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void calcDamage(DamageCalcResult dmgRec, BTL_POKEPARAM attacker, PokeSet targets, WazaParam wazaParam, DmgAffRec affRec, AffCounter affCounter, int damageRatio) { }
 		
-		// TODO
-		private uint damageWithFriend(DamageCalcResult pDamageRec, ActionDesc pActionDesc, WazaParam pWazaParam, BTL_POKEPARAM pAttacker, HITCHECK_PARAM pHitCheckParam, PokeSet pDamagedPokeSet, bool isPluralHitWaza) { return default; }
+		private uint damageWithFriend(DamageCalcResult pDamageRec, ActionDesc pActionDesc, WazaParam pWazaParam, BTL_POKEPARAM pAttacker, HITCHECK_PARAM pHitCheckParam, PokeSet pDamagedPokeSet, bool isPluralHitWaza)
+		{
+			damageSide();
+			return 0;
+		}
 		
 		// TODO
 		private uint damageSide(DamageCalcResult pDamageRec, ActionDesc pActionDesc, WazaParam pWazaParam, BTL_POKEPARAM pAttacker, HITCHECK_PARAM pHitCheckParam, PokeSet pDamagedPokeSet, bool isPluralHitWaza) { return default; }

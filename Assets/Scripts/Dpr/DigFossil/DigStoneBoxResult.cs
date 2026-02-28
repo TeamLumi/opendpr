@@ -157,8 +157,10 @@ namespace Dpr.DigFossil
 			// TODO
 			public void BoxOpen(Vector3 effectPos, Action onCompletedCallback) { }
 			
-			// TODO
-			private void PlayBoxOpenAnimation() { }
+			private void PlayBoxOpenAnimation()
+			{
+				PlayableGraph.Play(ref this.graph);
+			}
 			
 			// TODO
 			private IEnumerator BoxOpenDirection(Vector3 effectPos, Action onCompletedCallback) { return default; }

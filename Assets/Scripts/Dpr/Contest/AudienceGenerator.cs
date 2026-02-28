@@ -18,11 +18,15 @@ namespace Dpr.Contest
 		// TODO
 		private void Start() { }
 		
-		// TODO
-		public void Play() { }
+		public void Play()
+		{
+			this.bPlaying = true;
+		}
 		
-		// TODO
-		public void Stop() { }
+		public void Stop()
+		{
+			this.bPlaying = false;
+		}
 		
 		// TODO
 		private void OnDestroy() { }

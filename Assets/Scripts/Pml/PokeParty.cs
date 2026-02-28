@@ -38,11 +38,15 @@ namespace Pml
         // TODO
         public PokemonParam GetMemberPointerConst(uint idx) { return null; }
 
-        // TODO
-        public uint GetMemberCount() { return 0; }
+        public uint GetMemberCount()
+        {
+        	return this.m_memberCount;
+        }
 
-        // TODO
-        public void SetMemberCount(uint count) { }
+        public void SetMemberCount(uint count)
+        {
+        	this.m_memberCount = count;
+        }
 
         // TODO
         public uint GetMemberIndex(PokemonParam pokeParam) { return 0; }
@@ -59,8 +63,10 @@ namespace Pml
         // TODO
         public bool CheckPokeExist(MonsNo monsno) { return false; }
 
-        // TODO
-        public bool IsFull() { return false; }
+        public bool IsFull()
+        {
+        	return this.m_memberCount == 6;
+        }
 
         // TODO
         public void CopyFrom(PokeParty src) { }
@@ -89,14 +95,25 @@ namespace Pml
         // TODO
         public void RecoverAll() { }
 
-        // TODO
-        public void SetMarkingIndex(uint pos) { }
+        public void SetMarkingIndex(uint pos)
+        {
+        	this.markingIndex = (byte)(pos);
+        }
 
-        // TODO
-        public uint GetMarkingIndex() { return 0; }
+        public uint GetMarkingIndex()
+        {
+        	return this.markingIndex;
+        }
 
-        // TODO
-        public bool CanTrade() { return false; }
+        public bool CanTrade()
+        {
+        	var iVar1 = GetMemberCountEx(4);
+        	if (iVar1 != 0) {
+        	  return false;
+        	}
+        	iVar1 = GetMemberCountEx(5);
+        	return 1 < (uint)(this.m_memberCount - iVar1);
+        }
 
         // TODO
         public bool CanTradeMember(uint idx) { return false; }

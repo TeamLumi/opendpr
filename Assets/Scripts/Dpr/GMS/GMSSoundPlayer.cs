@@ -45,11 +45,19 @@ namespace Dpr.GMS
 		// TODO
 		public void OnFinalize() { }
 		
-		// TODO
-		public void SetLockPlaySe(bool lockSe) { }
+		public void SetLockPlaySe(bool lockSe)
+		{
+			this.lockPlaySe = (lockSe ? 1 : 0) & 1;
+		}
 		
-		// TODO
-		public void PlaySe(string eventName) { }
+		public void PlaySe(string eventName)
+		{
+			uint uVar1 = default;
+			var uVar2 = String.IsNullOrEmpty(eventName);
+			if ((uVar2 & 1) != 0) {
+			}
+			AudioInstance.Play(this.audioManager.CreateSe(uVar1,0),0,0,0);
+		}
 		
 		// TODO
 		public void PlaySeByID(PlaySE_ID seID) { }
@@ -57,8 +65,10 @@ namespace Dpr.GMS
 		// TODO
 		public void PlayVoice(string eventName) { }
 		
-		// TODO
-		private void SendAudioEvent(uint seId) { }
+		private void SendAudioEvent(uint seId)
+		{
+			AudioInstance.Play(this.audioManager.CreateSe(seId,0),0,0,0);
+		}
 		
 		// TODO
 		public void SetDuckingEnabled(bool enabled) { }

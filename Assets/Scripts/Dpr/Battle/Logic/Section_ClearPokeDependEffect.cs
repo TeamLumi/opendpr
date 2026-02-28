@@ -10,8 +10,17 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void releaseFreeFall(BTL_POKEPARAM poke) { }
 		
-		// TODO
-		private void removeHandlers(BTL_POKEPARAM poke) { }
+		private void removeHandlers(BTL_POKEPARAM poke)
+		{
+			var uVar1 = poke.GetID();
+			this.m_pServerCmdPutter.RemoveTokuseiHandler(uVar1);
+			uVar1 = poke.GetID();
+			this.m_pServerCmdPutter.RemoveItemHandler(uVar1);
+			uVar1 = poke.GetID();
+			this.m_pServerCmdPutter.RemoveDefaultPowerUpHandler(uVar1);
+			uVar1 = poke.GetID();
+			this.m_pServerCmdPutter.RemoveForceAllWazaHandler(uVar1);
+		}
 		
 		// TODO
 		private void cureDependPokeSick(BTL_POKEPARAM causePoke) { }

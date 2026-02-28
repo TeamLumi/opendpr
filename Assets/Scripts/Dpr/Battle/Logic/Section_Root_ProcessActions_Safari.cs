@@ -22,8 +22,10 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void throwDoro(byte pokeID) { }
 		
-		// TODO
-		private void yousumi(byte pokeID) { }
+		private void yousumi(byte pokeID)
+		{
+			this.m_pServerCmdPutter.SafariAct(pokeID,2,0);
+		}
 		
 		// TODO
 		private bool escape(byte pokeID) { return default; }

@@ -89,11 +89,19 @@ namespace Dpr.UI
 		// TODO
 		public void ShowBadgeCase() { }
 		
-		// TODO
-		public void OpenBadgeCase() { }
+		public void OpenBadgeCase()
+		{
+			if ((this.badgeCaseObject.IsOpen & 1) != 0) {
+			}
+			this.badgeCaseObject.OpenCover();
+		}
 		
-		// TODO
-		public void CloseBadgeCase() { }
+		public void CloseBadgeCase()
+		{
+			if ((this.badgeCaseObject.IsOpen & 1) != 0) {
+			  this.badgeCaseObject.CloseCover();
+			}
+		}
 		
 		// TODO
 		public void LoadModels(byte fashion, byte bodyType, bool sex) { }
@@ -101,7 +109,11 @@ namespace Dpr.UI
 		// TODO
 		private int GetPlayerWaitAnimationIndex(AnimationLayer animationLayer) { return default; }
 		
-		// TODO
-		private void PlayPlayerModelWaitMotion() { }
+		private void PlayPlayerModelWaitMotion()
+		{
+			if ((this.playerModelAnimationLayer != null) && (this.playerModelWaitAnimationIndex != -1)) {
+			  0.Play(0,this.playerModelAnimationLayer,this.playerModelWaitAnimationIndex);
+			}
+		}
 	}
 }

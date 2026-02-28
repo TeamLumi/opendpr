@@ -16,14 +16,20 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private bool isInvalidByLimit(BTL_POKEPARAM target, WazaRankEffect effect, int volume) { return default; }
 		
-		// TODO
-		private void putFailMessage_GWall(BTL_POKEPARAM target) { }
+		private void putFailMessage_GWall(BTL_POKEPARAM target)
+		{
+			var uVar1 = target.GetID();
+			this.m_pServerCmdPutter.Message_Std(0x17b,uVar1);
+		}
 		
 		// TODO
 		private void putFailMessage_Limit(BTL_POKEPARAM target, WazaRankEffect effect, int volume) { }
 		
-		// TODO
-		private void putFailMessage_Migawari(BTL_POKEPARAM target) { }
+		private void putFailMessage_Migawari(BTL_POKEPARAM target)
+		{
+			this.m_pServerCmdPutter.Message_Set(target,0x120)
+			;
+		}
 
 		public class Description
 		{

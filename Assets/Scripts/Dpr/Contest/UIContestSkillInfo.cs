@@ -54,17 +54,39 @@ namespace Dpr.Contest
 		// TODO
 		private void SetSkillUser(int logIndex, ContestPlayerEntity entity, Transform parent) { }
 		
-		// TODO
-		public void UseContestSkill(int playerIndex, int chainCount, bool isShowChainCount, bool canChain, bool isShowChainCountFx, bool isSameUserWazaType) { }
+		public void UseContestSkill(int playerIndex, int chainCount, bool isShowChainCount, bool canChain, bool isShowChainCountFx, bool isSameUserWazaType)
+		{
+			if (!canChain) {
+			  if ((this.acceptChainGaugeObj.activeSelf & 1) != 0) {
+			    this.acceptChainGaugeObj.SetActive(0);
+			  }
+			}
+			else {
+			  if ((this.acceptChainGaugeObj.activeSelf & 1) == 0) {
+			    this.acceptChainGaugeObj.SetActive(1);
+			  }
+			  0x3f800000.fillAmount = this.acceptChainGaugeImage;
+			}
+			if (isShowChainCount) {
+			  ShowChainCount(chainCount,(isShowChainCountFx ? 1 : 0) & 1);
+			  HideUserContestSkill();
+			}
+			ShowLaunchSkillLog(playerIndex,(isSameUserWazaType ? 1 : 0) & 1);
+		}
 		
 		// TODO
 		private void ShowChainCount(int chainCount, bool isShowFx) { }
 		
-		// TODO
-		private void PlayChainCountFx() { }
+		private void PlayChainCountFx()
+		{
+			this.chainCountContentRect.position;
+			this.fxEmitter.PlayFx(0x19,0);
+		}
 		
-		// TODO
-		private void StopChainCountFx() { }
+		private void StopChainCountFx()
+		{
+			0.StopFx(this.fxEmitter,0x19);
+		}
 		
 		// TODO
 		public void HideUserContestSkill() { }
@@ -75,11 +97,21 @@ namespace Dpr.Contest
 		// TODO
 		private void StopCommandAppealTween() { }
 		
-		// TODO
-		private void SetCommandActive(bool active) { }
+		private void SetCommandActive(bool active)
+		{
+			if (((!this.bIsShowCommand ^ active) & 1) != 0) {
+			}
+			this.bIsShowCommand = (active ? 1 : 0) & 1;
+			ExtensionMethods.SetActive(this.commandIconTransform,(active ? 1 : 0) & 1);
+		}
 		
-		// TODO
-		private void ShowAcceptChainGauge() { }
+		private void ShowAcceptChainGauge()
+		{
+			if ((this.acceptChainGaugeObj.activeSelf & 1) == 0) {
+			  this.acceptChainGaugeObj.SetActive(1);
+			}
+			0x3f800000.fillAmount = this.acceptChainGaugeImage;
+		}
 		
 		public bool IsShowLog { get => showLogCount > 0; }
 		
@@ -103,10 +135,18 @@ namespace Dpr.Contest
 		// TODO
 		public void UpdateChainGaugeHideTime(float deltaTime) { }
 		
-		// TODO
-		public void HideChainGauge() { }
+		public void HideChainGauge()
+		{
+			if ((this.acceptChainGaugeObj.activeSelf & 1) != 0) {
+			  this.acceptChainGaugeObj.SetActive(0);
+			}
+		}
 		
-		// TODO
-		private void SetAcceptChainGaugeActive(bool active) { }
+		private void SetAcceptChainGaugeActive(bool active)
+		{
+			if (((this.acceptChainGaugeObj.activeSelf ^ active) & 1) != 0) {
+			  this.acceptChainGaugeObj.SetActive((active ? 1 : 0) & 1);
+			}
+		}
 	}
 }

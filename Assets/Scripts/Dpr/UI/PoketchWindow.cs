@@ -160,11 +160,15 @@ namespace Dpr.UI
         // TODO
         private void SetCursorPosition(float posX, float posY) { }
 
-        // TODO
-        private void OnInputPrev(int button, UIInputButton.State state) { }
+        private void OnInputPrev(int button, UIInputButton.State state)
+        {
+        	SelectApp(button);
+        }
 
-        // TODO
-        private void OnInputNext(int button, UIInputButton.State state) { }
+        private void OnInputNext(int button, UIInputButton.State state)
+        {
+        	SelectApp(button,1);
+        }
 
         // TODO
         private void SelectApp(bool isForward) { }
@@ -181,8 +185,10 @@ namespace Dpr.UI
         // TODO
         public void SetAppColor(int index) { }
 
-        // TODO
-        public void SetAppBackLight() { }
+        public void SetAppBackLight()
+        {
+        	SetBackLight(this._isTouch);
+        }
 
         // TODO
         public void SetBackLight(bool isEnable) { }

@@ -19,8 +19,11 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void addExp_ByGakusyuSouti(ref bool isExpGet, BTL_PARTY pParty, in ExpCalculator.CalcExpContainer expContainer) { }
 		
-		// TODO
-		private void addExp(BTL_POKEPARAM poke, uint exp) { }
+		private void addExp(BTL_POKEPARAM poke, uint exp)
+		{
+			var uVar1 = poke.GetID();
+			this.m_pServerCmdPutter.Op_AddExp(uVar1,exp);
+		}
 		
 		// TODO
 		private bool checkRightsOfGettinExp(out uint exp, out bool isGakusyuSoutiOnly, in BTL_POKEPARAM poke, in ExpCalculator.CalcExpWork expWork)
@@ -30,14 +33,18 @@ namespace Dpr.Battle.Logic
 			return default;
 		}
 		
-		// TODO
-		private void putActCommand_InitParam() { }
+		private void putActCommand_InitParam()
+		{
+			this.m_pServerCmdPutter.Act_AddExp_InitParam();
+		}
 		
 		// TODO
 		private void putActCommand_SetParam(BTL_PARTY pParty, ExpCalculator.CalcExpContainer pExpContainer) { }
 		
-		// TODO
-		private void putActCommand_Execute() { }
+		private void putActCommand_Execute()
+		{
+			this.m_pServerCmdPutter.Act_AddExp();
+		}
 
 		public class Description
 		{

@@ -17,8 +17,11 @@ namespace Dpr.Contest
 		
 		public int StackLiveScore { get => stackLiveScore; }
 		
-		// TODO
-		public void AddLiveScore(int addScore) { }
+		public void AddLiveScore(int addScore)
+		{
+			this.danceScore = this.danceScore + addScore;
+			this.stackLiveScore = this.stackLiveScore + addScore;
+		}
 		
 		// TODO
 		public void DecLiveScore(int decScore) { }
@@ -29,26 +32,45 @@ namespace Dpr.Contest
 		// TODO
 		public int GetTapTimingCount(NoteTapTimingID timingID) { return default; }
 		
-		// TODO
-		public void ForceSetTension(int tension) { }
+		public void ForceSetTension(int tension)
+		{
+			this.successCount = 0;
+			this.tension = tension;
+		}
 		
 		// TODO
 		public void SetUpdownCount(TensionData tensionData) { }
 		
-		// TODO
-		public bool AddSuccessCount() { return default; }
+		public bool AddSuccessCount()
+		{
+			int iVar1 = default;
+			if (((this.tension != 0) && (-1 < this.nextTensionUpCount)) &&
+			   (iVar1 = this.successCount + 1, this.successCount = iVar1,
+			   this.nextTensionUpCount <= iVar1)) {
+			  this.tension = this.tension + -1;
+			  this.successCount = 0;
+			  return true;
+			}
+			return false;
+		}
 		
-		// TODO
-		private void UpTension() { }
+		private void UpTension()
+		{
+			this.tension = this.tension + -1;
+		}
 		
 		// TODO
 		public bool AddFailedCount() { return default; }
 		
-		// TODO
-		private void DownTension() { }
+		private void DownTension()
+		{
+			this.tension = this.tension + 1;
+		}
 		
-		// TODO
-		private void ResetTensionCount() { }
+		private void ResetTensionCount()
+		{
+			this.successCount = 0;
+		}
 		
 		// TODO
 		public bool AddHeartGauge(int addValue) { return default; }
@@ -58,25 +80,36 @@ namespace Dpr.Contest
 		public bool IsForceSuccess { get => bonusParam.forceSuccess; }
 		public bool CanEmitHeart { get => canEmitHeart; }
 		
-		// TODO
-		public void UseSkill() { }
+		public void UseSkill()
+		{
+			this.usedSkill = 1;
+		}
 		
-		// TODO
-		public void LockSkill() { }
+		public void LockSkill()
+		{
+			this.usedSkill = 1;
+		}
 		
 		// TODO
 		public void LaunchSkill() { }
 		
-		// TODO
-		public void FinishedSkillAnim() { }
+		public void FinishedSkillAnim()
+		{
+			this.canEmitHeart = 1;
+		}
 		
 		// TODO
 		public void ActivateSkillEffect(double elapsedTime, Action onFinishSkillEffect) { }
 		
-		// TODO
-		public void UpdateSkillEffect(double elapsedTime) { }
+		public void UpdateSkillEffect(double elapsedTime)
+		{
+			this.contestSkill.UpdateSkill();
+		}
 		
-		// TODO
-		public void AddWazaScore(int score) { }
+		public void AddWazaScore(int score)
+		{
+			this.stackLiveScore = this.stackLiveScore + score;
+			this.skillScore = this.skillScore + score;
+		}
 	}
 }

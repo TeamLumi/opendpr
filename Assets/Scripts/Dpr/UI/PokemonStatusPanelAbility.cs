@@ -55,8 +55,15 @@ namespace Dpr.UI
 		// TODO
 		private void SetupUpDownState(ChartItem chartItem, PowerID powerId) { }
 		
-		// TODO
-		private float GetAbilityRaderValue(uint value) { return default; }
+		private float GetAbilityRaderValue(uint value)
+		{
+			if ((float)value / 400.0 <= 1.0) {
+			  var fVar1 = (float)UnityEngine_AnimationCurve__Evaluate
+			                           (((float)value / 400.0) * 100.0,this._curveAbility,0);
+			  return fVar1 / 100.0;
+			}
+			return 1.1;
+		}
 		
 		// TODO
 		private float GetAbilitySplinedValue(float rate) { return default; }

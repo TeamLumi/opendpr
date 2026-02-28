@@ -81,23 +81,124 @@ namespace Dpr.UI
 		// TODO
 		private void ResetTimer(bool isPlaySE = true) { }
 		
-		// TODO
-		private void OnCountFinished() { }
+		private void OnCountFinished()
+		{
+			this._state = (TimerState)3;
+			SetBgSprites();
+			this._bgAnimationTimeCount = 0;
+		}
 		
-		// TODO
-		private void SetTimer(int minutes, int seconds) { }
+		private void SetTimer(int minutes, int seconds)
+		{
+			if ((int)this._state != 0) {
+			}
+			if (0x3a < (int)seconds) {
+			  seconds = 0x3b;
+			}
+			seconds = seconds & ((int)seconds >> 0x1f ^ 0xffffffffU);
+			if (0x62 < (int)minutes) {
+			  minutes = 99;
+			}
+			minutes = minutes & ((int)minutes >> 0x1f ^ 0xffffffffU);
+			SetTimerDisplay(minutes,seconds);
+			this._timer = (float)(int)(seconds + minutes * 0x3c);
+		}
 		
-		// TODO
-		private void AddTimerSeconds01(int addSeconds01) { }
+		private void AddTimerSeconds01(int addSeconds01)
+		{
+			addSeconds01 = this._displaySeconds % 10 + addSeconds01;
+			var iVar2 = addSeconds01;
+			if (addSeconds01 < 0) {
+			  iVar2 = 9;
+			}
+			if (9 < addSeconds01) {
+			  iVar2 = 0;
+			}
+			if ((int)this._state != 0) {
+			}
+			if (0x3a < (int)iVar2 + (this._displaySeconds / 10) * 10) {
+			  iVar2 + (this._displaySeconds / 10) * 10 = 0x3b;
+			}
+			iVar2 + (this._displaySeconds / 10) * 10 = iVar2 + (this._displaySeconds / 10) * 10 & ((int)iVar2 + (this._displaySeconds / 10) * 10 >> 0x1f ^ 0xffffffffU);
+			if (0x62 < (int)this._displayMinutes) {
+			  this._displayMinutes = 99;
+			}
+			this._displayMinutes = this._displayMinutes & ((int)this._displayMinutes >> 0x1f ^ 0xffffffffU);
+			SetTimerDisplay(this._displayMinutes,iVar2 + (this._displaySeconds / 10) * 10);
+			this._timer = (float)(int)(iVar2 + (this._displaySeconds / 10) * 10 + this._displayMinutes * 0x3c);
+		}
 		
-		// TODO
-		private void AddTimerSeconds10(int addSeconds10) { }
+		private void AddTimerSeconds10(int addSeconds10)
+		{
+			addSeconds10 = (this._displaySeconds / 10) % 10 + addSeconds10;
+			var iVar3 = addSeconds10 * 10;
+			if (addSeconds10 < 0) {
+			  iVar3 = 0x32;
+			}
+			if (5 < addSeconds10) {
+			  iVar3 = 0;
+			}
+			if ((int)this._state != 0) {
+			}
+			if (0x3a < (int)iVar3 + this._displaySeconds % 10) {
+			  iVar3 + this._displaySeconds % 10 = 0x3b;
+			}
+			iVar3 + this._displaySeconds % 10 = iVar3 + this._displaySeconds % 10 & ((int)iVar3 + this._displaySeconds % 10 >> 0x1f ^ 0xffffffffU);
+			if (0x62 < (int)this._displayMinutes) {
+			  this._displayMinutes = 99;
+			}
+			this._displayMinutes = this._displayMinutes & ((int)this._displayMinutes >> 0x1f ^ 0xffffffffU);
+			SetTimerDisplay(this._displayMinutes,iVar3 + this._displaySeconds % 10);
+			this._timer = (float)(int)(iVar3 + this._displaySeconds % 10 + this._displayMinutes * 0x3c);
+		}
 		
-		// TODO
-		private void AddTimerMinutes01(int addMinutes01) { }
+		private void AddTimerMinutes01(int addMinutes01)
+		{
+			addMinutes01 = this._displayMinutes % 10 + addMinutes01;
+			var iVar2 = addMinutes01;
+			if (addMinutes01 < 0) {
+			  iVar2 = 9;
+			}
+			if (9 < addMinutes01) {
+			  iVar2 = 0;
+			}
+			if ((int)this._state != 0) {
+			}
+			if (0x3a < (int)this._displaySeconds) {
+			  this._displaySeconds = 0x3b;
+			}
+			this._displaySeconds = this._displaySeconds & ((int)this._displaySeconds >> 0x1f ^ 0xffffffffU);
+			if (0x62 < (int)iVar2 + (this._displayMinutes / 10) * 10) {
+			  iVar2 + (this._displayMinutes / 10) * 10 = 99;
+			}
+			iVar2 + (this._displayMinutes / 10) * 10 = iVar2 + (this._displayMinutes / 10) * 10 & ((int)iVar2 + (this._displayMinutes / 10) * 10 >> 0x1f ^ 0xffffffffU);
+			SetTimerDisplay(iVar2 + (this._displayMinutes / 10) * 10,this._displaySeconds);
+			this._timer = (float)(int)(this._displaySeconds + iVar2 + (this._displayMinutes / 10) * 10 * 0x3c);
+		}
 		
-		// TODO
-		private void AddTimerMinutes10(int addMinutes10) { }
+		private void AddTimerMinutes10(int addMinutes10)
+		{
+			addMinutes10 = (this._displayMinutes / 10) % 10 + addMinutes10;
+			var iVar3 = addMinutes10 * 10;
+			if (addMinutes10 < 0) {
+			  iVar3 = 0x5a;
+			}
+			if (9 < addMinutes10) {
+			  iVar3 = 0;
+			}
+			if ((int)this._state != 0) {
+			}
+			if (0x3a < (int)this._displaySeconds) {
+			  this._displaySeconds = 0x3b;
+			}
+			this._displaySeconds = this._displaySeconds & ((int)this._displaySeconds >> 0x1f ^ 0xffffffffU);
+			if (0x62 < (int)iVar3 + this._displayMinutes % 10) {
+			  iVar3 + this._displayMinutes % 10 = 99;
+			}
+			iVar3 + this._displayMinutes % 10 = iVar3 + this._displayMinutes % 10 & ((int)iVar3 + this._displayMinutes % 10 >> 0x1f ^ 0xffffffffU);
+			SetTimerDisplay(iVar3 + this._displayMinutes % 10,this._displaySeconds);
+			this._timer = (float)(int)(this._displaySeconds + iVar3 + this._displayMinutes % 10 * 0x3c);
+		}
 		
 		// TODO
 		private void SetTimerDisplay(float seconds) { }

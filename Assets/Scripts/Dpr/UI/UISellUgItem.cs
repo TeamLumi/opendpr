@@ -83,8 +83,10 @@ namespace Dpr.UI
 		// TODO
 		private bool CheckIsEmptySelectItem() { return default; }
 		
-		// TODO
-		private bool CheckIsEmptySellItemData() { return default; }
+		private bool CheckIsEmptySellItemData()
+		{
+			return this.sellItemData == null;
+		}
 		
 		// TODO
 		private void OnRequiredItemData(IUIButton button) { }

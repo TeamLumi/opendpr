@@ -31,35 +31,72 @@ namespace Dpr.Contest
 		// TODO
 		public void OnFinalize() { }
 		
-		// TODO
-		private void SetImageComponents() { }
+		private void SetImageComponents()
+		{
+			var uVar1 = ComponentExtensions.FindDeep(_StringLiteral_8904,0);
+			uVar1 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar1);
+			this.contestTitleImage = uVar1;
+			uVar1 = ComponentExtensions.FindDeep(_StringLiteral_8905,0);
+			uVar1 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar1);
+			this.medalImage = uVar1;
+			uVar1 = ComponentExtensions.FindDeep(StringLiteral_8906,0);
+			uVar1 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar1);
+			this.categoryTitleImage = uVar1;
+			uVar1 = ComponentExtensions.FindDeep(_StringLiteral_8907,0);
+			uVar1 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar1);
+			this.rankImage = uVar1;
+		}
 		
 		// TODO
 		private void LoadFx() { }
 		
-		// TODO
-		public void ResetParam() { }
+		public void ResetParam()
+		{
+			var uVar1 = this.gameObject;
+			uVar1.SetActive(1);
+			this.animState = (AnimState)0;
+		}
 		
 		// TODO
 		public void Stop() { }
 		
-		// TODO
-		public void SetMedalSpr(Sprite spr) { }
+		public void SetMedalSpr(Sprite spr)
+		{
+			this.medalImage.sprite = spr;
+			this.medalImage.enabled = 1;
+		}
 		
-		// TODO
-		public void SetContestTitleSpr(Sprite spr) { }
+		public void SetContestTitleSpr(Sprite spr)
+		{
+			this.contestTitleImage.sprite = spr;
+			this.contestTitleImage.enabled = 1;
+		}
 		
-		// TODO
-		public void SetCategorySpr(Sprite spr) { }
+		public void SetCategorySpr(Sprite spr)
+		{
+			this.categoryTitleImage.sprite = spr;
+			this.categoryTitleImage.enabled = 1;
+		}
 		
-		// TODO
-		public void SetRankSpr(Sprite spr) { }
+		public void SetRankSpr(Sprite spr)
+		{
+			this.rankImage.sprite = spr;
+			this.rankImage.enabled = 1;
+		}
 		
-		// TODO
-		public void SetMedalActive(bool active) { }
+		public void SetMedalActive(bool active)
+		{
+			ExtensionMethods.SetActive(this.medalImage,(active ? 1 : 0) & 1);
+		}
 		
-		// TODO
-		public void SetRankActive(bool active) { }
+		public void SetRankActive(bool active)
+		{
+			ExtensionMethods.SetActive(this.rankImage,(active ? 1 : 0) & 1);
+		}
 		
 		// TODO
 		public void Setup() { }
@@ -100,8 +137,12 @@ namespace Dpr.Contest
 		// TODO
 		public void PlayTitleFx() { }
 		
-		// TODO
-		public void StopTitleFx() { }
+		public void StopTitleFx()
+		{
+			if (this.titleLogoFx != null) {
+			  0.Stop(this.titleLogoFx,0);
+			}
+		}
 
 		private enum AnimState : int
 		{

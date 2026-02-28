@@ -42,8 +42,21 @@ namespace Dpr.GMS
 		// TODO
 		private void ChangeStateNetworkTrade() { }
 		
-		// TODO
-		private void ResetTradeParam() { }
+		private void ResetTradeParam()
+		{
+			this.gmsTradeResult = null;
+			this.isMovedCamera = false;
+			this.pointDataStatus = (PointDataStatus)3;
+			this.afterErrorDialogActID = (AfterErrorDialogActID)0;
+			if (0xe < (int)this.currentTradeState ||
+			    (1 << (int)((int)this.currentTradeState & 0x1f) & 0x4009U) == 0) {
+			  GMSWork.EmitLog(_StringLiteral_9409,0);
+			}
+			this.currentTradeState = (TradeState)0;
+			this.uiGMSMark.HideAttentionIcon();
+			this.uiGMSMark.HideMatchingIcon();
+			0.StopFx(this.effectEmitter,0x27);
+		}
 		
 		// TODO
 		private void UpdateNetworkTrade(float deltaTime) { }
@@ -114,17 +127,29 @@ namespace Dpr.GMS
 		// TODO
 		private void OnTradeServerError() { }
 		
-		// TODO
-		private void OnTradeFailed() { }
+		private void OnTradeFailed()
+		{
+			this.canUseGMSNetwork = false;
+			this.dataModel.ClearTradeDemoParam();
+			this.dataModel.ClearTradeResultData();
+			ChangeTradeState(0xe);
+			var uVar1 = new Action(this);
+			this.msgWindow.ShowMessage(0xb,1,0,uVar1);
+		}
 		
 		// TODO
 		private bool IsPerformedTrade() { return default; }
 		
-		// TODO
-		private void HideMatchingIcon() { }
+		private void HideMatchingIcon()
+		{
+			this.uiGMSMark.HideMatchingIcon();
+			0.StopFx(this.effectEmitter,0x27);
+		}
 		
-		// TODO
-		private void HideAttentionIcon() { }
+		private void HideAttentionIcon()
+		{
+			this.uiGMSMark.HideAttentionIcon();
+		}
 		
 		// TODO
 		private bool WaitSave() { return default; }
@@ -151,8 +176,12 @@ namespace Dpr.GMS
 		// TODO
 		private void SceneInitialize() { }
 		
-		// TODO
-		private void LoadEffect() { }
+		private void LoadEffect()
+		{
+			var uVar1 = ComponentExtensions.FindDeep(_StringLiteral_9435,1);
+			uVar1 = uVar1.transform;
+			this.effectEmitter.Initialize(uVar1,GMSSceneDataModel.GetGMSEffects(this.dataModel),0);
+		}
 		
 		// TODO
 		private void Start() { }
@@ -166,26 +195,57 @@ namespace Dpr.GMS
 		// TODO
 		private void ChangeSceneState(SceneState nextState) { }
 		
-		// TODO
-		private void ChangeSceneStateLaunchAnim() { }
+		private void ChangeSceneStateLaunchAnim()
+		{
+			this.sceneUI.StartSceneAnim(this.dataModel.nowTotalPutPointNum,GMSSceneDataModel.get_IsPutComp(this.dataModel) & 1,0);
+		}
 		
 		// TODO
 		private void ChangeSceneStateModeSelect() { }
 		
-		// TODO
-		private void OnClosedModeSelectMenu() { }
+		private void OnClosedModeSelectMenu()
+		{
+			if (this.dataModel.selectGMSMode == 2) {
+			  ConfirmExitGMSScene();
+			}
+			if (this.dataModel.selectGMSMode != 1) {
+			  if (this.dataModel.selectGMSMode == 0) {
+			    OpenSelectTradeMonsBox();
+			  }
+			}
+			StartBrowsingMode();
+		}
 		
 		// TODO
 		private void OpenSelectTradeMonsBox() { }
 		
-		// TODO
-		private bool CheckHasUnionPenalty() { return default; }
+		private bool CheckHasUnionPenalty()
+		{
+			if ((this.dataModel.HasUnionPenalty() & 1) != 0) {
+			  this.msgWindow.ShowMessage(0x20,1,0,0,1);
+			  if (this.dataModel.nowSceneState == 0x10) {
+			    GMSWork.EmitLog(_StringLiteral_9436,2);
+			  }
+			  else {
+			    this.dataModel.SetSceneState(0x10);
+			  }
+			  return true;
+			}
+			return false;
+		}
 		
 		// TODO
 		private void StartBrowsingMode() { }
 		
-		// TODO
-		private void ChangeSceneStateBackTitle() { }
+		private void ChangeSceneStateBackTitle()
+		{
+			this.sceneUI.StartOnBackTopAnim(this.dataModel.nowTotalPutPointNum,GMSSceneDataModel.get_IsPutComp(this.dataModel) & 1,0);
+			if (this.dataModel.nowSceneState == 2) {
+			  GMSWork.EmitLog(_StringLiteral_9436,2);
+			}
+			this.dataModel.SetSceneState(2);
+			ChangeSceneStateModeSelect();
+		}
 		
 		// TODO
 		private void ChangeSceneStateStartGMSModeAnim() { }
@@ -193,8 +253,10 @@ namespace Dpr.GMS
 		// TODO
 		private void ChangeSceneStateEndGMSModeAnim() { }
 		
-		// TODO
-		private void ChangeSceneStateSaveTradeResult() { }
+		private void ChangeSceneStateSaveTradeResult()
+		{
+			this.dataModel.SetGMSPlayerData();
+		}
 		
 		// TODO
 		private void ChangeSceneStateMain() { }
@@ -202,8 +264,13 @@ namespace Dpr.GMS
 		// TODO
 		private void ChangeSceneStateAchievement() { }
 		
-		// TODO
-		private void ChangeSceneStateReward() { }
+		private void ChangeSceneStateReward()
+		{
+			if (this.dataModel.hasAchievementReward != 0) {
+			  this.dataModel.GetAutoCloseMsgTimeShort();
+			  this.msgWindow.ShowAutoCloseMessage(0x1a,0,1);
+			}
+		}
 		
 		// TODO
 		private void ChangeSceneStateConfirmContinue() { }
@@ -223,11 +290,19 @@ namespace Dpr.GMS
 		// TODO
 		private void UpdateInput(float deltaTime) { }
 		
-		// TODO
-		private bool CanExitScene() { return default; }
+		private bool CanExitScene()
+		{
+			return this.uiPointDataList.bIsShowPointHistoryView == 0;
+		}
 		
-		// TODO
-		private void BackBoxMenu() { }
+		private void BackBoxMenu()
+		{
+			OpenSelectTradeMonsBox();
+			if (this.dataModel.nowSceneState == 8) {
+			  GMSWork.EmitLog(_StringLiteral_9436,2);
+			}
+			this.dataModel.SetSceneState(8);
+		}
 		
 		// TODO
 		private void UpdateStateBackBox() { }
@@ -238,14 +313,28 @@ namespace Dpr.GMS
 		// TODO
 		private void UpdateStateEndGMSModeAnim() { }
 		
-		// TODO
-		private void UpdateAchievementAnim() { }
+		private void UpdateAchievementAnim()
+		{
+			if (this.uiAchievementAnim.bIsActive != 0) {
+			  this.uiAchievementAnim.OnUpdate();
+			}
+			ChangeSceneState(0xc);
+		}
 		
 		// TODO
 		private void UpdateReward() { }
 		
-		// TODO
-		private void UpdateSaveTradeResult() { }
+		private void UpdateSaveTradeResult()
+		{
+			var uVar1 = WaitSave();
+			if (uVar1) {
+			}
+			if (this.dataModel.nowSceneState == 0xe) {
+			  GMSWork.EmitLog(_StringLiteral_9436,2);
+			}
+			this.dataModel.SetSceneState(0xe);
+			ChangeSceneStateConfirmContinue();
+		}
 		
 		// TODO
 		private void UpdatePenalty() { }
@@ -292,8 +381,13 @@ namespace Dpr.GMS
 		// TODO
 		private void OnStopCameraMove() { }
 		
-		// TODO
-		private void OnReleaseListInput() { }
+		private void OnReleaseListInput()
+		{
+			if ((this.dataModel.selectGMSMode == 1) &&
+			   (this.dataModel.nowTotalPutPointNum < 2)) {
+			}
+			DecideSelectPoint();
+		}
 		
 		// TODO
 		private void OnCancelList() { }

@@ -9,11 +9,24 @@ namespace Dpr.Battle.Logic
 			Clear();
 		}
 		
-		// TODO
-		public void Register(byte pokeId) { }
+		public void Register(byte pokeId)
+		{
+			if (pokeId < 0x1e) {
+			  if (this.m_isPokemonBattleIn.Length <= (uint)pokeId) {
+			  }
+			  this.m_isPokemonBattleIn + (ulong)pokeId[0] = 1;
+			}
+		}
 		
-		// TODO
-		public bool Check(byte pokeId) { return default; }
+		public bool Check(byte pokeId)
+		{
+			if (0x1d < pokeId) {
+			  return false;
+			}
+			if ((uint)pokeId < this.m_isPokemonBattleIn.Length) {
+			  return this.m_isPokemonBattleIn + (ulong)pokeId[0] != 0;
+			}
+		}
 		
 		// TODO
 		public void Clear() { }

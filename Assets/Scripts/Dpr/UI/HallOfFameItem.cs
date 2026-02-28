@@ -25,8 +25,15 @@ namespace Dpr.UI
 		// TODO
 		public void Setup(DENDOU_POKEMON_DATA_INSIDE pokemonData, RE_DENDOU_POKEMON_DATA_INSIDE re_namedata, DENDOU_SAVE_ADD_POKE add_pokemon) { }
 		
-		// TODO
-		public void EnableInfo(int index) { }
+		public void EnableInfo(int index)
+		{
+			var uVar1 = this._infoStatus.root.gameObject
+			;
+			uVar1.SetActive(index == 0);
+			uVar1 = this._infoBattle.root.gameObject
+			;
+			uVar1.SetActive(index != 0);
+		}
 
 		[Serializable]
 		private class InfoStatus

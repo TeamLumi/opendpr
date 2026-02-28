@@ -91,8 +91,10 @@ namespace Dpr.UI
 		// TODO
 		private void ClosedMenu() { }
 		
-		// TODO
-		public void SetTimeCount(string minutStr, string secondStr) { }
+		public void SetTimeCount(string minutStr, string secondStr)
+		{
+			this._header.SetTime(minutStr,secondStr);
+		}
 		
 		// TODO
 		private void ResetContestParam() { }

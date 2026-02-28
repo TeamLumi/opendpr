@@ -83,8 +83,15 @@ namespace Dpr.Field
         // TODO
         private static bool CheckSpray(int inEneLv, ref ENC_FLD_SPA inSpa) { return false; }
 
-        // TODO
-        private static uint ChangeEncProbByEquipItem(PokemonParam inMyPokeParam, uint ioPer) { return 0; }
+        private static uint ChangeEncProbByEquipItem(PokemonParam inMyPokeParam, uint ioPer)
+        {
+        	var uVar2 = ioPer & 0xffffffff;
+        	var sVar1 = inMyPokeParam.GetItem();
+        	if ((sVar1 == 0x140) || (sVar1 == 0xe0)) {
+        	  uVar2 = (ulong)(uint)((int)ioPer << 1) / 3;
+        	}
+        	return uVar2;
+        }
 
         // TODO
         private static bool WildEncSingle(PokemonParam poke_param, ref EncountResult param, FieldEncountTable.Sheettable data, MonsLv[] enc_data, ENC_FLD_SPA inFldSpa, SWAY_ENC_INFO inSwayEncInfo) { return false; }
@@ -104,23 +111,132 @@ namespace Dpr.Field
         // TODO
         private static bool EncountWalkCheck(float walkcnt, uint per) { return false; }
 
-        // TODO
-        private static bool EncountCheckMain(uint per) { return false; }
+        private static bool EncountCheckMain(uint per)
+        {
+        	var iVar1 = RandomGroupWork.RandomRange(0,100);
+        	return (long)iVar1 < (long)(ulong)per;
+        }
 
-        // TODO
-        private static int RandomPokeSet() { return 0; }
+        private static int RandomPokeSet()
+        {
+        	var iVar1 = RandomGroupWork.RandomValue(100);
+        	if (iVar1 < 0x14) {
+        	  return 0;
+        	}
+        	if (iVar1 < 0x28) {
+        	  return 1;
+        	}
+        	if (iVar1 < 0x32) {
+        	  return 2;
+        	}
+        	if (iVar1 < 0x3c) {
+        	  return 3;
+        	}
+        	if (iVar1 < 0x46) {
+        	  return 4;
+        	}
+        	if (iVar1 < 0x50) {
+        	  return 5;
+        	}
+        	if (iVar1 < 0x55) {
+        	  return 6;
+        	}
+        	if (0x59 < iVar1) {
+        	  if (iVar1 < 0x5e) {
+        	    return 8;
+        	  }
+        	  if (0x61 < iVar1) {
+        	    var uVar2 = 10;
+        	    if (iVar1 != 0x62) {
+        	      uVar2 = 0xb;
+        	    }
+        	    return uVar2;
+        	  }
+        	  return 9;
+        	}
+        	return 7;
+        }
 
-        // TODO
-        private static int RandomPokeSetNoGround() { return 0; }
+        private static int RandomPokeSetNoGround()
+        {
+        	var iVar1 = RandomGroupWork.RandomValue(100);
+        	if (iVar1 < 0x3c) {
+        	  return 0;
+        	}
+        	if (0x59 < iVar1) {
+        	  if (0x5e < iVar1) {
+        	    var uVar2 = 3;
+        	    if (0x62 < iVar1) {
+        	      uVar2 = 4;
+        	    }
+        	    return uVar2;
+        	  }
+        	  return 2;
+        	}
+        	return 1;
+        }
 
-        // TODO
-        private static int RandomPokeSetFishing(FishingRod inFishingRod) { return 0; }
+        private static int RandomPokeSetFishing(FishingRod inFishingRod)
+        {
+        	uint uVar3;
+        	var iVar2 = RandomGroupWork.RandomValue(100);
+        	if ((int)inFishingRod == 3) {
+        	  uVar3 = 3;
+        	  if (0x62 < iVar2) {
+        	    uVar3 = 4;
+        	  }
+        	  var uVar1 = 2;
+        	  if (0x5e < iVar2) {
+        	    uVar1 = uVar3;
+        	  }
+        	  uVar3 = 1;
+        	  if (0x4f < iVar2) {
+        	    uVar3 = uVar1;
+        	  }
+        	  uVar1 = 0;
+        	  if (0x27 < iVar2) {
+        	    uVar1 = uVar3;
+        	  }
+        	  return uVar1;
+        	}
+        	if ((int)inFishingRod == 2) {
+        	  if (iVar2 < 0x28) {
+        	    return 0;
+        	  }
+        	  if (iVar2 < 0x50) {
+        	    return 1;
+        	  }
+        	}
+        	else {
+        	  if (((int)inFishingRod != 1) || (iVar2 < 0x3c)) {
+        	    return 0;
+        	  }
+        	  if (iVar2 < 0x5a) {
+        	    return 1;
+        	  }
+        	}
+        	if (iVar2 < 0x5f) {
+        	  return 2;
+        	}
+        	uVar3 = 3;
+        	if (0x62 < iVar2) {
+        	  uVar3 = 4;
+        	}
+        	return uVar3;
+        }
 
         // TODO
         private static bool SetEncountData(PokemonParam param, FishingRod inRodType, ENC_FLD_SPA inFldSpa, MonsLv[] inData, int location, BTL_CLIENT_ID inTarget, ref EncountResult outBattleParam) { return false; }
 
-        // TODO
-        private static bool SetEncountDataDecideMons(MonsNo inMonsNo, uint inLv, BTL_CLIENT_ID inTarget, bool inRare, ENC_FLD_SPA inFldSpa, PokemonParam param, ref EncountResult outBattleParam) { return false; }
+        private static bool SetEncountDataDecideMons(MonsNo inMonsNo, uint inLv, BTL_CLIENT_ID inTarget, bool inRare, ENC_FLD_SPA inFldSpa, PokemonParam param, ref EncountResult outBattleParam)
+        {
+        	if ((in_x3 & 1) != 0) {
+        	  EncountParamSetRare();
+        	  return true;
+        	}
+        	EncountParamSet();
+        	return true;
+        }
 
         // TODO
         private static bool SetSwayEncountData(PokemonParam param, ENC_FLD_SPA inFldSpa, MonsLv[] inData, BTL_CLIENT_ID inTarget, ref EncountResult outBattleParam, MonsNo inMonsNo, uint inLv) { return false; }

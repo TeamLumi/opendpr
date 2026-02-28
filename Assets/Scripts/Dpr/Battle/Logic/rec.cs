@@ -5,32 +5,47 @@
         private const int FALSE = 0;
         private const int TRUE = 1;
 
-        // TODO
-        public static byte MakeRecFieldTag(RecFieldType type, byte numClient, bool fChapter) { return 0; }
+        public static byte MakeRecFieldTag(RecFieldType type, byte numClient, bool fChapter)
+        {
+        	var uVar1 = 0x80;
+        	if (!fChapter) {
+        	  uVar1 = 0;
+        	}
+        	return (byte)(uVar1 | ((int)type & 7) << 4 | numClient & 0xf);
+        }
 
-        // TODO
         public static void ReadRecFieldTag(byte tagCode, out FieldType type, out byte numClient, out bool fChapter)
         {
-            type = FieldType.BTL_RECFIELD_NULL;
-            numClient = 0;
-            fChapter = false;
+        	numClient = (byte)tagCode & 0xf;
+        	type = (FieldType)((tagCode & 0xff) >> 4 & 7);
+        	fChapter = (byte)(tagCode >> 7) & 1;
         }
 
-        // TODO
-        public static byte MakeClientActionTag(byte clientID, byte numAction) { return 0; }
+        public static byte MakeClientActionTag(byte clientID, byte numAction)
+        {
+        	return (byte)(numAction | clientID << 5);
+        }
 
-        // TODO
         public static void ReadClientActionTag(byte tagCode, out byte clientID, out byte numAction)
         {
-            clientID = 0;
-            numAction = 0;
+        	clientID = (byte)(tagCode >> 5) & 7;
+        	numAction = (byte)tagCode & 0x1f;
         }
 
-        // TODO
-        public static byte MakeRecTimingCode(Timing timing, bool isRecordTargetData) { return 0; }
+        public static byte MakeRecTimingCode(Timing timing, bool isRecordTargetData)
+        {
+        	var uVar1 = 0x80;
+        	if (!isRecordTargetData) {
+        	  uVar1 = 0;
+        	}
+        	return (byte)(uVar1 | (int)timing & 0x7f);
+        }
 
-        // TODO
-        public static void ReadRecTimingCode(byte timingCode, ref Timing timing, ref bool isRecordTargetData) { }
+        public static void ReadRecTimingCode(byte timingCode, ref Timing timing, ref bool isRecordTargetData)
+        {
+        	isRecordTargetData = (byte)(timingCode >> 7) & 1;
+        	timing = (Timing)(timingCode & 0x7f);
+        }
 
         public enum FieldType : int
         {
@@ -89,11 +104,16 @@
             // TODO
             public Timing GetTimingCode(void* data) { return Timing.RECTIMING_None; }
 
-            // TODO
-            public bool IsCorrect() { return false; }
+            public bool IsCorrect()
+            {
+            	return !this.m_fSizeOver;
+            }
 
-            // TODO
-            public void* GetDataPtr(ref uint size) { return null; }
+            public void* GetDataPtr(ref uint size)
+            {
+            	size = (uint)this.m_writePtr;
+            	return this.m_buf;
+            }
         }
 
         public sealed unsafe class Reader
@@ -124,8 +144,21 @@
             // TODO
             public void Init(void* recordData, uint dataSize) { }
 
-            // TODO
-            public void Reset() { }
+            public void Reset()
+            {
+            	if (0 < (int)this.m_readPtr.Length) {
+            	  var uVar4 = 0;
+            	  var uVar5 = this.m_readPtr.Length & 0xffffffff;
+            	  do {
+            	    if (uVar5 <= uVar4) {
+            	    }
+            	    var lVar1 = uVar4 * 4;
+            	    uVar4 = uVar4 + 1;
+            	    this.m_readPtr + lVar1[0] = 0;
+            	    uVar5 = (ulong)this.m_readPtr.Length;
+            	  } while ((long)uVar4 < (int)this.m_readPtr.Length);
+            	}
+            }
 
             // TODO
             public bool CheckBtlInCmd(byte clientID) { return false; }

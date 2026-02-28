@@ -36,11 +36,17 @@
             return m_allDeadCount;
         }
 
-        // TODO
-        public void IncAllDeadCount() { }
+        public void IncAllDeadCount()
+        {
+        	if (this.m_allDeadCount < 4) {
+        	  this.m_allDeadCount = (byte)(this.m_allDeadCount + 1);
+        	}
+        }
 
-        // TODO
-        public bool IsAllDeadCountMax() { return false; }
+        public bool IsAllDeadCountMax()
+        {
+        	return 3 < this.m_allDeadCount;
+        }
 
         // TODO
         public ushort GetTurnCountAfterAllDead(BTL_CLIENT_ID clientID) { return 0; }
@@ -51,10 +57,14 @@
         // TODO
         public void ResetTurnCountAfterAllDead(BTL_CLIENT_ID clientID) { }
 
-        // TODO
-        public void PlayBtlEffectKill() { }
+        public void PlayBtlEffectKill()
+        {
+        	this.m_isPlayBtlEffectKill = true;
+        }
 
-        // TODO
-        public bool IsPlayBtlEffectKill() { return false; }
+        public bool IsPlayBtlEffectKill()
+        {
+        	return this.m_isPlayBtlEffectKill;
+        }
     }
 }

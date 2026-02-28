@@ -46,8 +46,11 @@ namespace Dpr.Contest
         // TODO
         public static PokemonParam GetEntryMemberPokemon(uint memberIndex) { return null; }
 
-        // TODO
-        private static PokemonParam CreateDummyMonster() { return null; }
+        private static PokemonParam CreateDummyMonster()
+        {
+        	var uVar1 = new PokemonParam(0x183,1,0);
+        	return uVar1;
+        }
 
         public static bool IsMultiMode { get => playMode == ContestMode.Local || playMode == ContestMode.Internet; }
 
@@ -60,11 +63,21 @@ namespace Dpr.Contest
         // TODO
         public static bool CanEntryContest(PokemonParam pokeParam, CategoryID categoryID) { return false; }
 
-        // TODO
-        public static bool CheckPokeStatus(PokemonParam pokeParam) { return false; }
+        public static bool CheckPokeStatus(PokemonParam pokeParam)
+        {
+        	var uVar2 = pokeParam.IsEgg(2);
+        	if (uVar2) {
+        	  return false;
+        	}
+        	var uVar1 = pokeParam.IsHpZero();
+        	return ~(uVar1 ? 1 : 0) & 1;
+        }
 
-        // TODO
-        private static bool CheckEntryFurContest(PokemonParam pokeParam) { return false; }
+        private static bool CheckEntryFurContest(PokemonParam pokeParam)
+        {
+        	pokeParam.HaveRibbon(0x28);
+        	return false;
+        }
 
         // TODO
         public static bool HasValidContestWaza(PokemonParam pokeParam) { return false; }
@@ -102,11 +115,19 @@ namespace Dpr.Contest
         // TODO
         public static void ApplyReportData_MultiMode(ResultDataModel resultDataModel) { }
 
-        // TODO
-        public static EvWork.SYSFLAG_INDEX FindStandardContestClearFlagIndex(CategoryID categoryID, RankID rankID) { return EvWork.SYSFLAG_INDEX.SYS_FLAG_ARRIVE_START; }
+        public static EvWork.SYSFLAG_INDEX FindStandardContestClearFlagIndex(CategoryID categoryID, RankID rankID)
+        {
+        	var iVar1 = categoryID * 3 + rankID + 0x2f2;
+        	if ((int)rankID == 4) {
+        	  iVar1 = categoryID + 8;
+        	}
+        	return iVar1;
+        }
 
-        // TODO
-        public static EvWork.SYSFLAG_INDEX FindSercretContestClearFlagIndex(RankID rankID) { return EvWork.SYSFLAG_INDEX.SYS_FLAG_ARRIVE_START; }
+        public static EvWork.SYSFLAG_INDEX FindSercretContestClearFlagIndex(RankID rankID)
+        {
+        	return rankID + 0x317;
+        }
 
         // TODO
         public static void ResetContestData() { }
@@ -114,8 +135,15 @@ namespace Dpr.Contest
         // TODO
         public static void SaveContestPhotoData(CategoryID categoryID, RankID rankID, CaptureData captureData) { }
 
-        // TODO
-        private static void ResetPhotoFxData(ref CON_PHOTO_FX_DATA targetData) { }
+        private static void ResetPhotoFxData(ref CON_PHOTO_FX_DATA targetData)
+        {
+        	targetData = 0xffffffff;
+        	*(targetData + 1) = 0;
+        	*(targetData + 3) = 0;
+        	*(targetData + 5) = 0;
+        	*(targetData + 7) = 0;
+        	*(targetData + 9) = 0;
+        }
 
         // TODO
         private static void SetMonsLanguageID(CategoryID categoryID, byte langID) { }

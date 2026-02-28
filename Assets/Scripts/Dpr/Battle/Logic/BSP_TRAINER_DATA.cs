@@ -9,56 +9,88 @@ namespace Dpr.Battle.Logic
         public const int USE_ITEM_MAX = 4;
         private CORE_DATA mCore = new CORE_DATA();
 
-        // TODO
-        public TrainerID GetTrainerID() { return TrainerID.INVALID; }
+        public TrainerID GetTrainerID()
+        {
+        	return this.mCore.tr_id;
+        }
 
-        // TODO
-        public uint GetAIBit() { return 0; }
+        public uint GetAIBit()
+        {
+        	return this.mCore.ai_bit;
+        }
 
-        // TODO
-        public BattleSetupEffectId GetBattleEffectID() { return BattleSetupEffectId.NONE; }
+        public BattleSetupEffectId GetBattleEffectID()
+        {
+        	return this.mCore.btl_eff_id;
+        }
 
-        // TODO
-        public TrainerType GetTrainerType() { return TrainerType.INVALID; }
+        public TrainerType GetTrainerType()
+        {
+        	return this.mCore.tr_type;
+        }
 
-        // TODO
-        public TrainerTypeGroup GetTrainerGroup() { return TrainerTypeGroup.NORA; }
+        public TrainerTypeGroup GetTrainerGroup()
+        {
+        	return this.mCore.tr_group;
+        }
 
-        // TODO
-        public Sex GetTrainerSex() { return Sex.MALE; }
+        public Sex GetTrainerSex()
+        {
+        	return this.mCore.tr_sex;
+        }
 
-        // TODO
-        public byte GetGoldParam() { return 0; }
+        public byte GetGoldParam()
+        {
+        	return (byte)(this.mCore.gold);
+        }
 
-        // TODO
-        public string GetModelID() { return null; }
+        public string GetModelID()
+        {
+        	return this.mCore.model_id;
+        }
 
-        // TODO
-        public int GetColorID() { return 0; }
+        public int GetColorID()
+        {
+        	return this.mCore.color_id;
+        }
 
         // TODO
         public ushort GetUseItem(int index) { return 0; }
 
-        // TODO
-        public string GetNameLabel() { return null; }
+        public string GetNameLabel()
+        {
+        	return this.mCore.name_label;
+        }
 
-        // TODO
-        public string GetTrTypeNameLabel() { return null; }
+        public string GetTrTypeNameLabel()
+        {
+        	return this.mCore.trtype_name_label;
+        }
 
-        // TODO
-        public void SetTrainerID(TrainerID id) { }
+        public void SetTrainerID(TrainerID id)
+        {
+        	this.mCore.tr_id = id;
+        }
 
-        // TODO
-        public void SetAIBit(uint bit) { }
+        public void SetAIBit(uint bit)
+        {
+        	this.mCore.ai_bit = bit;
+        }
 
-        // TODO
-        public void SetGoldParam(byte gold) { }
+        public void SetGoldParam(byte gold)
+        {
+        	this.mCore.gold = gold;
+        }
 
-        // TODO
-        public void SetModelID(string modelID) { }
+        public void SetModelID(string modelID)
+        {
+        	this.mCore.model_id = modelID;
+        }
 
-        // TODO
-        public void SetColorID(int color_id) { }
+        public void SetColorID(int color_id)
+        {
+        	this.mCore.color_id = color_id;
+        }
 
         // TODO
         public void Dispose() { }
@@ -75,23 +107,33 @@ namespace Dpr.Battle.Logic
         // TODO
         public void ReloadTrTypeData() { }
 
-        // TODO
-        public TrainerTable.SheetTrainerType GetTrTypeData() { return null; }
+        public TrainerTable.SheetTrainerType GetTrTypeData()
+        {
+        	return this.mCore.tr_type_data;
+        }
 
-        // TODO
-        public TrainerTable.SheetTrainerData GetTrainerData() { return null; }
+        public TrainerTable.SheetTrainerData GetTrainerData()
+        {
+        	return this.mCore.trainer_data;
+        }
 
-        // TODO
-        public TowerTrainerTable.SheetTrainerData GetInstTrainerData() { return null; }
+        public TowerTrainerTable.SheetTrainerData GetInstTrainerData()
+        {
+        	return this.mCore.inst_trainer_data;
+        }
 
         // TODO
         public void SetUseItem(ushort[] items) { }
 
-        // TODO
-        public void SetNameLabel(string name_label) { }
+        public void SetNameLabel(string name_label)
+        {
+        	this.mCore.name_label = name_label;
+        }
 
-        // TODO
-        public void SetTrTypeNameLabel(string trtype_name_label) { }
+        public void SetTrTypeNameLabel(string trtype_name_label)
+        {
+        	this.mCore.trtype_name_label = trtype_name_label;
+        }
 
         private class CORE_DATA
         {

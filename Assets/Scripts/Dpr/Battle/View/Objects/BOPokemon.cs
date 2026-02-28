@@ -40,8 +40,10 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		public void Initialize(BtlvPos vPos, PokemonParam param) { }
 		
-		// TODO
-		private static int GetUniqueID(MonsNo monsNo, int formNo) { return default; }
+		private static int GetUniqueID(MonsNo monsNo, int formNo)
+		{
+			return formNo + monsNo * 100;
+		}
 		
 		// TODO
 		private void SetupAdjustHeight() { }
@@ -70,11 +72,15 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		public void SetMotionTimingData(MotionTimingData data) { }
 		
-		// TODO
-		public float GetCamAdjustHeight() { return default; }
+		public float GetCamAdjustHeight()
+		{
+			return this.m_cameraAdjustHeight;
+		}
 		
-		// TODO
-		public float GetAdjustHeight() { return default; }
+		public float GetAdjustHeight()
+		{
+			return this.m_adjustHeight;
+		}
 		
 		// TODO
 		public PokeEffWeight CheckPokemonEffectWeight() { return default; }
@@ -94,8 +100,10 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		public Transform GetNodeTransformSequence(SEQ_DEF_NODE node) { return default; }
 		
-		// TODO
-		public BattlePokemonEntity.AnimationState GetLastPlayAnim() { return default; }
+		public BattlePokemonEntity.AnimationState GetLastPlayAnim()
+		{
+			return this._lastPlayAnimationState;
+		}
 		
 		public BattlePokemonEntity.AnimationState CurrentAnimationState { get => Entity.CurrentAnimationState; }
 		public float CurrentRemaingTime { get => Entity.GetAnimationPlayer().currentRemaingTime; }
@@ -112,8 +120,10 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		protected override void UpdateAnimSpeed() { }
 		
-		// TODO
-		public void PostPokeVoice(JointName joint, string voiceName, VOICE_TYPE voiceType) { }
+		public void PostPokeVoice(JointName joint, string voiceName, VOICE_TYPE voiceType)
+		{
+			var uVar1 = new NotImplementedException();
+		}
 		
 		// TODO
 		private void PostEventAnimationSoundComponent(string eventName, JointName joint) { }
@@ -121,17 +131,25 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		public PokeVoiceParameter GetPokeVoiceParams(string voiceName, VOICE_TYPE voiceType) { return default; }
 		
-		// TODO
-		public bool GetRTPC_IsPlayPinchSound() { return default; }
+		public bool GetRTPC_IsPlayPinchSound()
+		{
+			return this.m_isPlayPinchSoundRTPC;
+		}
 		
-		// TODO
-		public void SetRTPC_IsPlayPinchSound(bool value) { }
+		public void SetRTPC_IsPlayPinchSound(bool value)
+		{
+			this.m_isPlayPinchSoundRTPC = (value ? 1 : 0) & 1;
+		}
 		
-		// TODO
-		public bool GetIsPlayPinchSound() { return default; }
+		public bool GetIsPlayPinchSound()
+		{
+			return this.m_isPlayPinchSound;
+		}
 		
-		// TODO
-		public void SetIsPlayPinchSound(bool value) { }
+		public void SetIsPlayPinchSound(bool value)
+		{
+			this.m_isPlayPinchSound = (value ? 1 : 0) & 1;
+		}
 		
 		// TODO
 		public void SetEnableFloat(bool flg) { }
@@ -154,8 +172,10 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		private void CreateMigawari() { }
 		
-		// TODO
-		public void DisableSleepEye(bool value) { }
+		public void DisableSleepEye(bool value)
+		{
+			this.m_disableSleepEye = (value ? 1 : 0) & 1;
+		}
 		
 		// TODO
 		public override void SetVisibleShadow(bool value) { }

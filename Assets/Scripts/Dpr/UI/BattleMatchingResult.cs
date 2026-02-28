@@ -11,14 +11,18 @@ namespace Dpr.UI
 		private float _readyProgressTime;
 		private bool _closed;
 		
-		// TODO
-		public void Initialize(Action onFinishState) { }
+		public void Initialize(Action onFinishState)
+		{
+			this._onFinishState = onFinishState;
+		}
 		
 		// TODO
 		public void Setup(UIBattleMatching battleMatchingUI) { }
 		
-		// TODO
-		public void PreClose() { }
+		public void PreClose()
+		{
+			this._closed = true;
+		}
 		
 		// TODO
 		public void Close() { }

@@ -25,13 +25,27 @@ namespace Dpr.UI
 		// TODO
 		public void ShowPreparatioIcon(bool isReady) { }
 		
-		// TODO
-		public void HidePreparatioIcon() { }
+		public void HidePreparatioIcon()
+		{
+			var uVar2 = GameObject.get_activeSelf(this.preparationIconImage.gameObject,0);
+			if (uVar2) {
+			  GameObject.SetActive(this.preparationIconImage.gameObject,0,0);
+			}
+		}
 		
-		// TODO
-		private void SetPreparatioIconActive(bool active) { }
+		private void SetPreparatioIconActive(bool active)
+		{
+			var uVar1 = GameObject.get_activeSelf(this.preparationIconImage.gameObject,0);
+			if (((uVar1 ^ active) & 1) != 0) {
+			  GameObject.SetActive(this.preparationIconImage.gameObject,(active ? 1 : 0) & 1,0);
+			}
+		}
 		
-		// TODO
-		public void SetLoadingMonboObjActive(bool active) { }
+		public void SetLoadingMonboObjActive(bool active)
+		{
+			if (((this.loadingMonboObj.activeSelf ^ active) & 1) != 0) {
+			  this.loadingMonboObj.SetActive((active ? 1 : 0) & 1);
+			}
+		}
 	}
 }

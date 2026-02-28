@@ -22,8 +22,15 @@
         // TODO
         public void Relive(byte pokeID) { }
 
-        // TODO
-        public bool IsDeadNow(byte pokeID) { return false; }
+        public bool IsDeadNow(byte pokeID)
+        {
+        	if (0x1d < pokeID) {
+        	  return false;
+        	}
+        	if ((uint)pokeID < this.m_data.currentDeadFlag.Length) {
+        	  return this.m_data.currentDeadFlag + (ulong)pokeID[0] != 0;
+        	}
+        }
 
         // TODO
         public uint GetDeadCountByClientID(byte clientID) { return 0; }

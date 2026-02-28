@@ -8,28 +8,52 @@
         private bool m_bDisabledPutPosSequence;
         private byte[] m_prohibit = new byte[DefineConstants.BTL_PARTY_MEMBER_MAX];
 
-        // TODO
-        public BTL_PARTY GetParty() { return null; }
+        public BTL_PARTY GetParty()
+        {
+        	return this.m_party;
+        }
 
         // TODO
         public void Init(BTL_CLIENT_ID clientID, BTL_PARTY party, byte numSelect) { }
 
-        // TODO
-        public void SetProhibitFighting(byte numCover) { }
+        public void SetProhibitFighting(byte numCover)
+        {
+        	if (numCover != 0) {
+        	  var lVar3 = 0;
+        	  do {
+        	    if (this.m_prohibit.Length <= (uint)lVar3) {
+        	    }
+        	    lVar3 = lVar3 + 1;
+        	    this.m_prohibit + lVar3[0] = 2;
+        	  } while ((uint)numCover != (uint)lVar3);
+        	}
+        }
 
-        // TODO
-        public void SetProhibit(PokeselReason reason, byte idx) { }
+        public void SetProhibit(PokeselReason reason, byte idx)
+        {
+        	if ((uint)idx < this.m_prohibit.Length) {
+        	  this.m_prohibit + (ulong)idx[0] = reason;
+        	}
+        }
 
-        // TODO
-        public BTL_CLIENT_ID GetClientID() { return BTL_CLIENT_ID.BTL_CLIENT_PLAYER; }
+        public BTL_CLIENT_ID GetClientID()
+        {
+        	return this.m_clientID;
+        }
 
-        // TODO
-        public byte GetNumSelect() { return 0; }
+        public byte GetNumSelect()
+        {
+        	return (byte)(this.m_numSelect);
+        }
 
-        // TODO
-        public void DisablePutPosSequence() { }
+        public void DisablePutPosSequence()
+        {
+        	this.m_bDisabledPutPosSequence = true;
+        }
 
-        // TODO
-        public bool IsDisabledPutPosSequence() { return false; }
+        public bool IsDisabledPutPosSequence()
+        {
+        	return this.m_bDisabledPutPosSequence;
+        }
     }
 }

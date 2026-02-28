@@ -70,14 +70,25 @@ namespace Dpr.UI
 		// TODO
 		private void SetSelect(OpenMenuType type) { }
 		
-		// TODO
-		private void SetCursor() { }
+		private void SetCursor()
+		{
+			var uVar1 = 0xc3938000;
+			if ((int)this._currentSelect != 1) {
+			  uVar1 = 0x43938000;
+			}
+			this._cursorNetMode.transform = Transform.get_parent(Component.get_transform(this._cursorNetMode),0);
+			this._cursorNetMode.transform = UnityEngine_Component__GetComponent<object>
+			                  (this._cursorNetMode.transform);
+			ExtensionMethods.SetLocalPositionX(uVar1,this._cursorNetMode.transform,0);
+		}
 		
 		// TODO
 		private void LoadModel() { }
 		
-		// TODO
-		private void UnloadModel() { }
+		private void UnloadModel()
+		{
+			this._modelView.DestroyModel(0);
+		}
 
 		private enum OpenMenuType : int
 		{

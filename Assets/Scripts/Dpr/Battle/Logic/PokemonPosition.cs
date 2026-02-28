@@ -74,8 +74,13 @@
         // TODO
         public static bool IsPokePosExist(BtlRule rule, BtlMultiMode multiMode, BtlPokePos pos) { return false; }
 
-        // TODO
-        public static BtlPokePos GetValidPosMax(BtlRule rule) { return BtlPokePos.POS_1ST_0; }
+        public static BtlPokePos GetValidPosMax(BtlRule rule)
+        {
+        	if ((int)rule < 4) {
+        	  return 0x1040301 >> (int)(((int)rule & 3) << 3);
+        	}
+        	return (BtlPokePos)3;
+        }
 
         // TODO
         public static BtlPokePos GetOpponentPokePos(BtlRule rule, BtlMultiMode multiMode, BtlPokePos myBasePos, byte opponentPosIndex) { return BtlPokePos.POS_1ST_0; }
@@ -89,8 +94,14 @@
         // TODO
         public static BtlPokePos GetSidePos(BtlRule rule, BtlSide side, byte posIndex) { return BtlPokePos.POS_1ST_0; }
 
-        // TODO
-        public static BtlPokePos GetSidePos_Raid(BtlSide side, byte posIndex) { return BtlPokePos.POS_1ST_0; }
+        public static BtlPokePos GetSidePos_Raid(BtlSide side, byte posIndex)
+        {
+        	var uVar1 = 4;
+        	if ((int)side != 1) {
+        	  uVar1 = posIndex;
+        	}
+        	return uVar1;
+        }
 
         // TODO
         public static BtlSide PosToSide(BtlRule rule, BtlMultiMode multiMode, BtlPokePos pos) { return BtlSide.BTL_SIDE_1ST; }
@@ -113,11 +124,15 @@
         // TODO
         public static void AddSideIfExist(BtlSide[] destArray, ref byte count, BtlRule rule, BtlSide side) { }
 
-        // TODO
-        public static bool IsUnitSide(BtlSide side) { return false; }
+        public static bool IsUnitSide(BtlSide side)
+        {
+        	return (int)side < 2;
+        }
 
-        // TODO
-        public static bool IsMultiSide(BtlSide side) { return false; }
+        public static bool IsMultiSide(BtlSide side)
+        {
+        	return side - 3U < 3;
+        }
 
         // TODO
         public static BtlSide GetClientSide(BtlRule rule, BTL_CLIENT_ID clientId) { return BtlSide.BTL_SIDE_1ST; }
@@ -134,8 +149,14 @@
         // TODO
         public static byte PosToSidePosIndex(BtlRule rule, BtlPokePos pos) { return 0; }
 
-        // TODO
-        private static byte PosToSidePosIndex_Raid(BtlPokePos pos) { return 0; }
+        private static byte PosToSidePosIndex_Raid(BtlPokePos pos)
+        {
+        	var uVar1 = 0;
+        	if (((int)pos & 0xff) != 4) {
+        	  uVar1 = pos;
+        	}
+        	return (byte)(uVar1);
+        }
 
         // TODO
         public static BtlPokePos GetFriendPokePos(BtlRule rule, BtlMultiMode multiMode, BtlPokePos myBasePos, byte sidePosIndex) { return BtlPokePos.POS_1ST_0; }

@@ -11,7 +11,11 @@ namespace Dpr.Battle.Logic
         // TODO
         public void CopyFrom(PokeActionParam_Item src) { }
 
-        // TODO
-        public void Clear() { }
+        public void Clear()
+        {
+        	this.targetID = (byte)0;
+        	this.number = (ItemNo)0;
+        	this.param = (byte)0;
+        }
     }
 }

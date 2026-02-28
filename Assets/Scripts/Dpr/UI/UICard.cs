@@ -76,8 +76,13 @@ namespace Dpr.UI
 		// TODO
 		private void OnUpdateTrainerCard(float deltaTime) { }
 		
-		// TODO
-		private void OnUpdateBadgeCase(float deltaTime) { }
+		private void OnUpdateBadgeCase(float deltaTime)
+		{
+			if ((this.modelViewController.IsEndBadgeCase & 1) != 0) {
+			  this.modelViewController.ResetRotatePlayerModel();
+			  ShowPlayerModel();
+			}
+		}
 		
 		// TODO
 		private void UpdateKeyGuide() { }
@@ -100,17 +105,26 @@ namespace Dpr.UI
             IEnumerator Show() { return default; }
         }
 		
-		// TODO
-		public void SetTextFront(uint id, PlayerNameData nameData, int money, int zukanCount, ushort playTimeHour, ushort playTimeMinute, long startTime, uint clearTime) { }
+		public void SetTextFront(uint id, PlayerNameData nameData, int money, int zukanCount, ushort playTimeHour, ushort playTimeMinute, long startTime, uint clearTime)
+		{
+			uStack0000000000000008 = 0;
+			this.cardFrontView.SetText();
+		}
 		
-		// TODO
-		public void SetTextBackContest(uint styleRank, uint beatifulRank, uint cuteRank, uint cleverRank, uint strongRank) { }
+		public void SetTextBackContest(uint styleRank, uint beatifulRank, uint cuteRank, uint cleverRank, uint strongRank)
+		{
+			this.cardBackView.SetContestTexts();
+		}
 		
-		// TODO
-		public void SetTextBackTower(uint singleRenshouCount, uint doubleRenshouCount, uint masterSingleRenshouCount, uint masterDoubleRenshouCount) { }
+		public void SetTextBackTower(uint singleRenshouCount, uint doubleRenshouCount, uint masterSingleRenshouCount, uint masterDoubleRenshouCount)
+		{
+			this.cardBackView.SetTowerTexts();
+		}
 		
-		// TODO
-		public void SetTextBackOther(int cookingCount, int fossilCount, int statueCount) { }
+		public void SetTextBackOther(int cookingCount, int fossilCount, int statueCount)
+		{
+			this.cardBackView.SetOtherTexts();
+		}
 
 		public class Param
 		{

@@ -84,8 +84,13 @@ namespace Dpr.UI
         public Param param { get => _param; }
         public PokemonIcon pokemonIcon { get => _pokemonIcon; }
 
-        // TODO
-        private void Awake() { }
+        private void Awake()
+        {
+        	var uVar1 = UnityEngine_Component__GetComponentInChildren<object>
+        	                  (this);
+        	this._animator = uVar1;
+        	this._isDestroy = false;
+        }
 
         // TODO
         private void OnDestroy() { }
@@ -93,26 +98,45 @@ namespace Dpr.UI
         // TODO
         public void Setup(Param param) { }
 
-        // TODO
-        public void SetEnable(bool enabled) { }
+        public void SetEnable(bool enabled)
+        {
+        	GameObject.SetActive(this._root.gameObject,(enabled ? 1 : 0) & 1,0);
+        }
 
-        // TODO
-        public void EnablePairIcon(bool enabled) { }
+        public void EnablePairIcon(bool enabled)
+        {
+        	GameObject.SetActive(this._pair.gameObject,(enabled ? 1 : 0) & 1,0);
+        }
 
         // TODO
         public void SetupItem() { }
 
-        // TODO
-        public void ShowItemName(bool enabled) { }
+        public void ShowItemName(bool enabled)
+        {
+        	bool bVar1;
+        	if (!enabled) {
+        	  bVar1 = false;
+        	}
+        	else {
+        	  bVar1 = this._param.pokemonParam.GetItem() != 0;
+        	}
+        	GameObject.SetActive(this._itemRoot.gameObject,bVar1,0);
+        }
 
         // TODO
         public void ShowUsableItemText(string labelName) { }
 
-        // TODO
-        public void HideUsableItemText() { }
+        public void HideUsableItemText()
+        {
+        	GameObject.SetActive(this._usableItemRoot.gameObject,0,0);
+        	this.isShowUsableItem = false;
+        }
 
-        // TODO
-        public void Select(int stateBits) { }
+        public void Select(int stateBits)
+        {
+        	this._stateBits = stateBits;
+        	SetState();
+        }
 
         // TODO
         public void Decide(bool isOpenContextMenu) { }
@@ -129,8 +153,11 @@ namespace Dpr.UI
         // TODO
         public void EnableSwapMode(bool enabled) { }
 
-        // TODO
-        public Vector3 GetSwapPosition() { return default; }
+        public Vector3 GetSwapPosition()
+        {
+        	Transform.get_position(this._pokemonIcon.transform,0);
+        	return null;
+        }
 
         // TODO
         public void SetSwapPosition() { }
@@ -138,8 +165,10 @@ namespace Dpr.UI
         // TODO
         public void SetSwapPosition(Vector3 pos) { }
 
-        // TODO
-        public void UpdateHp([Optional] Action onComplete) { }
+        public void UpdateHp([Optional] Action onComplete)
+        {
+        	this._hpBar.SetHp(CoreParam.GetHp(this._param.pokemonParam),onComplete,0,0);
+        }
 
         // TODO
         public bool FormChange(ushort formNo, [Optional] RectTransform effectRoot, [Optional] Action<PokemonParam> onChangeIcon, [Optional] Action<PokemonParam> onComplete)

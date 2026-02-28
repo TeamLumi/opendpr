@@ -29,8 +29,10 @@ namespace Dpr.Battle.Logic
 		// TODO
 		public void Merge(in DamageCalcResult src) { }
 		
-		// TODO
-		public uint GetTargetCount() { return default; }
+		public uint GetTargetCount()
+		{
+			return (uint)this.migawariHitCount + (uint)this.realHitCount;
+		}
 		
 		// TODO
 		public uint GetDamageSum() { return default; }

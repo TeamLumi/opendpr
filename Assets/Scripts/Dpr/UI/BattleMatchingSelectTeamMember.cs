@@ -21,8 +21,10 @@ namespace Dpr.UI
 		// TODO
 		public void Setup(UIBattleMatching battleMatchingUI) { }
 		
-		// TODO
-		public void PreClose() { }
+		public void PreClose()
+		{
+			this._closed = true;
+		}
 		
 		// TODO
 		public void Close() { }
@@ -48,7 +50,9 @@ namespace Dpr.UI
 		// TODO
 		public void UnloadModel(int index) { }
 		
-		// TODO
-		private void SetKeyGuide(bool complete = false) { }
+		private void SetKeyGuide(bool complete = false)
+		{
+			this._battleMatchingUIPtr.SetKeyGuide(1,1,0,(complete ? 1 : 0) & 1);
+		}
 	}
 }

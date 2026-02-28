@@ -12,8 +12,10 @@ namespace Dpr.UI
 		
 		public Param param { get => _param; }
 		
-		// TODO
-		public bool IsUnderGroundItem() { return default; }
+		public bool IsUnderGroundItem()
+		{
+			return this._param.GetItemNo() >> 0x1f & 1;
+		}
 		
 		// TODO
 		public void Setup(Param param) { }

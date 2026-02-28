@@ -18,8 +18,10 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void put_WazaFail(BTL_POKEPARAM pAttacker, WazaNo waza, WazaFailCause failCause) { }
 		
-		// TODO
-		private void event_CheckWazaExeFail(BTL_POKEPARAM pAttacker, WazaNo waza, WazaFailCause failCause) { }
+		private void event_CheckWazaExeFail(BTL_POKEPARAM pAttacker, WazaNo waza, WazaFailCause failCause)
+		{
+			this.m_pEventLauncher.Event_CheckWazaExeFail();
+		}
 
 		public class Description
 		{

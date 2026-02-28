@@ -48,11 +48,18 @@ namespace Dpr.Message
         // TODO
         private bool IsNewLineChar(char c) { return false; }
 
-        // TODO
         public bool IsReplaceCharacter(char c, out char afterChar)
         {
-            afterChar = ' ';
-            return false;
+        	afterChar = c;
+        	if (this.charSingleQuotation == c) {
+        	  afterChar = this.charAfterSingleQuotation;
+        	  return true;
+        	}
+        	if (this.charDoubleQuotation == c) {
+        	  afterChar = this.charAfterDoubleQuotation;
+        	  return true;
+        	}
+        	return false;
         }
 
         // TODO

@@ -82,8 +82,10 @@ namespace Dpr.NetworkUtils
 			netDataList.Add(new NetDataTalkReserveResultData());
 		}
 		
-		// TODO
-		public INetData GetNetData() { return default; }
+		public INetData GetNetData()
+		{
+			return this.netData;
+		}
 		
 		// TODO
 		public void Parse(PacketReader pr) { }

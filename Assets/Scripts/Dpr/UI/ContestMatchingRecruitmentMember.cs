@@ -13,20 +13,27 @@ namespace Dpr.UI
 		private NetworkManager networkManager;
 		private Action onFinishState;
 		private Action<ContestMatching.FinishPattern> onFinish;
-		private RecruitmentState currentState;
+		internal RecruitmentState currentState;
 		private int loadCount;
 		private bool bLockPlayerAction;
 		private bool bIsOpenConfirmMsg;
-		private bool bIsActive;
+		internal bool bIsActive;
 		
 		// TODO
 		public void Initialize(ContestMatchingUI contestMatchingUI, ContestMatchingNetwork network, Action onFinishState, Action<ContestMatching.FinishPattern> onFinishMatching) { }
 		
-		// TODO
-		public void OnFinalize() { }
+		public void OnFinalize()
+		{
+			this.onFinishState = null;
+			this.onFinish = null;
+		}
 		
-		// TODO
-		private void Reset() { }
+		private void Reset()
+		{
+			this.bLockPlayerAction = false;
+			this.bIsActive = false;
+			this.currentState = (RecruitmentState)0;
+		}
 		
 		// TODO
 		public void StartProcess(int stationIndex, float startCountDown) { }
@@ -34,8 +41,21 @@ namespace Dpr.UI
 		// TODO
 		private void CheckModelLoadCompleted() { }
 		
-		// TODO
-		public void OnUpdate(float deltaTime) { }
+		public void OnUpdate(float deltaTime)
+		{
+			if (this.bIsActive) {
+			  if ((int)this.currentState == 2) {
+			    UpdateWaitSkip();
+			  }
+			  if ((int)this.currentState == 1) {
+			    UpdateWaitAllReady();
+			  }
+			  if ((int)this.currentState == 0) {
+			    UpdateWaitJoinMember();
+			    UpdateInput();
+			  }
+			}
+		}
 		
 		// TODO
 		private void UpdateWaitJoinMember(float deltaTime) { }
@@ -58,8 +78,33 @@ namespace Dpr.UI
 		// TODO
 		private void FinishRecruitmentMember() { }
 		
-		// TODO
-		private void CheckMemberActive() { }
+		private void CheckMemberActive()
+		{
+			if (((this.networkPtr.IsGamerActive(0) & 1) == 0) &&
+			   (this.networkPtr.IsGamerActive(0) = Dpr_UI_MultiModelView__HasViewModelByIndex
+			                      (this.contestMatchingUIPtr.modelView,0,0), (this.networkPtr.IsGamerActive(0) & 1) != 0))
+			{
+			  this.contestMatchingUIPtr.OnExitPlayer();
+			}
+			if (((this.networkPtr.IsGamerActive(1) & 1) == 0) &&
+			   (this.networkPtr.IsGamerActive(1) = Dpr_UI_MultiModelView__HasViewModelByIndex
+			                      (this.contestMatchingUIPtr.modelView,1,0), (this.networkPtr.IsGamerActive(1) & 1) != 0))
+			{
+			  this.contestMatchingUIPtr.OnExitPlayer(1);
+			}
+			if (((this.networkPtr.IsGamerActive(2) & 1) == 0) &&
+			   (this.networkPtr.IsGamerActive(2) = Dpr_UI_MultiModelView__HasViewModelByIndex
+			                      (this.contestMatchingUIPtr.modelView,2,0), (this.networkPtr.IsGamerActive(2) & 1) != 0))
+			{
+			  this.contestMatchingUIPtr.OnExitPlayer(2);
+			}
+			if (((this.networkPtr.IsGamerActive(3) & 1) == 0) &&
+			   (this.networkPtr.IsGamerActive(3) = Dpr_UI_MultiModelView__HasViewModelByIndex
+			                      (this.contestMatchingUIPtr.modelView,3,0), (this.networkPtr.IsGamerActive(3) & 1) != 0))
+			{
+			  this.contestMatchingUIPtr.OnExitPlayer(3);
+			}
+		}
 		
 		// TODO
 		private void UpdateInput() { }
@@ -76,8 +121,11 @@ namespace Dpr.UI
 		// TODO
 		private void SetSkipFlag(int stationIndex, bool flag) { }
 		
-		// TODO
-		private void ChangeState_WaitAllReady() { }
+		private void ChangeState_WaitAllReady()
+		{
+			ContestUtils.EmitLog(StringLiteral_11358,3);
+			this.currentState = (RecruitmentState)1;
+		}
 		
 		// TODO
 		public void OnJoinOtherPlayer(int stationIndex) { }
@@ -94,8 +142,10 @@ namespace Dpr.UI
 		// TODO
 		public void OnChangeHostOtherPlayer() { }
 		
-		// TODO
-		public void Deactivate() { }
+		public void Deactivate()
+		{
+			this.bIsActive = false;
+		}
 		
 		// TODO
 		public void OnReceiveCountDownData(CountDownNetData timeData) { }
@@ -106,7 +156,7 @@ namespace Dpr.UI
 		// TODO
 		public void OnReceiveReadyData(int stationIndex, NoticeID noticeID) { }
 
-		private enum RecruitmentState : int
+		internal enum RecruitmentState : int
 		{
 			WaitJoinMember = 0,
 			WaitAllReady = 1,

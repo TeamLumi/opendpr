@@ -28,8 +28,10 @@ namespace Dpr.UI
 		
 		public bool IsAnimation { get; private set; }
 		
-		// TODO
-		public void SetHpText(TextMeshProUGUI text) { }
+		public void SetHpText(TextMeshProUGUI text)
+		{
+			this.hpText = text;
+		}
 		
 		// TODO
 		public void Setup(int min, int max, int value, float duration = 1.0f, float afterDuration = 0.0f) { }
@@ -37,8 +39,10 @@ namespace Dpr.UI
 		// TODO
 		public void SetHpImmidiate(int value) { }
 		
-		// TODO
-		public void UpdateMaxHP(uint maxHp) { }
+		public void UpdateMaxHP(uint maxHp)
+		{
+			this.max = maxHp;
+		}
 		
 		// TODO
 		public void SetDuration(float duration) { }

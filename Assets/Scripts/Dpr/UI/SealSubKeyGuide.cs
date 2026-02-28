@@ -17,7 +17,9 @@ namespace Dpr.UI
 		// TODO
 		public void Set(bool is3D) { }
 		
-		// TODO
-		public void SetDisablePreviewGuide(bool isEnable) { }
+		public void SetDisablePreviewGuide(bool isEnable)
+		{
+			this.disableKeyGuidePreviewImage.enabled = (isEnable ? 1 : 0) & 1;
+		}
 	}
 }

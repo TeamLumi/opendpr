@@ -38,8 +38,10 @@ namespace Dpr.Contest
 		// TODO
 		private void InitMultiMode() { }
 		
-		// TODO
-		private void StartNetworkContest() { }
+		private void StartNetworkContest()
+		{
+			this.bIsStartMultiContest = true;
+		}
 		
 		// TODO
 		private void SetupNetwork() { }
@@ -50,8 +52,13 @@ namespace Dpr.Contest
 		// TODO
 		private bool CanStartNetworkContest() { return default; }
 		
-		// TODO
-		private void OnChangeSectionToVisual() { }
+		private void OnChangeSectionToVisual()
+		{
+			ContestUtils.EmitLog(StringLiteral_8824,3);
+			this.network.repeatSendSpanTimer.ResetTimer();
+			this.network.SetAllMainFlag();
+			this.network.SetAllSubFlag();
+		}
 		
 		// TODO
 		private void UpdateWaitAsync() { }
@@ -71,20 +78,69 @@ namespace Dpr.Contest
 		// TODO
 		private void OnReceiveNotice(NoticeNetData noticeData) { }
 		
-		// TODO
-		private void OnSessionEvent(SessionEventData result) { }
+		private void OnSessionEvent(SessionEventData result)
+		{
+			switch((int)((ulong)result >> 0x20)) {
+			case 3:
+			  OnChangeHostMine();
+			  break;
+			default:
+			case 6:
+			  OnLeaveOtherPlayer();
+			  break;
+			case 7:
+			case 8:
+			  OnSessionError();
+			  break;
+			case 9:
+			  this.network.ReleaseNetworkCallback();
+			  OnSessionError();
+			  break;
+			}
+		}
 		
 		// TODO
 		private void OnLeaveOtherPlayer(int stationIndex) { }
 		
-		// TODO
-		private bool IsGaming() { return default; }
+		private bool IsGaming()
+		{
+			return (int)this.currentSectionID < 3;
+		}
 		
-		// TODO
-		private void ChangeAllOtherPlayerToNPC() { }
+		private void ChangeAllOtherPlayerToNPC()
+		{
+			this.danceSection.OnLeaveOtherPlayer(0);
+			this.danceSection.OnLeaveOtherPlayer(1);
+			this.danceSection.OnLeaveOtherPlayer(2);
+			this.danceSection.OnLeaveOtherPlayer(3);
+		}
 		
-		// TODO
-		private void OnChangeHostMine() { }
+		private void OnChangeHostMine()
+		{
+			if (this.bIsStartMultiContest) {
+			  var uVar1 = Dpr_NetworkUtils_NetworkManager__IsGamerActive
+			                    (this.network.networkManager,0,0);
+			  if ((uVar1 & 1) == 0) {
+			    this.danceSection.OnLeaveOtherPlayer(0);
+			  }
+			  uVar1 = Dpr_NetworkUtils_NetworkManager__IsGamerActive
+			                    (this.network.networkManager,1,0);
+			  if ((uVar1 & 1) == 0) {
+			    this.danceSection.OnLeaveOtherPlayer(1);
+			  }
+			  uVar1 = Dpr_NetworkUtils_NetworkManager__IsGamerActive
+			                    (this.network.networkManager,2,0);
+			  if ((uVar1 & 1) == 0) {
+			    this.danceSection.OnLeaveOtherPlayer(2);
+			  }
+			  uVar1 = Dpr_NetworkUtils_NetworkManager__IsGamerActive
+			                    (this.network.networkManager,3,0);
+			  if ((uVar1 & 1) == 0) {
+			    this.danceSection.OnLeaveOtherPlayer(3);
+			  }
+			  this.danceSection.OnChangeHostMine();
+			}
+		}
 		
 		// TODO
 		private void OnChangeHostOtherPlayer() { }
@@ -150,8 +206,11 @@ namespace Dpr.Contest
 		// TODO
 		private void OnDestroy() { }
 		
-		// TODO
-		private void StartContest() { }
+		private void StartContest()
+		{
+			this.bIsStartMultiContest = true;
+			ChangeSectionOpening();
+		}
 		
 		// TODO
 		private void OnUpdate(float deltaTime) { }
@@ -161,20 +220,76 @@ namespace Dpr.Contest
 		// TODO
 		private void FinishedContest() { }
 		
-		// TODO
-		private void UpdateSection(float deltaTime, float elapsedTime) { }
+		private void UpdateSection(float deltaTime, float elapsedTime)
+		{
+			switch(this.currentSectionID) {
+			case 0:
+			  if (((((this.openingSection.UpdateSection() & 1) == 0) &&
+			       (this.openingSection.UpdateSection() = DanceSection.IsReady(this.danceSection),
+			       (this.openingSection.UpdateSection() & 1) != 0)) && (this.wazaViewSystem.ready != 0)) &&
+			     ((this.contestViewSystem.ready != 0 &&
+			      (this.openingSection.UpdateSection() = SceneObjectManager.get_IsReady(this.objectManagerPtr),
+			      (this.openingSection.UpdateSection() & 1) != 0)))) {
+			    RequestChangeSectionId(1);
+			  }
+			  break;
+			case 1:
+			  if ((this.visualSection.UpdateSection() & 1) == 0) {
+			    RequestChangeSectionId(2);
+			  }
+			  break;
+			case 2:
+			  UpdateDanceSection();
+			  break;
+			case 4:
+			  UpdateWaitAsync();
+			  break;
+			case 5:
+			  if ((this.resultSection.UpdateSection() & 1) == 0) {
+			    if (this.resultSection.restartContest != 0) {
+			      RequestChangeSectionId(6);
+			    }
+			    RequestChangeSectionId(8);
+			  }
+			  break;
+			case 7:
+			  UpdateNetworkError();
+			  break;
+			}
+		}
 		
-		// TODO
-		private void UpdateOpeningSection() { }
+		private void UpdateOpeningSection()
+		{
+			if (((((this.openingSection.UpdateSection() & 1) == 0) &&
+			     (this.openingSection.UpdateSection() = DanceSection.IsReady(this.danceSection),
+			     (this.openingSection.UpdateSection() & 1) != 0)) && (this.wazaViewSystem.ready != 0)) &&
+			   ((this.contestViewSystem.ready != 0 &&
+			    (this.openingSection.UpdateSection() = SceneObjectManager.get_IsReady(this.objectManagerPtr),
+			    (this.openingSection.UpdateSection() & 1) != 0)))) {
+			  RequestChangeSectionId(1);
+			}
+		}
 		
-		// TODO
-		private void UpdateVisualSection() { }
+		private void UpdateVisualSection()
+		{
+			if ((this.visualSection.UpdateSection() & 1) != 0) {
+			}
+			RequestChangeSectionId(2);
+		}
 		
 		// TODO
 		private void UpdateDanceSection(float deltaTime, float elapsedTime) { }
 		
-		// TODO
-		private void UpdateResultSection(float deltaTime) { }
+		private void UpdateResultSection(float deltaTime)
+		{
+			if ((this.resultSection.UpdateSection() & 1) != 0) {
+			}
+			var uVar2 = 8;
+			if (this.resultSection.restartContest != 0) {
+			  uVar2 = 6;
+			}
+			RequestChangeSectionId(uVar2);
+		}
 		
 		// TODO
 		private IEnumerator IE_LoadResultResource() { return default; }
@@ -185,8 +300,12 @@ namespace Dpr.Contest
 		// TODO
 		private void DoNextSection() { }
 		
-		// TODO
-		private void LateUpdateSection() { }
+		private void LateUpdateSection()
+		{
+			if ((int)this.currentSectionID == 2) {
+			  this.danceSection.OnLateUpdate();
+			}
+		}
 		
 		// TODO
 		private void ChangeSectionOpening() { }
@@ -197,8 +316,10 @@ namespace Dpr.Contest
 		// TODO
 		private void OnFindCommand(CommandNo commandNo, ContestViewSystem viewSystem) { }
 		
-		// TODO
-		private void LoadMigawariModel() { }
+		private void LoadMigawariModel()
+		{
+			this.resourceLoader.LoadMigawariModel(0);
+		}
 		
 		// TODO
 		private void OnPerformedCommand(CommandNo commandNo, ContestViewSystem viewSystem, Macro macro) { }

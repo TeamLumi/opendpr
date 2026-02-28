@@ -12,8 +12,10 @@ namespace Dpr.Contest
 		
 		public bool Loading { get => bLoading; }
 		
-		// TODO
-		public void Initialize() { }
+		public void Initialize()
+		{
+			this.bLoading = false;
+		}
 		
 		// TODO
 		public void OnFinalize() { }

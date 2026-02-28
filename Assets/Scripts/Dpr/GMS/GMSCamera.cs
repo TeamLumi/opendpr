@@ -50,14 +50,39 @@ namespace Dpr.GMS
 		// TODO
 		public void Setup(RenderTexture renderTexture, float speedUpCoefficient, EnvironmentController envController) { }
 		
-		// TODO
-		public void OnFinalize() { }
+		public void OnFinalize()
+		{
+			if (this.distanceTween != null) {
+			  this.isRunningDistanceTween = false;
+			  TweenExtensions.Kill(this.distanceTween,0);
+			}
+			if (this.rotTween != null) {
+			  this.isRunningRotTween = false;
+			  TweenExtensions.Kill(this.rotTween,0);
+			}
+			this.rotTween = null;
+			this.distanceTween = null;
+			this.envControllerPtr = null;
+			this.onStopMove = null;
+			this.distanceConfig = null;
+			this.cameraConfig = null;
+		}
 		
-		// TODO
-		private void KillDistanceTween() { }
+		private void KillDistanceTween()
+		{
+			if (this.distanceTween != null) {
+			  this.isRunningDistanceTween = false;
+			  TweenExtensions.Kill(this.distanceTween,0);
+			}
+		}
 		
-		// TODO
-		private void KillRotTween() { }
+		private void KillRotTween()
+		{
+			if (this.rotTween != null) {
+			  this.isRunningRotTween = false;
+			  TweenExtensions.Kill(this.rotTween,0);
+			}
+		}
 		
 		// TODO
 		public void ChangeCameraMode(CameraMode mode) { }
@@ -71,14 +96,23 @@ namespace Dpr.GMS
 		public int DistanceLevelNum { get => distanceLevelNum; }
 		public bool CanInput { get => currentMode == CameraMode.TracePoint; }
 		
-		// TODO
-		public void LockMove() { }
+		public void LockMove()
+		{
+			GMSWork.EmitLog(StringLiteral_9399,3);
+			this.bLockOperation = true;
+		}
 		
-		// TODO
-		public void UnlockMove() { }
+		public void UnlockMove()
+		{
+			GMSWork.EmitLog(StringLiteral_9400,3);
+			this.currentMovedIndex = 0xffffffff;
+			this.bLockOperation = false;
+		}
 		
-		// TODO
-		private void ResetMovedIndex() { }
+		private void ResetMovedIndex()
+		{
+			this.currentMovedIndex = 0xffffffff;
+		}
 		
 		// TODO
 		public void PerformNearDistance([Optional] Action onComplete) { }
@@ -92,8 +126,15 @@ namespace Dpr.GMS
 		// TODO
 		public void ResetDistance([Optional] Action onComplete, bool isImmediately = false, bool playSe = true) { }
 		
-		// TODO
-		private float GetGoalDistanceValue() { return default; }
+		private unsafe float GetGoalDistanceValue()
+		{
+			if (this.distanceLevel < this.distanceConfig.Length) {
+			  return *(uint *)
+			          (this.distanceConfig + (int)this.distanceLevel * 8[0]
+			          + 0x14);
+			}
+			return 0;
+		}
 		
 		// TODO
 		private void DoDistanceTween(float goalValue, float duration, Ease easeType, [Optional] [DefaultParameterValue(0.0f)] float delay, [Optional] Action onCompleteTween) { }
@@ -122,8 +163,10 @@ namespace Dpr.GMS
 		// TODO
 		public void MoveCameraPosition(in Vector3 moveVec, float deltaTime, bool isSpeedUp) { }
 		
-		// TODO
-		public void StopMoveCameraPosition() { }
+		public void StopMoveCameraPosition()
+		{
+			this.bIsInputMoving = false;
+		}
 		
 		// TODO
 		public void StopImmediateMoveCameraPosition() { }

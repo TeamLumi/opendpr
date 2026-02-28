@@ -41,11 +41,15 @@ namespace Dpr.Battle.View.UI
 		// TODO
 		public override void OnUpdate(float deltaTime) { }
 		
-		// TODO
-		private void SetPokeType(PokeType type) { }
+		private void SetPokeType(PokeType type)
+		{
+			this._typePanel.Set(type);
+		}
 		
-		// TODO
-		private void SetWazaDamageType(WazaNo wazaNo) { }
+		private void SetWazaDamageType(WazaNo wazaNo)
+		{
+			this._wazaCategory.Set(wazaNo);
+		}
 		
 		// TODO
 		private void SetConnector(float posY) { }

@@ -41,23 +41,41 @@ namespace Dpr.Battle.Logic.Net
         // TODO
         public Client(BATTLE_SETUP_PARAM bsp) { }
 
-        // TODO
-        public void Initialize() { }
+        public void Initialize()
+        {
+        	this.clientId = (byte)5;
+        	this.cmdSeqNo = 0;
+        	this.isChecked = false;
+        }
 
         // TODO
         public void Terminate() { }
 
-        // TODO
-        public bool IsTerminated() { return false; }
+        public bool IsTerminated()
+        {
+        	return this.isTerminated;
+        }
 
-        // TODO
-        public bool HasErrorOccured(ErrorKind kind = ErrorKind.Invalid) { return false; }
+        public bool HasErrorOccured(ErrorKind kind = ErrorKind.Invalid)
+        {
+        	var uVar1 = 1 << (int)((int)kind & 0x1f);
+        	if ((int)kind == 0) {
+        	  uVar1 = 0xffffffff;
+        	}
+        	return (this.m_ErrorKindBit & uVar1) != 0;
+        }
 
-        // TODO
-        public bool IsReady() { return false; }
+        public bool IsReady()
+        {
+        	return true;
+        }
 
-        // TODO
-        public bool StartDetermineServer() { return false; }
+        public bool StartDetermineServer()
+        {
+        	this.isStartDetermineServer = true;
+        	this.determineServerTimeout = 0;
+        	return true;
+        }
 
         // TODO
         public bool IsDeterminedServer() { return false; }
@@ -68,11 +86,25 @@ namespace Dpr.Battle.Logic.Net
         // TODO
         public bool CheckImServer() { return false; }
 
-        // TODO
-        public void Update() { }
+        public void Update()
+        {
+        	if (((this.m_ErrorKindBit == 0) &&
+        	    (sendToServerVersionCoreAll(), !this.isFinishedSession)
+        	    ) && (0 < this.sendToClientReq.Length)) {
+        	  var uVar2 = 0;
+        	  do {
+        	    var iVar1 = sendToClientCore(uVar2);
+        	    if (iVar1 < 0) {
+        	    }
+        	    uVar2 = uVar2 + 1;
+        	  } while ((int)(uVar2 & 0xff) < this.sendToClientReq.Length);
+        	}
+        }
 
-        // TODO
-        public bool ToBeReconnectableMode() { return false; }
+        public bool ToBeReconnectableMode()
+        {
+        	return false;
+        }
 
         // TODO
         public void TurnToRaidAIEnableMode() { }
@@ -80,20 +112,28 @@ namespace Dpr.Battle.Logic.Net
         // TODO
         public void TurnToRaidOnlyMeMode() { }
 
-        // TODO
-        public static bool IsShouldDissconetError(int errorKindBits) { return false; }
+        public static bool IsShouldDissconetError(int errorKindBits)
+        {
+        	return false;
+        }
 
         // TODO
         public static ErrorCodeID GetErrorDialogCode(int errorKindBits) { return ErrorCodeID.ErrorNSATokenAuth; }
 
-        // TODO
-        private static bool IsErrorKindBit(int errorKindBits, ErrorKind kind) { return false; }
+        private static bool IsErrorKindBit(int errorKindBits, ErrorKind kind)
+        {
+        	return (1 << (int)((int)kind & 0x1f) & errorKindBits) != 0;
+        }
 
-        // TODO
-        public void NotifyNetworkError(ErrorKind kind, int arg = 0) { }
+        public void NotifyNetworkError(ErrorKind kind, int arg = 0)
+        {
+        	this.m_ErrorKindBit = this.m_ErrorKindBit | 1 << (int)((int)kind & 0x1f);
+        }
 
-        // TODO
-        public bool IsClientCommunicationExist(BTL_CLIENT_ID clientId) { return false; }
+        public bool IsClientCommunicationExist(BTL_CLIENT_ID clientId)
+        {
+        	return true;
+        }
 
         // TODO
         public bool StartNotifyServerParam(in ServerParam serverParam) { return false; }
@@ -128,8 +168,15 @@ namespace Dpr.Battle.Logic.Net
         // TODO
         private void OnReceivePacketEx(PacketReader pr, TransportType transportType, int receiveStationIndex) { }
 
-        // TODO
-        private void OnReceivePacket_Signal(in Signal data, int stationIndex) { }
+        private void OnReceivePacket_Signal(in Signal data, int stationIndex)
+        {
+        	if (data == '\x02') {
+        	  this.m_ErrorKindBit = this.m_ErrorKindBit | 0x400;
+        	}
+        	else if (data == '\x01') {
+        	  this.m_serverParamSignal = this.m_serverParamSignal + 1;
+        	}
+        }
 
         // TODO
         private void OnReceivePacket_ServerVersion(in ServerVersion data, int stationIndex) { }
@@ -146,8 +193,10 @@ namespace Dpr.Battle.Logic.Net
         // TODO
         private void OnSessionEvent(SessionEventData result) { }
 
-        // TODO
-        private void OnFinishedSession() { }
+        private void OnFinishedSession()
+        {
+        	this.isFinishedSession = true;
+        }
 
         // TODO
         private static void OnReceivePacketExStatic(PacketReader pr, TransportType transportType, int receiveStationIndex) { }
@@ -200,20 +249,28 @@ namespace Dpr.Battle.Logic.Net
         // TODO
         public void ClearBattleCommandRecvData() { }
 
-        // TODO
-        public bool BroadcastRaidAction(RaidActionIconID actionIconId, BTL_CLIENT_ID clientId) { return false; }
+        public bool BroadcastRaidAction(RaidActionIconID actionIconId, BTL_CLIENT_ID clientId)
+        {
+        	return false;
+        }
 
-        // TODO
-        public RaidActionIconID GetRaidAction(BTL_CLIENT_ID cliendId) { return default; }
+        public RaidActionIconID GetRaidAction(BTL_CLIENT_ID cliendId)
+        {
+        	return (RaidActionIconID)0;
+        }
 
         // TODO
         public void ClearRaidAction() { }
 
-        // TODO
-        public bool BroadcastTrainerAction(BTL_CLIENT_ID clientId) { return false; }
+        public bool BroadcastTrainerAction(BTL_CLIENT_ID clientId)
+        {
+        	return false;
+        }
 
-        // TODO
-        public bool CheckTrainerAction(BTL_CLIENT_ID cliendId) { return false; }
+        public bool CheckTrainerAction(BTL_CLIENT_ID cliendId)
+        {
+        	return false;
+        }
 
         // TODO
         public void ClearTrainerAction() { }
@@ -263,8 +320,11 @@ namespace Dpr.Battle.Logic.Net
                 return false;
             }
 
-            // TODO
-            public void Set(ulong pSendBuf, int sendSize) { }
+            public void Set(ulong pSendBuf, int sendSize)
+            {
+            	this.clientId = (byte)(clientId);
+            	this.cmdSeqNo = cmdSeqNo;
+            }
 
             // TODO
             public void Clear() { }

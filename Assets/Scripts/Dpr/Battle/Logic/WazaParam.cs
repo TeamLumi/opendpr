@@ -20,11 +20,15 @@ namespace Dpr.Battle.Logic
         public bool fItazuraGokoro;
         public bool fInvalidMessageDisable;
 
-        // TODO
-        public void ClearFlags() { }
+        public void ClearFlags()
+        {
+        	this.fMagicCoat = false;
+        }
 
-        // TODO
-        public bool canInvalidMessageDisplay(uint count) { return false; }
+        public bool canInvalidMessageDisplay(uint count)
+        {
+        	return !this.fInvalidMessageDisable || count < 2;
+        }
 
         // TODO
         public void CopyFrom(WazaParam src) { }

@@ -66,14 +66,37 @@ namespace Dpr.Battle.Logic
 		// TODO
 		public static double ToFloat(int val) { return default; }
 		
-		// TODO
-		public static int Mul(int v1, int v2) { return default; }
+		public static int Mul(int v1, int v2)
+		{
+			return (long)v2 * (long)v1 + 0x800U >> 0xc;
+		}
 		
-		// TODO
-		public static int Whole(int v) { return default; }
+		public static int Whole(int v)
+		{
+			return v >> 0xc;
+		}
 		
-		// TODO
-		public static int Div(int numer, int denom) { return default; }
+		public static int Div(int numer, int denom)
+		{
+			var dVar1 = 0.0;
+			if ((denom & 0xfff) != 0) {
+			  dVar1 = (double)(denom & 0xfff) * 0.000244140625;
+			}
+			dVar1 = dVar1 + (double)((int)denom >> 0xc);
+			if (dVar1 != 0.0) {
+			  var dVar2 = 0.0;
+			  if ((numer & 0xfff) != 0) {
+			    dVar2 = (double)(numer & 0xfff) * 0.000244140625;
+			  }
+			  dVar1 = (dVar2 + (double)((int)numer >> 0xc)) / dVar1;
+			  dVar2 = 0.5;
+			  if (dVar1 <= 0.0) {
+			    dVar2 = -0.5;
+			  }
+			  return (int)(dVar1 * 4096.0 + dVar2);
+			}
+			return 0;
+		}
 		
 		// TODO
 		public static int Sqrt(int val) { return default; }

@@ -55,14 +55,18 @@ namespace Dpr.Battle.View.UI
 		// TODO
 		protected override void OnHide() { }
 		
-		// TODO
-		public void SetGameTime(bool isEnable) { }
+		public void SetGameTime(bool isEnable)
+		{
+			this._isGameTimeEnable = (isEnable ? 1 : 0) & 1;
+		}
 		
 		// TODO
 		public void ApplyGameTime(bool isEnable) { }
 		
-		// TODO
-		public void SetCommandTime(bool isEnable) { }
+		public void SetCommandTime(bool isEnable)
+		{
+			this._isCommandTimeEnable = (isEnable ? 1 : 0) & 1;
+		}
 		
 		// TODO
 		public void ApplyCommandTime(bool isEnable) { }

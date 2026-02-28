@@ -43,17 +43,25 @@ namespace Dpr.Battle.Logic.Net.Data
 		// TODO
 		public bool ExistsByStationIndex(int stationIndex) { return default; }
 		
-		// TODO
-		public byte MaxVersion() { return default; }
+		public byte MaxVersion()
+		{
+			return (byte)(this.m_maxVersion);
+		}
 		
-		// TODO
-		public byte GetServerClientID() { return default; }
+		public byte GetServerClientID()
+		{
+			return (byte)(this.m_serverClientID);
+		}
 		
-		// TODO
-		public void SetServerClientID(byte clientId) { }
+		public void SetServerClientID(byte clientId)
+		{
+			this.m_serverClientID = (byte)(clientId);
+		}
 		
-		// TODO
-		public bool IsDeterminedServer() { return default; }
+		public bool IsDeterminedServer()
+		{
+			return this.m_serverClientID != '\x05';
+		}
 		
 		// TODO
 		public int GetStationIndex(BTL_CLIENT_ID clientID) { return default; }

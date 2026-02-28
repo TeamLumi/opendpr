@@ -7,8 +7,15 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Execute(Result pResult, in Description description) { }
 		
-		// TODO
-		private void removeRaidBossReinforceHandler() { }
+		private void removeRaidBossReinforceHandler()
+		{
+			var iVar1 = Section.GetRule();
+			if (iVar1 == 2) {
+			  var uVar3 = 4.GetPokeParam();
+			  var uVar2 = uVar3.GetID();
+			  this.m_pServerCmdPutter.RemoveRaidBossHandler(uVar2,0);
+			}
+		}
 		
 		// TODO
 		private void updateRaidBossReinforceTurn() { }
@@ -28,8 +35,16 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void updateGMode(BTL_POKEPARAM poke) { }
 		
-		// TODO
-		private bool needEndG(BTL_POKEPARAM pPoke) { return default; }
+		private bool needEndG(BTL_POKEPARAM pPoke)
+		{
+			var uVar3 = Section.CheckShowdown();
+			if ((uVar3 & 1) != 0) {
+			  return this.m_pMainModule.NeedEndGOnBattleEnd();
+			}
+			var uVar2 = GMode.GetMaxTurn(0);
+			var bVar1 = pPoke.GetGModePassedTurnCount();
+			return (ulong)(uVar2 <= bVar1);
+		}
 		
 		// TODO
 		private void reliveAllDeadPartyOnRaidBattle() { }
@@ -49,8 +64,18 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void transferGRights(BtlSide side) { }
 		
-		// TODO
-		private void clearPokeTurnFlag() { }
+		private void clearPokeTurnFlag()
+		{
+			var uVar2 = new PokeSet();
+			storeFrontPokeByAgilityOrder(uVar2);
+			uVar2.SeekStart();
+			var lVar3 = uVar2.SeekNext();
+			while (lVar3 != null) {
+			  var uVar1 = lVar3.GetID();
+			  this.m_pServerCmdPutter.TurnEnd(uVar1);
+			  lVar3 = uVar2.SeekNext();
+			}
+		}
 		
 		// TODO
 		private void storeFrontPokeByAgilityOrder(PokeSet pPokeSet) { }
@@ -58,8 +83,11 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void incPokeTurnCount() { }
 		
-		// TODO
-		private bool checkForceQuitByTurnOver() { return default; }
+		private bool checkForceQuitByTurnOver()
+		{
+			var iVar2 = 0.GetCounter();
+			return this.m_pMainModule.GetForceQuitTurnCount() != 0 && (uint)MainModule.GetForceQuitTurnCount(this.m_pMainModule) <= iVar2 + 1U;
+		}
 		
 		// TODO
 		private void checkBattleTalk() { }

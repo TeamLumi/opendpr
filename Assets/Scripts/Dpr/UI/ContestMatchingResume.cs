@@ -16,15 +16,22 @@ namespace Dpr.UI
 		private UISelectorWindow selectorWindowPtr;
 		private WaitTimer waitTimer;
 		private Action<ContestMatching.FinishPattern> onFinish;
-		private ResumeState currentState;
+		internal ResumeState currentState;
 		private int loadCount;
-		private bool bIsActive;
+		internal bool bIsActive;
 		
-		// TODO
-		public void Initialize(ContestMatchingUI contestMatchingUI, ContestMatchingNetwork network, Action<ContestMatching.FinishPattern> onFinish) { }
+		public void Initialize(ContestMatchingUI contestMatchingUI, ContestMatchingNetwork network, Action<ContestMatching.FinishPattern> onFinish)
+		{
+			this.contestMatchingUIPtr = contestMatchingUI;
+			this.networkPtr = network;
+			this.onFinish = onFinish;
+			this.currentState = (ResumeState)0;
+		}
 		
-		// TODO
-		public void OnFinalize() { }
+		public void OnFinalize()
+		{
+			this.onFinish = null;
+		}
 		
 		// TODO
 		private void Reset() { }
@@ -41,8 +48,17 @@ namespace Dpr.UI
 		// TODO
 		private void LoadCharacterModel(int stationIndex, Action onComplete) { }
 		
-		// TODO
-		public void OnUpdate(float deltaTime) { }
+		public void OnUpdate(float deltaTime)
+		{
+			if (this.bIsActive) {
+			  if ((int)this.currentState == 3) {
+			    UpdateWait();
+			  }
+			  if ((int)this.currentState == 2) {
+			    UpdateReady();
+			  }
+			}
+		}
 		
 		// TODO
 		private void UpdateCheckEntry() { }
@@ -62,8 +78,12 @@ namespace Dpr.UI
 		// TODO
 		private void OnChangeState_Ready() { }
 		
-		// TODO
-		private void OnChangeState_Wait() { }
+		private void OnChangeState_Wait()
+		{
+			if (this.waitTimer != null) {
+			  this.waitTimer.ResetTimer();
+			}
+		}
 		
 		// TODO
 		private void OnChangeState_Finish() { }
@@ -77,13 +97,15 @@ namespace Dpr.UI
 		// TODO
 		public void Deactivate() { }
 		
-		// TODO
-		public bool IsFinishPreparation() { return default; }
+		public bool IsFinishPreparation()
+		{
+			return (int)this.currentState == 4;
+		}
 		
 		// TODO
 		public void OnReceiveReadyData(int stationIndex, NoticeID noticeID) { }
 
-		private enum ResumeState : int
+		internal enum ResumeState : int
 		{
 			LoadModel = 0,
 			CheckEntry = 1,

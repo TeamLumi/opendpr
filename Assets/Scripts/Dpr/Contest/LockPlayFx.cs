@@ -12,13 +12,25 @@ namespace Dpr.Contest
 		
 		public bool IsLock { get => isLock; }
 		
-		// TODO
-		public void Lock() { }
+		public void Lock()
+		{
+			this.isLock = true;
+		}
 		
-		// TODO
-		public void Reset() { }
+		public void Reset()
+		{
+			this.waitTimer.ResetTimer();
+		}
 		
-		// TODO
-		public void OnUpdate(float deltaTime) { }
+		public void OnUpdate(float deltaTime)
+		{
+			ulong uVar1 = default;
+			if ((this.isLock) &&
+			   (uVar1 = this.waitTimer.IsFinishWait(),
+			   (uVar1 & 1) != 0)) {
+			  this.waitTimer.ResetTimer();
+			  this.isLock = false;
+			}
+		}
 	}
 }

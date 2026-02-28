@@ -26,11 +26,16 @@ namespace Dpr.UI
 		// TODO
 		public void SetPositionAndRotation(Vector3 position, Vector3 up) { }
 		
-		// TODO
-		public Vector3 GetPosition() { return default; }
+		public Vector3 GetPosition()
+		{
+			this.rootTransform.position;
+			return null;
+		}
 		
-		// TODO
-		public Vector3 GetSealPosition() { return default; }
+		public Vector3 GetSealPosition()
+		{
+			return this.sealPosition;
+		}
 		
 		// TODO
 		public void Clear() { }

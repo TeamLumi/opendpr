@@ -13,12 +13,14 @@ namespace Dpr.Contest
 		private ResultDataModel resultDataModel;
 		private ResultState currentState;
 		private bool bRunning;
-		private bool restartContest;
+		internal bool restartContest;
 		private bool isTutorial;
 		private WaitForSeconds waitStartResult;
 		
-		// TODO
-		public void SetScriptableObject(ResultSettings resultSettings) { }
+		public void SetScriptableObject(ResultSettings resultSettings)
+		{
+			this.resultSettings = resultSettings;
+		}
 		
 		// TODO
 		public void Initialize() { }
@@ -35,8 +37,10 @@ namespace Dpr.Contest
 		// TODO
 		public void Setup(bool isTutorial) { }
 		
-		// TODO
-		public void LoadResource(ResultID resultID) { }
+		public void LoadResource(ResultID resultID)
+		{
+			this.resultAnnounce.LoadResultFx();
+		}
 		
 		// TODO
 		public void StartSection(ResultDataModel resultDataModel) { }
@@ -44,23 +48,117 @@ namespace Dpr.Contest
 		// TODO
 		private IEnumerator IE_StartSection(ResultState firstState) { return default; }
 		
-		// TODO
-		public bool UpdateSection(float deltaTime) { return default; }
+		public bool UpdateSection(float deltaTime)
+		{
+			switch(this.currentState) {
+			case 1:
+			  var iVar1 = this.resultAnnounce.currentState;
+			  if ((int)iVar1 == 3) {
+			    this.resultAnnounce.UpdateWait();
+			    var cVar2 = this.resultAnnounce.bRunning;
+			  }
+			  else if ((int)iVar1 == 2) {
+			    this.resultAnnounce.UpdateRankupAnim();
+			    cVar2 = this.resultAnnounce.bRunning;
+			  }
+			  else {
+			    if ((int)iVar1 == 1) {
+			      this.resultAnnounce.UpdateGauge();
+			    }
+			    cVar2 = this.resultAnnounce.bRunning;
+			  }
+			  if (!cVar2) {
+			    this.currentState = (ResultState)2;
+			    this.totalScores.StartAnimation();
+			  }
+			  break;
+			case 2:
+			  UpdateTotalScores();
+			  return this.bRunning;
+			case 3:
+			  this.personalPerformance.UpdatePokeMotion();
+			  if ((int)this.personalPerformance.currentState == 1) {
+			    this.personalPerformance.UpdateKeywait();
+			  }
+			  if (!this.personalPerformance.bRunning) {
+			    this.currentState = (ResultState)5;
+			    this.bRunning = false;
+			    return false;
+			  }
+			  break;
+			case 4:
+			  UpdateTutorialMode();
+			  return this.bRunning;
+			}
+			return this.bRunning;
+		}
 		
-		// TODO
-		private void UpdateAnnouncement(float deltaTime) { }
+		private void UpdateAnnouncement(float deltaTime)
+		{
+			var iVar1 = this.resultAnnounce.currentState;
+			if ((int)iVar1 == 3) {
+			  this.resultAnnounce.UpdateWait();
+			  var cVar2 = this.resultAnnounce.bRunning;
+			}
+			else if ((int)iVar1 == 2) {
+			  this.resultAnnounce.UpdateRankupAnim();
+			  cVar2 = this.resultAnnounce.bRunning;
+			}
+			else {
+			  if ((int)iVar1 == 1) {
+			    this.resultAnnounce.UpdateGauge();
+			  }
+			  cVar2 = this.resultAnnounce.bRunning;
+			}
+			if (!cVar2) {
+			  this.currentState = (ResultState)2;
+			  this.totalScores.StartAnimation();
+			}
+		}
 		
 		// TODO
 		private void UpdateTotalScores(float deltaTime) { }
 		
-		// TODO
-		private void UpdatePersonalPerformance() { }
+		private void UpdatePersonalPerformance()
+		{
+			this.personalPerformance.UpdatePokeMotion();
+			if ((int)this.personalPerformance.currentState == 1) {
+			  this.personalPerformance.UpdateKeywait();
+			  var cVar1 = this.personalPerformance.bRunning;
+			}
+			else {
+			  cVar1 = this.personalPerformance.bRunning;
+			}
+			if (cVar1) {
+			}
+			this.currentState = (ResultState)5;
+			this.bRunning = false;
+		}
 		
 		// TODO
 		private void UpdateTutorialMode(float deltaTime) { }
 		
-		// TODO
-		private void ChangeState(ResultState stateID) { }
+		private void ChangeState(ResultState stateID)
+		{
+			this.currentState = (ResultState)(stateID);
+			switch(stateID) {
+			case 1:
+			  this.resultAnnounce.StartAnimation();
+			  break;
+			case 2:
+			  this.totalScores.StartAnimation();
+			  break;
+			case 3:
+			  this.personalPerformance.StartAnimation();
+			  break;
+			case 4:
+			  this.tutorialMode.StartAnimation();
+			  break;
+			case 5:
+			  this.bRunning = false;
+			  break;
+			}
+		}
 		
 		// TODO
 		private RankGaugeData CreateRankGaugeData() { return default; }

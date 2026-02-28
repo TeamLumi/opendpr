@@ -25,8 +25,16 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Pause(TimerType type, TimerControlLevel level) { }
 
-        // TODO
-        public bool IsFinish(TimerType type) { return false; }
+        public bool IsFinish(TimerType type)
+        {
+        	if (2 < (int)type) {
+        	  return true;
+        	}
+        	if (type < this.m_timeCount.Length) {
+        	  var iVar1 = GetTime();
+        	  return iVar1 == 0;
+        	}
+        }
 
         // TODO
         private void setPauseFlag(TimerType type, TimerControlLevel level, bool flag) { }

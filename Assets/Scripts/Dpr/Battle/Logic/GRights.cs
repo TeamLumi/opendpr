@@ -31,8 +31,10 @@
         // TODO
         public void CopyFrom(in GRights src) { }
 
-        // TODO
-        public bool IsGRightsRegulationExist() { return false; }
+        public bool IsGRightsRegulationExist()
+        {
+        	return 1 < this.m_clientNum;
+        }
 
         // TODO
         public void AddClient(BTL_CLIENT_ID clientID) { }
@@ -40,8 +42,10 @@
         // TODO
         public void InvalidateClient(BTL_CLIENT_ID clientID) { }
 
-        // TODO
-        public byte GetClientNum() { return 0; }
+        public byte GetClientNum()
+        {
+        	return (byte)(this.m_clientNum);
+        }
 
         // TODO
         public int GetClientOrder(BTL_CLIENT_ID clientID) { return 0; }
@@ -49,23 +53,67 @@
         // TODO
         public BTL_CLIENT_ID GetClientByOrder(byte order) { return BTL_CLIENT_ID.BTL_CLIENT_PLAYER; }
 
-        // TODO
-        public BTL_CLIENT_ID GetAssignedClient() { return BTL_CLIENT_ID.BTL_CLIENT_PLAYER; }
+        public unsafe BTL_CLIENT_ID GetAssignedClient()
+        {
+        	if (this.m_clientNum == 0) {
+        	  return (BTL_CLIENT_ID)5;
+        	}
+        	if ((uint)this.m_assignedClientIdx < this.m_clientInfo.Length) {
+        	  return *(uint *)
+        	          (this.m_clientInfo + (ulong)this.m_assignedClientIdx * 8[0] +
+        	          0x10);
+        	}
+        	return (BTL_CLIENT_ID)0;
+        }
 
-        // TODO
-        public bool TransferRights() { return false; }
+        public bool TransferRights()
+        {
+        	if (this.m_clientNum < 2) {
+        	  return false;
+        	}
+        	var uVar3 = 0;
+        	if (this.m_clientNum != 0) {
+        	  uVar3 = this.m_assignedClientIdx + 1 / this.m_clientNum;
+        	}
+        	this.m_assignedClientIdx + 1 = this.m_assignedClientIdx + 1 - uVar3 * this.m_clientNum;
+        	if (this.m_assignedClientIdx + 1 < this.m_clientInfo.Length) {
+        	  this.m_assignedClientIdx = (byte)((char)this.m_assignedClientIdx + 1);
+        	  this.m_passedTurnCount = 0;
+        	  return true;
+        	}
+        }
 
-        // TODO
-        private byte getNextAssignTarget(byte currentIdx) { return 0; }
+        private byte getNextAssignTarget(byte currentIdx)
+        {
+        	if (this.m_clientNum != 0) {
+        	  currentIdx = (byte)((currentIdx & 0xff) + 1);
+        	  var uVar2 = 0;
+        	  if (this.m_clientNum != 0) {
+        	    uVar2 = currentIdx / this.m_clientNum;
+        	  }
+        	  currentIdx = (byte)(currentIdx - uVar2 * this.m_clientNum);
+        	  if (this.m_clientInfo.Length <= currentIdx) {
+        	  }
+        	}
+        	return (byte)(currentIdx);
+        }
 
-        // TODO
-        private bool isAssignEnable(in ClientInfo clientInfo) { return false; }
+        private bool isAssignEnable(in ClientInfo clientInfo)
+        {
+        	return true;
+        }
 
-        // TODO
-        public uint GetPassedTurnCount() { return 0; }
+        public uint GetPassedTurnCount()
+        {
+        	return this.m_passedTurnCount;
+        }
 
-        // TODO
-        public void IncPassedTurnCount() { }
+        public void IncPassedTurnCount()
+        {
+        	if (this.m_passedTurnCount < 9999) {
+        	  this.m_passedTurnCount = this.m_passedTurnCount + 1;
+        	}
+        }
 
         private class ClientInfo
         {

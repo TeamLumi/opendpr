@@ -101,8 +101,22 @@ namespace Dpr.Battle.Logic
         // TODO
         private MessageTextParseDataModel mkstr_std_side(MessageMsgFile msgFile, int strID, int[] args) { return null; }
 
-        // TODO
-        private MessageTextParseDataModel mkstr_std_cheer(MessageMsgFile msgFile, int strID, int[] args) { return null; }
+        private MessageTextParseDataModel mkstr_std_cheer(MessageMsgFile msgFile, int strID, int[] args)
+        {
+        	if ((int)strID - 399U < 2) {
+        	  if (args.Length == 0) {
+        	  }
+        	  if (args[0] != (uint)this.mainModule.m_myClientID) {
+        	    var uVar2 = 0x207;
+        	    if ((int)strID != 399) {
+        	      uVar2 = 0x208;
+        	    }
+        	    strID = (ulong)uVar2;
+        	  }
+        	}
+        	mkstr_std_simple(this,msgFile,strID);
+        	return null;
+        }
 
         // TODO
         private MessageTextParseDataModel mkstr_std_useitem(MessageMsgFile msgFile, int strID, int[] args) { return null; }

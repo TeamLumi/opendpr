@@ -28,8 +28,21 @@ namespace Dpr.Battle.View.UI
 		
 		public bool IsPlaying { get; private set; }
 		
-		// TODO
-		public static HpStatus GetHpStatus(uint currentHP, uint maxHP) { return default; }
+		public static HpStatus GetHpStatus(uint currentHP, uint maxHP)
+		{
+			var fVar1 = (float)currentHP;
+			if (fVar1 == 0.0) {
+			  return (HpStatus)0;
+			}
+			if (fVar1 < (float)maxHP * 0.25) {
+			  return (HpStatus)1;
+			}
+			var uVar2 = 2;
+			if ((float)maxHP * 0.5 <= fVar1) {
+			  uVar2 = 3;
+			}
+			return uVar2;
+		}
 		
 		// TODO
 		public void Initialize(uint currentHP, uint maxHP, Ease ease, float duration) { }

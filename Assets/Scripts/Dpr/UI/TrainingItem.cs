@@ -15,7 +15,9 @@ namespace Dpr.UI
 		// TODO
 		public void Check(bool enabled) { }
 		
-		// TODO
-		public bool IsCheck() { return default; }
+		public bool IsCheck()
+		{
+			return this._isChecked;
+		}
 	}
 }

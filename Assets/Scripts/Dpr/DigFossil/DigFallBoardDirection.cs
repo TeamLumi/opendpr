@@ -23,8 +23,10 @@ namespace Dpr.DigFossil
 		// TODO
 		public void StartDirection(Action onFinishDirection) { }
 		
-		// TODO
-		public void SetActive(bool bisActive) { }
+		public void SetActive(bool bisActive)
+		{
+			ExtensionMethods.SetActive(this.curtain,(bisActive ? 1 : 0) & 1);
+		}
 		
 		// TODO
 		public float GetDirectionTime() { return default; }

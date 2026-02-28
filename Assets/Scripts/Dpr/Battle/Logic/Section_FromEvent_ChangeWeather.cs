@@ -7,8 +7,18 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Execute(Result result, in Description description) { }
 		
-		// TODO
-		private void endWeather_byAirLock(byte userPokeID, bool isTokuseiWindowDisplay, in StrParam successMessage) { }
+		private void endWeather_byAirLock(byte userPokeID, bool isTokuseiWindowDisplay, in StrParam successMessage)
+		{
+			var uVar1 = userPokeID.GetPokeParam();
+			if (isTokuseiWindowDisplay) {
+			  this.m_pServerCmdPutter.TokWin_In(uVar1);
+			}
+			this.m_pServerCmdPutter.Message(successMessage);
+			this.m_pEventLauncher.Event_NotifyAirLock();
+			if (isTokuseiWindowDisplay) {
+			  this.m_pServerCmdPutter.TokWin_Out(uVar1);
+			}
+		}
 		
 		// TODO
 		private void endWeather() { }

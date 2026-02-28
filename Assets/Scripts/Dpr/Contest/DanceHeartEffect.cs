@@ -29,11 +29,15 @@ namespace Dpr.Contest
 		// TODO
 		public void Initialize() { }
 		
-		// TODO
-		public void SetNormalHeartFxData(EffectData fxData) { }
+		public void SetNormalHeartFxData(EffectData fxData)
+		{
+			this.heartFxData = fxData;
+		}
 		
-		// TODO
-		public void SetLargeHeartFxData(EffectData fxData) { }
+		public void SetLargeHeartFxData(EffectData fxData)
+		{
+			this.heartFxData = fxData;
+		}
 		
 		// TODO
 		public void OnFinalize() { }
@@ -44,8 +48,13 @@ namespace Dpr.Contest
 		// TODO
 		private bool CheckHeartFxInst() { return default; }
 		
-		// TODO
-		public void OnUpdate(float deltaTime) { }
+		public void OnUpdate(float deltaTime)
+		{
+			if (this.isPlayerHeart) {
+			  OnPlayerHeartUpdate();
+			}
+			OnNPCHeartUpdate();
+		}
 		
 		// TODO
 		public void PerformEmitPlayerHeart(float duration, Ease easeType, Action onComplete, Vector3[] points) { }

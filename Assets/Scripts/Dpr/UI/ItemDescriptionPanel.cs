@@ -40,7 +40,7 @@ namespace Dpr.UI
         [SerializeField]
         protected Sprite appealPointFullSprite;
         protected bool isShowWazaDescription;
-        protected bool isShowWazaContest;
+        protected internal bool isShowWazaContest;
         protected ItemInfo currentItemInfo;
 
         // TODO
@@ -67,8 +67,12 @@ namespace Dpr.UI
         // TODO
         protected void ShowWazaDescriptionPanel() { }
 
-        // TODO
-        protected void HideWazaDescriptionPanel() { }
+        protected void HideWazaDescriptionPanel()
+        {
+        	this.isShowWazaDescription = false;
+        	this.wazaBattleObject.SetActive(0);
+        	this.wazaContestObject.SetActive(0);
+        }
 
         // TODO
         protected void UpdateDescriptionText() { }

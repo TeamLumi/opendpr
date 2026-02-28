@@ -14,8 +14,10 @@ namespace Dpr.Contest
 		private bool active;
 		private bool isHold;
 		
-		// TODO
-		public bool IsActive() { return default; }
+		public bool IsActive()
+		{
+			return this.active;
+		}
 		
 		public int StartNoteID { get => startNoteID; }
 		public int EndNoteID { get => endNoteID; }
@@ -23,8 +25,16 @@ namespace Dpr.Contest
 		// TODO
 		public void Create(NotesDataModel startNoteData, NotesDataModel endNoteData, double elapsedTime, float moveSpeed) { }
 		
-		// TODO
-		public void Deactive() { }
+		public void Deactive()
+		{
+			this.active = false;
+			var uVar1 = this.gameObject;
+			var uVar2 = uVar1.activeSelf;
+			if ((uVar2 & 1) != 0) {
+			  uVar1 = this.gameObject;
+			  uVar1.SetActive(0);
+			}
+		}
 		
 		// TODO
 		private void SetActive(bool active) { }
@@ -32,8 +42,11 @@ namespace Dpr.Contest
 		// TODO
 		private void CalcWidth(float startSecTime, float endSecTime) { }
 		
-		// TODO
-		public void OnStartHold() { }
+		public void OnStartHold()
+		{
+			this.isHold = true;
+			UpdateMovePosition(0);
+		}
 		
 		// TODO
 		public void OnUpdate(double elapsedTime) { }

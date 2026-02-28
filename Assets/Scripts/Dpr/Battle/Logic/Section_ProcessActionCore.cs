@@ -22,8 +22,10 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void putInterruptActionInfo(PokeAction pokeAction) { }
 		
-		// TODO
-		private void event_StartAction(PokeAction pokeAction) { }
+		private void event_StartAction(PokeAction pokeAction)
+		{
+			this.m_pEventLauncher.Event_ActProcStart(pokeAction);
+		}
 		
 		// TODO
 		private void action(PokeAction pokeAction) { }
@@ -31,8 +33,11 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void action_Fight(PokeAction pokeAction) { }
 		
-		// TODO
-		private void action_Change(PokeAction pokeAction) { }
+		private void action_Change(PokeAction pokeAction)
+		{
+			var uVar1 = memberChange();
+			afterMemberIn(pokeAction,uVar1);
+		}
 		
 		// TODO
 		private byte memberChange(PokeAction pokeAction) { return default; }

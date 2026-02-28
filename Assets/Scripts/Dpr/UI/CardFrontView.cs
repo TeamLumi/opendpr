@@ -38,8 +38,13 @@ namespace Dpr.UI
 		// TODO
 		public void Initialize(UICard.Param param) { }
 		
-		// TODO
-		public void SetCardImageSprite(Sprite cardSprite, Sprite titleSprite, Sprite cover1Sprite, Sprite cover2Sprite) { }
+		public void SetCardImageSprite(Sprite cardSprite, Sprite titleSprite, Sprite cover1Sprite, Sprite cover2Sprite)
+		{
+			this.cardImage.sprite = cardSprite;
+			this.titleImage.sprite = titleSprite;
+			this.cover1Image.sprite = cover1Sprite;
+			this.cover2Image.sprite = cover2Sprite;
+		}
 		
 		// TODO
 		public void Show() { }
@@ -47,8 +52,12 @@ namespace Dpr.UI
 		// TODO
 		public void Hide() { }
 		
-		// TODO
-		public void OnUpdate(float deltaTime) { }
+		public void OnUpdate(float deltaTime)
+		{
+			if (this.isUpdatePlayTime) {
+			  UpdatePlayTimeText();
+			}
+		}
 		
 		// TODO
 		public void SetText(uint id, PlayerNameData nameData, int money, int zukanCount, ushort playTimeHour, ushort playTimeMinute, long startTime, uint clearTime) { }

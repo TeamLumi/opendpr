@@ -115,8 +115,16 @@ namespace Dpr.UI
         private bool canUseItem { get => bootType != BootType.Poffine; }
         public bool IsOpenFromBattleTeam { get; set; }
 
-        // TODO
-        public override void OnCreate() { }
+        public override void OnCreate()
+        {
+        	UIWindow.OnCreate();
+        	var uVar1 = UnityEngine_Component__GetComponentInChildren<object>
+        	                  (this);
+        	this._animator = uVar1;
+        	uVar1 = new UIMsgWindowController();
+        	uVar1 = new UIMsgWindowController();
+        	this.msgWindowController = uVar1;
+        }
 
         // TODO
         public void Open([Optional, DefaultParameterValue(BootType.Default)] BootType bootType, [Optional, DefaultParameterValue(ModeType.Default)] ModeType modeType, [Optional] PokemonParam pokemonParam, int displayMoney = -1, bool isDontBuryNuts = false, UIWindowID prevWindowId = WINDOWID_PARENT) { }
@@ -194,11 +202,11 @@ namespace Dpr.UI
         // TODO
         private void ShowWazaOboeWindow(PokemonParam pokemonParam, WazaNo learnWazaNo, Action<WazaNo, WazaNo> resultCallBack) { }
 
-        // TODO
         private void StartSortItems()
         {
-            // TODO
-            void OnSelected(ContextMenuID contextMenuID) { }
+        	this.bagItemPanel.SetRemoveNewEnable(0);
+        	var uVar1 = new Action(this);
+        	this.msgWindowController.OpenMsgWindow(0,_StringLiteral_11687,1,0,uVar1,0);
         }
 
         // TODO

@@ -42,8 +42,10 @@ namespace Dpr.UI
 		// TODO
 		public virtual void Clear() { }
 		
-		// TODO
-		public virtual PokemonIcon GetSwapRoot() { return default; }
+		public virtual PokemonIcon GetSwapRoot()
+		{
+			return this._root;
+		}
 		
 		// TODO
 		public virtual void SetIconDefault(bool isShow = true) { }
@@ -66,8 +68,10 @@ namespace Dpr.UI
 		// TODO
 		public virtual void ReturnItemInBag() { }
 		
-		// TODO
-		public void SetExternalSelectIcon(bool isSelect) { }
+		public void SetExternalSelectIcon(bool isSelect)
+		{
+			GameObject.SetActive(this._imageSelect.gameObject,(isSelect ? 1 : 0) & 1,0);
+		}
 
 		public class Param
 		{

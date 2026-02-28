@@ -60,8 +60,10 @@ namespace Dpr.Contest
 		// TODO
 		private void ChangeStateLeave() { }
 		
-		// TODO
-		private void ChangeStateEnd() { }
+		private void ChangeStateEnd()
+		{
+			this.bRunning = false;
+		}
 		
 		// TODO
 		private void TransitionWaitState(StateID nextStateID, float waitDuration) { }

@@ -24,8 +24,13 @@ namespace Dpr.Contest
 		// TODO
 		public NoteIcon CreateNextNoteIcon(float elapsedTime, NotesDataModel noteData, float validTapTimeRange) { return default; }
 		
-		// TODO
-		public void DecCreateIconNum() { }
+		public void DecCreateIconNum()
+		{
+			if (0 < this.currentCreateNum) {
+			  this.currentCreateNum = this.currentCreateNum + -1;
+			}
+			ContestUtils.EmitLog(_StringLiteral_8901,0);
+		}
 		
 		// TODO
 		public LongTapNotesBg CreateNotesBg(NotesDataModel startNote, NotesDataModel endNote, double elapsedTime) { return default; }

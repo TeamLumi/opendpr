@@ -22,8 +22,11 @@ namespace Dpr.DigFossil
 		
 		public bool IsPickaxe { get; private set; }
 		
-		// TODO
-		public void Initialize(IDigCursor cursor) { }
+		public void Initialize(IDigCursor cursor)
+		{
+			this.cursor = cursor;
+			SetTool(1);
+		}
 		
 		// TODO
 		public void OnUpdate() { }

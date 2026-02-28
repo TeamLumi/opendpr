@@ -41,8 +41,10 @@ namespace Dpr.UI
 		// TODO
 		protected override void OnUpdateControl([Optional] [DefaultParameterValue(false)] bool isAppControlEnable, [Optional] PoketchButton targetButton, PoketchWindow.TouchState state = PoketchWindow.TouchState.None) { }
 		
-		// TODO
-		public override void OnSizeChanged(bool isLarge) { }
+		public override void OnSizeChanged(bool isLarge)
+		{
+			ResetButtonsState(isLarge);
+		}
 		
 		// TODO
 		private void SetMarker(Transform marker, int px, int py) { }

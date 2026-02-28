@@ -6,8 +6,10 @@ namespace Dpr.Battle.Logic
 	{
 		private const byte MAX_GMODE_TURN = 3;
 		
-		// TODO
-		public static uint GetMaxTurn() { return default; }
+		public static uint GetMaxTurn()
+		{
+			return 3;
+		}
 		
 		// TODO
 		public static bool IsGPokeExist(MainModule mainModule, BattleEnv battleEnv, BTL_CLIENT_ID targetClientID) { return default; }

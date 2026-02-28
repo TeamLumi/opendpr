@@ -72,11 +72,17 @@ namespace Dpr.Battle.Logic
         // TODO
         public void SetJudgeParam(bool[] usableWazaFlags, BtlPokePos pos, byte pokeID, ushort itemId, bool isGoingToStartG) { }
 
-        // TODO
-        public void StartJudge() { }
+        public void StartJudge()
+        {
+        	this.m_AIStep = 0;
+        	this.m_bDecided = false;
+        	this.m_scriptCommandHandler.m_isEscapeSelected = 0;
+        }
 
-        // TODO
-        public override bool IsJudgeFinished() { return false; }
+        public override bool IsJudgeFinished()
+        {
+        	return this.m_bFinished;
+        }
 
         // TODO
         public override void UpdateJudge() { }
@@ -90,8 +96,10 @@ namespace Dpr.Battle.Logic
         // TODO
         private BtlPokePos updateTargetPos(bool bFriendSide, byte targetIdx) { return BtlPokePos.POS_1ST_0; }
 
-        // TODO
-        private bool isTargettingCoveragePos(WazaNo waza_no, BtlPokePos targetPos) { return false; }
+        private bool isTargettingCoveragePos(WazaNo waza_no, BtlPokePos targetPos)
+        {
+        	return this.m_atkPos != targetPos;
+        }
 
         // TODO
         private BtlPokePos correctTargetPos(BtlPokePos targetPos, byte wazaIdx) { return BtlPokePos.POS_1ST_0; }
@@ -108,11 +116,45 @@ namespace Dpr.Battle.Logic
         // TODO
         private int wazaScore_Add(byte wazaIdx, BtlPokePos targetPos, int score) { return 0; }
 
-        // TODO
-        private void wazaScore_SetScoreless(byte wazaIdx, BtlPokePos targetPos) { }
+        private void wazaScore_SetScoreless(byte wazaIdx, BtlPokePos targetPos)
+        {
+        	uint uVar1 = default;
+        	if ((3 < wazaIdx) || (uVar1 = (int)targetPos & 0xff, 4 < uVar1)) {
+        	}
+        	if (uVar1 < this.m_wazaScoreStatus.Length) {
+        	  if ((uint)wazaIdx < this.m_wazaScoreStatus + ((ulong)(int)targetPos & 0xff) * 8[0].Length) {
+        	    this.m_wazaScoreStatus + ((ulong)(int)targetPos & 0xff) * 8[0] + (ulong)wazaIdx * 4[0] = 2;
+        	    if ((uVar1 < this.m_wazaScore.Length) &&
+        	       (this.m_wazaScoreStatus + ((ulong)(int)targetPos & 0xff) * 8[0] = this.m_wazaScore + ((ulong)(int)targetPos & 0xff) * 8[0],
+        	       (uint)wazaIdx < this.m_wazaScoreStatus + ((ulong)(int)targetPos & 0xff) * 8[0].Length)) {
+        	      this.m_wazaScoreStatus + ((ulong)(int)targetPos & 0xff) * 8[0] + (ulong)wazaIdx * 4[0] = 0;
+        	    }
+        	  }
+        	}
+        }
 
-        // TODO
-        private bool wazaScore_IsScoreless(byte wazaIdx, BtlPokePos targetPos) { return false; }
+        private bool wazaScore_IsScoreless(byte wazaIdx, BtlPokePos targetPos)
+        {
+        	uint uVar1 = default;
+        	if ((3 < wazaIdx) || (uVar1 = (int)targetPos & 0xff, 4 < uVar1)) {
+        	  return false;
+        	}
+        	if (uVar1 < this.m_wazaScoreStatus.Length) {
+        	  if ((uint)wazaIdx < this.m_wazaScoreStatus + ((ulong)(int)targetPos & 0xff) * 8[0].Length) {
+        	    if (this.m_wazaScoreStatus + ((ulong)(int)targetPos & 0xff) * 8[0] + (ulong)wazaIdx * 4[0] != 2) {
+        	      return false;
+        	    }
+        	    if ((uVar1 < this.m_wazaScore.Length) &&
+        	       (this.m_wazaScoreStatus + ((ulong)(int)targetPos & 0xff) * 8[0] = this.m_wazaScore + ((ulong)(int)targetPos & 0xff) * 8[0],
+        	       (uint)wazaIdx < this.m_wazaScoreStatus + ((ulong)(int)targetPos & 0xff) * 8[0].Length)) {
+        	      if (this.m_wazaScoreStatus + ((ulong)(int)targetPos & 0xff) * 8[0] + (ulong)wazaIdx * 4[0] != 0) {
+        	        return false;
+        	      }
+        	      return true;
+        	    }
+        	  }
+        	}
+        }
 
         // TODO
         private void wazaScore_DecideBest() { }
@@ -120,20 +162,37 @@ namespace Dpr.Battle.Logic
         // TODO
         private void wazaScore_DecideRaidBoss() { }
 
-        // TODO
-        private WazaNo getAttackerWazaNo(byte wazaIdx) { return WazaNo.NULL; }
+        private WazaNo getAttackerWazaNo(byte wazaIdx)
+        {
+        	if (((this.m_atkPoke.IsGMode() & 1) == 0) && (!this.m_isGoingToStartG)) {
+        	  return this.m_atkPoke.WAZA_GetID(wazaIdx) & 0xffffffff;
+        	}
+        	this.m_atkPoke.WAZA_GetID(wazaIdx) = GWaza.GetGWaza(BTL_POKEPARAM.WAZA_GetID(this.m_atkPoke,wazaIdx) & 0xffffffff,0);
+        	return this.m_atkPoke.WAZA_GetID(wazaIdx);
+        }
 
-        // TODO
-        public bool IsEnemyEscape() { return false; }
+        public bool IsEnemyEscape()
+        {
+        	return this.m_scriptCommandHandler.m_isEscapeSelected;
+        }
 
-        // TODO
-        public bool IsWazaSelected() { return false; }
+        public bool IsWazaSelected()
+        {
+        	return this.m_bDecided;
+        }
 
-        // TODO
-        public int GetSelectedWazaScore() { return 0; }
+        public int GetSelectedWazaScore()
+        {
+        	return this.m_selectWazaScore;
+        }
 
-        // TODO
-        public void GetSelectedWaza(ref byte wazaIdx, ref BtlPokePos targetPos) { }
+        public void GetSelectedWaza(ref byte wazaIdx, ref BtlPokePos targetPos)
+        {
+        	if (this.m_bDecided) {
+        	  wazaIdx = (byte)(this.m_selectWazaPos);
+        	  targetPos = (BtlPokePos)(this.m_selectTargetPos);
+        	}
+        }
 
         public enum ScoreStatus : int
         {

@@ -75,8 +75,10 @@ namespace Dpr.UI
 		// TODO
 		private void UpdateUserItemData() { }
 		
-		// TODO
-		private void OnFinishSellProcess() { }
+		private void OnFinishSellProcess()
+		{
+			this.state = (MenuState)1;
+		}
 		
 		// TODO
 		private bool CheckIsEmptySelectItem() { return default; }

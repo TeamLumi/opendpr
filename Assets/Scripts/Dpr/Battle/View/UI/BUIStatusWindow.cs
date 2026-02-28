@@ -86,8 +86,13 @@ namespace Dpr.Battle.View.UI
         // TODO
         public void Initialize(BtlvPos pos, BTL_POKEPARAM btlParam, byte clientID, [Optional] BTL_PARTY party, [Optional] Sprite[] ballSprites, bool isTrainerBattle = true) { }
 
-        // TODO
-        public override void UnInitialize() { }
+        public override void UnInitialize()
+        {
+        	this._cachedRectTransform = 0;
+        	this._canvasGroup = 0;
+        	this._onShowComplete = 0;
+        	this._onHideComplete = 0;
+        }
 
         // TODO
         private void InitBallBar(bool isShowBallBar) { }

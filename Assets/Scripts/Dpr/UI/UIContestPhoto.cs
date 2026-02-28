@@ -59,8 +59,20 @@ namespace Dpr.UI
         // TODO
         private static void ReleaseWazaEffect() { }
 
-        // TODO
-        public override void OnCreate() { }
+        public override void OnCreate()
+        {
+        	UIWindow.OnCreate();
+        	this._bLoadAssetBundle = false;
+        	var uVar1 = ComponentExtensions.FindDeep(StringLiteral_11795,0);
+        	uVar1 = UnityEngine_GameObject__GetComponent<object>
+        	                  (uVar1);
+        	this.photoFrameImage = uVar1;
+        	uVar1 = ComponentExtensions.FindDeep(StringLiteral_11796,0);
+        	uVar1 = UnityEngine_GameObject__GetComponent<object>
+        	                  (uVar1);
+        	this.messageTxt = uVar1;
+        	this._stageFx.Initialize();
+        }
 
         // TODO
         public void Open(int categoryID, CON_PHOTO_DATA photoData, CON_PHOTO_EXT_DATA extData) { }
@@ -183,8 +195,12 @@ namespace Dpr.UI
             // TODO
             public void Show(Transform parentTransform) { }
 
-            // TODO
-            public void Hide() { }
+            public void Hide()
+            {
+            	if (this.fxInst != null) {
+            	  GameObject.SetActive(this.fxInst.gameObject,0,0);
+            	}
+            }
 
             // TODO
             public void Release() { }
@@ -201,8 +217,12 @@ namespace Dpr.UI
             // TODO
             public void Show(Transform parentTransform) { }
 
-            // TODO
-            public void Hide() { }
+            public void Hide()
+            {
+            	if (this.fxInst != null) {
+            	  GameObject.SetActive(this.fxInst.gameObject,0,0);
+            	}
+            }
 
             // TODO
             public void Release() { }
@@ -217,8 +237,12 @@ namespace Dpr.UI
             // TODO
             public void Show() { }
 
-            // TODO
-            public void Hide() { }
+            public void Hide()
+            {
+            	if (this.fxInst != null) {
+            	  GameObject.SetActive(this.fxInst.gameObject,0,0);
+            	}
+            }
         }
     }
 }

@@ -68,7 +68,9 @@ namespace Pml.Item
         // TODO
         public ItemTable.SheetItem Get(ushort itemno, bool isCheckActive = true) { return null; }
 
-        // TODO
-        public static bool IsStrangeBall(BallId ballid) { return false; }
+        public static bool IsStrangeBall(BallId ballid)
+        {
+        	return 0x19 < ((int)ballid & 0xff) - 1;
+        }
     }
 }

@@ -21,8 +21,15 @@ namespace Dpr.Battle.Logic
 		
 		public EffectBattleID[] effectBattleID { get => arenaEffTable.EffectID; }
 		
-		// TODO
-		public void Clear() { }
+		public void Clear()
+		{
+			this.arenaEffTable = null;
+			this.arenaIndex = 0xa1ffffffff;
+			this.enableDarkBall = 0x200;
+			this.footEffectID = (EffectBattleID)0xffffffff;
+			this.isIndoor = false;
+			this.reflectionResolution = 0xffffffffffffffff;
+		}
 		
 		// TODO
 		public void CopyFrom(BgComponentData src) { }

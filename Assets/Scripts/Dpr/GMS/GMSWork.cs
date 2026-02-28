@@ -26,8 +26,10 @@ namespace Dpr.GMS
         // TODO
         public static void ApplyPointData(PointHistoryDataModel pointData, int pointIndex, int dataIndex) { }
 
-        // TODO
-        public static int CalcPointExtDataIndex(int pointIndex, int historyIndex) { return 0; }
+        public static int CalcPointExtDataIndex(int pointIndex, int historyIndex)
+        {
+        	return pointIndex * 5 + historyIndex;
+        }
 
         // TODO
         public static void OverwriteHistoryData(int pointIndex, int dataIndex, IntermediatePointData newHistoryData) { }

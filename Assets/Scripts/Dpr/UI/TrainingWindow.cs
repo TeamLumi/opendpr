@@ -27,8 +27,13 @@ namespace Dpr.UI
 		
 		public bool isDoneTraining { get => _isDoneTraining; }
 		
-		// TODO
-		public override void OnCreate() { }
+		public override void OnCreate()
+		{
+			UIWindow.OnCreate();
+			var uVar1 = UnityEngine_Component__GetComponentInChildren<object>
+			                  (this,1);
+			this._animator = uVar1;
+		}
 		
 		// TODO
 		public void Open(Param param, UIWindowID prevWindowId) { }

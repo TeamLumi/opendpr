@@ -20,7 +20,7 @@ namespace Dpr.FureaiHiroba
         [SerializeField]
         private float baseOffsetScale = 1.5f;
         [SerializeField]
-        private List<FureaiPokeModel> PokeWalkers = new List<FureaiPokeModel>();
+        internal List<FureaiPokeModel> PokeWalkers = new List<FureaiPokeModel>();
         [SerializeField]
         private bool isLineFormation;
         [SerializeField]

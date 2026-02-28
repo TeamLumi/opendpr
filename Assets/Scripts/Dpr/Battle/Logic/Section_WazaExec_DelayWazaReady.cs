@@ -10,8 +10,10 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void putWazaEffect(BtlPokePos attackerPos, BtlPokePos targetPos, in WazaParam pWazaParam) { }
 		
-		// TODO
-		private void event_DecideDelayWaza(in BTL_POKEPARAM pAttacker) { }
+		private void event_DecideDelayWaza(in BTL_POKEPARAM pAttacker)
+		{
+			this.m_pEventLauncher.Event_DecideDelayWaza(pAttacker);
+		}
 
 		public class Description
 		{

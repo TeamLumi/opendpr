@@ -26,7 +26,11 @@ namespace Dpr.SecretBase
 		// TODO
 		public void TargetLookAt(PlacementData target) { }
 		
-		// TODO
-		public void SetRenderTexture(RenderTexture texture) { }
+		public void SetRenderTexture(RenderTexture texture)
+		{
+			ExtensionMethods.SetActive(this.pedestalCamera,1);
+			ExtensionMethods.SetActive(this.mainCamera,0);
+			this.pedestalCamera.targetTexture = texture;
+		}
 	}
 }

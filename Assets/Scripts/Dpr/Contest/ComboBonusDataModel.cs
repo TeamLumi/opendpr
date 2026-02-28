@@ -13,17 +13,23 @@ namespace Dpr.Contest
 			prevWazaType = PokeType.NULL;
 		}
 		
-		// TODO
-		public void Reset() { }
+		public void Reset()
+		{
+			this.prevWazaType = 0x12;
+		}
 		
 		// TODO
 		public bool CanGetChainBonus(int count) { return default; }
 		
-		// TODO
-		public void SetWazaType(PokeType wazaType) { }
+		public void SetWazaType(PokeType wazaType)
+		{
+			this.prevWazaType = wazaType;
+		}
 		
-		// TODO
-		public void ResetWazaType() { }
+		public void ResetWazaType()
+		{
+			this.prevWazaType = 0x12;
+		}
 		
 		// TODO
 		public int CalcComboBonus(int chainCount, PokeType wazaType) { return default; }

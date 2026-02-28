@@ -4,8 +4,18 @@ namespace Dpr.Battle.Logic
 	{
 		public Section_FirstPokeIn_End(in CommonParam commonParam) : base(commonParam) { }
 		
-		// TODO
-		public void Execute(Result pResult, in Description description) { }
+		public void Execute(Result pResult, in Description description)
+		{
+			angryRaidBoss();
+			if ((this.m_pMainModule.IsSideExist(0) & 1) != 0) {
+			  putGRightsAnnounce();
+			}
+			if ((this.m_pMainModule.IsSideExist(1) & 1) != 0) {
+			  putGRightsAnnounce(1);
+			}
+			this.m_pServerCmdPutter.SetBattleFlag(0);
+			setPokeMemoriesOnFaceToRaidBossG();
+		}
 		
 		// TODO
 		private void angryRaidBoss() { }

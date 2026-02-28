@@ -40,8 +40,12 @@ namespace Dpr.UI
 
         public int selectIndex { get => _selectIndex; }
 
-        // TODO
-        private void Awake() { }
+        private void Awake()
+        {
+        	var uVar1 = UnityEngine_Component__GetComponentInChildren<object>
+        	                  (this,1);
+        	this._animator = uVar1;
+        }
 
         // TODO
         public override void OnCreate() { }

@@ -11,7 +11,15 @@ namespace Dpr.SecretBase
 		// TODO
 		public static KeyValuePair<int, int> CalcHighestStatueEffect(SecretBaseMasterDataManager masterData) { return default; }
 		
-		// TODO
-		public static int CalcStatueEffectLevel(int value) { return default; }
+		public static int CalcStatueEffectLevel(int value)
+		{
+			if (699 < value) {
+			  return 2;
+			}
+			if (299 < value) {
+			  return 1;
+			}
+			return -(uint)(value < 1);
+		}
 	}
 }

@@ -15,11 +15,31 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Add(byte pokeID, TypeAffinity.AffinityID aff, bool isNoEffectByFloatingStatus) { }
 
-        // TODO
-        public TypeAffinity.AffinityID Get(byte pokeID) { return TypeAffinity.AffinityID.TYPEAFF_0; }
+        public unsafe TypeAffinity.AffinityID Get(byte pokeID)
+        {
+        	var uVar1 = (uint)pokeID & 0xff;
+        	if ((int)this.m_affinityData.Length <= (int)uVar1) {
+        	  return (AffinityID)7;
+        	}
+        	if (uVar1 < this.m_affinityData.Length) {
+        	  return *(uint *)
+        	          (this.m_affinityData + (pokeID & 0xff) * 8[0] + 0x10);
+        	}
+        	return (AffinityID)0;
+        }
 
-        // TODO
-        public TypeAffinity.AffinityID GetIfEnable(byte pokeID) { return TypeAffinity.AffinityID.TYPEAFF_0; }
+        public unsafe TypeAffinity.AffinityID GetIfEnable(byte pokeID)
+        {
+        	var uVar1 = (uint)pokeID & 0xff;
+        	if ((int)this.m_affinityData.Length <= (int)uVar1) {
+        	  return (AffinityID)0xe;
+        	}
+        	if (uVar1 < this.m_affinityData.Length) {
+        	  return *(uint *)
+        	          (this.m_affinityData + (pokeID & 0xff) * 8[0] + 0x10);
+        	}
+        	return (AffinityID)0;
+        }
 
         // TODO
         public bool IsNoEffectByFloatingStatus(byte pokeID) { return false; }

@@ -29,8 +29,12 @@ namespace Dpr.UI
 		// TODO
 		protected override void OnInitialize() { }
 		
-		// TODO
-		protected override void OnOpen() { }
+		protected override void OnOpen()
+		{
+			CheckOpenHiden();
+			this._cursor.SetActive(0);
+			SetCursor(this._currentIndex);
+		}
 		
 		// TODO
 		protected override void OnClose() { }

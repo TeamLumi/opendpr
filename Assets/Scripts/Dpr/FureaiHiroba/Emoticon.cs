@@ -137,8 +137,10 @@ namespace Dpr.FureaiHiroba
         // TODO
         public void TestBaloon(int type) { }
 
-        // TODO
-        private void OnDestroy() { }
+        private void OnDestroy()
+        {
+        	this.bln = null;
+        }
 
         // TODO
         public static void PlaySeByEvent(int type) { }

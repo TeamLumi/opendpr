@@ -44,11 +44,19 @@ namespace Dpr.GMS
 		// TODO
 		public void OnFinalize() { }
 		
-		// TODO
-		public void Setup(GMSPointDataModel[] points) { }
+		public void Setup(GMSPointDataModel[] points)
+		{
+			var uVar1 = new GMS_UIPointMark[points.Length];
+			this.pointMarkArray = uVar1;
+			this.active = true;
+		}
 		
-		// TODO
-		public void ShowGMSMark(GMSMode gmsMode) { }
+		public void ShowGMSMark(GMSMode gmsMode)
+		{
+			this.canvas.enabled = 1;
+			this.isMaxZoom = 0x100;
+			this.isModeBrowsing = (int)gmsMode == 1;
+		}
 		
 		// TODO
 		public void ResetPoints() { }
@@ -59,14 +67,20 @@ namespace Dpr.GMS
 		// TODO
 		public Vector2 GetMarkPos() { return default; }
 		
-		// TODO
-		public void ShowUIMark() { }
+		public void ShowUIMark()
+		{
+			this.canvas.enabled = 1;
+			this.active = true;
+		}
 		
 		// TODO
 		public void ShowOnlySelectMark() { }
 		
-		// TODO
-		public void HideUIMark() { }
+		public void HideUIMark()
+		{
+			this.canvas.enabled = 0;
+			this.active = false;
+		}
 		
 		// TODO
 		public void OnChangeDistanceLevel(bool isMaxZoom) { }
@@ -86,17 +100,25 @@ namespace Dpr.GMS
 		// TODO
 		public void StopCursorTween() { }
 		
-		// TODO
-		public void ShowMatchingIcon() { }
+		public void ShowMatchingIcon()
+		{
+			this.uiNetworkIcon.ShowMatchingIcon();
+		}
 		
-		// TODO
-		public void HideMatchingIcon() { }
+		public void HideMatchingIcon()
+		{
+			this.uiNetworkIcon.matchingIconObj.SetActive(0);
+		}
 		
-		// TODO
-		public void ShowAttentionIcon() { }
+		public void ShowAttentionIcon()
+		{
+			this.uiNetworkIcon.ShowAttentionIcon();
+		}
 		
-		// TODO
-		public void HideAttentionIcon() { }
+		public void HideAttentionIcon()
+		{
+			this.uiNetworkIcon.attentionIconObj.SetActive(0);
+		}
 		
 		// TODO
 		public void UpdatePointPosition(int index, GMSPointDataModel pointDataModel) { }

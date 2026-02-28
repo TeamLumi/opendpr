@@ -36,8 +36,11 @@ namespace Pml
 		// TODO
 		private static string GetStringFromTable(string[] table, int index) { return default; }
 		
-		// TODO
-		private static int GetIndexFromTable(string[] table, string s) { return default; }
+		private static int GetIndexFromTable(string[] table, string s)
+		{
+			System_Array__IndexOf<string>(table,s);
+			return 0;
+		}
 		
 		// TODO: cctor
 	}

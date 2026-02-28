@@ -31,8 +31,16 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Clear() { }
 
-        // TODO
-        private void storeAllPokeParam() { }
+        private void storeAllPokeParam()
+        {
+        	if (0 < this.m_activePokeParam.Length) {
+        	  var uVar1 = 0;
+        	  do {
+        	    storePokeParam(uVar1);
+        	    uVar1 = (ulong)((int)uVar1 + 1);
+        	  } while ((long)uVar1 < (long)this.m_activePokeParam.Length);
+        	}
+        }
 
         // TODO
         private void storePokeParam(byte pokeID) { }
@@ -52,8 +60,10 @@ namespace Dpr.Battle.Logic
         // TODO
         private void setupPokeParam(BTL_POKEPARAM pokeParam, byte pokeID, PokemonParam srcParam, in DefaultPowerUpDesc defaultPowerUpDesc, MyStatus playerData) { }
 
-        // TODO
-        private bool checkForceGEnable(PokemonParam pPoke) { return false; }
+        private bool checkForceGEnable(PokemonParam pPoke)
+        {
+        	return false;
+        }
 
         // TODO
         private void updateIllusionTarget(byte clientID) { }

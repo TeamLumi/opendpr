@@ -25,8 +25,10 @@ namespace Dpr.Contest
 		// TODO
 		public void OnFinalize() { }
 		
-		// TODO
-		public void ResetLoadCount() { }
+		public void ResetLoadCount()
+		{
+			this.loadCount = 0;
+		}
 		
 		// TODO
 		public void LoadStageLight(uint userRank, LightSetting[] lightDataArray, Vector3 offsetPos) { }

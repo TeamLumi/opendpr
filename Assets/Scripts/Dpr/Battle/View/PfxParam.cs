@@ -72,8 +72,12 @@ namespace Dpr.Battle.View
 		// TODO
 		public void SetDefualt() { }
 		
-		// TODO
-		public void SetDefaultColorFilter() { }
+		public void SetDefaultColorFilter()
+		{
+			this.isColorFilterEnabled = false;
+			this.colorFilterR = 0;
+			this.colorFilterB = 0;
+		}
 		
 		// TODO
 		public void SetDefaultDepthOfField() { }
@@ -87,8 +91,18 @@ namespace Dpr.Battle.View
 		// TODO
 		public void SetDefaultFeedbackBlur() { }
 		
-		// TODO
-		public void SetDefaultColorCorrection() { }
+		public void SetDefaultColorCorrection()
+		{
+			this.colorScaleB = 0x3f800000;
+			this.colorContrast = 0x3f8000003f800000;
+			this.colorScaleR = 0x3f8000003f800000;
+			this.isColorCorrectionEnabled = false;
+			this.colorHue = 0;
+			this.colorInversion = false;
+			this.colorBiasR = 0;
+			this.colorBiasB = 0x3f80000000000000;
+			this.sepiaToneWeight = 0x45cb200000000000;
+		}
 		
 		public static PfxParam Factory()
 		{

@@ -38,8 +38,15 @@ namespace Dpr.UI
 		// TODO
 		public void RemainingWarningText(bool warning = true) { }
 		
-		// TODO
-		public void SetupCount(int max) { }
+		public void SetupCount(int max)
+		{
+			this._maxCount = max;
+			if (0 < max) {
+			  this._objCount.SetActive(1);
+			  SetCount();
+			}
+			this._objCount.SetActive(0);
+		}
 		
 		// TODO
 		public void SetCount(int count) { }

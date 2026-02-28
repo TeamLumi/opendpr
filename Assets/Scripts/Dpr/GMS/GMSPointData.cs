@@ -8,6 +8,6 @@ namespace Dpr.GMS
 		public string pointTitle;
 		public int index;
 		public int dataIndex;
-		protected PointHistoryDataModel[] historyDataArray;
+		protected internal PointHistoryDataModel[] historyDataArray;
 	}
 }

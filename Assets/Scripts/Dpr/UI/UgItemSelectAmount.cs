@@ -25,11 +25,22 @@ namespace Dpr.UI
 		// TODO
 		public void ResumeSelectAmountChange() { }
 		
-		// TODO
-		public void DecideSelectAmount() { }
+		public void DecideSelectAmount()
+		{
+			ItemSelectAmount.Hide();
+			if (this.onDecideSelectAmountCallback != null) {
+			  var uVar1 = this.CurrentAmount;
+			  Action<int>.Invoke(this.onDecideSelectAmountCallback,uVar1);
+			}
+		}
 		
-		// TODO
-		public void CancelSelectAmount() { }
+		public void CancelSelectAmount()
+		{
+			ItemSelectAmount.Hide();
+			if (this.onCancelSelectAmountCallback != null) {
+			  this.onCancelSelectAmountCallback.Invoke();
+			}
+		}
 		
 		// TODO
 		public void SetSelectAmountDescriptionText(string text) { }

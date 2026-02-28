@@ -25,8 +25,12 @@ namespace Dpr.SubContents
 		// TODO
 		public void LoadFx(EmitEffectParam param, Transform fxParent, [Optional] Action onCompletedLoad) { }
 		
-		// TODO
-		private void OnCompleteLoad() { }
+		private void OnCompleteLoad()
+		{
+			if (this.loadedCount <= this.loadCount) {
+			  this.bReady = true;
+			}
+		}
 		
 		// TODO
 		public EffectInstance PlayFx(EffectContestID fxID, Vector3 emitPos, [Optional] Action onComplete) { return default; }

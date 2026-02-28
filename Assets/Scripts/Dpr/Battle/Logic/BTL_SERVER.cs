@@ -50,11 +50,20 @@
         // TODO
         public void AttachAdapter(BTL_CLIENT_ID clientID, Adapter adapter) { }
 
-        // TODO
-        public void Startup() { }
+        public void Startup()
+        {
+        	this.m_currentSeq = (ServerSequence)0;
+        	this.m_seqStep = 0;
+        	initAllAdapter();
+        	this.m_battleDriver.Initialize();
+        }
 
-        // TODO
-        public void StartupAsNewServer() { }
+        public void StartupAsNewServer()
+        {
+        	this.m_currentSeq = (ServerSequence)0x2f;
+        	this.m_seqStep = 0;
+        	resetAdapterCmd();
+        }
 
         // TODO
         public bool IsWaitingClientReply() { return false; }
@@ -74,14 +83,20 @@
         // TODO
         private bool updateSeq() { return false; }
 
-        // TODO
-        private void changeSequence(ServerSequence nextSeq) { }
+        private void changeSequence(ServerSequence nextSeq)
+        {
+        	this.m_currentSeq = (ServerSequence)(nextSeq);
+        	this.m_seqStep = 0;
+        }
 
         // TODO
         private void seq_BATTLE_START_SETUP(ref int pSeqStep, ref ServerSequence pNextSeq) { }
 
-        // TODO
-        private void seq_BATTLE_START_SWITCH(ref int pSeqStep, ref ServerSequence pNextSeq) { }
+        private void seq_BATTLE_START_SWITCH(ref int pSeqStep, ref ServerSequence pNextSeq)
+        {
+        	this.m_pMainModule.GetCompetitor(0);
+        	pNextSeq = (ServerSequence)2;
+        }
 
         // TODO
         private void seq_BATTLE_START_TIMING(ref int pSeqStep, ref ServerSequence pNextSeq) { }
@@ -92,8 +107,18 @@
         // TODO
         private void seq_BATTLE_START_RECORD(ref int pSeqStep, ref ServerSequence pNextSeq) { }
 
-        // TODO
-        private void seq_BATTLE_START_SWITCH_AFTER_FIRST_POKEIN(ref int pSeqStep, ref ServerSequence pNextSeq) { }
+        private void seq_BATTLE_START_SWITCH_AFTER_FIRST_POKEIN(ref int pSeqStep, ref ServerSequence pNextSeq)
+        {
+        	var uVar1 = 6;
+        	if (this.m_serverRequestGenerator.m_interruptCode != '\x01') {
+        	  uVar1 = 10;
+        	}
+        	var uVar2 = 10;
+        	if (this.m_serverRequestGenerator.m_interruptCode != 0) {
+        	  uVar2 = uVar1;
+        	}
+        	pNextSeq = (ServerSequence)(uVar2);
+        }
 
         // TODO
         private void seq_POKECHANGE_AFTERFIRSTPOKEIN_POKESELECT(ref int pSeqStep, ref ServerSequence pNextSeq) { }
@@ -104,14 +129,33 @@
         // TODO
         private void seq_POKECHANGE_AFTERFIRSTPOKEIN_COMMAND(ref int pSeqStep, ref ServerSequence pNextSeq) { }
 
-        // TODO
-        private void seq_POKECHANGE_AFTERFIRSTPOKEIN_SWITCH(ref int pSeqStep, ref ServerSequence pNextSeq) { }
+        private void seq_POKECHANGE_AFTERFIRSTPOKEIN_SWITCH(ref int pSeqStep, ref ServerSequence pNextSeq)
+        {
+        	var uVar1 = 6;
+        	if (this.m_serverRequestGenerator.m_interruptCode != '\x01') {
+        	  uVar1 = 10;
+        	}
+        	var uVar2 = 10;
+        	if (this.m_serverRequestGenerator.m_interruptCode != 0) {
+        	  uVar2 = uVar1;
+        	}
+        	pNextSeq = (ServerSequence)(uVar2);
+        }
 
         // TODO
         private void seq_ACTION_SELECT_START(ref int pSeqStep, ref ServerSequence pNextSeq) { }
 
-        // TODO
-        private void seq_ACTION_SELECT_SWITCH(ref int pSeqStep, ref ServerSequence pNextSeq) { }
+        private void seq_ACTION_SELECT_SWITCH(ref int pSeqStep, ref ServerSequence pNextSeq)
+        {
+        	if ((this.m_pMainModule.CheckGameLimitTimeOver() & 1) != 0) {
+        	  pNextSeq = (ServerSequence)0x1d;
+        	}
+        	var uVar2 = 0x24;
+        	if ((this.m_pMainModule.CheckRecPlayError() & 1) == 0) {
+        	  uVar2 = 0xc;
+        	}
+        	pNextSeq = (ServerSequence)(uVar2);
+        }
 
         // TODO
         private void seq_ACTION_SELECT_RECORD(ref int pSeqStep, ref ServerSequence pNextSeq) { }
@@ -140,8 +184,13 @@
         // TODO
         private void seq_COVER_COMFIRM_PLAYER_POKECHANGE(ref int pSeqStep, ref ServerSequence pNextSeq) { }
 
-        // TODO
-        private void seq_COVER_SELECT_SWITCH(ref int pSeqStep, ref ServerSequence pNextSeq) { }
+        private void seq_COVER_SELECT_SWITCH(ref int pSeqStep, ref ServerSequence pNextSeq)
+        {
+        	if ((this.m_pMainModule.CheckRecPlayError() & 1) != 0) {
+        	  pNextSeq = (ServerSequence)0x24;
+        	}
+        	pNextSeq = (ServerSequence)0x15;
+        }
 
         // TODO
         private void seq_COVER_SELECT_RECORD(ref int pSeqStep, ref ServerSequence pNextSeq) { }
@@ -161,8 +210,13 @@
         // TODO
         private void seq_INTERRUPT_POKECHANGE_POKESELECT(ref int pSeqStep, ref ServerSequence pNextSeq) { }
 
-        // TODO
-        private void seq_INTERRUPT_POKECHANGE_POKESELECT_SWITCH(ref int pSeqStep, ref ServerSequence pNextSeq) { }
+        private void seq_INTERRUPT_POKECHANGE_POKESELECT_SWITCH(ref int pSeqStep, ref ServerSequence pNextSeq)
+        {
+        	if ((this.m_pMainModule.CheckRecPlayError() & 1) != 0) {
+        	  pNextSeq = (ServerSequence)0x24;
+        	}
+        	pNextSeq = (ServerSequence)0x1a;
+        }
 
         // TODO
         private void seq_INTERRUPT_POKECHANGE_RECORD(ref int pSeqStep, ref ServerSequence pNextSeq) { }
@@ -258,8 +312,10 @@
         // TODO
         private bool checkRaidBattleWin() { return false; }
 
-        // TODO
-        private BtlRule getRule() { return BtlRule.BTL_RULE_SINGLE; }
+        private BtlRule getRule()
+        {
+        	return this.m_pMainModule.m_rule;
+        }
 
         // TODO
         private void storeClientInstruction() { }

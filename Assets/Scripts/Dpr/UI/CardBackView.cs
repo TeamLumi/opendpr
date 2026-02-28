@@ -45,8 +45,11 @@ namespace Dpr.UI
 		// TODO
 		public void Initialize(UICard.Param param) { }
 		
-		// TODO
-		public void SetCardImageSprite(Sprite cardSprite, Sprite titleSprite) { }
+		public void SetCardImageSprite(Sprite cardSprite, Sprite titleSprite)
+		{
+			this.cardImage.sprite = cardSprite;
+			this.titleImage.sprite = titleSprite;
+		}
 		
 		// TODO
 		public void Show() { }

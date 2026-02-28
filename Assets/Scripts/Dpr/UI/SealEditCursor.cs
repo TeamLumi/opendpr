@@ -55,17 +55,23 @@ namespace Dpr.UI
 		// TODO
 		public RectTransform GetRectTransform() { return default; }
 		
-		// TODO
-		public RectTransform GetInfoTextRightRectTransform() { return default; }
+		public RectTransform GetInfoTextRightRectTransform()
+		{
+			return this.infoTextRightRectTransform;
+		}
 		
 		// TODO
 		public Vector3 GetPosition() { return default; }
 		
-		// TODO
-		public void SetPosition(Vector3 pos) { }
+		public void SetPosition(Vector3 pos)
+		{
+			this.rectTransform.set_position();
+		}
 		
-		// TODO
-		public void SetAnchorPosition(Vector2 pos) { }
+		public void SetAnchorPosition(Vector2 pos)
+		{
+			this.rectTransform.set_anchoredPosition();
+		}
 		
 		// TODO
 		public void SetActive(bool isActive) { }

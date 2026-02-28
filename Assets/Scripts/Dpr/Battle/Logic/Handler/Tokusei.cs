@@ -266,11 +266,16 @@ namespace Dpr.Battle.Logic.Handler
 		private static readonly EventFactor.EventHandlerTable[] HandlerTable_HukutuNoTate;
 		private static readonly EventFactor.EventHandlerTable[] HandlerTable_ScrewObire;
 		
-		// TODO
-		public static uint numHandlersWithHandlerPri(ushort pri, ushort numHandlers) { return default; }
+		public static uint numHandlersWithHandlerPri(ushort pri, ushort numHandlers)
+		{
+			return numHandlers & 0xffff | pri << 0x10;
+		}
 		
-		// TODO
-		public static ushort calcTokHandlerSubPriority(BTL_POKEPARAM bpp) { return default; }
+		public static ushort calcTokHandlerSubPriority(BTL_POKEPARAM bpp)
+		{
+			bpp.GetValue_Base(0xc);
+			return 0;
+		}
 		
 		// TODO
 		public static bool isOccurPer(EventFactor.EventHandlerArgs args, byte per) { return default; }
@@ -1816,8 +1821,13 @@ namespace Dpr.Battle.Logic.Handler
 		// TODO
 		public static EventFactor.EventHandlerTable[] ADD_MirrorArmor(ref EventPriority prio) { return default; }
 		
-		// TODO
-		public static bool checkMirrorArmorCause(RankEffectCause cause) { return default; }
+		public static bool checkMirrorArmorCause(RankEffectCause cause)
+		{
+			if (1 < ((int)cause & 0xff) - 5) {
+			  return ((int)cause & 0xff) - 8 < 3;
+			}
+			return true;
+		}
 		
 		// TODO
 		public static void handler_MirroArmor_Check(in EventFactor.EventHandlerArgs args, byte pokeID) { }

@@ -42,11 +42,38 @@ namespace Dpr.Contest
 		// TODO
 		public void Initialize(float addValue, float lockTime) { }
 		
-		// TODO
-		private void SetComponents() { }
+		private void SetComponents()
+		{
+			var uVar1 = ComponentExtensions.FindDeep(StringLiteral_8963,1);
+			var uVar2 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar1);
+			this.leftFrameRect = uVar2;
+			uVar2 = GameObjectExtensions.FindDeep(uVar1,StringLiteral_8964,1);
+			uVar2 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar2);
+			this.leftGaugeImage = uVar2;
+			uVar1 = GameObjectExtensions.FindDeep(uVar1,StringLiteral_8965,1);
+			uVar1 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar1);
+			this.leftGaugeBgImage = uVar1;
+			uVar1 = ComponentExtensions.FindDeep(StringLiteral_8966,1);
+			uVar2 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar1);
+			this.rightFrameRect = uVar2;
+			uVar2 = GameObjectExtensions.FindDeep(uVar1,StringLiteral_8967,1);
+			uVar2 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar2);
+			this.rightGaugeImage = uVar2;
+			uVar1 = GameObjectExtensions.FindDeep(uVar1,StringLiteral_8968,1);
+			uVar1 = UnityEngine_GameObject__GetComponent<object>
+			                  (uVar1);
+			this.rightGaugeBgImage = uVar1;
+		}
 		
-		// TODO
-		public void OnFinalize() { }
+		public void OnFinalize()
+		{
+			this.fxEmitter.OnFinalize();
+		}
 		
 		// TODO
 		public void SetUp(float successScoreRatio, float initGaugeRatio) { }
@@ -57,8 +84,13 @@ namespace Dpr.Contest
 		// TODO
 		public void SetScoreRatio(float ratio, EmitHeartPattern emitPattern) { }
 		
-		// TODO
-		private void CheckSuccessRatio() { }
+		private void CheckSuccessRatio()
+		{
+			if ((!this.playingGaugeFlash) &&
+			   (this.successScoreRatio <= this.goalRatio)) {
+			  this.playingGaugeFlash = true;
+			}
+		}
 		
 		// TODO
 		public void ResetParam(float ratio) { }
@@ -84,7 +116,9 @@ namespace Dpr.Contest
 		// TODO
 		private void SetColorRatio(float ratio) { }
 		
-		// TODO
-		private float LerpColorFactor(float a, float b, float ratio) { return default; }
+		private float LerpColorFactor(float a, float b, float ratio)
+		{
+			return (b - a) * ratio + a;
+		}
 	}
 }

@@ -22,58 +22,124 @@
         // TODO
         public void CopyFrom(in GWall src) { }
 
-        // TODO
-        public void Setup(byte gaugeMax, byte gaugeInit, byte repairTurn) { }
+        public void Setup(byte gaugeMax, byte gaugeInit, byte repairTurn)
+        {
+        	var bVar1 = gaugeMax;
+        	if (gaugeInit <= gaugeMax) {
+        	  bVar1 = (byte)(gaugeInit);
+        	}
+        	this.m_gaugeMax = (byte)(gaugeMax);
+        	this.m_gaugeInit = (byte)(gaugeInit);
+        	this.m_repairTurnMax = (byte)(repairTurn);
+        	this.m_repairTurnCount = (byte)(repairTurn);
+        	this.m_gaugeNow = (byte)(bVar1);
+        }
 
-        // TODO
-        public void SetAppear() { }
+        public void SetAppear()
+        {
+        	this.m_isAppeared = true;
+        }
 
-        // TODO
-        public bool IsAppeared() { return false; }
+        public bool IsAppeared()
+        {
+        	return this.m_isAppeared;
+        }
 
-        // TODO
-        public bool IsActive() { return false; }
+        public bool IsActive()
+        {
+        	if (this.m_isAppeared) {
+        	  return this.m_gaugeNow != 0;
+        	}
+        	return false;
+        }
 
-        // TODO
-        public bool IsBroken() { return false; }
+        public bool IsBroken()
+        {
+        	if (this.m_isAppeared) {
+        	  return this.m_gaugeNow == 0;
+        	}
+        	return false;
+        }
 
-        // TODO
-        public byte GetGauseMax() { return 0; }
+        public byte GetGauseMax()
+        {
+        	return (byte)(this.m_gaugeMax);
+        }
 
-        // TODO
-        public byte GetGaugeNow() { return 0; }
+        public byte GetGaugeNow()
+        {
+        	return (byte)(this.m_gaugeNow);
+        }
 
-        // TODO
-        public byte GetGauseInit() { return 0; }
+        public byte GetGauseInit()
+        {
+        	return (byte)(this.m_gaugeInit);
+        }
 
-        // TODO
-        public void InitGauge() { }
+        public void InitGauge()
+        {
+        	if (this.m_gaugeInit <= this.m_gaugeMax) {
+        	}
+        	this.m_gaugeNow = (byte)(this.m_gaugeInit);
+        }
 
-        // TODO
-        public void SetGauge(byte value) { }
+        public void SetGauge(byte value)
+        {
+        	if (value <= this.m_gaugeMax) {
+        	  this.m_gaugeMax = (byte)(value);
+        	}
+        	this.m_gaugeNow = (byte)(this.m_gaugeMax);
+        }
 
-        // TODO
-        public void AddGauge(byte value) { }
+        public void AddGauge(byte value)
+        {
+        	if (this.m_gaugeNow + value <= this.m_gaugeMax) {
+        	  this.m_gaugeMax = (byte)(this.m_gaugeNow + value);
+        	}
+        	this.m_gaugeNow = (byte)(this.m_gaugeMax);
+        }
 
-        // TODO
-        public void SubGauge(byte value) { }
+        public void SubGauge(byte value)
+        {
+        	var uVar1 = 0;
+        	if ((uint)(value * 0x1000000) <= (uint)this.m_gaugeNow * 0x1000000) {
+        	  uVar1 = (char)((uint)this.m_gaugeNow * 0x1000000 + value * -0x1000000 >> 0x18);
+        	}
+        	this.m_gaugeNow = (byte)(uVar1);
+        }
 
-        // TODO
-        public bool IsGaugeZero() { return false; }
+        public bool IsGaugeZero()
+        {
+        	return this.m_gaugeNow == 0;
+        }
 
-        // TODO
-        public bool IsGaugeFull() { return false; }
+        public bool IsGaugeFull()
+        {
+        	return this.m_gaugeMax <= this.m_gaugeNow;
+        }
 
-        // TODO
-        public byte GetRepairTurnCount() { return 0; }
+        public byte GetRepairTurnCount()
+        {
+        	return (byte)(this.m_repairTurnCount);
+        }
 
-        // TODO
-        public void DecrementRepairTurnCount() { }
+        public void DecrementRepairTurnCount()
+        {
+        	if (this.m_repairTurnCount != 0) {
+        	  this.m_repairTurnCount = (byte)(this.m_repairTurnCount + -1);
+        	}
+        }
 
-        // TODO
-        public void SetRepairTurnCountMax() { }
+        public void SetRepairTurnCountMax()
+        {
+        	this.m_repairTurnCount = (byte)(this.m_repairTurnMax);
+        }
 
-        // TODO
-        public void DecrementRepairTurnCountMax() { }
+        public void DecrementRepairTurnCountMax()
+        {
+        	if (this.m_repairTurnMax != 0) {
+        	  this.m_repairTurnMax = (byte)(this.m_repairTurnMax + -1);
+        	}
+        }
     }
 }

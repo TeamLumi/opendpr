@@ -27,8 +27,10 @@ namespace Dpr.UI
 		// TODO
 		public void Setup(bool isFront, Color clear, Color affixed) { }
 		
-		// TODO
-		public RectTransform GetRectTransform() { return default; }
+		public RectTransform GetRectTransform()
+		{
+			return this.gridRectTransform;
+		}
 		
 		// TODO
 		public void SetAffixSeal(int affixSealId, int sealId) { }
@@ -42,11 +44,16 @@ namespace Dpr.UI
 		// TODO
 		public void HideAffixSeal() { }
 		
-		// TODO
-		public Vector3 GetSealPosition() { return default; }
+		public Vector3 GetSealPosition()
+		{
+			return this.sealPosition;
+		}
 		
-		// TODO
-		public Vector3 GetPosition() { return default; }
+		public Vector3 GetPosition()
+		{
+			this.gridRectTransform.position;
+			return null;
+		}
 		
 		// TODO
 		private void SetClearColor() { }

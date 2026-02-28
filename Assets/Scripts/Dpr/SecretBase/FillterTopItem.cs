@@ -30,14 +30,20 @@ namespace Dpr.SecretBase
 		// TODO
 		public void SetText(string text) { }
 		
-		// TODO
-		public void SetSelect(bool isEnable) { }
+		public void SetSelect(bool isEnable)
+		{
+			this._body.SetActive((isEnable ? 1 : 0) & 1);
+		}
 		
-		// TODO
-		public int GetIndex() { return default; }
+		public int GetIndex()
+		{
+			return this._index;
+		}
 		
-		// TODO
-		public void SetIndex(int index) { }
+		public void SetIndex(int index)
+		{
+			this._index = index;
+		}
 		
 		// TODO
 		public RectTransform GetRectTransform() { return default; }
@@ -48,10 +54,14 @@ namespace Dpr.SecretBase
 		// TODO
 		public void SetActive(bool isActive) { }
 		
-		// TODO
-		public void Select() { }
+		public void Select()
+		{
+			this._body.SetActive(1);
+		}
 		
-		// TODO
-		public void UnSelect() { }
+		public void UnSelect()
+		{
+			this._body.SetActive(0);
+		}
 	}
 }

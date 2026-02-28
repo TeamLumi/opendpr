@@ -30,7 +30,9 @@ namespace Dpr.SecretBase
 		// TODO
 		public void Show() { }
 		
-		// TODO
-		public void Close() { }
+		public void Close()
+		{
+			this.canvas.enabled = 0;
+		}
 	}
 }

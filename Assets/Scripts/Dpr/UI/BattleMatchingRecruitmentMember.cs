@@ -18,17 +18,24 @@ namespace Dpr.UI
 		private float _readyWaitTime = 3.0f;
 		private float _readyProgressTime;
 		
-		// TODO
-		public void Initialize(Action onFinishState, Action onLeave) { }
+		public void Initialize(Action onFinishState, Action onLeave)
+		{
+			this._onFinishState = onFinishState;
+			this._onLeave = onLeave;
+		}
 		
 		// TODO
 		public void Setup(UIBattleMatching battleMatchingUI) { }
 		
-		// TODO
-		public bool CanClose() { return default; }
+		public bool CanClose()
+		{
+			return this._loadingModelCount < 1;
+		}
 		
-		// TODO
-		public void PreClose() { }
+		public void PreClose()
+		{
+			this._closed = true;
+		}
 		
 		// TODO
 		public void Close() { }

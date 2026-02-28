@@ -33,16 +33,26 @@ namespace Dpr.Contest
 			Reset();
 		}
 		
-		// TODO
-		protected override void Dispose() { }
+		protected override void Dispose()
+		{
+			this.bIsActive = 0;
+			this.bTapActionEnable = false;
+		}
 		
 		public DanceTapData TapData { get => tapData; }
 		
-		// TODO
-		public override void Reset() { }
+		public override void Reset()
+		{
+			ADancePlayer.Reset();
+			this.currentActionID = 0;
+			this.bIsStandbySkill = false;
+			this.bTapActionEnable = false;
+		}
 		
-		// TODO
-		public void ChangeTutorialSetting(bool flag) { }
+		public void ChangeTutorialSetting(bool flag)
+		{
+			this.bIsTutorial = (flag ? 1 : 0) & 1;
+		}
 		
 		// TODO
 		public override void Activate() { }
@@ -50,8 +60,12 @@ namespace Dpr.Contest
 		// TODO
 		private void SetNextNoteDataPtr() { }
 		
-		// TODO
-		public override void DeActivate() { }
+		public override void DeActivate()
+		{
+			this.bIsStandbySkill = false;
+			this.bIsActive = 0;
+			this.bTapActionEnable = false;
+		}
 		
 		// TODO
 		public void SkipCurrentNotesIndexByTime(float elapsedTime) { }
@@ -68,35 +82,67 @@ namespace Dpr.Contest
 		// TODO
 		private void UpdateNPCTapAction() { }
 		
-		// TODO
-		private void StartHold() { }
+		private void StartHold()
+		{
+			this.bIsHold = true;
+			this.currentActionID = 2;
+			this.startNoteArriveSec = this.nextNoteArriveTime + this.tapData.tapTimingOffset;
+		}
 		
-		// TODO
-		private void FinishHold() { }
+		private void FinishHold()
+		{
+			if (this.bIsHold) {
+			  this.tapData.holdTimeRatio =
+			       ((this.nextNoteArriveTime + this.tapData.tapTimingOffset) -
+			       this.startNoteArriveSec) / (this.nextNoteArriveTime - this.startNoteArriveSec);
+			  this.currentActionID = 3;
+			  this.bIsHold = false;
+			}
+		}
 		
-		// TODO
-		public void FailedTap() { }
+		public void FailedTap()
+		{
+			this.startNoteArriveSec = 0;
+			this.bIsHold = false;
+		}
 		
 		// TODO
 		private bool CheckUseSkill() { return default; }
 		
-		// TODO
-		private bool CheckLaunchSkill() { return default; }
+		private bool CheckLaunchSkill()
+		{
+			return (double)this.reserveLaunchSkillTime <= this.currentElapsedTime;
+		}
 		
 		// TODO
 		public override void NoticeLaunchSkill(ADancePlayer player) { }
 		
-		// TODO
-		private void SetSkillComboTiming() { }
+		private void SetSkillComboTiming()
+		{
+			var uVar1 = Random.Range(0,0x40bccccd);
+			this.limitWaitComboTime = uVar1;
+			this.waitTimer = 0;
+		}
 		
-		// TODO
-		private bool CheckLaunchSkillToOtherCombo() { return default; }
+		private bool CheckLaunchSkillToOtherCombo()
+		{
+			if (this.bIsStandbySkill) {
+			  var fVar1 = this.waitTimer +
+			          (float)(this.currentElapsedTime - this.prevElapsedTime);
+			  this.waitTimer = fVar1;
+			  return this.limitWaitComboTime <= fVar1;
+			}
+			return false;
+		}
 		
 		// TODO
 		protected override void OnForceLaunchSkill() { }
 		
-		// TODO
-		public override void LaunchSkill() { }
+		public override void LaunchSkill()
+		{
+			this.bTapActionEnable = false;
+			this.danceData.LaunchSkill();
+		}
 		
 		// TODO
 		public override void ActivateSkillEffect(double elapsedTime, Action onFinishSkillEffect) { }

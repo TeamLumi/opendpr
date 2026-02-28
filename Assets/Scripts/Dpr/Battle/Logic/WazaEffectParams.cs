@@ -24,52 +24,89 @@ namespace Dpr.Battle.Logic
         // TODO
         public void CopyFrom(WazaEffectParams src) { }
 
-        // TODO
-        public void Clear() { }
+        public void Clear()
+        {
+        	this.attackerPos = (BtlPokePos)0x505;
+        	this.effectWazaID = (WazaNo)0;
+        	this.effectIndex = (byte)0;
+        	this.fDone = false;
+        	this.commandQueuePos = (ushort)0xffff;
+        	this.isSyncDamageEffect = false;
+        	this.subEff_pokeID_2 = (byte)0;
+        }
 
         // TODO
         public void Setup(BTL_POKEPARAM attacker, PokeSet targets, in PosPoke posPoke) { }
 
-        // TODO
-        public void ChangeAttackerPos(BtlPokePos atkPos) { }
+        public void ChangeAttackerPos(BtlPokePos atkPos)
+        {
+        	this.attackerPos = (BtlPokePos)(atkPos);
+        }
 
-        // TODO
-        public void ChangeEffectWazaID(WazaNo waza) { }
+        public void ChangeEffectWazaID(WazaNo waza)
+        {
+        	this.effectWazaID = (WazaNo)(waza);
+        }
 
-        // TODO
-        public WazaNo GetEffectWazaID() { return WazaNo.NULL; }
+        public WazaNo GetEffectWazaID()
+        {
+        	return this.effectWazaID;
+        }
 
-        // TODO
-        public void SetEnable() { }
+        public void SetEnable()
+        {
+        	this.fEnable = true;
+        }
 
-        // TODO
-        public void SetEnableDummy() { }
+        public void SetEnableDummy()
+        {
+        	if (this.fEnable) {
+        	}
+        	this.fEnable = 0x101;
+        }
 
-        // TODO
-        public bool IsEnable() { return false; }
+        public bool IsEnable()
+        {
+        	return this.fEnable;
+        }
 
-        // TODO
-        public bool IsDone() { return false; }
+        public bool IsDone()
+        {
+        	return this.fDone;
+        }
 
-        // TODO
-        public void SetEffectIndex(byte index) { }
+        public void SetEffectIndex(byte index)
+        {
+        	this.effectIndex = (byte)(index);
+        }
 
         // TODO
         public void AddSubEffectPoke(byte pokeID) { }
 
-        // TODO
-        public void ClearSubEffectParams() { }
+        public void ClearSubEffectParams()
+        {
+        	this.subEff_pokeID_4 = (byte)0;
+        	this.subEff_pokeCnt = (byte)0;
+        }
 
-        // TODO
-        public bool IsSubEffectParamsValid() { return false; }
+        public bool IsSubEffectParamsValid()
+        {
+        	return this.subEff_pokeCnt != 0;
+        }
 
-        // TODO
-        public bool IsGShockOccur() { return false; }
+        public bool IsGShockOccur()
+        {
+        	return this.isGShockOccur;
+        }
 
-        // TODO
-        public void SetGShockOccur() { }
+        public void SetGShockOccur()
+        {
+        	this.isGShockOccur = true;
+        }
 
-        // TODO
-        public void SetSyncDamageEffectEnable() { }
+        public void SetSyncDamageEffectEnable()
+        {
+        	this.isSyncDamageEffect = true;
+        }
     }
 }

@@ -207,8 +207,17 @@
             ServerCommandArgsFormat.FMT_111byte,
         };
 
-        // TODO
-        private static byte SC_ARGFMT_GetArgCount(ServerCommandArgsFormat format) { return 0; }
+        private static byte SC_ARGFMT_GetArgCount(ServerCommandArgsFormat format)
+        {
+        	if ((int)format == 0x10) {
+        	  return 9;
+        	}
+        	var bVar1 = (byte)9;
+        	if ((int)format != 0x20) {
+        	  bVar1 = (byte)((int)format & 0xf);
+        	}
+        	return (byte)(bVar1);
+        }
 
         public ServerCommandQueue()
         {
@@ -229,11 +238,15 @@
         // TODO
         public unsafe void Copy(void* data, ushort dataLength) { }
 
-        // TODO
-        public unsafe void* GetData() { return null; }
+        public unsafe void* GetData()
+        {
+        	return this.m_buffer;
+        }
 
-        // TODO
-        public uint GetDataSize() { return 0; }
+        public uint GetDataSize()
+        {
+        	return this.m_writePtr;
+        }
 
         // TODO
         public bool IsContainActCommand(ushort startPos, ushort endPos) { return false; }
@@ -244,8 +257,10 @@
         // TODO
         public ServerCommand Read(int[] args, uint argsBufferSize) { return ServerCommand.INVALID; }
 
-        // TODO
-        public bool IsReadFinished() { return false; }
+        public bool IsReadFinished()
+        {
+        	return this.m_readPtr == this.m_writePtr;
+        }
 
         // TODO
         public void Put_Common(ServerCommand cmd, int[] LegacyParamArray) { }
@@ -268,11 +283,15 @@
         // TODO
         private void put_reserved_pos_core(ushort pos, ServerCommand cmd, int[] args, uint argsNum) { }
 
-        // TODO
-        public uint PushReadState() { return 0; }
+        public uint PushReadState()
+        {
+        	return this.m_readPtr;
+        }
 
-        // TODO
-        public void PopReadState(uint state) { }
+        public void PopReadState(uint state)
+        {
+        	this.m_readPtr = state;
+        }
 
         // TODO
         public void ReplaceWithSkipCmd(uint pos) { }

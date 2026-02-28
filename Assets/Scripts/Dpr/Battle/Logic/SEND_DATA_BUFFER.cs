@@ -28,8 +28,10 @@ namespace Dpr.Battle.Logic
         // TODO
         public static void Store(SEND_DATA_BUFFER* buf, ushort serialNumber, ServerSequence serverSeq, ServerRequest serverReq, void* data, uint dataSize) { }
 
-        // TODO
-        public static ushort GetSerialNumber(in SEND_DATA_BUFFER* buf) { return 0; }
+        public static unsafe ushort GetSerialNumber(in SEND_DATA_BUFFER* buf)
+        {
+        	return (ushort)(*(ushort *)buf);
+        }
 
         // TODO
         public static ServerSequence GetServerSequence(in SEND_DATA_BUFFER* buf) { return ServerSequence.BATTLE_START_SETUP; }
@@ -37,8 +39,10 @@ namespace Dpr.Battle.Logic
         // TODO
         public static ServerRequest GetServerRequest(in SEND_DATA_BUFFER* buf) { return ServerRequest.NONE; }
 
-        // TODO
-        public static void* GetData(SEND_DATA_BUFFER* buf) { return null; }
+        public static void* GetData(SEND_DATA_BUFFER* buf)
+        {
+        	return buf + 8;
+        }
 
         // TODO
         public static uint GetDataSize(in SEND_DATA_BUFFER* buf) { return 0; }

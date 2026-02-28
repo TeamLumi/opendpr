@@ -31,17 +31,29 @@
         // TODO
         public BattleAi(in SetupParam setupParam) { }
 
-        // TODO
-        public void ChangeScript(uint scriptNoBit) { }
+        public void ChangeScript(uint scriptNoBit)
+        {
+        	this.m_wazaJudge.m_targetScriptBit = scriptNoBit;
+        	this.m_itemJudge.m_targetScriptBit = scriptNoBit;
+        	this.m_pokeChangeJudge.m_targetScriptBit = scriptNoBit;
+        }
 
-        // TODO
-        public uint GetScript() { return 0; }
+        public uint GetScript()
+        {
+        	return this.m_itemJudge.m_targetScriptBit | this.m_wazaJudge.m_targetScriptBit |
+        	       this.m_pokeChangeJudge.m_targetScriptBit;
+        	return 0;
+        }
 
-        // TODO
-        public bool IsActionSelectFinished() { return false; }
+        public bool IsActionSelectFinished()
+        {
+        	return this.m_isFinished;
+        }
 
-        // TODO
-        public Result GetResult() { return null; }
+        public Result GetResult()
+        {
+        	return this.m_result;
+        }
 
         // TODO
         public void StartActionSelect(in StartParam startParam) { }
@@ -55,8 +67,10 @@
         // TODO
         private bool CheckSpecialAction(Result result) { return false; }
 
-        // TODO
-        private bool IsItemUseEnable() { return false; }
+        private bool IsItemUseEnable()
+        {
+        	return this.m_judgeTargetItem != 0;
+        }
 
         // TODO
         private bool IsPokeChangeEnable() { return false; }

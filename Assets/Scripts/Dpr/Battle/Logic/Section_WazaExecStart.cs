@@ -25,20 +25,31 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void onFailed(BTL_POKEPARAM attacker, WazaNo waza, WazaFailCause failCause) { }
 		
-		// TODO
-		private BtlPokePos correctReqWazaTargetPos(WazaNo orgWaza, BtlPokePos defaultTargetPos) { return default; }
+		private BtlPokePos correctReqWazaTargetPos(WazaNo orgWaza, BtlPokePos defaultTargetPos)
+		{
+			var iVar1 = WAZADATA.GetWazaTarget(orgWaza);
+			if ((((int)defaultTargetPos & 0xff) == 5) && (iVar1 == 3)) {
+			  return this.m_pMainModule.GetOpponentPokePos(5,0);
+			}
+			return (ulong)defaultTargetPos;
+		}
 		
 		// TODO
 		private WazaFailCause checkReqWazaFail(BTL_POKEPARAM attacker, WazaParam wazaParam) { return default; }
 		
-		// TODO
-		private void event_WazaCallDecide(BTL_POKEPARAM attacker, WazaParam wazaParamOrg, WazaParam wazaParamAct) { }
+		private void event_WazaCallDecide(BTL_POKEPARAM attacker, WazaParam wazaParamOrg, WazaParam wazaParamAct)
+		{
+			this.m_pEventLauncher.Event_WazaCallDecide();
+		}
 		
 		// TODO
 		private void putWazaMessage(BTL_POKEPARAM pAttacker, WazaNo orgWazaID, WazaNo actWazaID, BtlPokePos actTargetPos) { }
 		
-		// TODO
-		private bool checkWazaMsgCustom(BTL_POKEPARAM pAttacker, WazaNo orgWazaID, WazaNo actWazaID, StrParam pStrParam) { return default; }
+		private bool checkWazaMsgCustom(BTL_POKEPARAM pAttacker, WazaNo orgWazaID, WazaNo actWazaID, StrParam pStrParam)
+		{
+			this.m_pEventLauncher.Event_CheckWazaMsgCustom();
+			return false;
+		}
 		
 		// TODO
 		private bool checkWazaFail_2nd(BTL_POKEPARAM attacker, WazaParam wazaParam, PokeSet targets) { return default; }
@@ -61,8 +72,11 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void event_WazaExecDecide(BTL_POKEPARAM attacker, WazaParam wazaParam) { }
 		
-		// TODO
-		private bool checkWazaRob(BTL_POKEPARAM attacker, WazaNo waza, PokeSet targets, WazaRobParam robParam) { return default; }
+		private bool checkWazaRob(BTL_POKEPARAM attacker, WazaNo waza, PokeSet targets, WazaRobParam robParam)
+		{
+			this.m_pEventLauncher.Event_CheckWazaRob();
+			return false;
+		}
 		
 		// TODO
 		public void checkBattleTalk(byte pokeID, WazaNo waza) { }

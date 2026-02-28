@@ -41,8 +41,11 @@ namespace Dpr.UI
 		// TODO
 		public void OpenResume(int resultWkIndex, UIWindowID prevWindowId) { }
 		
-		// TODO
-		private void ResetParam() { }
+		private void ResetParam()
+		{
+			this.bIsSuccess = false;
+			FlagWork.SetWork(this.resultWorkIndex,2);
+		}
 		
 		// TODO
 		private IEnumerator OpOpen(UIWindowID prevWindowId) { return default; }
@@ -53,8 +56,49 @@ namespace Dpr.UI
 		// TODO
 		private void RequestLoadAssetBundle() { }
 		
-		// TODO
-		private void OnUpdate(float deltaTime) { }
+		private void OnUpdate(float deltaTime)
+		{
+			if (this.bIsActive) {
+			  switch(this.currentState) {
+			  case 0:
+			    if (this.recruitmentMember.bIsActive) {
+			      var iVar1 = this.recruitmentMember.currentState;
+			      if ((int)iVar1 == 2) {
+			        this.recruitmentMember.UpdateWaitSkip();
+			      }
+			      if ((int)iVar1 == 1) {
+			        this.recruitmentMember.UpdateWaitAllReady();
+			      }
+			      if ((int)iVar1 == 0) {
+			        this.recruitmentMember.UpdateWaitJoinMember();
+			        this.recruitmentMember.UpdateInput();
+			      }
+			    }
+			    break;
+			  case 1:
+			    this.selectCategoryAndRank.OnUpdate();
+			    break;
+			  case 2:
+			    if (this.preparation != null) {
+			      ContestMatchingPreparation.OnUpdate();
+			    }
+			    break;
+			  case 3:
+			    if (this.resume.bIsActive) {
+			      if ((int)this.resume.currentState == 3) {
+			        ContestMatchingResume.UpdateWait();
+			      }
+			      if ((int)this.resume.currentState == 2) {
+			        ContestMatchingResume.UpdateReady();
+			      }
+			    }
+			    break;
+			  case 5:
+			    UpdateExit();
+			    break;
+			  }
+			}
+		}
 		
 		// TODO
 		private void OnFinishRecruitmentMember() { }
@@ -62,8 +106,12 @@ namespace Dpr.UI
 		// TODO
 		private void OnFinishSelectCategoryAndRank() { }
 		
-		// TODO
-		private void SendNextStepDataToAll() { }
+		private void SendNextStepDataToAll()
+		{
+			if ((this.network.IsHost() & 1) != 0) {
+			  this.network.SendNoticeDataToAll(8);
+			}
+		}
 		
 		// TODO
 		private void OnRecievePacket(byte dataID, PacketReader pr) { }
@@ -77,14 +125,26 @@ namespace Dpr.UI
 		// TODO
 		private void OnReceiveSkillPointData(PacketReader pr) { }
 		
-		// TODO
-		private void OnReceiveChoiceData(PacketReader pr) { }
+		private void OnReceiveChoiceData(PacketReader pr)
+		{
+			var uVar1 = Dpr_Contest_ContestMatchingNetwork__ReceiveChoiceNetData
+			                  (this.network,pr,0);
+			if ((int)this.currentState == 1) {
+			  this.selectCategoryAndRank.OnReceiveChoice(uVar1);
+			}
+		}
 		
 		// TODO
 		private void OnReceiveCategoryAndRankData(PacketReader pr) { }
 		
-		// TODO
-		private void OnReceiveEntryNPCData(PacketReader pr) { }
+		private void OnReceiveEntryNPCData(PacketReader pr)
+		{
+			var uVar1 = Dpr_Contest_ContestMatchingNetwork__ReceiveEntryNPCData
+			                  (this.network,pr,0);
+			if ((int)this.currentState == 2) {
+			  this.preparation.OnReceiveEntryNPCData(uVar1);
+			}
+		}
 		
 		// TODO
 		private void OnReceiveEntryPlayerData(PacketReader pr) { }
@@ -104,8 +164,12 @@ namespace Dpr.UI
 		// TODO
 		private void OnJoinMine(int stationIndex) { }
 		
-		// TODO
-		private void OnJoinOtherPlayer(int stationIndex) { }
+		private void OnJoinOtherPlayer(int stationIndex)
+		{
+			if ((int)this.currentState != 0) {
+			}
+			this.recruitmentMember.OnJoinOtherPlayer();
+		}
 		
 		// TODO
 		private void OnLeaveMine() { }
@@ -146,8 +210,10 @@ namespace Dpr.UI
 		// TODO
 		private void UpdateExit() { }
 		
-		// TODO
-		private void OnFinishSession() { }
+		private void OnFinishSession()
+		{
+			ContestUtils.EmitLog(StringLiteral_11292,3);
+		}
 		
 		// TODO
 		public void CloseWindow() { }

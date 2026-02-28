@@ -14,8 +14,12 @@ namespace Dpr.Contest
 		// TODO
 		public ContestCameraSystem(ISequenceViewSystem cameraView, Camera mainCamera) : base(cameraView) { }
 		
-		// TODO
-		public override void OnLateUpdate(float deltaTime) { }
+		public override void OnLateUpdate(float deltaTime)
+		{
+			if (this.Cameras != 0) {
+			  SequenceCameraSystem.OnLateUpdate();
+			}
+		}
 		
 		// TODO
 		private void LateUpdateWaitCamera() { }

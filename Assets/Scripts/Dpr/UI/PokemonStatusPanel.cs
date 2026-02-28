@@ -32,16 +32,22 @@ namespace Dpr.UI
         protected bool isLimitPofin { get => isFromBoxOtherStatus || isFromBoxSelect || isFromZukanRegister || isFromFureai || !FlagWork.GetFlag(EvScript.EvWork.FLAG_INDEX.FE_C05R0201_ITEM_GET); }
         protected bool isLimitRibon { get => isFromZukanRegister; }
 
-        // TODO
-        public virtual void Clear() { }
+        public virtual void Clear()
+        {
+        	this._pokemonParam = null;
+        }
 
-        // TODO
-        public virtual void Setup(PokemonParam pokemonParam) { }
+        public virtual void Setup(PokemonParam pokemonParam)
+        {
+        	this._pokemonParam = pokemonParam;
+        }
 
         // TODO
         public virtual void Select(bool enabled) { }
 
-        // TODO
-        public virtual bool OnUpdate(float deltaTime) { return default; }
+        public virtual bool OnUpdate(float deltaTime)
+        {
+        	return false;
+        }
     }
 }

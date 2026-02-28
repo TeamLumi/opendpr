@@ -20,8 +20,11 @@ namespace Dpr.Demo
 			isDisableMainCamera = true;
 		}
 		
-		// TODO
-		public override void Destroy() { }
+		public override void Destroy()
+		{
+			DemoBase.Destroy();
+			this.timeLine = null;
+		}
 		
 		// TODO
 		public override IEnumerator Enter() { return default; }

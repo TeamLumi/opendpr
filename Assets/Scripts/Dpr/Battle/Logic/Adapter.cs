@@ -32,26 +32,49 @@ namespace Dpr.Battle.Logic
             m_isRetDataPrepared = false;
         }
 
-        // TODO
-        public void ChangeToNonCommMode() { }
+        public void ChangeToNonCommMode()
+        {
+        	this.m_isCommMode = false;
+        }
 
-        // TODO
-        public bool IsWaitingClientReply() { return false; }
+        public bool IsWaitingClientReply()
+        {
+        	return (int)this.m_state == 3;
+        }
 
-        // TODO
-        public unsafe void SetCmd(ushort serialNumber, ServerSequence serverSeq, ServerRequest serverReq, void* sendData, uint sendDataSize) { }
+        public unsafe void SetCmd(ushort serialNumber, ServerSequence serverSeq, ServerRequest serverReq, void* sendData, uint sendDataSize)
+        {
+        	if ((int)this.m_state != 0) {
+        	}
+        	this.m_processingRequest = (ServerRequest)(serverReq);
+        	this.m_state = (State)1;
+        	this.m_sendData.Store();
+        	this.m_returnData.Clear();
+        	this.m_isRetDataPrepared = false;
+        }
 
         // TODO
         public bool WaitCmd() { return false; }
 
-        // TODO
-        public SendData GetReturnData() { return null; }
+        public SendData GetReturnData()
+        {
+        	return this.m_returnData;
+        }
 
-        // TODO
-        public void ResetCmd() { }
+        public void ResetCmd()
+        {
+        	this.m_state = (State)0;
+        	if (this.m_isCommMode) {
+        	  this.m_iPtrNetClient.ClearBattleCommandRecvData();
+        	}
+        }
 
-        // TODO
-        public void ClearRecvData() { }
+        public void ClearRecvData()
+        {
+        	if (this.m_isCommMode) {
+        	  this.m_iPtrNetClient.ClearBattleCommandRecvData();
+        	}
+        }
 
         // TODO
         private bool startToReception() { return false; }
@@ -59,8 +82,10 @@ namespace Dpr.Battle.Logic
         // TODO
         private bool receptionClient() { return false; }
 
-        // TODO
-        public void ResetRecvBuffer() { }
+        public void ResetRecvBuffer()
+        {
+        	this.m_sendData.Clear();
+        }
 
         // TODO
         public void RecvCmd(ref ServerRequest serverReq, ref ushort commandSerialNumber, ref ServerSequence serverSeq) { }
@@ -71,23 +96,42 @@ namespace Dpr.Battle.Logic
         // TODO
         public bool ReturnCmd(in SendData returnData) { return false; }
 
-        // TODO
-        public RaidActionIconID GetRaidAction(BTL_CLIENT_ID clientID) { return RaidActionIconID.NONE; }
+        public RaidActionIconID GetRaidAction(BTL_CLIENT_ID clientID)
+        {
+        	if (this.m_iPtrNetClient != null) {
+        	  return this.m_iPtrNetClient.GetRaidAction(clientID);
+        	}
+        	return (ulong)this.m_raidActionIcon;
+        }
 
         // TODO
         public void SetRaidAction(RaidActionIconID action) { }
 
-        // TODO
-        public void ClearRaidAction() { }
+        public void ClearRaidAction()
+        {
+        	if (this.m_iPtrNetClient != null) {
+        	  this.m_iPtrNetClient.ClearRaidAction();
+        	}
+        	this.m_raidActionIcon = (RaidActionIconID)0;
+        }
 
-        // TODO
-        public bool CheckTrainerActionRequest(BTL_CLIENT_ID clientID) { return false; }
+        public bool CheckTrainerActionRequest(BTL_CLIENT_ID clientID)
+        {
+        	if (this.m_iPtrNetClient != null) {
+        	  this.m_iPtrNetClient.CheckTrainerAction(clientID);
+        	}
+        	return false;
+        }
 
         // TODO
         public void SetTrainerActionRequest() { }
 
-        // TODO
-        public void ClearTrainerActionRequest() { }
+        public void ClearTrainerActionRequest()
+        {
+        	if (this.m_iPtrNetClient != null) {
+        	  this.m_iPtrNetClient.ClearTrainerAction();
+        	}
+        }
 
         private enum State : int
         {

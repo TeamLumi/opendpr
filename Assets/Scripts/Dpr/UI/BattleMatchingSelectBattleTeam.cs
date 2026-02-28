@@ -19,8 +19,13 @@ namespace Dpr.UI
 		private bool _openedTeamSelect;
 		private State _currentState;
 		
-		// TODO
-		public void Initialize(Action onFinishState, Action onLeave, Action onSelect, Action onCancel) { }
+		public void Initialize(Action onFinishState, Action onLeave, Action onSelect, Action onCancel)
+		{
+			this._onFinishState = onFinishState;
+			this._onLeave = onLeave;
+			this._onSelect = onSelect;
+			this._onCancel = onCancel;
+		}
 		
 		// TODO
 		public void Setup(UIBattleMatching battleMatchingUI) { }

@@ -22,7 +22,9 @@ namespace Dpr.SubContents
 		// TODO
 		private void OnDisable() { }
 		
-		// TODO
-		private void OnDestroy() { }
+		private void OnDestroy()
+		{
+			this.audioInstance = null;
+		}
 	}
 }

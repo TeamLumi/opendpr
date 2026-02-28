@@ -49,11 +49,17 @@ namespace Dpr.SecretBase
 		// TODO
 		public void SetActiveField(bool value) { }
 		
-		// TODO
-		public void SetActiveCursor(bool value) { }
+		public void SetActiveCursor(bool value)
+		{
+			GameObject.SetActive(this.cursorRoot.gameObject,(value ? 1 : 0) & 1,0);
+		}
 		
-		// TODO
-		public void SetActivePointer(bool value) { }
+		public void SetActivePointer(bool value)
+		{
+			if (this.pointer != null) {
+			  GameObject.SetActive(this.pointer.gameObject,(value ? 1 : 0) & 1,0);
+			}
+		}
 		
 		// TODO
 		public void SetPointerHeight(float height) { }

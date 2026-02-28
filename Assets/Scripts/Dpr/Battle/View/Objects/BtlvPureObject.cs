@@ -32,41 +32,55 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		public void SetTranslationVec(Vector3 translation) { }
 		
-		// TODO
-		public Vector3 GetTranslationVec() { return default; }
+		public Vector3 GetTranslationVec()
+		{
+			return this._translation;
+		}
 		
 		// TODO
 		public void SetTranslationOffset(Vector3 translation) { }
 		
-		// TODO
-		public Vector3 GetTranslationOffset() { return default; }
+		public Vector3 GetTranslationOffset()
+		{
+			return this._translationOffset;
+		}
 		
 		// TODO
 		public void SetScaleVec(Vector3 scale) { }
 		
-		// TODO
-		public Vector3 GetScaleVec() { return default; }
+		public Vector3 GetScaleVec()
+		{
+			return this._scale;
+		}
 		
 		// TODO
 		public void SetScaleOffset(Vector3 scale) { }
 		
-		// TODO
-		public Vector3 GetScaleOffset() { return default; }
+		public Vector3 GetScaleOffset()
+		{
+			return this._scaleOffset;
+		}
 		
 		// TODO
 		public void SetRotationVec(Vector3 rot) { }
 		
-		// TODO
-		public Vector3 GetRotationVec() { return default; }
+		public Vector3 GetRotationVec()
+		{
+			return this._rotVec;
+		}
 		
 		// TODO
 		public void SetRotationVecOffset(Vector3 rot) { }
 		
-		// TODO
-		public Vector3 GetRotationVecOffset() { return default; }
+		public Vector3 GetRotationVecOffset()
+		{
+			return this._rotVecOffset;
+		}
 		
-		// TODO
-		public virtual bool IsActive() { return default; }
+		public virtual bool IsActive()
+		{
+			return false;
+		}
 		
 		// TODO
 		public virtual void OnUpdatePreJob(float deltaTime) { }
@@ -89,13 +103,17 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		public void AttachPoke(BOPokemon pokemon, SEQ_DEF_NODE node, bool isFollowRot, bool isFollowScl, bool isFollowAnimRot) { }
 		
-		// TODO
-		public void DetachPoke() { }
+		public void DetachPoke()
+		{
+			this._pokeFollowInfo = null;
+		}
 		
 		// TODO
 		public void AttachModel(ITranslationObject iPtrObject, Transform joint, bool isFollowPos, bool isFollowRot, bool isFollowScl, bool followAnimScl, bool followLocalScl) { }
 		
-		// TODO
-		public void DetachModel() { }
+		public void DetachModel()
+		{
+			this._objectFollowInfo = null;
+		}
 	}
 }

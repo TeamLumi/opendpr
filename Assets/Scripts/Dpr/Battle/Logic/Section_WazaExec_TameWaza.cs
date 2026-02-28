@@ -19,8 +19,10 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private bool event_TameStart(ref byte pHideTargetPokeID, ref bool pIsFailMsgDisplayed, BTL_POKEPARAM attacker, WazaParam wazaParam, PokeSet targetRec) { return default; }
 		
-		// TODO
-		private void event_TameStartFixed(BTL_POKEPARAM attacker) { }
+		private void event_TameStartFixed(BTL_POKEPARAM attacker)
+		{
+			this.m_pEventLauncher.Event_TameStartFixed(attacker);
+		}
 		
 		// TODO
 		private void event_TameSkipFixed(BTL_POKEPARAM attacker, WazaParam wazaParam) { }

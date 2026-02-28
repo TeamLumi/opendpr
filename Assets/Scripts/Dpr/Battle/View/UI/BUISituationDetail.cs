@@ -112,8 +112,13 @@ namespace Dpr.Battle.View.UI
 		// TODO
 		private void Initialize() { }
 		
-		// TODO
-		public override void UnInitialize() { }
+		public override void UnInitialize()
+		{
+			this._cachedRectTransform = 0;
+			this._canvasGroup = 0;
+			this._onShowComplete = 0;
+			this._onHideComplete = 0;
+		}
 		
 		// TODO
 		public override void OnUpdate(float deltaTime) { }

@@ -20,8 +20,12 @@ namespace Dpr.UI
 		private CountDownTimer _countTimer = new CountDownTimer();
 		private State _currentState;
 		
-		// TODO
-		public void Initialize(Action onFinishState, Action onSelect, Action<ushort> onCountDown) { }
+		public void Initialize(Action onFinishState, Action onSelect, Action<ushort> onCountDown)
+		{
+			this._onFinishState = onFinishState;
+			this._onSelect = onSelect;
+			this._onCountDown = onCountDown;
+		}
 		
 		// TODO
 		public void Setup(UIBattleMatching battleMatchingUI) { }
@@ -50,17 +54,33 @@ namespace Dpr.UI
 		// TODO
 		public void SetPreparationIconWait(int stationIndex) { }
 		
-		// TODO
-		public void StartCountDown(float startTime) { }
+		public void StartCountDown(float startTime)
+		{
+			this._isCountDown = true;
+			this._countTimer.StartCountDown();
+			UpdateUITimeText();
+		}
 		
 		// TODO
 		private void UpdateCountDown(float deltaTime) { }
 		
-		// TODO
-		private void Timeup() { }
+		private void Timeup()
+		{
+			if ((int)this._currentState == 1) {
+			  this._pokemonSelectUIPtr.TimeUp();
+			}
+		}
 		
-		// TODO
-		private bool UpdateCountDownFlow(float deltaTime) { return default; }
+		private bool UpdateCountDownFlow(float deltaTime)
+		{
+			this._countTimer.OnUpdate();
+			if ((this._countTimer.IsChangeCountDown() & 1) != 0) {
+			  UpdateUITimeText();
+			  CheckShowUICountDown();
+			  return true;
+			}
+			return false;
+		}
 		
 		// TODO
 		private void SetCountDownTime() { }

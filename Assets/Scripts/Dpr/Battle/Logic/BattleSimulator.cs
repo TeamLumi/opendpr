@@ -43,8 +43,10 @@ namespace Dpr.Battle.Logic
         // TODO
         public TypeAffinity.AffinityID CalcTypeAffinity(byte atkPokeID, byte defPokeID, WazaNo waza, bool onlyAttacker) { return TypeAffinity.AffinityID.TYPEAFF_0; }
 
-        // TODO
-        private void copyBattleEnv() { }
+        private void copyBattleEnv()
+        {
+        	this.m_battleEnv.CopyFrom(ref this.m_pSrcBattleEnv);
+        }
 
         // TODO
         private void clearServerCommandQueue() { }

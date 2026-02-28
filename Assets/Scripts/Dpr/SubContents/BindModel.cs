@@ -31,7 +31,12 @@ namespace Dpr.SubContents
         // TODO
         public string GetAssetName() { return null; }
 
-        // TODO
-        public void Destroy() { }
+        public void Destroy()
+        {
+        	this.LoadedAsset = null;
+        	this.catalog = null;
+        	this.parent = null;
+        	this.pokeParam = null;
+        }
     }
 }

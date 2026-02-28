@@ -17,7 +17,7 @@ namespace Dpr.Battle.View.UI
         [Header("[TransitionParams]")]
         [SerializeField]
         protected TransitionParams _transitionParams = TransitionParams.Factory();
-        private RectTransform _cachedRectTransform;
+        internal RectTransform _cachedRectTransform;
         protected CanvasGroup _canvasGroup;
         protected Action _onShowComplete;
         protected Action _onHideComplete;
@@ -60,8 +60,13 @@ namespace Dpr.Battle.View.UI
         // TODO
         public virtual void Reset() { }
 
-        // TODO
-        public virtual void UnInitialize() { }
+        public virtual void UnInitialize()
+        {
+        	this._cachedRectTransform = null;
+        	this._canvasGroup = null;
+        	this._onShowComplete = null;
+        	this._onHideComplete = null;
+        }
 
         // TODO
         public abstract void OnUpdate(float deltaTime);

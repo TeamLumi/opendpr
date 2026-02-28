@@ -43,8 +43,12 @@ namespace Dpr.UI
         // TODO
         public virtual void SetNavigate(NavigateType type, UINavigator navigate) { }
 
-        // TODO
-        public virtual bool IsStop(NavigateType type) { return false; }
+        public virtual bool IsStop(NavigateType type)
+        {
+        	if (type < this._isStops.Length) {
+        	  return this._isStops + (int)type[0];
+        	}
+        }
 
         public enum NavigateType
         {

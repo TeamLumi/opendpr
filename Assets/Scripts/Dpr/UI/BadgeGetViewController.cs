@@ -55,8 +55,13 @@ namespace Dpr.UI
 		// TODO
 		public IEnumerator LoadBadgeGetAnimation() { return default; }
 		
-		// TODO
-		public void PlayAnimationBadgeGet(string animeName) { }
+		public void PlayAnimationBadgeGet(string animeName)
+		{
+			this.badgeCaseObject.badgeCaseAnimator.Play(animeName,0);
+			0x3f800000.speed = this.badgeCaseObject.badgeCaseAnimator;
+			this.badgeCaseObject.badgeAnimator.Play(animeName,0);
+			0x3f800000.speed = this.badgeCaseObject.badgeAnimator;
+		}
 		
 		// TODO
 		public void PlayEffectBadgeGet(int badgeNo) { }

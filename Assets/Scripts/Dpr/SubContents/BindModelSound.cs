@@ -19,8 +19,11 @@ namespace Dpr.SubContents
         // TODO
         public uint GetID() { return 0; }
 
-        // TODO
-        public void Destroy() { }
+        public void Destroy()
+        {
+        	this.parent = null;
+        	this.catalog = null;
+        }
 
         public enum SoundType : int
         {

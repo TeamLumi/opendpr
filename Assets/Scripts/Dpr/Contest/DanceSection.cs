@@ -37,8 +37,10 @@ namespace Dpr.Contest
 		private bool isBlockLockSkill;
 		private bool isFinishDance;
 		
-		// TODO
-		public void SetScriptableObject(DanceSettings danceSettingData) { }
+		public void SetScriptableObject(DanceSettings danceSettingData)
+		{
+			this.danceSettingData = danceSettingData;
+		}
 		
 		// TODO
 		public void Initialize() { }
@@ -58,14 +60,23 @@ namespace Dpr.Contest
 		// TODO
 		private float CalcSkillAnimDuration(float skillAnimDuration, int restNoteNum) { return default; }
 		
-		// TODO
-		public void SetProgressIconSpr(Sprite iconSpr) { }
+		public void SetProgressIconSpr(Sprite iconSpr)
+		{
+			this.uiMusicProgress.SetIconSpr(iconSpr);
+		}
 		
 		// TODO
 		public void SetupNetwork(ContestMatchingNetwork network, float syncScoreSpan) { }
 		
-		// TODO
-		public bool IsReady() { return default; }
+		public bool IsReady()
+		{
+			if (((this.uiPlayerStatus.IsReady() & 1) != 0) &&
+			   (this.uiPlayerStatus.IsReady() = NotesLane.IsReady(this.notesLane), (UIPlayerStatus.IsReady(this.uiPlayerStatus) & 1) != 0))
+			{
+			  return this.uiSkillInfo.IsReady();
+			}
+			return false;
+		}
 		
 		public bool IsActive { get => active; }
 		
@@ -132,11 +143,17 @@ namespace Dpr.Contest
 		// TODO
 		private void PlayerTapActionResult(int playerIndex, PlayerType playerType, NoteTapTimingID timingID) { }
 		
-		// TODO
-		private void ShowUITimingGrade(NoteTapTimingID timingID) { }
+		private void ShowUITimingGrade(NoteTapTimingID timingID)
+		{
+			if ((this.wazaSeqPlayer.IsRunning & 1) != 0) {
+			}
+			this.notesLane.ShowTimingGrade(timingID);
+		}
 		
-		// TODO
-		private void UpdateContestWaza() { }
+		private void UpdateContestWaza()
+		{
+			this.wazaSeqPlayer.OnUpdate();
+		}
 		
 		// TODO
 		public void ForceLaunchContestWazaFromSeq() { }
@@ -180,8 +197,10 @@ namespace Dpr.Contest
 		// TODO
 		private void UpdateHeartEffect() { }
 		
-		// TODO
-		public void OnLateUpdate() { }
+		public void OnLateUpdate()
+		{
+			this.wazaSeqPlayer.OnLateUpdate();
+		}
 		
 		// TODO
 		private void DoPlayAllTween(bool forward) { }

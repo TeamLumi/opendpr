@@ -26,8 +26,13 @@ namespace Dpr.Contest
 		// TODO
 		public void Create(bool isPlayer, string playerName, Sprite frameSpr, Sprite wazaTypeIconSpr) { }
 		
-		// TODO
-		public void ResetParam() { }
+		public void ResetParam()
+		{
+			this.timer = 0;
+			this.bShow = false;
+			this.appealObj.SetActive(0);
+			Hide();
+		}
 		
 		// TODO
 		public void ShowSkillLog(bool isSameType, float showTime) { }

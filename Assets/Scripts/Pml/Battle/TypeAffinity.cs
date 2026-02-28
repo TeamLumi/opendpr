@@ -27,8 +27,19 @@ namespace Pml.Battle
         private const uint VALUE_64 = 4096;
         private static readonly uint[] VALUE_TABLE;
 
-        // TODO
-        private static uint calcLSB(uint value) { return 0; }
+        private static uint calcLSB(uint value)
+        {
+        	uint uVar1;
+        	var uVar2 = 0;
+        	do {
+        	  if (uVar2 == 0x20) {
+        	    return 0;
+        	  }
+        	  uVar1 = uVar2 & 0x1f;
+        	  uVar2 = uVar2 + 1;
+        	} while ((1 << (int)uVar1 & value) == 0);
+        	return uVar2;
+        }
 
         // TODO
         public static AffinityID CalcAffinity(PokeType wazaType, PokeType pokeType, bool isSakasaBattle) { return AffinityID.TYPEAFF_0; }
@@ -42,8 +53,20 @@ namespace Pml.Battle
         // TODO
         public static AffinityID MulAffinity(AffinityID aff1, AffinityID aff2) { return AffinityID.TYPEAFF_0; }
 
-        // TODO
-        public static AboutAffinityID ConvAboutAffinity(AffinityID aff) { return AboutAffinityID.NONE; }
+        public static AboutAffinityID ConvAboutAffinity(AffinityID aff)
+        {
+        	if (7 < (int)aff) {
+        	  return (AboutAffinityID)2;
+        	}
+        	if ((int)aff == 7) {
+        	  return (AboutAffinityID)1;
+        	}
+        	var uVar1 = 0;
+        	if ((int)aff != 0) {
+        	  uVar1 = 3;
+        	}
+        	return uVar1;
+        }
 
         // TODO
         public static AboutAffinityID TCalcAffinityAbout(PokeType wazaType, PokeType pokeType, bool isSakasaBattle) { return AboutAffinityID.NONE; }

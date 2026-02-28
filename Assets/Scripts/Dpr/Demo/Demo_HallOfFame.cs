@@ -41,11 +41,15 @@ namespace Dpr.Demo
 		// TODO
 		public void UpdateText(int index) { }
 		
-		// TODO
-		public void ToBattleScale(int index) { }
+		public void ToBattleScale(int index)
+		{
+			this.timeLine.ChangePokeBattleScale();
+		}
 		
-		// TODO
-		public void ToMenuScale(int index) { }
+		public void ToMenuScale(int index)
+		{
+			this.timeLine.ChangePokeMenuScale();
+		}
 		
 		// TODO
 		private void SetUpGraphicText(TimeLineBinder timeline) { }

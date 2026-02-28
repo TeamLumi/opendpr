@@ -10,8 +10,10 @@ namespace Dpr.Battle.Logic
 		// TODO
 		public void Execute(Result pResult, in Description description) { }
 		
-		// TODO
-		private void updateWazaExecRecord(BTL_POKEPARAM attacker, WazaNo waza) { }
+		private void updateWazaExecRecord(BTL_POKEPARAM attacker, WazaNo waza)
+		{
+			attacker.CheckPlayersPoke(waza);
+		}
 		
 		// TODO
 		private TameWazaResult execTameWaza(BTL_POKEPARAM attacker, WazaParam wazaParam, PokeSet taragets) { return default; }

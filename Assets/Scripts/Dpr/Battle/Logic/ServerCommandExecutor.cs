@@ -207,23 +207,31 @@ namespace Dpr.Battle.Logic
         // TODO
         public void StartWeather(BtlWeather weather, byte turn, byte turnUpCount, byte causePokeID) { }
 
-        // TODO
-        public void EndWeather() { }
+        public void EndWeather()
+        {
+        	this.m_pBattleEnv.m_fieldStatus.EndWeather();
+        }
 
         // TODO
         public BtlWeather TurnCheckWeather() { return BtlWeather.BTL_WEATHER_TURBULENCE; }
 
-        // TODO
-        public void SetBattleFlag(BattleFlags.Flag flag) { }
+        public void SetBattleFlag(BattleFlags.Flag flag)
+        {
+        	this.m_pBattleEnv.m_flags.Set(flag);
+        }
 
-        // TODO
-        public void RemoveBattleFlag(BattleFlags.Flag flag) { }
+        public void RemoveBattleFlag(BattleFlags.Flag flag)
+        {
+        	this.m_pBattleEnv.m_flags.Set(flag);
+        }
 
         // TODO
         public void IncBattleCount(BattleCounter.UniqueCounter counterID) { }
 
-        // TODO
-        public void DecBattleCount(BattleCounter.UniqueCounter counterID) { }
+        public void DecBattleCount(BattleCounter.UniqueCounter counterID)
+        {
+        	this.m_pBattleEnv.m_counter.Dec(counterID);
+        }
 
         // TODO
         public void IncBattleCount(BattleCounter.ClientCounter counterID, BTL_CLIENT_ID clientID) { }
@@ -291,11 +299,15 @@ namespace Dpr.Battle.Logic
         // TODO
         public void IncGModeTurnCount(byte pokeID) { }
 
-        // TODO
-        public void IncGGauge(BTL_CLIENT_ID clientID) { }
+        public void IncGGauge(BTL_CLIENT_ID clientID)
+        {
+        	GGauge.IncValue(this.m_pBattleEnv.GetGGauge(clientID),0);
+        }
 
-        // TODO
-        public void EmptyGGauge(BTL_CLIENT_ID clientID) { }
+        public void EmptyGGauge(BTL_CLIENT_ID clientID)
+        {
+        	GGauge.SetEmpty(this.m_pBattleEnv.GetGGauge(clientID),0);
+        }
 
         // TODO
         public bool TransferGRights(BtlSide side) { return false; }
@@ -309,8 +321,10 @@ namespace Dpr.Battle.Logic
         // TODO
         public void PlayedTalkEvent(byte talkID) { }
 
-        // TODO
-        public void AddEscapeInfo(BTL_CLIENT_ID clientID) { }
+        public void AddEscapeInfo(BTL_CLIENT_ID clientID)
+        {
+        	this.m_pBattleEnv.m_escapeInfo.Add(clientID);
+        }
 
         // TODO
         public bool AddWazaHandler(byte pokeID, WazaNo waza, uint subPri) { return false; }

@@ -35,8 +35,12 @@ namespace Dpr.GMS
 		// TODO
 		private void SetTextColor(Color color) { }
 		
-		// TODO
-		public void SetNewImageEnabled(bool enabled) { }
+		public void SetNewImageEnabled(bool enabled)
+		{
+			if (((this.newIconImage.enabled ^ enabled) & 1) != 0) {
+			  this.newIconImage.enabled = (enabled ? 1 : 0) & 1;
+			}
+		}
 		
 		// TODO
 		protected override void OnSelect() { }

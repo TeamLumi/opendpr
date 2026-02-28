@@ -22,8 +22,12 @@ namespace Dpr.Battle.View.Playables
 		// TODO
 		private void OnDestroy() { }
 		
-		// TODO
-		private void OnEnable() { }
+		private void OnEnable()
+		{
+			var uVar1 = ExtensionMethods__GetComponentThis<Transform>
+			                  (this,ref this._camera);
+			uVar1.enabled = 0;
+		}
 		
 		// TODO
 		public void Initialize(ISequenceViewSystem viewSystem, CameraData cameraData, Transform aimTarget) { }

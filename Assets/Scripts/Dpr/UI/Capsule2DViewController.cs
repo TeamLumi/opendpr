@@ -35,14 +35,22 @@ namespace Dpr.UI
 		// TODO
 		public bool MoveGridCell(int x, int y) { return default; }
 		
-		// TODO
-		public Capsule2DGridCell GetCurrentGridCell() { return default; }
+		public Capsule2DGridCell GetCurrentGridCell()
+		{
+			return this.currentGridCell;
+		}
 		
-		// TODO
-		public void SetCurrentGridCell(Capsule2DGridCell cell) { }
+		public void SetCurrentGridCell(Capsule2DGridCell cell)
+		{
+			this.currentGridCell = cell;
+		}
 		
-		// TODO
-		public void ResetCurrentGridCell() { }
+		public void ResetCurrentGridCell()
+		{
+			if (this.gridCells.Length != 0) {
+			  this.currentGridCell = this.gridCells[0];
+			}
+		}
 		
 		// TODO
 		public Capsule2DGridCell GetNearGridCell(Vector3 pos) { return default; }
@@ -50,8 +58,11 @@ namespace Dpr.UI
 		// TODO
 		public void Reverse() { }
 		
-		// TODO
-		private void UpdateView() { }
+		private void UpdateView()
+		{
+			this.frontObject.SetActive(this.isFrontView);
+			this.backObject.SetActive(!this.isFrontView);
+		}
 		
 		// TODO
 		private void UpdateGridCells(AffixSealData[] affixSealDatas, int sealCount) { }

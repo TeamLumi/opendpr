@@ -63,8 +63,10 @@ namespace Dpr.SealPreview
         // TODO
         public bool IsPlayEnd { get; }
 
-        // TODO
-        public TaskManager GetTaskManagerAlways() { return default; }
+        public TaskManager GetTaskManagerAlways()
+        {
+        	return this.m_iPtrTaskManagerAlways;
+        }
 
         public SealPreviewViewSystem(MainModule mainModule, BOCamera camera)
 		{
@@ -116,8 +118,10 @@ namespace Dpr.SealPreview
 
         private List<BtlvEffectInstance> sealEffectInstances;
 
-        // TODO
-        public void RegisterSealEffectInstances(List<BtlvEffectInstance> instances) { }
+        public void RegisterSealEffectInstances(List<BtlvEffectInstance> instances)
+        {
+        	this.sealEffectInstances = instances;
+        }
 
         private string setupIntroSequenceFilePath;
         private string playSequenceFilePath;
@@ -127,8 +131,12 @@ namespace Dpr.SealPreview
 
         private BtlRule btlRule;
 
-        // TODO
-        public void SetBattleRule(BtlRule btlRule) { }
+        public void SetBattleRule(BtlRule btlRule)
+        {
+        	this.btlRule = (BtlRule)(btlRule);
+        	SetupInrtoSequence();
+        	SetupThrowBallSequence();
+        }
 
         // TODO
         public bool GetSealEffectData(BtlvPos vPos, out AffixSealData[] affixSealDatas, out int affixSealCount)
@@ -161,20 +169,28 @@ namespace Dpr.SealPreview
         // TODO
         public void Play(string path, bool isKeepResource = false) { }
 
-        // TODO
-        public BattleSequenceSystem GetSequenceSystem() { return default; }
+        public BattleSequenceSystem GetSequenceSystem()
+        {
+        	return this.m_iPtrSequenceSystem;
+        }
 
-        // TODO
-        public BattleCharacterSystem GetCharacterSystem() { return default; }
+        public BattleCharacterSystem GetCharacterSystem()
+        {
+        	return this.m_iPtrCharacterSystem;
+        }
 
         // TODO
         public SequenceCameraSystem GetCameraSystem() { return default; }
 
-        // TODO
-        public BattleWeatherSystem GetBattleWeatherSystem() { return default; }
+        public BattleWeatherSystem GetBattleWeatherSystem()
+        {
+        	return this.m_iPtrWeatherSystem;
+        }
 
-        // TODO
-        public BattleGroundEffectSystem GetBattleGroundEffectSystem() { return default; }
+        public BattleGroundEffectSystem GetBattleGroundEffectSystem()
+        {
+        	return this.m_iPtrBattleGroundEffectSystem;
+        }
 
         public bool IsStencilEnable { get; set; }
         public float blurry { get; set; }
@@ -187,8 +203,10 @@ namespace Dpr.SealPreview
 		// TODO
 		public BTL_POKEPARAM GetBattlePokeParam(BtlvPos pos) { return default; }
 		
-		// TODO
-		public MainModule GetMainModule() { return default; }
+		public MainModule GetMainModule()
+		{
+			return this.m_pMainModule;
+		}
 		
 		// TODO
 		public Dictionary<int, HashSet<BtlvEffectInstance>> GetParticleVectorHashTable() { return default; }
@@ -196,14 +214,21 @@ namespace Dpr.SealPreview
 		// TODO
 		public Stack<Tuple<int, uint, uint>> GetSoundPlayingIDHashTable() { return default; }
 		
-		// TODO
-		public TaskManager GetTaskManager() { return default; }
+		public TaskManager GetTaskManager()
+		{
+			return this.m_iPtrTaskManager;
+		}
 		
-		// TODO
-		public TaskManager GetTaskManagerLate() { return default; }
+		public TaskManager GetTaskManagerLate()
+		{
+			return this.m_iPtrTaskManagerLate;
+		}
 		
-		// TODO
-		public BTLV_WAZA_EFF_PARAM GetWazaParam() { return default; }
+		public BTLV_WAZA_EFF_PARAM GetWazaParam()
+		{
+			var uVar1 = new NotImplementedException();
+			return null;
+		}
 		
 		// TODO
 		public void OnUpdate(float deltaTime) { }
@@ -211,8 +236,11 @@ namespace Dpr.SealPreview
 		// TODO
 		public void SEQ_CMD_ResetDefaultCamera(int frame, SEQ_DEF_MOVETYPE moveType, SequenceCameraSystem system) { }
 		
-		// TODO
-		public BTLV_WAZA_EFF_PARAM SetWazaParam(BTLV_WAZA_EFF_PARAM param) { return default; }
+		public BTLV_WAZA_EFF_PARAM SetWazaParam(BTLV_WAZA_EFF_PARAM param)
+		{
+			var uVar1 = new NotImplementedException();
+			return null;
+		}
 		
 		public void CheckWazaDataPath_Particle(ref string path, int idx, bool isBallEffect, bool isCapture, bool isAttributeEffect, bool isStreamLineEffect)
 		{
@@ -222,8 +250,12 @@ namespace Dpr.SealPreview
                 path = m_battleDataTable.BallEffectData[(int)m_effectBallId[idx]].CaptureEffectAssetbundleName;
 		}
 		
-		// TODO
-		private BallId __SeqComFunc_GetEffectBallId__(int idx) { return default; }
+		private BallId __SeqComFunc_GetEffectBallId__(int idx)
+		{
+			if (idx < this.m_effectBallId.Length) {
+			  return this.m_effectBallId + (int)idx[0];
+			}
+		}
 		
 		// TODO
 		public BtlvBallInfo SeqComFunc_GetEffectBallInfo(int idx) { return default; }
@@ -231,20 +263,29 @@ namespace Dpr.SealPreview
 		// TODO
 		public string GetBallModelPath(int idx) { return default; }
 		
-		// TODO
-		public string GetBttleWazaModelPath(string idx) { return default; }
+		public string GetBttleWazaModelPath(string idx)
+		{
+			var uVar1 = new NotImplementedException();
+			return default;
+		}
 		
 		// TODO
 		public void GetDefaultPokePos(BtlvPos vPos, ref Vector3 pos, ref int deg, SEQ_DEF_DEFAULT_PLACEMENT placement = SEQ_DEF_DEFAULT_PLACEMENT.SEQ_DEF_DEFAULT_PLACEMENT_DEFAULT) { }
 		
-		// TODO
-		public PartyDesc __GetPartySetupParam__(byte clientId) { return default; }
+		public PartyDesc __GetPartySetupParam__(byte clientId)
+		{
+			var uVar1 = new NotImplementedException();
+			return null;
+		}
 		
 		// TODO
 		public BOPokemon GetPokeModel(BtlvPos vPos) { return default; }
 		
-		// TODO
-		public Size GetPokeSize(BattleViewSystem.BattleViewSide side, bool isGPoke = false) { return default; }
+		public Size GetPokeSize(BattleViewSystem.BattleViewSide side, bool isGPoke = false)
+		{
+			var uVar1 = new NotImplementedException();
+			return (Size)0;
+		}
 		
 		// TODO
 		public BattleViewCharacter GetTrainerModel(BtlvPos vPos) { return default; }
@@ -258,20 +299,28 @@ namespace Dpr.SealPreview
 		// TODO
 		public void ResetTrainer(BtlvPos vPos, bool isOrigin, SEQ_DEF_DEFAULT_PLACEMENT placement = SEQ_DEF_DEFAULT_PLACEMENT.SEQ_DEF_DEFAULT_PLACEMENT_DEFAULT) { }
 		
-		// TODO
-		public void SeqComFunc_CalcPokeDir(Vector3 nowPos, BtlvPos trgPoke, SEQ_DEF_NODE trgNode, ref Vector3 retRot, bool isVertical) { }
+		public void SeqComFunc_CalcPokeDir(Vector3 nowPos, BtlvPos trgPoke, SEQ_DEF_NODE trgNode, ref Vector3 retRot, bool isVertical)
+		{
+			var uVar1 = new NotImplementedException();
+		}
 		
-		// TODO
-		public void SeqComFunc_CalcPosDir(Vector3 nowPos, Vector3 trgPos, ref Vector3 retRot, bool isVertical) { }
+		public void SeqComFunc_CalcPosDir(Vector3 nowPos, Vector3 trgPos, ref Vector3 retRot, bool isVertical)
+		{
+			var uVar1 = new NotImplementedException();
+		}
 		
-		// TODO
-		public void SeqComFunc_GetPokeFiledPos(ref Vector3 retPos, ref Vector3 retRot, BtlvPos plater, bool isAttack) { }
+		public void SeqComFunc_GetPokeFiledPos(ref Vector3 retPos, ref Vector3 retRot, BtlvPos plater, bool isAttack)
+		{
+			var uVar1 = new NotImplementedException();
+		}
 		
 		// TODO
 		public void SeqComFunc_GetPokeRelativePos(ref RELARIVE_POKE_OPTION opt, ref Vector3 pRetPos, ref Vector3 pRetRot, ref Vector3 pRetScale, bool isCameraAdjust) { }
 		
-		// TODO
-		public void SeqComFunc_GetSpecialPos(SEQ_DEF_SPPOS trgType, ref Vector3 retPos, ref Vector3 retRot) { }
+		public void SeqComFunc_GetSpecialPos(SEQ_DEF_SPPOS trgType, ref Vector3 retPos, ref Vector3 retRot)
+		{
+			var uVar1 = new NotImplementedException();
+		}
 		
 		// TODO
 		public BtlvPos SeqComFunc_GetTargetCharaVPos(SEQ_DEF_TRAINER target, int index = 0) { return default; }
@@ -282,62 +331,94 @@ namespace Dpr.SealPreview
 		// TODO
 		public BattleViewCharacter SeqComFunc_GetTargetChara(SEQ_DEF_TRAINER_ADD trg, int idx = 0) { return default; }
 		
-		// TODO
-		public int SeqComFunc_GetTargetPokeNum(bool isCheck = true) { return default; }
+		public int SeqComFunc_GetTargetPokeNum(bool isCheck = true)
+		{
+			var uVar1 = new NotImplementedException();
+			return 0;
+		}
 		
 		// TODO
 		public BtlvPos SeqComFunc_GetTargetPokeSub(SEQ_DEF_POS target) { return default; }
 		
-		// TODO
-		public BtlvPos SeqComFunc_GetTargetPoke_Org(int idx) { return default; }
+		public BtlvPos SeqComFunc_GetTargetPoke_Org(int idx)
+		{
+			var uVar1 = new NotImplementedException();
+			return (BtlvPos)0;
+		}
 		
 		// TODO
 		public BtlvPos SeqComFunc_GetTargetPoke(SEQ_DEF_POS target, int index = 0) { return default; }
 		
-		// TODO
-		public bool SeqComFunc_IsFlipEffect(BtlvPos target, BtlvPos subTarget) { return default; }
+		public bool SeqComFunc_IsFlipEffect(BtlvPos target, BtlvPos subTarget)
+		{
+			return false;
+		}
 		
 		// TODO
 		public void SeqComFunc_MoveRelativePoke(ITranslationObject iPtrObj, int frame, RELARIVE_POKE_OPTION opt, bool isTrainer = false) { }
 		
-		// TODO
-		public void SeqComFunc_MoveSpecialPos(ITranslationObject iPtrObj, int frame, SEQ_DEF_SPPOS trgType, Vector3 ofs, bool isRotate, bool isFlip) { }
+		public void SeqComFunc_MoveSpecialPos(ITranslationObject iPtrObj, int frame, SEQ_DEF_SPPOS trgType, Vector3 ofs, bool isRotate, bool isFlip)
+		{
+			var uVar1 = new NotImplementedException();
+		}
 		
-		// TODO
-		public void __SetCanChangePinch__(bool value) { }
+		public void __SetCanChangePinch__(bool value)
+		{
+			var uVar1 = new NotImplementedException();
+		}
 		
-		// TODO
-		public void SetIsSoundPlayingFinishCheckInvalid(bool value) { }
+		public void SetIsSoundPlayingFinishCheckInvalid(bool value)
+		{
+			this.m_isSoundPlayingFinishCheckInvalid = (value ? 1 : 0) & 1;
+		}
 		
-		// TODO
-		public void __SetReqCheckPinch__(bool value) { }
+		public void __SetReqCheckPinch__(bool value)
+		{
+			var uVar1 = new NotImplementedException();
+		}
 		
-		// TODO
-		public void SetTerrainChipVisibility(bool disp) { }
+		public void SetTerrainChipVisibility(bool disp)
+		{
+			var uVar1 = new NotImplementedException();
+		}
 		
-		// TODO
-		public void StartWeather(BtlWeather weather) { }
+		public void StartWeather(BtlWeather weather)
+		{
+			var uVar1 = new NotImplementedException();
+		}
 		
 		// TODO
 		public void SetSuspendSequenceFunc(SEQ_DEF_WAIT type) { }
 		
-		// TODO
-		private bool __SeqComWaitFunc_Message__() { return default; }
+		private bool __SeqComWaitFunc_Message__()
+		{
+			return true;
+		}
 		
-		// TODO
-		private bool __SeqComWaitFunc_LoadPoke__() { return default; }
+		private bool __SeqComWaitFunc_LoadPoke__()
+		{
+			return true;
+		}
 		
-		// TODO
-		private bool __SeqComWaitFunc_SelectMessage__() { return default; }
+		private bool __SeqComWaitFunc_SelectMessage__()
+		{
+			return true;
+		}
 		
-		// TODO
-		private bool __SeqComWaitFunc_UIBag__() { return default; }
+		private bool __SeqComWaitFunc_UIBag__()
+		{
+			return true;
+		}
 		
-		// TODO
-		private bool __SeqComWaitFunc_UITrainerName__() { return default; }
+		private bool __SeqComWaitFunc_UITrainerName__()
+		{
+			return true;
+		}
 		
-		// TODO
-		private bool __SeqComWaitFunc_UIFog__() { return default; }
+		private bool __SeqComWaitFunc_UIFog__()
+		{
+			return true;
+		}
 		
 		// TODO
 		public bool CheckCanPlayCommand(CommandParam param) { return default; }
@@ -360,11 +441,16 @@ namespace Dpr.SealPreview
 		// TODO
 		private void __SaveFog__() { }
 		
-		// TODO
-		private bool __WaitSequenceResource__() { return default; }
+		private bool __WaitSequenceResource__()
+		{
+			return true;
+		}
 		
-		// TODO
-		private bool __WaitLoadSequence__() { return default; }
+		private bool __WaitLoadSequence__()
+		{
+			this.m_iPtrSequenceSystem.IsPreLoaded;
+			return false;
+		}
 		
 		// TODO
 		private bool __IsWazaMsgCommandSeq__() { return default; }
@@ -372,8 +458,11 @@ namespace Dpr.SealPreview
 		// TODO
 		private void __StartWazaMsgCommand__() { }
 		
-		// TODO
-		private bool __WaitWazaMsgCommand__() { return default; }
+		private bool __WaitWazaMsgCommand__()
+		{
+			this.m_wazaMsgFrame = this.m_wazaMsgFrame - 1;
+			return this.m_wazaMsgFrame - 1 >> 0x1f;
+		}
 		
 		// TODO
 		private bool __IsSuspendSequenceSystem__ { get; }
@@ -390,8 +479,10 @@ namespace Dpr.SealPreview
 		// TODO
 		private BtlvBallInfo __GetBallInfo__(BtlvPos vPos) { return default; }
 		
-		// TODO
-		public bool IsFriendExist() { return default; }
+		public bool IsFriendExist()
+		{
+			return false;
+		}
 		
 		// TODO
 		private void __PlaySequenceCore__(string path, bool keepResource = false) { }
@@ -439,7 +530,9 @@ namespace Dpr.SealPreview
 		// TODO
 		private void PlaySequenceCore(string path, bool isKeepResource = false) { }
 		
-		// TODO
-		private bool __WaitSequence__() { return default; }
+		private bool __WaitSequence__()
+		{
+			return (int)this.m_sequenceSeq == 0;
+		}
 	}
 }

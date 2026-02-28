@@ -281,8 +281,12 @@ namespace Dpr.UI
         // TODO
         public static void CloseOverUIWindows() { }
 
-        // TODO
-        public void Awake() { }
+        public void Awake()
+        {
+        	var uVar1 = UnityEngine_Component__GetComponentInChildren<object>
+        	                  (this);
+        	this._animator = uVar1;
+        }
 
         // TODO
         public void Open(UIWindowID prevWindowId, bool isDuckOn = false) { }
@@ -347,20 +351,51 @@ namespace Dpr.UI
         // TODO
         private void SetSelectBoxMode(bool isEnable) { }
 
-        // TODO
-        private void SetMarkingMode(bool isEnable) { }
+        private void SetMarkingMode(bool isEnable)
+        {
+        	var uVar1 = 2;
+        	if (!isEnable) {
+        	  uVar1 = 0;
+        	}
+        	this._controlType = (ControlType)(uVar1);
+        	SetupKeyguide();
+        }
 
-        // TODO
-        private void SetWallPaperSelectMode(bool isEnable) { }
+        private void SetWallPaperSelectMode(bool isEnable)
+        {
+        	var uVar1 = 3;
+        	if (!isEnable) {
+        	  uVar1 = 0;
+        	}
+        	this._controlType = (ControlType)(uVar1);
+        	if (!isEnable) {
+        	  ExtensionMethods.SetActive(this._cursorBody,1);
+        	}
+        	SetupKeyguide();
+        }
 
         // TODO
         private void SetupKeyguide() { }
 
-        // TODO
-        private void SetBoxButtonGray(bool isGray) { }
+        private void SetBoxButtonGray(bool isGray)
+        {
+        	var uVar1 = Shader.PropertyToID(StringLiteral_11179);
+        	var uVar3 = 0x3f800000;
+        	if (!isGray) {
+        	  uVar3 = 0;
+        	}
+        	uVar3.SetFloat(this._matBoxButton,uVar1);
+        }
 
-        // TODO
-        private void SetSearchButtonGray(bool isGray) { }
+        private void SetSearchButtonGray(bool isGray)
+        {
+        	var uVar1 = Shader.PropertyToID(StringLiteral_11179);
+        	var uVar3 = 0x3f800000;
+        	if (!isGray) {
+        	  uVar3 = 0;
+        	}
+        	uVar3.SetFloat(this._matSearchButton,uVar1);
+        }
 
         // TODO
         private bool IsSwap() { return false; }
@@ -389,8 +424,22 @@ namespace Dpr.UI
         // TODO
         private bool UpdateNetworkTrade(float deltaTime) { return false; }
 
-        // TODO
-        public void ToNextPhase(NetTradePhase next = NetTradePhase.None) { }
+        public void ToNextPhase(NetTradePhase next = NetTradePhase.None)
+        {
+        	ExtensionMethods.SetActive(this._darkScreen,0);
+        	var uVar1 = 0.IsOpen;
+        	if ((uVar1 & 1) == 0) {
+        	  this._isPhaseProcDone = false;
+        	}
+        	else {
+        	  MsgWindowManager.CloseMsg(0);
+        	  this._isPhaseProcDone = false;
+        	}
+        	if ((int)next != 0) {
+        	  this._tradeParam.tradePhase = next;
+        	}
+        	this._tradeParam.tradePhase = this._tradeParam.tradePhase + 1;
+        }
 
         // TODO
         public void SetOtherPokeParam(PokemonParam param, int cassetVersion) { }
@@ -777,8 +826,15 @@ namespace Dpr.UI
         // TODO
         private void SetSearchMode(bool isEnable) { }
 
-        // TODO
-        private void SetSearchSubMode(bool isEnable) { }
+        private void SetSearchSubMode(bool isEnable)
+        {
+        	var uVar1 = 4;
+        	if (isEnable) {
+        	  uVar1 = 5;
+        	}
+        	this._controlType = (ControlType)(uVar1);
+        	SetupKeyguide();
+        }
 
         // TODO
         private void ApplyBoxTrayBySearch() { }
@@ -996,8 +1052,19 @@ namespace Dpr.UI
                 is_active = false;
             }
 
-            // TODO
-            public void SetActive() { }
+            public void SetActive()
+            {
+            	if (((((((int)this.mons == 0) && (this.type1 == '\x12')) &&
+            	      (this.type2 == '\x12')) &&
+            	     (((int)this.waza == 0 && (this.waza_machine == 0x7fffffff)))) &&
+            	    (((int)this.tokusei == 0 &&
+            	     (((int)this.seikaku == 0x19 && (this.sex == '\x03')))))) &&
+            	   (((int)this.item == 2 &&
+            	    ((this.mark == 0 && (this.team == 6)))))) {
+            	  this.is_active = this.form != 0;
+            	}
+            	this.is_active = true;
+            }
         }
 
         public class SearchItemData

@@ -303,8 +303,26 @@ namespace Dpr.Battle.Logic.Handler
 		// TODO
 		public static bool Add(EventSystem pEventSystem, BTL_POKEPARAM poke, WazaNo waza, uint subPri) { return default; }
 		
-		// TODO
-		public static bool canRegister(EventSystem pEventSystem, byte pokeID, WazaNo waza) { return default; }
+		public static bool canRegister(EventSystem pEventSystem, byte pokeID, WazaNo waza)
+		{
+			var uVar2 = pEventSystem.GetFactorContainer();
+			var lVar3 = uVar2.SeekFactor(0,pokeID);
+			if (lVar3 != null) {
+			  var iVar4 = 8;
+			  do {
+			    var sVar1 = lVar3.GetSubID();
+			    if (sVar1 == waza) {
+			      return false;
+			    }
+			    if (iVar4 == 0) {
+			      return false;
+			    }
+			    lVar3 = uVar2.GetNextFactor(lVar3,0);
+			    iVar4 = iVar4 + -1;
+			  } while (lVar3 != null);
+			}
+			return true;
+		}
 		
 		// TODO
 		public static void Remove(EventSystem pEventSystem, BTL_POKEPARAM poke, WazaNo waza) { }
@@ -315,8 +333,16 @@ namespace Dpr.Battle.Logic.Handler
 		// TODO
 		public static void removeHandlerForce(EventSystem pEventSystem, byte pokeID, WazaNo waza) { }
 		
-		// TODO
-		public static void RemoveForceAll(EventSystem eventSystem, BTL_POKEPARAM poke) { }
+		public static void RemoveForceAll(EventSystem eventSystem, BTL_POKEPARAM poke)
+		{
+			var uVar1 = poke.GetID();
+			var uVar2 = eventSystem.GetFactorContainer();
+			var lVar3 = uVar2.SeekFactor(0,uVar1);
+			while (lVar3 != 0) {
+			  eventSystem.RemoveFactor(lVar3);
+			  lVar3 = uVar2.SeekFactor(0,uVar1);
+			}
+		}
 		
 		// TODO
 		public static bool common_checkActStart_isMyWaza(in EventFactor.EventHandlerArgs args, in byte pokeID) { return default; }
@@ -528,11 +554,56 @@ namespace Dpr.Battle.Logic.Handler
 		// TODO
 		public static void handler_Makituku_Str(in EventFactor.EventHandlerArgs args, byte pokeID) { }
 		
-		// TODO
 		public static bool makituku_GetStr(out ushort pStrID, WazaNo wazano)
 		{
-			pStrID = default;
-			return default;
+			if ((int)wazano < 0x81) {
+			  if ((int)wazano < 0x24) {
+			    if ((int)wazano == 0x14) {
+			      pStrID = (ushort)0x43e;
+			      return true;
+			    }
+			    if ((int)wazano == 0x23) {
+			      pStrID = (ushort)0x448;
+			      return true;
+			    }
+			  }
+			  else {
+			    if ((int)wazano == 0x53) {
+			      pStrID = (ushort)0x460;
+			      return true;
+			    }
+			    if ((int)wazano == 0x80) {
+			      pStrID = (ushort)0x452;
+			      return true;
+			    }
+			  }
+			}
+			else if ((int)wazano < 0x149) {
+			  if ((int)wazano == 0xfa) {
+			    pStrID = (ushort)0x45c;
+			    return true;
+			  }
+			  if ((int)wazano == 0x148) {
+			    pStrID = (ushort)0x468;
+			    return true;
+			  }
+			}
+			else {
+			  if ((int)wazano == 0x1cf) {
+			    pStrID = (ushort)0x464;
+			    return true;
+			  }
+			  if ((int)wazano == 0x263) {
+			    pStrID = (ushort)0x680;
+			    return true;
+			  }
+			  if ((int)wazano == 0x30b) {
+			    pStrID = (ushort)0x7b6;
+			    return true;
+			  }
+			}
+			pStrID = (ushort)0x7de;
+			return false;
 		}
 		
 		// TODO
@@ -550,8 +621,18 @@ namespace Dpr.Battle.Logic.Handler
 		// TODO
 		public static void handler_IkariNoMaeba(in EventFactor.EventHandlerArgs args, byte pokeID) { }
 		
-		// TODO
-		public static ushort common_CalcFixDamageByDefenderHp(BTL_POKEPARAM target, byte numerator, byte denominator) { return default; }
+		public static ushort common_CalcFixDamageByDefenderHp(BTL_POKEPARAM target, byte numerator, byte denominator)
+		{
+			var uVar2 = target.GetValue(0xe);
+			var uVar1 = 0;
+			if ((denominator & 0xff) != 0) {
+			  uVar1 = ((uVar2 & 0xffff) * (numerator & 0xff)) / (denominator & 0xff);
+			}
+			if ((uVar1 & 0xffff) == 0) {
+			  uVar1 = 1;
+			}
+			return (ushort)(uVar1);
+		}
 		
 		// TODO
 		public static EventFactor.EventHandlerTable[] ADD_Gamusyara() { return default; }
@@ -963,8 +1044,49 @@ namespace Dpr.Battle.Logic.Handler
 		// TODO
 		public static EventFactor.EventHandlerTable[] ADD_MultiAttack() { return default; }
 		
-		// TODO
-		public static PokeType multiAttack_GetType(ItemNo item) { return default; }
+		public static PokeType multiAttack_GetType(ItemNo item)
+		{
+			var uVar1 = 10;
+			switch(item) {
+			case 0x388:
+			  return (PokeType)1;
+			case 0x389:
+			  return (PokeType)2;
+			case 0x38a:
+			  return (PokeType)3;
+			case 0x38b:
+			  return (PokeType)4;
+			case 0x38c:
+			  return (PokeType)5;
+			case 0x38d:
+			  return (PokeType)6;
+			case 0x38e:
+			  return (PokeType)7;
+			case 0x38f:
+			  return (PokeType)8;
+			case 0x390:
+			  return (PokeType)9;
+			case 0x391:
+			  break;
+			case 0x392:
+			  return (PokeType)0xb;
+			case 0x393:
+			  return (PokeType)0xc;
+			case 0x394:
+			  return (PokeType)0xd;
+			case 0x395:
+			  return (PokeType)0xe;
+			case 0x396:
+			  return (PokeType)0xf;
+			case 0x397:
+			  return (PokeType)0x10;
+			case 0x398:
+			  return (PokeType)0x11;
+			default:
+			  uVar1 = 0;
+			}
+			return uVar1;
+		}
 		
 		// TODO
 		public static void handler_MultiAttack(in EventFactor.EventHandlerArgs args, byte pokeID) { }
@@ -975,8 +1097,13 @@ namespace Dpr.Battle.Logic.Handler
 		// TODO
 		public static EventFactor.EventHandlerTable[] ADD_TechnoBaster() { return default; }
 		
-		// TODO
-		public static void technoBaster_GetParam(ref PokeType pType, ref byte pEffectIdx, ItemNo item) { }
+		public static void technoBaster_GetParam(ref PokeType pType, ref byte pEffectIdx, ItemNo item)
+		{
+			if ((item - 0x74U & 0xffff) < 4) {
+			  pType = (PokeType)((char)(0xe090c0a >> (int)((item - 0x74U & 3) << 3)));
+			  pEffectIdx = (byte)((char)item + -0x73);
+			}
+		}
 		
 		// TODO
 		public static void handler_TechnoBaster(in EventFactor.EventHandlerArgs args, byte pokeID) { }
@@ -1125,11 +1252,13 @@ namespace Dpr.Battle.Logic.Handler
 		// TODO
 		public static void handler_Itamiwake(in EventFactor.EventHandlerArgs args, byte pokeID) { }
 		
-		// TODO
 		public static void itamiwake_CalcShiftHP(out int pAttackerHP, out int pDefenderHP, BTL_POKEPARAM pAttacker, BTL_POKEPARAM pDefender)
 		{
-            pAttackerHP = default;
-            pDefenderHP = default;
+			var iVar2 = pAttacker.GetValue(0xe);
+			var iVar3 = pDefender.GetValue(0xe);
+			var uVar1 = (uint)(iVar3 + iVar2) >> 1;
+			pAttackerHP = uVar1 - iVar2;
+			pDefenderHP = uVar1 - iVar3;
 		}
 		
 		// TODO

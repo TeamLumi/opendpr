@@ -20,8 +20,10 @@ namespace Dpr.UI
 		// TODO
 		public void Initialize(Action<IUIButton> onSelectButton, Action<IUIButton> onUnSelectButton) { }
 		
-		// TODO
-		public void SetActive(bool isActive) { }
+		public void SetActive(bool isActive)
+		{
+			GameObject.SetActive(this.buttonsParentTransform.gameObject,(isActive ? 1 : 0) & 1,0);
+		}
 		
 		// TODO
 		public int GetActiveButtonIndex(int index) { return default; }
@@ -41,8 +43,10 @@ namespace Dpr.UI
 		// TODO
 		public bool MoveSelect(int value) { return default; }
 		
-		// TODO
-		public void ResumeMoveSelect() { }
+		public void ResumeMoveSelect()
+		{
+			this.indexSelector.ResumeMoveState();
+		}
 		
 		// TODO
 		private void SetSelectIndex(int index) { }

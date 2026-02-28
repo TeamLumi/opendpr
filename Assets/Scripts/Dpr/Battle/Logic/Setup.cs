@@ -94,8 +94,14 @@ namespace Dpr.Battle.Logic
 		// TODO
 		public static void BATTLE_PARAM_AllocRecBuffer(BATTLE_SETUP_PARAM bsp) { }
 		
-		// TODO
-		private static uint getBattleInstTrainerAIBit(BtlRule rule) { return default; }
+		private static uint getBattleInstTrainerAIBit(BtlRule rule)
+		{
+			var uVar1 = 0x4f;
+			if ((int)rule != 1) {
+			  uVar1 = 0x47;
+			}
+			return uVar1;
+		}
 		
 		// TODO
 		public static void BTL_SETUP_BattleInst(BATTLE_SETUP_PARAM pSetupParam, PokeParty pPlayerParty, TowerTrID instTrainerEnemy1, PokeParty instEnemy1Party, SealTemplateID[] instEnemy1SealTIDs, TowerTrID instTrainerEnemy2, PokeParty instEnemy2Party, SealTemplateID[] instEnemy2SealTIDs, BTL_FIELD_SITUATION pFieldSituation, BtlRule rule) { }
@@ -112,8 +118,10 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private static byte GetMaxFollowPokeLevel() { return default; }
 		
-		// TODO
-		private static byte GetCaptureLevelCap() { return default; }
+		private static byte GetCaptureLevelCap()
+		{
+			return 100;
+		}
 		
 		// TODO
 		private static byte GetExpLevelCap() { return default; }

@@ -30,11 +30,11 @@ namespace Dpr.GMS
 		private int currentSelectIndex;
 		private bool bIsPlayingInput;
 		private bool bInputEnabled;
-		private Action<AUIGMSScrollItem> onRequiredItem;
-		private Action<int> onMoveScrollView;
-		private Action onSelect;
-		private Action onCancel;
-		private Action onReleaseInput;
+		internal Action<AUIGMSScrollItem> onRequiredItem;
+		internal Action<int> onMoveScrollView;
+		internal Action onSelect;
+		internal Action onCancel;
+		internal Action onReleaseInput;
 		
 		// TODO
 		public void Initialize(Action<AUIGMSScrollItem> onRequiredItem, Action<int> onMoveScrollView, Action onSelect, Action onCancel, Action onReleaseInput) { }
@@ -42,8 +42,14 @@ namespace Dpr.GMS
 		// TODO
 		public void Setup(int dataNum, int startIndex) { }
 		
-		// TODO
-		public void OnFinalize() { }
+		public void OnFinalize()
+		{
+			this.onRequiredItem = null;
+			this.onMoveScrollView = null;
+			this.onSelect = null;
+			this.onCancel = null;
+			this.onReleaseInput = null;
+		}
 		
 		public int CurrentSelectIndex { get => currentSelectIndex; }
 		public bool IsPlayingInput { get => bIsPlayingInput; }
@@ -52,8 +58,10 @@ namespace Dpr.GMS
 		// TODO
 		public AUIGMSScrollItem GetScrollItemByIndex(int index) { return default; }
 		
-		// TODO
-		public void SetInputEnabled(bool enabled) { }
+		public void SetInputEnabled(bool enabled)
+		{
+			this.bInputEnabled = (enabled ? 1 : 0) & 1;
+		}
 		
 		// TODO
 		public void Show(string title = "") { }
@@ -67,8 +75,10 @@ namespace Dpr.GMS
 		// TODO
 		private void SetListTitle(string title) { }
 		
-		// TODO
-		private void SetAnchoredPosition(Vector2 anchoredPosition) { }
+		private void SetAnchoredPosition(Vector2 anchoredPosition)
+		{
+			this.scrollViewRect.set_anchoredPosition();
+		}
 		
 		// TODO
 		public void OnUpdate() { }
@@ -82,8 +92,14 @@ namespace Dpr.GMS
 		// TODO
 		public void DoMoveScrollView(int moveIndex, bool playMoveSE = true, bool isInput = true) { }
 		
-		// TODO
-		public void ReleaseInput() { }
+		public void ReleaseInput()
+		{
+			this.bIsPlayingInput = false;
+			this.scrollView.ResumeMoveSelect();
+			if (this.onReleaseInput != null) {
+			  this.onReleaseInput.Invoke();
+			}
+		}
 		
 		// TODO
 		private void OnRequiredItemData(IUIButton button) { }

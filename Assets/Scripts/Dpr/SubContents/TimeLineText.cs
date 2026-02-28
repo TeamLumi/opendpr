@@ -15,8 +15,10 @@ namespace Dpr.SubContents
             "DLP_halloffame_demo_015", "DLP_halloffame_demo_014", "DLP_halloffame_demo_013",
         };
 		
-		// TODO
-		private void OnEnable() { }
+		private void OnEnable()
+		{
+			Transform.SetSiblingIndex(Text.get_rectTransform(this.text),100,0);
+		}
 		
 		// TODO
 		private void Awake() { }

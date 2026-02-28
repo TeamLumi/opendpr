@@ -49,8 +49,10 @@ namespace Dpr.Battle.View.Systems
 		// TODO
 		private void SetInitColors(float weight) { }
 		
-		// TODO
-		private bool CheckAlreadyChanged() { return default; }
+		private bool CheckAlreadyChanged()
+		{
+			return this._iPtrWeatherEffectMain != null;
+		}
 		
 		// TODO
 		private IEnumerator EffectStop(BtlvWeather nextWeather) { return default; }

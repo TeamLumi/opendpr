@@ -7,8 +7,12 @@ namespace Dpr.Battle.Logic
 		// TODO
 		public void Execute(Result pResult, in Description description) { }
 		
-		// TODO
-		private bool incTurnCount(EffectType effect) { return default; }
+		private bool incTurnCount(EffectType effect)
+		{
+			this.m_pServerCmdPutter.IncFieldTurnCount(effect)
+			;
+			return false;
+		}
 		
 		// TODO
 		private void removeEffect(EffectType effect) { }

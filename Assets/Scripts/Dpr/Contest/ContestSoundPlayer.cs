@@ -85,11 +85,16 @@ namespace Dpr.Contest
 		// TODO
 		private float GetBGMOptionVolume() { return default; }
 		
-		// TODO
-		public void StopBGM() { }
+		public void StopBGM()
+		{
+			this.audioManager.StopBgm();
+		}
 		
-		// TODO
-		public void PlayTitleBgm() { }
+		public void PlayTitleBgm()
+		{
+			this.audioManager.SetBgmEvent(0x14ada707,0);
+			PlayBGM(0x3f0a5f97);
+		}
 		
 		// TODO
 		public void PlayVisualBgm(Action onFinished) { }
@@ -97,8 +102,10 @@ namespace Dpr.Contest
 		// TODO
 		private void PlayBGM(uint eventId, [Optional] Action onFinished) { }
 		
-		// TODO
-		public void CreateMainBGM(uint eventId) { }
+		public void CreateMainBGM(uint eventId)
+		{
+			this.contestBGMInstance = this.audioManager.CreateSe(eventId,0);
+		}
 		
 		// TODO
 		public void PlayMainBGM([Optional] Action onFinished) { }
@@ -109,8 +116,17 @@ namespace Dpr.Contest
 		// TODO
 		public void StopResultBGM(bool isBestPerformer) { }
 		
-		// TODO
-		public float GetBGMPlayPosition() { return default; }
+		public float GetBGMPlayPosition()
+		{
+			if (this.contestBGMInstance != null) {
+			  var fVar2 = 0.0;
+			  if (0.0 < (float)this.contestBGMInstance.GetPlayPosition(1)) {
+			    fVar2 = (float)this.contestBGMInstance.GetPlayPosition(1);
+			  }
+			  return fVar2;
+			}
+			return 0.0;
+		}
 		
 		// TODO
 		public void PlaySeByID(PlaySE_ID seID) { }
@@ -136,8 +152,12 @@ namespace Dpr.Contest
 		// TODO
 		private float UpdateFadeTimer(float deltaTime) { return default; }
 		
-		// TODO
-		private void SetBGMVolume(float volume) { }
+		private void SetBGMVolume(float volume)
+		{
+			if ((this.contestBGMInstance != null) && (this.playingMusic)) {
+			  this.contestBGMInstance.SetVolume();
+			}
+		}
 
 		public enum PlaySE_ID : int
 		{

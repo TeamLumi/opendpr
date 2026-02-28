@@ -14,8 +14,13 @@ namespace Dpr.UI
 		[SerializeField]
 		private UIText _title;
 		
-		// TODO
-		public override void OnCreate() { }
+		public override void OnCreate()
+		{
+			UIWindow.OnCreate();
+			var uVar1 = UnityEngine_Component__GetComponentInChildren<object>
+			                  (this,1);
+			this._animator = uVar1;
+		}
 		
 		// TODO
 		public void Open(AdventureNoteID category, UIWindowID prevWindowId) { }

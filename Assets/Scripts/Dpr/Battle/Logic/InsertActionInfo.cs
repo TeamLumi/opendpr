@@ -8,7 +8,10 @@
         // TODO
         public void CopyFrom(InsertActionInfo src) { }
 
-        // TODO
-        public void Clear() { }
+        public void Clear()
+        {
+        	this.isTokuseiWindowDisplay = false;
+        	this.prevActionMessage.Clear();
+        }
     }
 }

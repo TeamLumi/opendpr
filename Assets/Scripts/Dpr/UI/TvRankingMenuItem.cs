@@ -24,8 +24,10 @@ namespace Dpr.UI
 		// TODO
 		public int DeleteRankParam(int flagIndex, int rankParamIndex) { return default; }
 		
-		// TODO
-		public void Select(bool enabled) { }
+		public void Select(bool enabled)
+		{
+			GameObject.SetActive(this._select.gameObject,(enabled ? 1 : 0) & 1,0);
+		}
 
 		public class RankParam
 		{

@@ -10,14 +10,21 @@ namespace Dpr.Contest
 		private bool bStop;
 		private bool bRunning;
 		
-		// TODO
-		public void RestParam() { }
+		public void RestParam()
+		{
+			this.bRunning = false;
+			this.bPlayeSeq = false;
+			var uVar1 = this.gameObject;
+			uVar1.SetActive(1);
+		}
 		
 		// TODO
 		public void Setup(uint mainBgmID, ContestViewSystem viewSystem) { }
 		
-		// TODO
-		public void Stop() { }
+		public void Stop()
+		{
+			this.bStop = true;
+		}
 		
 		// TODO
 		public void StartSection() { }

@@ -181,8 +181,10 @@ namespace Dpr.DigFossil
 		// TODO
 		private IEnumerator ResultDirection() { return default; }
 		
-		// TODO
-		private void SetState(GameState newState) { }
+		private void SetState(GameState newState)
+		{
+			this.gameState = (GameState)(newState);
+		}
 		
 		// TODO
 		private void SetUIAndCamera(DigCameraManager.CameraSet set) { }
@@ -196,8 +198,11 @@ namespace Dpr.DigFossil
 		// TODO
 		private void SaveReport() { }
 		
-		// TODO
-		private void SetDisplayDebugInfo(bool isDisplay) { }
+		private void SetDisplayDebugInfo(bool isDisplay)
+		{
+			ExtensionMethods.SetActive(this.tableTypeText,(isDisplay ? 1 : 0) & 1);
+			ExtensionMethods.SetActive(this.tonariNumText,(isDisplay ? 1 : 0) & 1);
+		}
 		
 		// TODO
 		private void SendDigData(Vector2 pos, bool isHammer) { }

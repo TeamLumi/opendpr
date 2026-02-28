@@ -26,11 +26,17 @@ namespace Dpr.Contest
 		// TODO
 		public void ResetParam() { }
 		
-		// TODO
-		public void SetNormalHeartFxData(EffectData fxData) { }
+		public void SetNormalHeartFxData(EffectData fxData)
+		{
+			this.heartFxData = fxData;
+			Create();
+		}
 		
-		// TODO
-		public void SetLargeHeartFxData(EffectData fxData) { }
+		public void SetLargeHeartFxData(EffectData fxData)
+		{
+			this.heartFxData = fxData;
+			Create();
+		}
 		
 		// TODO
 		public void OnFinalize() { }

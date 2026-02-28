@@ -30,8 +30,12 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		public void Play([Optional] Action onComplete) { }
 		
-		// TODO
-		public void Stop(float fadeTime = 0.0f) { }
+		public void Stop(float fadeTime = 0.0f)
+		{
+			if (this._effectInstance != null) {
+			  this._effectInstance.Stop(0);
+			}
+		}
 		
 		// TODO
 		public static void ReleaseEffectData() { }

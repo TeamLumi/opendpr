@@ -75,8 +75,23 @@ namespace Dpr.UI
 		// TODO
 		private void UpdateFormSelect(float deltaTime) { }
 		
-		// TODO
-		private void UpdateLoadModelRequest(float deltaTime) { }
+		private void UpdateLoadModelRequest(float deltaTime)
+		{
+			if (-1 < this.loadModelCount) {
+			  if (this.loadModelCount == 0) {
+			    this.loadModelCount = 0xffffffff;
+			    if (!this.isShowHeightPanel) {
+			      this.zukanCompareWeightController.RequestLoadModel();
+			    }
+			    if ((int)this.zukanCompareHeightController.currentState == 1) {
+			      this.zukanCompareHeightController.currentState = (State)2;
+			    }
+			  }
+			  else {
+			    this.loadModelCount = this.loadModelCount + -1;
+			  }
+			}
+		}
 		
 		// TODO
 		private void UpdateKeyGuide() { }
@@ -84,11 +99,22 @@ namespace Dpr.UI
 		// TODO
 		private void ShowHeightWeightPanel(bool isShowHeight) { }
 		
-		// TODO
-		private void Setup() { }
+		private void Setup()
+		{
+			this.arrowRightImage.enabled = 1 < this.CurrentZukanInfo.modelParams.Length;
+			this.arrowLeftImage.enabled = 1 < this.CurrentZukanInfo.modelParams.Length;
+			this.loadModelCount = 0x100000003;
+		}
 		
-		// TODO
-		private void RequestLoadModel() { }
+		private void RequestLoadModel()
+		{
+			if (this.isShowHeightPanel) {
+			  if ((int)this.zukanCompareHeightController.currentState == 1) {
+			    this.zukanCompareHeightController.currentState = (State)2;
+			  }
+			}
+			this.zukanCompareWeightController.RequestLoadModel();
+		}
 
 		public class Param
 		{

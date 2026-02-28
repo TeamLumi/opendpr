@@ -17,14 +17,28 @@ namespace Dpr.UI
 
 		private MessageMsgFile _useMsgFile;
 		
-		// TODO
-		public void Setup() { }
+		public void Setup()
+		{
+			this._useMsgFile = null;
+			if ((this._timerObj.activeSelf & 1) != 0) {
+			  this._timerObj.SetActive(0);
+			}
+		}
 		
-		// TODO
-		public void HideTimer() { }
+		public void HideTimer()
+		{
+			this._useMsgFile = null;
+			if ((this._timerObj.activeSelf & 1) != 0) {
+			  this._timerObj.SetActive(0);
+			}
+		}
 		
-		// TODO
-		private void SetTimerActive(bool active) { }
+		private void SetTimerActive(bool active)
+		{
+			if (((this._timerObj.activeSelf ^ active) & 1) != 0) {
+			  this._timerObj.SetActive((active ? 1 : 0) & 1);
+			}
+		}
 		
 		// TODO
 		public void SetTime(int minut, int second) { }

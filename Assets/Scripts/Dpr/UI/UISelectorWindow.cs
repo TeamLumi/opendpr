@@ -51,8 +51,10 @@ namespace Dpr.UI
 		// TODO
 		private void ResetIndex() { }
 		
-		// TODO
-		public void SetWindowActive(bool active) { }
+		public void SetWindowActive(bool active)
+		{
+			this.bActive = (active ? 1 : 0) & 1;
+		}
 		
 		// TODO
 		public void OpenSelectWindow(string[] contestNameArray, string[] rankNameArray, Action<WindowItemID> onEvent) { }
@@ -66,8 +68,16 @@ namespace Dpr.UI
 		// TODO
 		private void SetFrameActive(WindowFrameType frameType, bool active) { }
 		
-		// TODO
-		private void SetObjectActive(bool active) { }
+		private void SetObjectActive(bool active)
+		{
+			var uVar2 = this.gameObject;
+			var uVar1 = uVar2.activeSelf;
+			if (((uVar1 ^ active) & 1) != 0) {
+			  this.bIsOpen = true;
+			  uVar2 = this.gameObject;
+			  uVar2.SetActive(this.bIsOpen);
+			}
+		}
 		
 		// TODO
 		public void Close([Optional] Action onClosed) { }
@@ -90,8 +100,16 @@ namespace Dpr.UI
 		// TODO
 		private void OnItemEvent(AWindowItem item) { }
 		
-		// TODO
-		public void OnCompleteRewind() { }
+		public void OnCompleteRewind()
+		{
+			this.windowState = (WindowState)0;
+			this.bIsOpen = false;
+			var uVar1 = this.gameObject;
+			uVar1.SetActive(0);
+			if (this.onClosed != null) {
+			  this.onClosed.Invoke();
+			}
+		}
 		
 		// TODO
 		private void CursorUp() { }
@@ -105,8 +123,12 @@ namespace Dpr.UI
 		// TODO
 		private void UpdateCursor() { }
 		
-		// TODO
-		private void SetCursorView(bool active) { }
+		private void SetCursorView(bool active)
+		{
+			if (((this.arrowParent.activeSelf ^ active) & 1) != 0) {
+			  this.arrowParent.SetActive((active ? 1 : 0) & 1);
+			}
+		}
 
 		public enum WindowItemID : int
 		{

@@ -56,8 +56,10 @@ namespace Dpr.UI
 		// TODO
 		public void Set(PokemonParam param, int index) { }
 		
-		// TODO
-		public void SkipAnimation() { }
+		public void SkipAnimation()
+		{
+			this.isSkipAnimation = true;
+		}
 		
 		// TODO
 		public bool AddExp(uint exp) { return default; }

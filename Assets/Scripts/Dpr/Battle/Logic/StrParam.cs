@@ -13,47 +13,91 @@
         // TODO
         public void CopyFrom(in StrParam src) { }
 
-        // TODO
-        public void Clear() { }
+        public void Clear()
+        {
+        	this.m_param.ID = 0;
+        	var lVar4 = this.m_param.args;
+        	if (0 < (int)lVar4.Length) {
+        	  var uVar5 = 0;
+        	  var uVar6 = lVar4.Length & 0xffffffff;
+        	  do {
+        	    if (uVar6 <= uVar5) {
+        	    }
+        	    var lVar1 = uVar5 * 4;
+        	    uVar5 = uVar5 + 1;
+        	    lVar4 + lVar1[0] = 0;
+        	    lVar4 = this.m_param.args;
+        	    uVar6 = (ulong)lVar4.Length;
+        	  } while ((long)uVar5 < (int)lVar4.Length);
+        	}
+        	this.m_param.type = 0;
+        }
 
-        // TODO
-        public bool IsEnable() { return false; }
+        public bool IsEnable()
+        {
+        	return this.m_param.type != 0;
+        }
 
-        // TODO
-        public void Setup(BtlStrType type, ushort strID) { }
+        public void Setup(BtlStrType type, ushort strID)
+        {
+        	this.m_param.type = type;
+        	this.m_param.ID = strID;
+        	this.m_param.argCnt = 0;
+        }
 
-        // TODO
-        public ushort GetStrID() { return 0; }
+        public ushort GetStrID()
+        {
+        	return (ushort)(this.m_param.ID);
+        }
 
-        // TODO
-        public BtlStrType GetStrType() { return BtlStrType.BTL_STRTYPE_NULL; }
+        public BtlStrType GetStrType()
+        {
+        	return this.m_param.type;
+        }
 
         // TODO
         public void AddArg(int arg) { }
 
-        // TODO
-        public void ChangeArg(byte index, int value) { }
+        public void ChangeArg(byte index, int value)
+        {
+        	var uVar1 = (uint)index & 0xff;
+        	if (uVar1 < this.m_param.argCnt) {
+        	  if (this.m_param.args.Length <= uVar1) {
+        	  }
+        	  this.m_param.args + (index & 0xff) * 4[0] = value;
+        	}
+        }
 
-        // TODO
-        public ushort GetArgsCount() { return 0; }
+        public ushort GetArgsCount()
+        {
+        	return (ushort)(this.m_param.argCnt);
+        }
 
-        // TODO
-        public int[] GetArgs() { return null; }
+        public int[] GetArgs()
+        {
+        	return this.m_param.args;
+        }
 
         // TODO
         public void AddSE(uint SENo) { }
 
-        // TODO
-        public bool IsSEAdded() { return false; }
+        public bool IsSEAdded()
+        {
+        	return this.m_param.fSEAdd;
+        }
 
         // TODO
         public int GetSE() { return 0; }
 
-        // TODO
-        public void SetFailMsgFlag() { }
+        public void SetFailMsgFlag()
+        {
+        	this.m_param.fFailMsg = 1;
+        }
 
-        // TODO
-        public bool IsFailMsg() { return false; }
+        public bool IsFailMsg()
+        {
+        	return this.m_param.fFailMsg;
+        }
 
         private class Param
         {
@@ -67,8 +111,25 @@
             // TODO
             public void CopyFrom(Param src) { }
 
-            // TODO
-            public void Clear() { }
+            public void Clear()
+            {
+            	this.m_param.ID = 0;
+            	var lVar4 = this.m_param.args;
+            	if (0 < (int)lVar4.Length) {
+            	  var uVar5 = 0;
+            	  var uVar6 = lVar4.Length & 0xffffffff;
+            	  do {
+            	    if (uVar6 <= uVar5) {
+            	    }
+            	    var lVar1 = uVar5 * 4;
+            	    uVar5 = uVar5 + 1;
+            	    lVar4 + lVar1[0] = 0;
+            	    lVar4 = this.m_param.args;
+            	    uVar6 = (ulong)lVar4.Length;
+            	  } while ((long)uVar5 < (int)lVar4.Length);
+            	}
+            	this.m_param.type = 0;
+            }
 
             // TODO
             public Param() { }

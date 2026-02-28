@@ -12,8 +12,10 @@
             m_requestCount = 0;
         }
 
-        // TODO
-        public void Clear() { }
+        public void Clear()
+        {
+        	this.m_requestCount = (byte)0;
+        }
 
         // TODO
         public void Request(BtlPokePos pos) { }
@@ -36,7 +38,14 @@
         // TODO
         public byte GetCount(BTL_CLIENT_ID clientID) { return 0; }
 
-        // TODO
-        public BtlPokePos GetRequestPos(byte index) { return BtlPokePos.POS_1ST_0; }
+        public BtlPokePos GetRequestPos(byte index)
+        {
+        	if (this.m_requestCount <= index) {
+        	  return (BtlPokePos)5;
+        	}
+        	if ((uint)index < this.m_requestPos.Length) {
+        	  return this.m_requestPos + (ulong)index[0];
+        	}
+        }
     }
 }

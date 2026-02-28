@@ -9,8 +9,23 @@ namespace Dpr.SecretBase
 		private SkinnedMeshRenderer[] renderers;
 		private Step step;
 		
-		// TODO
-		public void Initialize(StatueEffectData statueData, SkinnedMeshRenderer[] renderers) { }
+		public void Initialize(StatueEffectData statueData, SkinnedMeshRenderer[] renderers)
+		{
+			this.statueData = statueData;
+			this.renderers = renderers;
+			this.step = (Step)0;
+			if (0 < (int)renderers.Length) {
+			  var uVar3 = 0;
+			  var uVar2 = renderers.Length & 0xffffffff;
+			  do {
+			    if (uVar2 <= uVar3) {
+			    }
+			    ExtensionMethods.SetActive(*(renderers + 0x20 + uVar3 * 8),0,0);
+			    uVar2 = (ulong)renderers.Length;
+			    uVar3 = uVar3 + 1;
+			  } while ((long)uVar3 < (int)renderers.Length);
+			}
+		}
 		
 		// TODO
 		private void LateUpdate() { }

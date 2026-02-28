@@ -34,17 +34,25 @@ namespace Dpr.UI
 		// TODO
 		public void Setup(VoiceRTPC.VoiceRTPCDataList voiceRtpcData) { }
 		
-		// TODO
-		public void OnUpdate(float deltaTime, AudioInstance audioInstance) { }
+		public void OnUpdate(float deltaTime, AudioInstance audioInstance)
+		{
+			UpdateHeads();
+			UpdateLevels(deltaTime,audioInstance);
+		}
 		
 		// TODO
 		private void UpdateLevels(AudioInstance audioInstance) { }
 		
-		// TODO
-		private float GetRTPCValue(AudioInstance audioInstance, uint paramId, int gaugeIndex) { return default; }
+		private float GetRTPCValue(AudioInstance audioInstance, uint paramId, int gaugeIndex)
+		{
+			paramId.GetRTPCValue(gaugeIndex);
+			return 0;
+		}
 		
-		// TODO
-		private float ToLevelValue(float value, float min = _minDecibel, float max = _maxDecibel) { return default; }
+		private float ToLevelValue(float value, float min = _minDecibel, float max = _maxDecibel)
+		{
+			return (value - min) / (max - min);
+		}
 		
 		// TODO
 		private void SetLevelValue(int level, float value) { }

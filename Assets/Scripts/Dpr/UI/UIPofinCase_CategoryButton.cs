@@ -16,8 +16,19 @@ namespace Dpr.UI
 		public Sprite SelectedImage;
 		public Sprite UnselectedImage;
 		
-		// TODO
-		private void Awake() { }
+		private void Awake()
+		{
+			var uVar1 = this.transform;
+			uVar1 = uVar1.Find(StringLiteral_3765);
+			uVar1 = UnityEngine_Component__GetComponent<object>
+			                  (uVar1);
+			this.image = uVar1;
+			uVar1 = this.transform;
+			uVar1 = uVar1.Find(_StringLiteral_11863);
+			uVar1 = UnityEngine_Component__GetComponent<object>
+			                  (uVar1);
+			this.text = uVar1;
+		}
 		
 		public bool isOn { get; private set; }
 		

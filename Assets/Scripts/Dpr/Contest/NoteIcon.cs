@@ -28,8 +28,10 @@ namespace Dpr.Contest
 		public float LifeTime { get => lifeTime; }
 		public float AbsLifeTime { get => lifeTime >= 0.0f ? lifeTime : -lifeTime; }
 		
-		// TODO
-		public bool IsActive() { return default; }
+		public bool IsActive()
+		{
+			return this.active;
+		}
 		
 		// TODO
 		public void Create(NotesDataModel noteData, float elapsedTime, float moveSpeed, float validTapTimeRange, float fadeDuration) { }
@@ -66,14 +68,21 @@ namespace Dpr.Contest
 		
 		public bool CanTap { get => NoteType != NoteTypeID.LongEnd && canTap; }
 		
-		// TODO
-		public void OnTap() { }
+		public void OnTap()
+		{
+			this.isTap = true;
+		}
 		
-		// TODO
-		public void SetTapEnabled(bool enabled) { }
+		public void SetTapEnabled(bool enabled)
+		{
+			this.canTap = (enabled ? 1 : 0) & 1;
+		}
 		
-		// TODO
-		public void ChangeStateMiss() { }
+		public void ChangeStateMiss()
+		{
+			this.statusID = (NoteStatusID)1;
+			this.canTap = false;
+		}
 
 		public enum NoteStatusID : int
 		{

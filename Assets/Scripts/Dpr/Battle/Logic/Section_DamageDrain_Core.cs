@@ -7,8 +7,11 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Execute(Result pResult, in Description description) { }
 		
-		// TODO
-		private ushort recalcDrainVolume(BTL_POKEPARAM attacker, BTL_POKEPARAM target, ushort drainHP) { return default; }
+		private ushort recalcDrainVolume(BTL_POKEPARAM attacker, BTL_POKEPARAM target, ushort drainHP)
+		{
+			this.m_pEventLauncher.Event_RecalcDrainVolume();
+			return 0;
+		}
 		
 		// TODO
 		private bool recoverHP(BTL_POKEPARAM poke, ushort drainHP, bool skipSpFailCheck) { return default; }

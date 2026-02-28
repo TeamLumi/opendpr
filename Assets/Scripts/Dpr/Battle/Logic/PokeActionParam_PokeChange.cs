@@ -9,7 +9,10 @@
         // TODO
         public void CopyFrom(PokeActionParam_PokeChange src) { }
 
-        // TODO
-        public void Clear() { }
+        public void Clear()
+        {
+        	this.posIdx = (byte)0;
+        	this.depleteFlag = false;
+        }
     }
 }

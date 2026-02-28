@@ -22,11 +22,15 @@ namespace Dpr.UI
 		
 		public UgItemInfo.CategoryType CategoryType { get => categoryType; }
 		
-		// TODO
-		public int GetIndex() { return default; }
+		public int GetIndex()
+		{
+			return this.index;
+		}
 		
-		// TODO
-		public void SetIndex(int index) { }
+		public void SetIndex(int index)
+		{
+			this.index = index;
+		}
 		
 		// TODO
 		public RectTransform GetRectTransform() { return default; }
@@ -37,13 +41,21 @@ namespace Dpr.UI
 		// TODO
 		public void SetActive(bool isActive) { }
 		
-		// TODO
-		public void Select() { }
+		public void Select()
+		{
+			this.unselectObject.SetActive(0);
+			this.selectObject.SetActive(1);
+		}
 		
-		// TODO
-		public void UnSelect() { }
+		public void UnSelect()
+		{
+			this.unselectObject.SetActive(1);
+			this.selectObject.SetActive(0);
+		}
 		
-		// TODO
-		public void SetNewIconEnable(bool isEnable) { }
+		public void SetNewIconEnable(bool isEnable)
+		{
+			this.newIconImage.enabled = (isEnable ? 1 : 0) & 1;
+		}
 	}
 }

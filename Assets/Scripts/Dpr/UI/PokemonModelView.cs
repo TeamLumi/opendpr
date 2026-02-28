@@ -35,8 +35,13 @@ namespace Dpr.UI
         // TODO
         public void Setup(Param param, [Optional] UnityAction<PokemonParam> onSetup) { }
 
-        // TODO
-        public bool IsEnableAction() { return false; }
+        public bool IsEnableAction()
+        {
+        	if (this._param.type == 9) {
+        	  return false;
+        	}
+        	return this._param.type != 0x41;
+        }
 
         // TODO
         public bool OnUpdate(float deltaTime, UIInputController input, int playAnimButtonMask = GameController.ButtonMask.StickL | GameController.ButtonMask.StickR, int rotYPlusButtonMask = 0, int rotYMinusButtonMask = 0, int rotXPlusButtonMask = 0, int rotXMinusButtonMask = 0) { return false; }

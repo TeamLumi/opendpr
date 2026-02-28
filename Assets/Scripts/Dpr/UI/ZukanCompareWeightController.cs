@@ -39,8 +39,11 @@ namespace Dpr.UI
 		// TODO
 		public void OnUpdate(float deltaTime) { }
 		
-		// TODO
-		public void Setup(ZukanInfo zukanInfo) { }
+		public void Setup(ZukanInfo zukanInfo)
+		{
+			this.currentZukanInfo = zukanInfo;
+			this.isSetupEnd = false;
+		}
 		
 		// TODO
 		public void RequestLoadModel() { }

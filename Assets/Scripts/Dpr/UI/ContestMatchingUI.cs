@@ -28,7 +28,7 @@ namespace Dpr.UI
 		[SerializeField]
 		private UIContMatchingPlayerBoard[] _playerBoardArray;
 		[SerializeField]
-		private MultiModelView modelView;
+		internal MultiModelView modelView;
 		[SerializeField]
 		private UIRemainingCountDown remainigCountDown;
 		[SerializeField]
@@ -37,7 +37,7 @@ namespace Dpr.UI
 		private GameObject timerObj;
 
 		private CountDownTimer countTimer = new CountDownTimer();
-		private ShowMessageWindow msgWindow = new ShowMessageWindow();
+		internal ShowMessageWindow msgWindow = new ShowMessageWindow();
 		private KeyGuideCreater _keyGuideCreator = new KeyGuideCreater();
 		private MessageMsgFile msgFile;
 		private MsgWindowManager msgWindowManager;
@@ -49,19 +49,26 @@ namespace Dpr.UI
 		// TODO
 		private Sprite GetSprite(string texName) { return default; }
 		
-		// TODO
-		public void OnFinalize() { }
+		public void OnFinalize()
+		{
+			this._keyGuideCreator.Release();
+		}
 		
 		public int GetNowViewModelCount { get => modelView.ModelViewCount; }
 		
-		// TODO
-		public bool HasViewModelByIndex(int index) { return default; }
+		public bool HasViewModelByIndex(int index)
+		{
+			this.modelView.HasViewModelByIndex(index);
+			return false;
+		}
 		
 		// TODO
 		public void ShowKeyGuide(SubContentsPatternID patternID) { }
 		
-		// TODO
-		public void CloseKeyGuide(Action onClosed) { }
+		public void CloseKeyGuide(Action onClosed)
+		{
+			this._keyGuideCreator.Close(onClosed);
+		}
 		
 		// TODO
 		public void OnJoinMine(int playerIndex) { }
@@ -75,20 +82,48 @@ namespace Dpr.UI
 		// TODO
 		public void LoadCharacterModel(int index, TrainerType trainerType, int colorID, string modelPath, Action<GameObject> onComplete) { }
 		
-		// TODO
-		public void DestroyAllCahracterModel() { }
+		public void DestroyAllCahracterModel()
+		{
+			if (0 < this.modelView.TotalModelViewCount) {
+			  this.modelView.TotalModelViewCount = 0;
+			  do {
+			    DestroyCharacterModel(this.modelView.TotalModelViewCount);
+			    this.modelView.TotalModelViewCount = MultiModelView.get_TotalModelViewCount(this.modelView) + 1;
+			  } while (this.modelView.TotalModelViewCount < MultiModelView.get_TotalModelViewCount(this.modelView));
+			}
+		}
 		
 		// TODO
 		public void DestroyCharacterModel(int index) { }
 		
-		// TODO
-		public void ChangeAllModelMotion(int motionIndex) { }
+		public void ChangeAllModelMotion(int motionIndex)
+		{
+			if (0 < this.modelView.TotalModelViewCount) {
+			  this.modelView.TotalModelViewCount = 0;
+			  do {
+			    this.modelView.ChangeModelMotion(MultiModelView.get_TotalModelViewCount(this.modelView),motionIndex,0);
+			    this.modelView.TotalModelViewCount = MultiModelView.get_TotalModelViewCount(this.modelView) + 1;
+			  } while (this.modelView.TotalModelViewCount < MultiModelView.get_TotalModelViewCount(this.modelView));
+			}
+		}
 		
-		// TODO
-		public void ChangeModelMotion(int index, int motionIndex) { }
+		public void ChangeModelMotion(int index, int motionIndex)
+		{
+			this.modelView.ChangeModelMotion(index,motionIndex);
+		}
 		
-		// TODO
-		public void ResetAllPlayerName() { }
+		public void ResetAllPlayerName()
+		{
+			var uVar1 = Dpr_Message_MessageMsgFile__GetNameStr
+			                  (this.msgFile,StringLiteral_11370,0);
+			if (0 < this._playerBoardArray.Length) {
+			  var iVar2 = 0;
+			  do {
+			    SetPlayerName(iVar2,uVar1);
+			    iVar2 = iVar2 + 1;
+			  } while (iVar2 < this._playerBoardArray.Length);
+			}
+		}
 		
 		// TODO
 		public void SetPlayerName(int index, string name) { }
@@ -96,8 +131,12 @@ namespace Dpr.UI
 		// TODO
 		public void SetPlayerName(int index, string name, MessageEnumData.MsgLangId langId) { }
 		
-		// TODO
-		public void SetEmptyPlayerName(int index) { }
+		public void SetEmptyPlayerName(int index)
+		{
+			var uVar1 = Dpr_Message_MessageMsgFile__GetNameStr
+			                  (this.msgFile,StringLiteral_11375,0);
+			SetPlayerName(index,uVar1);
+		}
 		
 		// TODO
 		public void ShowPreparatioIconReady(int index) { }
@@ -114,11 +153,17 @@ namespace Dpr.UI
 		public int CountTime { get => countTimer.RemainingCount; }
 		public bool IsFinishCountDown { get => !countTimer.IsCountDown; }
 		
-		// TODO
-		public string GetCountDownMinutStr() { return default; }
+		public string GetCountDownMinutStr()
+		{
+			this.countTimer.GetMinuteStr();
+			return default;
+		}
 		
-		// TODO
-		public string GetCountDownSecondStr() { return default; }
+		public string GetCountDownSecondStr()
+		{
+			this.countTimer.GetSecondStr();
+			return default;
+		}
 		
 		// TODO
 		public void StartCountDown(float startTime) { }
@@ -144,14 +189,24 @@ namespace Dpr.UI
 		// TODO
 		private void SetTimerActive(bool active) { }
 		
-		// TODO
-		public void SetTimerObjActive(bool active) { }
+		public void SetTimerObjActive(bool active)
+		{
+			if (((this.timerObj.activeSelf ^ active) & 1) != 0) {
+			  this.timerObj.SetActive((active ? 1 : 0) & 1);
+			}
+		}
 		
-		// TODO
-		public bool IsWindowOpen() { return default; }
+		public bool IsWindowOpen()
+		{
+			this.msgWindow.IsOpen;
+			return false;
+		}
 		
-		// TODO
-		public MsgWindowDataModel.MsgWindowState GetMsgState() { return default; }
+		public MsgWindowDataModel.MsgWindowState GetMsgState()
+		{
+			this.msgWindow.MsgWindowState;
+			return (MsgWindowState)0;
+		}
 		
 		// TODO
 		public void ShowMessageWindow(string label, [Optional] Action onFinishMessage, bool isShowloadingIcon = false) { }
@@ -171,13 +226,21 @@ namespace Dpr.UI
 		// TODO
 		public void ShowInputCloseMessageWindow(string label, [Optional] Action onCloseed) { }
 		
-		// TODO
-		public void CloseMessageWindow() { }
+		public void CloseMessageWindow()
+		{
+			if ((this.msgWindow.IsOpen & 1) != 0) {
+			  ContestUtils.EmitLog(StringLiteral_11384,3);
+			  this.msgWindow.CloseMsgWindow();
+			}
+		}
 		
 		// TODO
 		public void OpenContextMenu(string[] contextLabels, Action<int> onSelect) { }
 		
-		// TODO
-		public void CloseContextMenu() { }
+		public void CloseContextMenu()
+		{
+			ContestUtils.EmitLog(StringLiteral_11386,3);
+			this.msgWindowManager.CloseContextMenu();
+		}
 	}
 }

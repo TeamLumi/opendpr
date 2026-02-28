@@ -17,7 +17,7 @@ namespace Dpr.Movie
         private const int ResX = 1280;
         private const int ResY = 720;
         private RawImage _rendererImage;
-        private bool _isPlaying;
+        internal bool _isPlaying;
         private bool isUpdateVideoOnThisFrame;
 
         // TODO
@@ -26,14 +26,30 @@ namespace Dpr.Movie
         // TODO
         public void Uninitialize() { }
 
-        // TODO
-        public void PlayStreaming(string path, bool loop = false) { }
+        public void PlayStreaming(string path, bool loop = false)
+        {
+        	var uVar1 = String.Concat(path,_StringLiteral_9931);
+        	var uVar2 = 0.streamingAssetsPath;
+        	uVar1 = String.Concat(uVar2,StringLiteral_457,uVar1);
+        	if (this._switchVideoPlayer != null) {
+        	  this._switchVideoPlayer.isLooping = (loop ? 1 : 0) & 1;
+        	  this._switchVideoPlayer.Play(uVar1);
+        	  this._isPlaying = true;
+        	}
+        }
 
-        // TODO
-        public void Stop() { }
+        public void Stop()
+        {
+        	if (this._switchVideoPlayer != null) {
+        	  this._switchVideoPlayer.Stop();
+        	  this._isPlaying = false;
+        	}
+        }
 
-        // TODO
-        public bool IsPlaying() { return false; }
+        public bool IsPlaying()
+        {
+        	return this._isPlaying;
+        }
 
         // TODO
         public float GetTime() { return 0.0f; }
@@ -41,17 +57,53 @@ namespace Dpr.Movie
         // TODO
         public float GetLength() { return 0.0f; }
 
-        // TODO
-        public void JumpTo(float sec) { }
+        public void JumpTo(float sec)
+        {
+        	if (this._switchVideoPlayer != null) {
+        	  this._switchVideoPlayer.JumpTo();
+        	}
+        }
 
-        // TODO
-        public bool IsLoop() { return false; }
+        public bool IsLoop()
+        {
+        	if (this._switchVideoPlayer != null) {
+        	  this._switchVideoPlayer.isLooping;
+        	}
+        	return false;
+        }
 
-        // TODO
-        private void Update() { }
+        private void Update()
+        {
+        	this.isUpdateVideoOnThisFrame = false;
+        }
 
-        // TODO
-        private void OnRenderObject() { }
+        private void OnRenderObject()
+        {
+        	ulong uVar2 = default;
+        	var fVar4 = 0.0;
+        	if ((!this._isPlaying) || (this._switchVideoPlayer == null)) {
+        	  var fVar3 = fVar4;
+        	}
+        	else {
+        	  fVar3 = (float)this._switchVideoPlayer.GetVideoLength()
+        	  ;
+        	  if ((this._isPlaying) && (fVar4 = 0.0, this._switchVideoPlayer != null)) {
+        	    fVar4 = (float)UnityEngine_Switch_SwitchVideoPlayer__GetCurrentTime
+        	                             (this._switchVideoPlayer,0);
+        	  }
+        	}
+        	if ((((this._switchVideoPlayer == null) ||
+        	     (uVar2 = this._switchVideoPlayer.isLooping, (uVar2 & 1) == 0)) &&
+        	    (this._isPlaying)) && ((fVar3 != 0.0 && (fVar3 + -0.1 <= fVar4)))) {
+        	  this._isPlaying = false;
+        	}
+        	if (!this.isUpdateVideoOnThisFrame) {
+        	  if (this._switchVideoPlayer != null) {
+        	    this._switchVideoPlayer.Update();
+        	  }
+        	  this.isUpdateVideoOnThisFrame = true;
+        	}
+        }
 
         // TODO
 #if SWITCH
@@ -67,11 +119,19 @@ namespace Dpr.Movie
         // TODO
         private void UpdateEditor() { }
 
-        // TODO
-        private void PlayStreamingEditor(string path, bool loop) { }
+        private void PlayStreamingEditor(string path, bool loop)
+        {
+        	this._videoPlayer.url = path;
+        	this._videoPlayer.isLooping = (loop ? 1 : 0) & 1;
+        	this._videoPlayer.Play();
+        	this._isPlaying = true;
+        }
 
-        // TODO
-        private void StopEditor() { }
+        private void StopEditor()
+        {
+        	this._videoPlayer.Stop();
+        	this._isPlaying = false;
+        }
 
         // TODO
         private bool IsPlayingEditor() { return false; }
@@ -94,17 +154,37 @@ namespace Dpr.Movie
         // TODO
         private void UninitializeSwitch() { }
 
-        // TODO
-        private void UpdateSwitch() { }
+        private void UpdateSwitch()
+        {
+        	if (this._switchVideoPlayer != null) {
+        	  this._switchVideoPlayer.Update();
+        	}
+        }
 
-        // TODO
-        private void PlayStreamingSwitch(string path, bool loop) { }
+        private void PlayStreamingSwitch(string path, bool loop)
+        {
+        	if (this._switchVideoPlayer != null) {
+        	  this._switchVideoPlayer.isLooping = (loop ? 1 : 0) & 1;
+        	  this._switchVideoPlayer.Play(path);
+        	  this._isPlaying = true;
+        	}
+        }
 
-        // TODO
-        private void StopSwitch() { }
+        private void StopSwitch()
+        {
+        	if (this._switchVideoPlayer != null) {
+        	  this._switchVideoPlayer.Stop();
+        	  this._isPlaying = false;
+        	}
+        }
 
-        // TODO
-        private bool IsPlayingSwitch() { return false; }
+        private bool IsPlayingSwitch()
+        {
+        	if (this._switchVideoPlayer != null) {
+        	  return this._isPlaying;
+        	}
+        	return false;
+        }
 
         // TODO
         private float GetTimeSwitch() { return 0.0f; }
@@ -112,10 +192,19 @@ namespace Dpr.Movie
         // TODO
         private float GetLengthSwitch() { return 0.0f; }
 
-        // TODO
-        private void JumpToSwitch(float sec) { }
+        private void JumpToSwitch(float sec)
+        {
+        	if (this._switchVideoPlayer != null) {
+        	  this._switchVideoPlayer.JumpTo();
+        	}
+        }
 
-        // TODO
-        private bool IsLoopSwitch() { return false; }
+        private bool IsLoopSwitch()
+        {
+        	if (this._switchVideoPlayer != null) {
+        	  this._switchVideoPlayer.isLooping;
+        	}
+        	return false;
+        }
     }
 }

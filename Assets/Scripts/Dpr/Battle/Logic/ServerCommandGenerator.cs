@@ -45,8 +45,12 @@
         // TODO
         private InterruptCode putCover(SVCL_ACTION clientInstructions) { return InterruptCode.NONE; }
 
-        // TODO
-        public bool GenerateOperations_ForEscape() { return false; }
+        public bool GenerateOperations_ForEscape()
+        {
+        	this.m_pQueue.Initialize();
+        	escape(this);
+        	return false;
+        }
 
         // TODO
         private bool escape() { return false; }

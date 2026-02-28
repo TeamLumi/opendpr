@@ -35,11 +35,20 @@ namespace Dpr.Battle.Logic
         // TODO
         public void AddData(in SendData dataBuffer) { }
 
-        // TODO
-        private void IncAddIndex() { }
+        private void IncAddIndex()
+        {
+        	var uVar3 = 0;
+        	if (this.m_bufferNum != 0) {
+        	  uVar3 = this.m_addIndex + 1 / this.m_bufferNum;
+        	}
+        	this.m_addIndex = this.m_addIndex + 1 - uVar3 * this.m_bufferNum;
+        }
 
-        // TODO
-        public bool IsDataExist(uint dataSerialNumber) { return false; }
+        public bool IsDataExist(uint dataSerialNumber)
+        {
+        	var lVar1 = GetData();
+        	return lVar1 != 0;
+        }
 
         // TODO
         public SendData GetData(uint dataSerialNumber) { return null; }

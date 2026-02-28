@@ -16,14 +16,20 @@ namespace Dpr.UI
 		private float _readyProgressTime;
 		private UIInputController _inputController = new UIInputController();
 		
-		// TODO
-		public void Initialize(Action onFinishState, Action<bool> onSelect, Action onLeve) { }
+		public void Initialize(Action onFinishState, Action<bool> onSelect, Action onLeve)
+		{
+			this._onFinishState = onFinishState;
+			this._onSelect = onSelect;
+			this._onLeve = onLeve;
+		}
 		
 		// TODO
 		public void Setup(UIBattleMatching battleMatchingUI) { }
 		
-		// TODO
-		public void PreClose() { }
+		public void PreClose()
+		{
+			this._closed = true;
+		}
 		
 		// TODO
 		public void Close() { }
@@ -34,14 +40,30 @@ namespace Dpr.UI
 		// TODO
 		private void ShowSelectResume() { }
 		
-		// TODO
-		private void OnSelectResume(int index) { }
+		private void OnSelectResume(int index)
+		{
+			if ((!this._closed) && (!this._ready)) {
+			  this._battleMatchingUIPtr.CloseMessageWindow();
+			  if (index != 0) {
+			    ShowSelectLeave();
+			  }
+			  OnSelect(1);
+			}
+		}
 		
 		// TODO
 		private void ShowSelectLeave() { }
 		
-		// TODO
-		private void OnSelectLeave(int index) { }
+		private void OnSelectLeave(int index)
+		{
+			if ((!this._closed) && (!this._ready)) {
+			  this._battleMatchingUIPtr.CloseMessageWindow();
+			  if (index != 0) {
+			    ShowSelectResume();
+			  }
+			  OnSelect();
+			}
+		}
 		
 		// TODO
 		private void OnSelect(bool resume) { }

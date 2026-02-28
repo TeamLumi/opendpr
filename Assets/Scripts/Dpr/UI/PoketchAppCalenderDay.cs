@@ -34,13 +34,18 @@ namespace Dpr.UI
 		// TODO
 		public void SetDay(int day) { }
 		
-		// TODO
-		public void SetToday(bool today) { }
+		public void SetToday(bool today)
+		{
+			ExtensionMethods.SetActive(this._frameImage,(today ? 1 : 0) & 1);
+		}
 		
 		// TODO
 		public void SetSelectDay(bool select) { }
 		
-		// TODO
-		private void OnValidate() { }
+		private void OnValidate()
+		{
+			ExtensionMethods.SetActive(this._sunDayGroup,this._sunday);
+			ExtensionMethods.SetActive(this._dayGroup,!this._sunday);
+		}
 	}
 }

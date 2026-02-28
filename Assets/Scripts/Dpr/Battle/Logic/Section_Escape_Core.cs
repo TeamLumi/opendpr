@@ -10,8 +10,11 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private bool checkEscapeForbid(BTL_POKEPARAM escapePoke) { return default; }
 		
-		// TODO
-		private bool putSpEscapeMessage(BTL_POKEPARAM escapePoke) { return default; }
+		private bool putSpEscapeMessage(BTL_POKEPARAM escapePoke)
+		{
+			this.m_pEventLauncher.Event_NigeruExMessage(escapePoke);
+			return false;
+		}
 		
 		// TODO
 		private void putDefaultEscapeMessage(BTL_POKEPARAM escapePoke) { }

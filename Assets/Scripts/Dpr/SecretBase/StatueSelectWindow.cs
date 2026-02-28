@@ -39,11 +39,16 @@ namespace Dpr.SecretBase
 		// TODO
 		public void PreBuildLayout() { }
 		
-		// TODO
-		public void Show() { }
+		public void Show()
+		{
+			this.isBuildedLayout = true;
+			this.canvas.enabled = 1;
+		}
 		
-		// TODO
-		public void Close() { }
+		public void Close()
+		{
+			this.canvas.enabled = 0;
+		}
 		
 		// TODO
 		public void SetCursorFromRatio(float ratio, bool left) { }

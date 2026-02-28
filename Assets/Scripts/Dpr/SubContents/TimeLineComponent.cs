@@ -14,10 +14,18 @@ namespace Dpr.SubContents
 			OnResumeTimeLine = OnResume;
 		}
 		
-		// TODO
-		public void StopTimeLine() { }
+		public void StopTimeLine()
+		{
+			if (this.OnStopTimeLine != null) {
+			  this.OnStopTimeLine.Invoke();
+			}
+		}
 		
-		// TODO
-		public void ResumeTimeLine() { }
+		public void ResumeTimeLine()
+		{
+			if (this.OnResumeTimeLine != null) {
+			  this.OnResumeTimeLine.Invoke();
+			}
+		}
 	}
 }

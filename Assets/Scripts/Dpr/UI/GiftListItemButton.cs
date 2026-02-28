@@ -17,11 +17,15 @@ namespace Dpr.UI
 		private int index;
 		private RectTransform rectTransform;
 		
-		// TODO
-		public int GetIndex() { return default; }
+		public int GetIndex()
+		{
+			return this.index;
+		}
 		
-		// TODO
-		public void SetIndex(int index) { }
+		public void SetIndex(int index)
+		{
+			this.index = index;
+		}
 		
 		// TODO
 		public RectTransform GetRectTransform() { return default; }
@@ -32,11 +36,17 @@ namespace Dpr.UI
 		// TODO
 		public void SetActive(bool isActive) { }
 		
-		// TODO
-		public void Select() { }
+		public void Select()
+		{
+			this.activeObject.SetActive(1);
+			this.disableObject.SetActive(0);
+		}
 		
-		// TODO
-		public void UnSelect() { }
+		public void UnSelect()
+		{
+			this.activeObject.SetActive(0);
+			this.disableObject.SetActive(1);
+		}
 		
 		// TODO
 		public void Set(RecvData data) { }

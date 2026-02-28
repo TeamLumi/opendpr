@@ -10,10 +10,18 @@ namespace Dpr.Demo
         public Taste taste;
 		public TasteJudge tasteJudge;
 		
-		// TODO
-		public bool IsConditionUp(Condition condition) { return default; }
+		public bool IsConditionUp(Condition condition)
+		{
+			if (condition < this.AddCondition.Length) {
+			  return this.AddCondition + (int)condition[0] != 0;
+			}
+		}
 		
-		// TODO
-		public bool IsConditionMax(Condition condition) { return default; }
+		public bool IsConditionMax(Condition condition)
+		{
+			if (condition < this.PrevCondition.Length) {
+			  return this.PrevCondition + (int)condition[0] == -1;
+			}
+		}
 	}
 }

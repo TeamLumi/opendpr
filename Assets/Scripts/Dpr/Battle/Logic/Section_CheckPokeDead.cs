@@ -13,17 +13,32 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void recordPokeDead(DeadRec pDeadRec, byte deadPokeID) { }
 		
-		// TODO
-		private void putDeadMessage(BTL_POKEPARAM deadPoke) { }
+		private void putDeadMessage(BTL_POKEPARAM deadPoke)
+		{
+			var uVar1 = deadPoke.IsRaidBoss();
+			if (uVar1) {
+			}
+			this.m_pServerCmdPutter.Message_Set(deadPoke,0);
+		}
 		
-		// TODO
-		private bool isKillCountIncrementEnable(byte deadPokeID, byte deadCausePokeID, DamageCause deadCause) { return default; }
+		private bool isKillCountIncrementEnable(byte deadPokeID, byte deadCausePokeID, DamageCause deadCause)
+		{
+			var uVar1 = Section.CheckFriendPoke();
+			if ((uVar1 & 1) != 0) {
+			  return false;
+			}
+			return deadCause != deadCausePokeID && deadCause != '\x1f';
+		}
 		
-		// TODO
-		private bool isKillCountEffectEnable(bool isKillCountInc) { return default; }
+		private bool isKillCountEffectEnable(bool isKillCountInc)
+		{
+			return false;
+		}
 		
-		// TODO
-		private bool needDeadMessage(BTL_POKEPARAM pDeadPoke) { return default; }
+		private bool needDeadMessage(BTL_POKEPARAM pDeadPoke)
+		{
+			return true;
+		}
 		
 		// TODO
 		private bool needDeadAct(BTL_POKEPARAM pDeadPoke) { return default; }
@@ -31,8 +46,14 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void removePokeDependEffect(BTL_POKEPARAM poke) { }
 		
-		// TODO
-		private void endGMode(BTL_POKEPARAM poke) { }
+		private void endGMode(BTL_POKEPARAM poke)
+		{
+			var uVar2 = poke.IsGMode();
+			if (uVar2) {
+			  var uVar1 = poke.GetID();
+			  this.m_pServerCmdPutter.EndGMode(uVar1);
+			}
+		}
 		
 		// TODO
 		private void incGGaugeByFriendDead(BTL_POKEPARAM deadPoke) { }
@@ -52,8 +73,17 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void notifyPokeMemory(byte deadPokeID, byte deadCausePokeID) { }
 		
-		// TODO
-		private void setPokeMemories(byte deadPokeID, byte deadCausePokeID) { }
+		private void setPokeMemories(byte deadPokeID, byte deadCausePokeID)
+		{
+			if ((deadCausePokeID & 0xff) != 0x1f) {
+			  var uVar1 = deadCausePokeID.CheckPlayersPoke();
+			  if ((uVar1 & 1) != 0) {
+			    var uVar2 = deadPokeID.GetPokeParam();
+			    var uVar3 = deadCausePokeID.GetPokeParam();
+			    Memories.SetMemories_OnKill(this.m_pMainModule,uVar3,uVar2);
+			  }
+			}
+		}
 		
 		// TODO
 		private void allDeadOnRaidBattle(BTL_POKEPARAM deadPoke) { }

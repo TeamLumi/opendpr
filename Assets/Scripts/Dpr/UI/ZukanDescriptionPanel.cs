@@ -107,26 +107,39 @@ namespace Dpr.UI
 		// TODO
 		public void Initialize() { }
 		
-		// TODO
-		public void Dispose() { }
+		public void Dispose()
+		{
+			this.modelView.Clear(1);
+		}
 		
 		// TODO
 		public void SetZukanInfos(ZukanInfo[] infos) { }
 		
-		// TODO
-		public Vector3 GetModelViewPosition() { return default; }
+		public Vector3 GetModelViewPosition()
+		{
+			this.modelViewRectTransform.position;
+			return null;
+		}
 		
-		// TODO
-		public Vector3 GetInfoButtonPosition() { return default; }
+		public Vector3 GetInfoButtonPosition()
+		{
+			Transform.get_position(this.pokemonInfoButton.transform,0);
+			return null;
+		}
 		
-		// TODO
-		public void SetArrowsActive(bool isUpDownActive, bool isLeftRightActive) { }
+		public void SetArrowsActive(bool isUpDownActive, bool isLeftRightActive)
+		{
+			this.arrowUpDownObject.SetActive((isUpDownActive ? 1 : 0) & 1);
+			this.arrowLeftRightObject.SetActive((isLeftRightActive ? 1 : 0) & 1);
+		}
 		
 		// TODO
 		public void SetBgHead(bool isZenkoku) { }
 		
-		// TODO
-		public void OnUpdateModelView(float deltaTime, UIInputController input) { }
+		public void OnUpdateModelView(float deltaTime, UIInputController input)
+		{
+			this.modelView.OnUpdate(deltaTime,0x30,0,0,0,0);
+		}
 		
 		// TODO
 		public void SetHidePositions(Vector2 modelViewPos, Vector2 infoButtonPos) { }
@@ -165,14 +178,18 @@ namespace Dpr.UI
 		// TODO
 		public bool MoveLanguageButtonSelect(int value) { return default; }
 		
-		// TODO
-		public void ResumeLanguageButtonSelect() { }
+		public void ResumeLanguageButtonSelect()
+		{
+			this.languageButtonSelector.ResumeMoveSelect();
+		}
 		
 		// TODO
 		public bool MoveZukanInfoSelect(int addValue) { return default; }
 		
-		// TODO
-		public void ResumeZukanInfoSelect() { }
+		public void ResumeZukanInfoSelect()
+		{
+			this.zukanInfoIndexSelector.ResumeMoveState();
+		}
 		
 		// TODO
 		public bool MoveCatalogSelect(int addValue) { return default; }

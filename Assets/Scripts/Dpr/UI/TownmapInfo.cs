@@ -11,8 +11,11 @@ namespace Dpr.UI
 		private Townmap.NoticeType _selectType;
 		private UnityAction<Townmap.NoticeType> _onSelectChanged;
 		
-		// TODO
-		public void Setup(UnityAction<Townmap.NoticeType> onSelectChanged) { }
+		public void Setup(UnityAction<Townmap.NoticeType> onSelectChanged)
+		{
+			this._onSelectChanged = onSelectChanged;
+			Select(0xffffffff,1);
+		}
 		
 		// TODO
 		public void Select(Townmap.NoticeType type, bool isInitialized) { }

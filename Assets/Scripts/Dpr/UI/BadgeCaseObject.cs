@@ -71,8 +71,8 @@ namespace Dpr.UI
 		private float noTouchTime;
 		private Camera screenCamera;
 		private RaycastHit[] raycastHits;
-		private Animator badgeCaseAnimator;
-		private Animator badgeAnimator;
+		internal Animator badgeCaseAnimator;
+		internal Animator badgeAnimator;
 		private bool isDisposed;
 		private bool isShowBadge;
 		private bool IsBadgeGet;
@@ -107,8 +107,13 @@ namespace Dpr.UI
 		// TODO
 		public void StopBadgeConditionEffects() { }
 		
-		// TODO
-		public void PlayAnimationBadgeGet(string animeName) { }
+		public void PlayAnimationBadgeGet(string animeName)
+		{
+			this.badgeCaseAnimator.Play(animeName,0);
+			0x3f800000.speed = this.badgeCaseAnimator;
+			this.badgeAnimator.Play(animeName,0);
+			0x3f800000.speed = this.badgeAnimator;
+		}
 		
 		// TODO
 		public IEnumerator LoadBadgeGetAnimation() { return default; }

@@ -5,8 +5,16 @@
         // TODO
         public static void CLIENT_LIMIT_TIME_Copy(ref CLIENT_LIMIT_TIME dest, in CLIENT_LIMIT_TIME src) { }
 
-        // TODO
-        public static void RAIDBOSS_CAPTURE_RESULT_Copy(ref RAIDBOSS_CAPTURE_RESULT dest, in RAIDBOSS_CAPTURE_RESULT src) { }
+        public static void RAIDBOSS_CAPTURE_RESULT_Copy(ref RAIDBOSS_CAPTURE_RESULT dest, in RAIDBOSS_CAPTURE_RESULT src)
+        {
+        	var uVar1 = src;
+        	var uVar2 = src[1];
+        	var uVar3 = src[3];
+        	dest[2] = src[2];
+        	dest[3] = uVar3;
+        	dest = uVar1;
+        	dest[1] = uVar2;
+        }
 
         public struct CLIENT_LIMIT_TIME
         {

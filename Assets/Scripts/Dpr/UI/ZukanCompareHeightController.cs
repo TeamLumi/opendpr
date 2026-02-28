@@ -20,7 +20,7 @@ namespace Dpr.UI
 
 		private ushort playerHeight;
 		private PokemonParam currentPokemonParam;
-		private State currentState;
+		internal State currentState;
 		private UIModelViewController.ModelParam playerModelParam;
 		private AnimationLayer playerModelAnimationLayer;
 		private int playerModelWaitAnimationIndex = -1;
@@ -40,11 +40,19 @@ namespace Dpr.UI
 		// TODO
 		public void SetRawImageEnable(bool isEnable) { }
 		
-		// TODO
-		public void Setup(ZukanInfo zukanInfo) { }
+		public void Setup(ZukanInfo zukanInfo)
+		{
+			var uVar1 = zukanInfo.GetCurrentPokemonParam();
+			this.currentPokemonParam = uVar1;
+			this.currentState = (State)1;
+		}
 		
-		// TODO
-		public void RequestLoadModel() { }
+		public void RequestLoadModel()
+		{
+			if ((int)this.currentState == 1) {
+			  this.currentState = (State)2;
+			}
+		}
 		
 		// TODO
 		public void Show() { }
@@ -67,7 +75,7 @@ namespace Dpr.UI
 		// TODO
 		private int GetPlayerWaitAnimationIndex(AnimationLayer animationLayer) { return default; }
 
-		private enum State : int
+		internal enum State : int
 		{
 			None = 0,
 			BeforeLoad = 1,

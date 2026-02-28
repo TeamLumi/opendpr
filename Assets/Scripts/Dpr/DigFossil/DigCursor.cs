@@ -45,8 +45,10 @@ namespace Dpr.DigFossil
 		// TODO
 		public void SetTool(bool bIsPickaxe) { }
 		
-		// TODO
-		public void SetDisplay(bool bIsDisplay) { }
+		public void SetDisplay(bool bIsDisplay)
+		{
+			this.root.SetActive((bIsDisplay ? 1 : 0) & 1);
+		}
 		
 		// TODO
 		public void Initialize() { }
@@ -69,8 +71,15 @@ namespace Dpr.DigFossil
 		// TODO
 		private bool CheckInsideBoradArea(Vector2 touchPos) { return default; }
 		
-		// TODO
-		public void SetTouchMode(bool bIsTouchMode) { }
+		public void SetTouchMode(bool bIsTouchMode)
+		{
+			this.bIsTouchMode = (bIsTouchMode ? 1 : 0) & 1;
+			if (bIsTouchMode) {
+			  GameObject.SetActive(this.cursor.gameObject,0,0);
+			}
+			GameObject.SetActive(this.cursor.gameObject,1,0);
+			GameObject.SetActive(this.tool.gameObject,1,0);
+		}
 
 		public delegate void OnClicked(in Vector2 inPos);
 

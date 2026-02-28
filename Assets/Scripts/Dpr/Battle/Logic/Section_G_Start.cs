@@ -23,8 +23,15 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void checkBattleTalk(byte pokeID) { }
 		
-		// TODO
-		private void registerZukanFlag(BTL_POKEPARAM poke) { }
+		private void registerZukanFlag(BTL_POKEPARAM poke)
+		{
+			this.m_pMainModule.RegisterZukanSeeFlag(poke);
+			var uVar1 = poke.IsSpecialG();
+			if ((uVar1) &&
+			   (uVar1 = poke.CheckPlayersPoke(), uVar1)) {
+			  this.m_pMainModule.RegisterZukanSpGGetFlag(poke);
+			}
+		}
 		
 		// TODO
 		private void setPokeMemories(BTL_POKEPARAM pGPoke) { }

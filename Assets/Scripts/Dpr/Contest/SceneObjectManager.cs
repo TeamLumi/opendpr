@@ -36,13 +36,15 @@ namespace Dpr.Contest
 		private BOPokemon tempWazaModelPtr;
 		private SpriteAtlas sceneUISpriteAtlas;
 		private float initCompositorDepth;
-		private int userIndex;
+		internal int userIndex;
 		private bool bLoadedStage;
 		private bool bLoadedCharacter;
 		private bool bPlayingWazaAnim;
 		
-		// TODO
-		public void SetScriptableObject(ContestSettings contestSetting) { }
+		public void SetScriptableObject(ContestSettings contestSetting)
+		{
+			this.contestSetting = contestSetting;
+		}
 		
 		// TODO
 		public void Initialize(Transform cluster) { }
@@ -56,8 +58,11 @@ namespace Dpr.Contest
 		// TODO
 		public void ResetParam(Vector3 initMainCamDofTargetPos, Vector3 initWazaCamDofTargetPos) { }
 		
-		// TODO
-		public void StartContest() { }
+		public void StartContest()
+		{
+			DisableCamera(this.wazaCamera.Camera,SequenceCameraObject.get_Camera(this.wazaCamera));
+			EnableCamera(this.mainCamera.Camera,SequenceCameraObject.get_Camera(this.mainCamera));
+		}
 		
 		// TODO
 		public void ResetDofParam(Vector3 initMainCamDofTargetPos, Vector3 initWazaCamDofTargetPos) { }
@@ -76,8 +81,13 @@ namespace Dpr.Contest
 
 		public Vector3 StageModelPosition { get => stageModelObj.Position; }
 		
-		// TODO
-		public void SetAudienceUpdateFlag(bool flag) { }
+		public void SetAudienceUpdateFlag(bool flag)
+		{
+			if (flag) {
+			  this.stageModelObj.generator.Play();
+			}
+			this.stageModelObj.generator.Stop();
+		}
 		
 		// TODO
 		public void LoadContestFx(ContestDataModel dataModel) { }
@@ -85,8 +95,10 @@ namespace Dpr.Contest
 		// TODO
 		public void LoadResultFx() { }
 		
-		// TODO
-		public void SetUISpriteAtlas(SpriteAtlas spriteAtlas) { }
+		public void SetUISpriteAtlas(SpriteAtlas spriteAtlas)
+		{
+			this.sceneUISpriteAtlas = spriteAtlas;
+		}
 		
 		// TODO
 		public Sprite GetSpriteByFileName(string fileName) { return default; }
@@ -108,11 +120,19 @@ namespace Dpr.Contest
 		
 		public int UserIndex { get => userIndex; }
 		
-		// TODO
-		public ContestPlayerEntity[] GetPlayerEntities() { return default; }
+		public ContestPlayerEntity[] GetPlayerEntities()
+		{
+			return this.playerEntityArray;
+		}
 		
-		// TODO
-		public ContestPlayerEntity GetUserEntity() { return default; }
+		public ContestPlayerEntity GetUserEntity()
+		{
+			if (this.userIndex < this.playerEntityArray.Length) {
+			  return *
+			          (this.playerEntityArray + (int)this.userIndex * 8 + 0x20);
+			}
+			return null;
+		}
 		
 		public BOPokemon SpecialWazaModel { get => specialWazaModelPtr; }
 		
@@ -128,23 +148,45 @@ namespace Dpr.Contest
 		// TODO
 		public AContestPlayerData GetPlayerDataByPosID(int index) { return default; }
 		
-		// TODO
-		public AContestPlayerData GetUserPlayerData() { return default; }
+		public AContestPlayerData GetUserPlayerData()
+		{
+			if (this.userIndex < this.playerEntityArray.Length) {
+			  return *
+			          (this.playerEntityArray + (int)this.userIndex * 8[0]
+			          + 0x60);
+			}
+			return null;
+		}
 		
 		// TODO
 		public Vector3 GetDefaultPokePos(BtlvPos posID) { return default; }
 		
-		// TODO
-		public Vector3 GetUserDefaultPokePos() { return default; }
+		public unsafe Vector3 GetUserDefaultPokePos()
+		{
+			if (this.userIndex < this.contestSetting.modelPosArray.Length) {
+			  return *(uint *)
+			          (this.contestSetting.modelPosArray + (int)this.userIndex * 8[0] + 0x1c);
+			}
+			return null;
+		}
 		
-		// TODO
-		public BOPokemon GetUserWazaModelPokemon() { return default; }
+		public BOPokemon GetUserWazaModelPokemon()
+		{
+			if (this.userIndex < this.playerEntityArray.Length) {
+			  return *
+			          (this.playerEntityArray + (int)this.userIndex * 8[0]
+			          + 0x40);
+			}
+			return null;
+		}
 		
 		// TODO
 		public ObjectEntity GetBallObjEntityByPosID(int index) { return default; }
 		
-		// TODO
-		public void SetEnvController(EnvironmentController envController) { }
+		public void SetEnvController(EnvironmentController envController)
+		{
+			this.envController = envController;
+		}
 		
 		public EnvironmentController EnvController { get => envController; }
 		
@@ -173,8 +215,11 @@ namespace Dpr.Contest
 		
 		public ContestViewSystem WazaViewSystem { get => wazaViewSystem; }
 		
-		// TODO
-		public void SetViewSystem(ContestViewSystem contestViewSystem, ContestViewSystem wazaViewSystem) { }
+		public void SetViewSystem(ContestViewSystem contestViewSystem, ContestViewSystem wazaViewSystem)
+		{
+			this.contestViewSystem = contestViewSystem;
+			this.wazaViewSystem = wazaViewSystem;
+		}
 		
 		public bool IsPlayingUserWaza { get => bPlayingWazaAnim; }
 		
@@ -217,14 +262,20 @@ namespace Dpr.Contest
 		// TODO
 		public DanceHeartEffect CreatePlayerHeart(Vector2 from, Vector2 to, EmitHeartPattern pattern, Action onComplete) { return default; }
 		
-		// TODO
-		public DanceHeartEffect CreateNPCHeart(Vector2 from, Vector2 to, EmitHeartPattern pattern, Action onComplete) { return default; }
+		public DanceHeartEffect CreateNPCHeart(Vector2 from, Vector2 to, EmitHeartPattern pattern, Action onComplete)
+		{
+			this.heartEmitter.CreateNPCHeart(from,to)
+			;
+			return null;
+		}
 		
 		public int NowMonitorIndex { get => stageFx.NowMonitorIndex; }
 		public float NowMonitorPlayTime { get => stageFx.GetMonitorFxTime(); }
 		
-		// TODO
-		public void SwitchMonitor() { }
+		public void SwitchMonitor()
+		{
+			this.stageFx.SwitchMonitor();
+		}
 		
 		// TODO
 		public BtlvBallInfo GetBallInfoByIndex(int index) { return default; }
@@ -232,8 +283,10 @@ namespace Dpr.Contest
 		// TODO
 		public void PlayAnnounceWinnerFx(int targetPlayerIndex) { }
 		
-		// TODO
-		public void PlayConfettiFx(Vector3 emitPos) { }
+		public void PlayConfettiFx(Vector3 emitPos)
+		{
+			this.stageFx.PlayConfettiFx();
+		}
 		
 		// TODO
 		public void DevMovePosition() { }

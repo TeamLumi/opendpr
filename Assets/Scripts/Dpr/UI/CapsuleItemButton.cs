@@ -19,11 +19,15 @@ namespace Dpr.UI
 		private RectTransform rectTransform;
 		private CapsuleInfo info;
 		
-		// TODO
-		public int GetIndex() { return default; }
+		public int GetIndex()
+		{
+			return this.index;
+		}
 		
-		// TODO
-		public void SetIndex(int index) { }
+		public void SetIndex(int index)
+		{
+			this.index = index;
+		}
 		
 		// TODO
 		public RectTransform GetRectTransform() { return default; }
@@ -43,22 +47,34 @@ namespace Dpr.UI
 		// TODO
 		public void SetInfo(CapsuleInfo info) { }
 		
-		// TODO
-		public CapsuleInfo GetInfo() { return default; }
+		public CapsuleInfo GetInfo()
+		{
+			return this.info;
+		}
 		
-		// TODO
-		public void OnSwapStart() { }
+		public void OnSwapStart()
+		{
+			this.swapSelectedObject.SetActive(1);
+		}
 		
-		// TODO
-		public void OnSwapEnd() { }
+		public void OnSwapEnd()
+		{
+			this.swapSelectedObject.SetActive(0);
+		}
 		
-		// TODO
-		public void OnNotSelectable() { }
+		public void OnNotSelectable()
+		{
+			this.onNotSelectableObject.SetActive(1);
+		}
 		
-		// TODO
-		public void OnContextMenuOpen() { }
+		public void OnContextMenuOpen()
+		{
+			this.contextOpenObject.SetActive(1);
+		}
 		
-		// TODO
-		public void OnContextMenuClose() { }
+		public void OnContextMenuClose()
+		{
+			this.contextOpenObject.SetActive(0);
+		}
 	}
 }

@@ -7,7 +7,7 @@
         private BtlAiScriptNo m_minScriptNo;
         private BtlAiScriptNo m_maxScriptNo;
         private BtlAiScriptNo m_currentScriptNo;
-        private uint m_targetScriptBit;
+        internal uint m_targetScriptBit;
         private byte m_myClientID;
 
         // TODO
@@ -28,17 +28,25 @@
         // TODO
         public virtual void Dispose() { }
 
-        // TODO
-        protected byte GetMyClientID() { return 0; }
+        protected byte GetMyClientID()
+        {
+        	return (byte)(this.m_myClientID);
+        }
 
-        // TODO
-        public void ChangeAiBit(uint targetScriptBit) { }
+        public void ChangeAiBit(uint targetScriptBit)
+        {
+        	this.m_targetScriptBit = targetScriptBit;
+        }
 
-        // TODO
-        public uint GetAiBit() { return 0; }
+        public uint GetAiBit()
+        {
+        	return this.m_targetScriptBit;
+        }
 
-        // TODO
-        protected BtlAiScriptNo GetCurrentScriptNo() { return BtlAiScriptNo.BTL_AISCRIPT_NO_WAZA_MIN; }
+        protected BtlAiScriptNo GetCurrentScriptNo()
+        {
+        	return this.m_currentScriptNo;
+        }
 
         // TODO
         protected void ResetScriptNo() { }
@@ -46,10 +54,22 @@
         // TODO
         protected void UpdateScriptNo() { }
 
-        // TODO
-        private BtlAiScriptNo GetNextScriptNo(BtlAiScriptNo minScriptNo, BtlAiScriptNo maxScriptNo) { return BtlAiScriptNo.BTL_AISCRIPT_NO_WAZA_MIN; }
+        private BtlAiScriptNo GetNextScriptNo(BtlAiScriptNo minScriptNo, BtlAiScriptNo maxScriptNo)
+        {
+        	if (minScriptNo <= maxScriptNo) {
+        	  do {
+        	    if ((this.m_targetScriptBit & 1 << (int)((int)minScriptNo & 0x1f)) != 0) {
+        	      return minScriptNo;
+        	    }
+        	    minScriptNo = (BtlAiScriptNo)(minScriptNo + 1);
+        	  } while (minScriptNo <= maxScriptNo);
+        	}
+        	return (BtlAiScriptNo)8;
+        }
 
-        // TODO
-        protected bool IsAllScriptFinished() { return false; }
+        protected bool IsAllScriptFinished()
+        {
+        	return this.m_maxScriptNo < this.m_currentScriptNo;
+        }
     }
 }

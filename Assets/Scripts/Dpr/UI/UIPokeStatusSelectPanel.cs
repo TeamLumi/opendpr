@@ -28,11 +28,19 @@ namespace Dpr.UI
 		// TODO
 		public void Setup(PokemonParam pokemonParam) { }
 		
-		// TODO
-		private void SetInfoStatusRootActive(bool active) { }
+		private void SetInfoStatusRootActive(bool active)
+		{
+			if (((this._infoStatusRoot.activeSelf ^ active) & 1) != 0) {
+			  this._infoStatusRoot.SetActive((active ? 1 : 0) & 1);
+			}
+		}
 		
-		// TODO
-		public void SetArrowAcitve(bool active) { }
+		public void SetArrowAcitve(bool active)
+		{
+			if (((this._selectArrowRoot.activeSelf ^ active) & 1) != 0) {
+			  this._selectArrowRoot.SetActive((active ? 1 : 0) & 1);
+			}
+		}
 		
 		// TODO
 		public void PlayAnimArrow(int move) { }

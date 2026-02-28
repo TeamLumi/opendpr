@@ -72,11 +72,15 @@ namespace Dpr
 		// TODO
 		public void Play(int index, float duration = 0.0f, float startTime = 0.0f, bool isLoop = false) { }
 		
-		// TODO
-		public void Stop() { }
+		public void Stop()
+		{
+			this._animationPlayer.Stop();
+		}
 		
-		// TODO
-		public override AnimationPlayer GetAnimationPlayer() { return default; }
+		public override AnimationPlayer GetAnimationPlayer()
+		{
+			return this._animationPlayer;
+		}
 		
 		// TODO
 		public void SetAnimSpeed(float speed) { }
@@ -90,32 +94,42 @@ namespace Dpr
 		// TODO
 		public void SetTranslationVec(Vector3 translation) { }
 		
-		// TODO
-		public Vector3 GetTranslationVec() { return default; }
+		public Vector3 GetTranslationVec()
+		{
+			return this._translation;
+		}
 		
 		// TODO
 		public void SetTranslationOffset(Vector3 translation) { }
 		
-		// TODO
-		public Vector3 GetTranslationOffset() { return default; }
+		public Vector3 GetTranslationOffset()
+		{
+			return this._translationOffset;
+		}
 		
 		// TODO
 		public void SetScaleVec(Vector3 scale) { }
 		
-		// TODO
-		public Vector3 GetScaleVec() { return default; }
+		public Vector3 GetScaleVec()
+		{
+			return this._scale;
+		}
 		
 		// TODO
 		public void SetScaleOffset(Vector3 scale) { }
 		
-		// TODO
-		public Vector3 GetScaleOffset() { return default; }
+		public Vector3 GetScaleOffset()
+		{
+			return this._scaleOffset;
+		}
 		
 		// TODO
 		public void SetRotationVec(Vector3 rot) { }
 		
-		// TODO
-		public Vector3 GetRotationVec() { return default; }
+		public Vector3 GetRotationVec()
+		{
+			return this._rotVec;
+		}
 		
 		// TODO
 		public void SetRotationVecOffset(Vector3 rot) { }
@@ -144,8 +158,10 @@ namespace Dpr
 		// TODO
 		public void GetPlaySealEffect(BallId ballId, in AffixSealData[] affixSealDatas, ref List<BtlvEffectInstance> sealEffects, ref BtlvEffectInstance lightEffect) { }
 		
-		// TODO
-		public List<BtlvEffectInstance> GetSealEffectInstances() { return default; }
+		public List<BtlvEffectInstance> GetSealEffectInstances()
+		{
+			return this._sealEffectInstances;
+		}
 		
 		// TODO
 		private void UpdateSRT() { }

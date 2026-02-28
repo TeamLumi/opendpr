@@ -55,8 +55,10 @@ namespace Dpr.GMS
 		
 		public MsgWindowDataModel.MsgWindowState MsgWindowState { get => msgWindow.MsgWindowState; }
 		
-		// TODO
-		public void SetMsgSpeed(MSGSPEED msgSpeed) { }
+		public void SetMsgSpeed(MSGSPEED msgSpeed)
+		{
+			this.msgWindow.SetMsgSpeed(msgSpeed);
+		}
 		
 		// TODO
 		public void ShowMessage(MessageID messageID, [Optional] [DefaultParameterValue(false)] bool canInputClose, [Optional] Action onFinishedMessage, [Optional] Action onClosedWindow, bool defaultPos = false) { }
@@ -70,8 +72,10 @@ namespace Dpr.GMS
 		// TODO
 		private string SettingMsbtData(MessageID messageID) { return default; }
 		
-		// TODO
-		public void CloseMsgWindow() { }
+		public void CloseMsgWindow()
+		{
+			this.msgWindow.CloseMsgWindow();
+		}
 		
 		// TODO
 		public void OpenYesNoMenu(Action<int> onChoiced, [Optional] Action onClosed) { }

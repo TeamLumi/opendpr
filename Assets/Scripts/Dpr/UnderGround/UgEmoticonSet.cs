@@ -17,8 +17,10 @@ namespace Dpr.UnderGround
 
         public Action<int> OnDeside;
 		
-		// TODO
-		private void Awake() { }
+		private void Awake()
+		{
+			0.alpha = this.group;
+		}
 		
 		// TODO
 		private void MyUpdate(float deltaTime) { }

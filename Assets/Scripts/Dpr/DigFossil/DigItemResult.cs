@@ -25,8 +25,11 @@ namespace Dpr.DigFossil
 
 		private readonly List<IDigResultItem> resultItems = new List<IDigResultItem>();
 		
-		// TODO
-		public void Initialize(IDigMessage message) { }
+		public void Initialize(IDigMessage message)
+		{
+			this.message = message;
+			DestroyResultItems();
+		}
 		
 		// TODO
 		public IEnumerator ResultCommonItems(Vector2 fadeTime, Action onFinishedCallback) { return default; }

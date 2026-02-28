@@ -37,8 +37,15 @@ namespace Dpr.Item
         // TODO
         public bool IsAddItem(int num = 1) { return false; }
 
-        // TODO
-        private int GetMaxCount() { return 0; }
+        private int GetMaxCount()
+        {
+        	var iVar1 = get_Category();
+        	var uVar2 = 99;
+        	if (iVar1 != 2) {
+        	  uVar2 = 999;
+        	}
+        	return uVar2;
+        }
 
         // TODO
         public static void LoadItemIcon(int itemId, Action<Sprite> onLoadedCallback) { }

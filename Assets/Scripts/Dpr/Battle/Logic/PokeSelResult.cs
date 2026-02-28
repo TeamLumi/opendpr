@@ -12,38 +12,112 @@
         private byte m_max;
         private bool m_fCancel;
 
-        // TODO
-        public byte GetSelectMax() { return 0; }
+        public byte GetSelectMax()
+        {
+        	return (byte)(this.m_max);
+        }
 
         // TODO
         public void Init(PokeSelParam param) { }
 
-        // TODO
-        public void Push(byte outPokeIdx, byte selPokeIdx) { }
+        public void Push(byte outPokeIdx, byte selPokeIdx)
+        {
+        	if ((uint)this.m_max <= (uint)this.m_cnt) {
+        	}
+        	if ((uint)this.m_cnt < this.m_selClientID.Length) {
+        	  this.m_selClientID + (ulong)this.m_cnt * 4[0] =
+        	       this.m_myClientID;
+        	  if ((uint)this.m_cnt < this.m_selIdx.Length) {
+        	    this.m_selIdx + (ulong)this.m_cnt[0] = selPokeIdx
+        	    ;
+        	    if ((uint)this.m_cnt < this.m_outPokeIdx.Length) {
+        	      this.m_outPokeIdx + (ulong)this.m_cnt[0] =
+        	           outPokeIdx;
+        	      if ((uint)this.m_cnt < this.m_useItem.Length) {
+        	        this.m_useItem + (ulong)this.m_cnt * 2[0] =
+        	             0;
+        	        if ((uint)this.m_cnt < this.m_wazaIdx.Length) {
+        	          this.m_wazaIdx + (ulong)this.m_cnt[0] = 0
+        	          ;
+        	          this.m_cnt = (byte)(this.m_cnt + '\x01');
+        	        }
+        	      }
+        	    }
+        	  }
+        	}
+        }
 
-        // TODO
-        public void Pop() { }
+        public void Pop()
+        {
+        	if (this.m_cnt != 0) {
+        	  this.m_cnt = (byte)(this.m_cnt + -1);
+        	}
+        }
 
-        // TODO
-        public void SetCancel(bool flg) { }
+        public void SetCancel(bool flg)
+        {
+        	this.m_fCancel = (flg ? 1 : 0) & 1;
+        }
 
-        // TODO
-        public bool IsCancel() { return false; }
+        public bool IsCancel()
+        {
+        	return this.m_fCancel;
+        }
 
-        // TODO
-        public bool IsDone() { return false; }
+        public bool IsDone()
+        {
+        	return this.m_cnt == this.m_max;
+        }
 
-        // TODO
-        public byte GetCount() { return 0; }
+        public byte GetCount()
+        {
+        	return (byte)(this.m_cnt);
+        }
 
-        // TODO
-        public byte GetLast() { return 0; }
+        public byte GetLast()
+        {
+        	if ((ulong)this.m_cnt == 0) {
+        	  return 6;
+        	}
+        	if ((uint)(ulong)this.m_cnt - 1 < this.m_selIdx.Length) {
+        	  return (byte)(this.m_selIdx + (ulong)this.m_cnt - 1[0]);
+        	}
+        }
 
-        // TODO
-        public byte Get(byte idx) { return 0; }
+        public byte Get(byte idx)
+        {
+        	if (this.m_cnt <= idx) {
+        	  return 6;
+        	}
+        	if ((uint)idx < this.m_selIdx.Length) {
+        	  return (byte)(this.m_selIdx + (ulong)idx[0]);
+        	}
+        }
 
-        // TODO
-        public void SetItemUse(BTL_CLIENT_ID clientID, byte pokeIdx, ushort itemNo, byte wazaIdx = 0) { }
+        public void SetItemUse(BTL_CLIENT_ID clientID, byte pokeIdx, ushort itemNo, byte wazaIdx = 0)
+        {
+        	if ((uint)this.m_max <= (uint)this.m_cnt) {
+        	}
+        	if ((uint)this.m_cnt < this.m_selClientID.Length) {
+        	  this.m_selClientID + (ulong)this.m_cnt * 4[0] = clientID;
+        	  if ((uint)this.m_cnt < this.m_selIdx.Length) {
+        	    this.m_selIdx + (ulong)this.m_cnt[0] = pokeIdx
+        	    ;
+        	    if ((uint)this.m_cnt < this.m_outPokeIdx.Length) {
+        	      this.m_outPokeIdx + (ulong)this.m_cnt[0] = 0;
+        	      if ((uint)this.m_cnt < this.m_useItem.Length) {
+        	        this.m_useItem + (ulong)this.m_cnt * 2[0] =
+        	             itemNo;
+        	        if ((uint)this.m_cnt < this.m_wazaIdx.Length) {
+        	          this.m_wazaIdx + (ulong)this.m_cnt[0] =
+        	               wazaIdx;
+        	          this.m_cnt = (byte)(this.m_cnt + '\x01');
+        	        }
+        	      }
+        	    }
+        	  }
+        	}
+        }
 
         // TODO
         public bool IsItemUse(out BTL_CLIENT_ID clientID, out byte pokeIdx, out ushort itemNo, out byte wazaIdx)

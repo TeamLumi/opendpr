@@ -88,8 +88,12 @@ namespace Dpr.Demo
 		// TODO
 		private Tweener ShowPokeView(int cursolIndex) { return default; }
 		
-		// TODO
-		private Tweener HidePokeView() { return default; }
+		private Tweener HidePokeView()
+		{
+			DOTweenModuleUI.DOFade(0,0x3e4ccccd,this.Blur);
+			this.PokemonViewer.HidePokeView();
+			return null;
+		}
 		
 		// TODO
 		public override void _DebugMethod(int TestNo) { }

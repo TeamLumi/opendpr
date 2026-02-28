@@ -161,8 +161,13 @@ namespace Dpr.SubContents
         // TODO
         public static int GetUISortingOrderMax() { return 0; }
 
-        // TODO
-        public static int KinomiID_to_ItemID(int kinomiID) { return 0; }
+        public static int KinomiID_to_ItemID(int kinomiID)
+        {
+        	var iVar1 = 0x51b;
+        	if (kinomiID != 0x2ae) {
+        	}
+        	return kinomiID + 0x94;
+        }
 
         // TODO
         public static IEnumerator ZukanTouroku(PokemonParam p, DemoSceneManager manager) { return null; }
@@ -188,8 +193,10 @@ namespace Dpr.SubContents
         // TODO
         public static string GetVoiceID(MonsNo monsNo, int formNo, int voiceNo) { return ""; }
 
-        // TODO
-        public static bool IsPikaV(MonsNo monsNo) { return false; }
+        public static bool IsPikaV(MonsNo monsNo)
+        {
+        	return (int)monsNo == 0x19 || (int)monsNo == 0x85;
+        }
 
         // TODO
         public static void PlayVoicePikaBui_NakayoshiRank(MonsNo monsNo, int FriendRank, VoicePlayerAmbient voicePlayer) { }
@@ -206,20 +213,46 @@ namespace Dpr.SubContents
         // TODO
         public static void PlayVoicePikaBui_Poffin(MonsNo monsNo, int motionID) { }
 
-        // TODO
-        public static void PlayVoicePikaBui_Yobiyose(MonsNo monsNo, VoicePlayerAmbient voicePlayer) { }
+        public static void PlayVoicePikaBui_Yobiyose(MonsNo monsNo, VoicePlayerAmbient voicePlayer)
+        {
+        	if ((int)monsNo == 0x85) {
+        	  voicePlayer.PlayVoice(0x85,0,0x21);
+        	}
+        	if ((int)monsNo == 0x19) {
+        	  voicePlayer.PlayVoice(0x19,0,0x1f);
+        	}
+        }
 
-        // TODO
-        public static void PlayVoicePikaBui_Kaisan(MonsNo monsNo, VoicePlayerAmbient voicePlayer) { }
+        public static void PlayVoicePikaBui_Kaisan(MonsNo monsNo, VoicePlayerAmbient voicePlayer)
+        {
+        	if ((int)monsNo == 0x85) {
+        	  voicePlayer.PlayVoice(0x85,0,0x23);
+        	}
+        	if ((int)monsNo == 0x19) {
+        	  voicePlayer.PlayVoice(0x19,0,0x20);
+        	}
+        }
 
-        // TODO
-        public static void PlayVoicePikaBui_Roar(MonsNo monsNo, VoicePlayerAmbient voicePlayer) { }
+        public static void PlayVoicePikaBui_Roar(MonsNo monsNo, VoicePlayerAmbient voicePlayer)
+        {
+        	if ((int)monsNo == 0x85) {
+        	  voicePlayer.PlayVoice(0x85,0,0x1b);
+        	}
+        	if ((int)monsNo == 0x19) {
+        	  voicePlayer.PlayVoice(0x19);
+        	}
+        }
 
         // TODO
         public static void PlayVoicePikaBui_Drowse(MonsNo monsNo, int sequence, VoicePlayerAmbient voicePlayer) { }
 
-        // TODO
-        public static void PlayVoicePikaBui_Touch(MonsNo monsNo, VoicePlayerAmbient voicePlayer) { }
+        public static void PlayVoicePikaBui_Touch(MonsNo monsNo, VoicePlayerAmbient voicePlayer)
+        {
+        	if ((int)monsNo == 0x19) {
+        	  voicePlayer.PlayVoice(0x19,0,0x12);
+        	}
+        	voicePlayer.PlayVoice(monsNo,0,0x14);
+        }
 
         // TODO
         private static bool IsExistAnim(int index, AnimationPlayer animPlayer) { return false; }
@@ -236,8 +269,26 @@ namespace Dpr.SubContents
         // TODO
         private static IEnumerator WaitFrameCoroutine(int frame, Action act) { return null; }
 
-        // TODO
-        public static int GetNakayoshiRank(uint friendship) { return 0; }
+        public static int GetNakayoshiRank(uint friendship)
+        {
+        	if (friendship < 0x23) {
+        	  return 0;
+        	}
+        	if (friendship < 0x46) {
+        	  return 1;
+        	}
+        	if (friendship < 0xb4) {
+        	  return 2;
+        	}
+        	if (friendship < 0xdc) {
+        	  return 3;
+        	}
+        	var uVar1 = 4;
+        	if (0xfe < friendship) {
+        	  uVar1 = 5;
+        	}
+        	return uVar1;
+        }
 
         // TODO
         public static void ArrayDestroy(object[] objects) { }
@@ -385,8 +436,10 @@ namespace Dpr.SubContents
         // TODO
         public static string CheckNGTrainerName(ref string trainerName, MessageEnumData.MsgLangId langId, int cassetVersion) { return ""; }
 
-        // TODO
-        private static int GetPersonNameLength() { return 0; }
+        private static int GetPersonNameLength()
+        {
+        	return 6;
+        }
 
         // TODO
         public static string CheckNGPokeName(ref string nickname, MonsNo monsNo, MessageEnumData.MsgLangId langId) { return ""; }
@@ -394,8 +447,10 @@ namespace Dpr.SubContents
         // TODO
         public static string CheckNGPokeName(PokemonParam param) { return ""; }
 
-        // TODO
-        private static int GetMonsNameLength() { return 0; }
+        private static int GetMonsNameLength()
+        {
+        	return 6;
+        }
 
         // TODO
         public static string CheckNGGroupName(ref string groupName, MessageEnumData.MsgLangId langId, int cassetVersion) { return ""; }

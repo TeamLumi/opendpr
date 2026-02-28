@@ -42,8 +42,11 @@ namespace Dpr.UI
 		// TODO
 		public void Setup(BTL_POKEPARAM battlePokemonParam, bool isWait, bool isMultiPlayer) { }
 		
-		// TODO
-		public void UpdateState(BTL_POKEPARAM bpp, bool isWait) { }
+		public void UpdateState(BTL_POKEPARAM bpp, bool isWait)
+		{
+			var uVar1 = GetSelectStateLabel(bpp,(isWait ? 1 : 0) & 1);
+			this._state.SetupMessage(0,uVar1);
+		}
 		
 		// TODO
 		private string GetSelectStateLabel(BTL_POKEPARAM bpp, bool isWait) { return default; }
@@ -57,11 +60,24 @@ namespace Dpr.UI
 		// TODO
 		private void SetupDetail() { }
 		
-		// TODO
-		public void SetActive(bool enabled) { }
+		public void SetActive(bool enabled)
+		{
+			enabled = (enabled ? 1 : 0) & 1;
+			this._cursor.SetActive(enabled);
+			this._isActived = enabled;
+			ShowWazaDetail(enabled);
+		}
 		
-		// TODO
-		public bool OnUpdate(float deltaTime, UIInputController input) { return default; }
+		public bool OnUpdate(float deltaTime, UIInputController input)
+		{
+			var uVar1 = this.gameObject;
+			var uVar2 = uVar1.activeSelf;
+			if (((uVar2 & 1) != 0) && (this._isActived)) {
+			  uVar1 = UpdateSelect(deltaTime);
+			  return uVar1;
+			}
+			return false;
+		}
 		
 		// TODO
 		private bool UpdateSelect(float deltaTime, UIInputController input) { return default; }

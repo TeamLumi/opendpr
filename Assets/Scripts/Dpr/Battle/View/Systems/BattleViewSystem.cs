@@ -215,8 +215,10 @@ namespace Dpr.Battle.View.Systems
         // TODO
         private int GetBattleReflectionLayer(bool isEnable) { return 0; }
 
-        // TODO
-        public bool SetupGraphic() { return false; }
+        public bool SetupGraphic()
+        {
+        	return true;
+        }
 
         // TODO
         private void InitializeSystem() { }
@@ -365,8 +367,10 @@ namespace Dpr.Battle.View.Systems
         // TODO
         public void SetTerrainChipVisibility(bool disp) { }
 
-        // TODO
-        public void StartWeather(BtlWeather weather) { }
+        public void StartWeather(BtlWeather weather)
+        {
+        	this.m_iPtrWeatherSystem.Request(weather,0);
+        }
 
         // TODO
         public void SetSuspendSequenceFunc(SEQ_DEF_WAIT type) { }
@@ -374,8 +378,10 @@ namespace Dpr.Battle.View.Systems
         // TODO
         private bool SeqComWaitFunc_Message() { return false; }
 
-        // TODO
-        private bool SeqComWaitFunc_LoadPoke() { return false; }
+        private bool SeqComWaitFunc_LoadPoke()
+        {
+        	return true;
+        }
 
         // TODO
         private bool SeqComWaitFunc_SelectMessage() { return false; }
@@ -389,11 +395,17 @@ namespace Dpr.Battle.View.Systems
         // TODO
         private bool SeqComWaitFunc_UIFog() { return false; }
 
-        // TODO
-        private bool SeqComWaitFunc_UISeq() { return false; }
+        private bool SeqComWaitFunc_UISeq()
+        {
+        	return true;
+        }
 
-        // TODO
-        private BallId SeqComFunc_GetEffectBallId(int idx) { return BallId.NULL; }
+        private BallId SeqComFunc_GetEffectBallId(int idx)
+        {
+        	if (idx < this.m_effectBallId.Length) {
+        	  return this.m_effectBallId + (int)idx[0];
+        	}
+        }
 
         // TODO
         public BtlvBallInfo SeqComFunc_GetEffectBallInfo(int idx) { return default; }
@@ -413,8 +425,13 @@ namespace Dpr.Battle.View.Systems
         // TODO
         public override bool CMD_WaitSetup() { return false; }
 
-        // TODO
-        private void PlaySequenceStartDemo(bool isKeepResource = true) { }
+        private void PlaySequenceStartDemo(bool isKeepResource = true)
+        {
+        	this.m_sequenceSeq = (SequenceSeq)3;
+        	this.m_seqKeepResource = (isKeepResource ? 1 : 0) & 1;
+        	this.m_isSoundPlayingFinishCheckInvalid = false;
+        	this.m_soundPlayingFinishWaitCount = 0;
+        }
 
         // TODO
         private void StartRareSequence(BtlvPos[] posArr, int arrNum, bool isKeepResource = true) { }
@@ -656,8 +673,10 @@ namespace Dpr.Battle.View.Systems
         // TODO
         public override void CMD_PlaySE(SoundType SENo) { }
 
-        // TODO
-        public override bool CMD_IsSEFinished(SoundType SENo) { return default; }
+        public override bool CMD_IsSEFinished(SoundType SENo)
+        {
+        	return true;
+        }
 
         // TODO
         public override void CMD_ACT_MoveMember_Start(byte clientID, BtlvPos vpos1, BtlvPos vpos2, byte posIdx1, byte posIdx2) { }
@@ -684,8 +703,10 @@ namespace Dpr.Battle.View.Systems
         // TODO
         public override void CMD_EFFECT_DrawEnableTimer(GameTimer.TimerType type, bool enable) { }
 
-        // TODO
-        public override void CMD_FinalizeFadeSkip() { }
+        public override void CMD_FinalizeFadeSkip()
+        {
+        	this.m_isFinalizeFadeSkip = true;
+        }
 
         // TODO
         private void PlaySequenceCore(string path, bool keepResource = false) { }

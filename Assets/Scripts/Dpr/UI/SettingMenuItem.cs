@@ -63,8 +63,11 @@ namespace Dpr.UI
 		// TODO
 		public bool SetSelectIndex(int selectIndex, bool isEqualChecked = true, bool isCallbacked = true) { return default; }
 		
-		// TODO
-		public void Select(bool enabled) { }
+		public void Select(bool enabled)
+		{
+			this._selectBg.enabled = (enabled ? 1 : 0) & 1;
+			SetSelectIndex(this._selectIndex,0);
+		}
 
 		public enum ItemType : int
 		{

@@ -50,14 +50,22 @@ namespace Dpr.UI
         // TODO
         private void Awake() { }
 
-        // TODO
-        public void Initialize(Action<IUIButton> onRequiedItemData, Action<IUIButton> onSelectItem, Action<IUIButton> onUnSelectItem) { }
+        public void Initialize(Action<IUIButton> onRequiedItemData, Action<IUIButton> onSelectItem, Action<IUIButton> onUnSelectItem)
+        {
+        	this.onRequiedItemData = onRequiedItemData;
+        	this.onSelectItem = onSelectItem;
+        	this.onUnSelectItem = onUnSelectItem;
+        	this.selectedItemNode = null;
+        	this.isActive = true;
+        }
 
         // TODO
         public void Setup(int itemCount, int selectIndex = 0, float scrollPos = 0.0f, bool isForceScroll = false) { }
 
-        // TODO
-        public void SetActive(bool isActive) { }
+        public void SetActive(bool isActive)
+        {
+        	this.isActive = (isActive ? 1 : 0) & 1;
+        }
 
         // TODO
         public float GetScrollPosition() { return 0.0f; }
@@ -71,8 +79,10 @@ namespace Dpr.UI
         // TODO
         public bool MovePage(bool isNext) { return false; }
 
-        // TODO
-        public void ResumeMoveSelect() { }
+        public void ResumeMoveSelect()
+        {
+        	this.indexSelector.ResumeMoveState();
+        }
 
         // TODO
         private void SetSelectIndex(int index) { }

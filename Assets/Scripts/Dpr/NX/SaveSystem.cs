@@ -63,8 +63,17 @@ namespace Dpr.NX
 		// TODO
 		private void MountSaveData() { }
 		
-		// TODO
-		private void StartThread() { }
+		private void StartThread()
+		{
+			if (this._saveLoadThread != null) {
+			}
+			var uVar1 = new Threading_ThreadStart(this);
+			var uVar2 = new Threading_Thread(uVar1);
+			this._saveLoadThread = uVar2;
+			this._saveLoadThread.Priority = 0;
+			this._threadEnable = true;
+			this._saveLoadThread.Start();
+		}
 		
 		// TODO
 		private void ThreadLoop() { }

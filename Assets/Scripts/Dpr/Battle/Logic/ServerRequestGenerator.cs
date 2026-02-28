@@ -16,16 +16,20 @@
         private ServerSendData.POKECHANGE_REQUEST* m_sendData_PokeChangeRequest;
         private bool m_isBattleInEventOccured;
         private bool m_isEscapeSucceeded;
-        private InterruptCode m_interruptCode;
+        internal InterruptCode m_interruptCode;
 
         // TODO
         public ServerRequestGenerator(in SetupParam setupParam) { }
 
-        // TODO
-        public InterruptCode GetInterruptCode() { return InterruptCode.NONE; }
+        public InterruptCode GetInterruptCode()
+        {
+        	return this.m_interruptCode;
+        }
 
-        // TODO
-        public bool IsEscapeSucceededOnChangeOrEscape() { return false; }
+        public bool IsEscapeSucceededOnChangeOrEscape()
+        {
+        	return this.m_isEscapeSucceeded;
+        }
 
         // TODO
         public void SetSendData_ConfirmCounterPokeChange(byte enemyPutPokeID) { }

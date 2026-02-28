@@ -27,10 +27,17 @@ namespace Dpr.UI
 		// TODO
 		public void DOCountDown(int count) { }
 		
-		// TODO
-		public void Deactivate() { }
+		public void Deactivate()
+		{
+			if (this.bIsActive) {
+			  this.bIsActive = false;
+			  ExtensionMethods.SetActive(0);
+			}
+		}
 		
-		// TODO
-		private void OnDestroy() { }
+		private void OnDestroy()
+		{
+			this.countSprArray = null;
+		}
 	}
 }

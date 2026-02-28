@@ -2,10 +2,20 @@ namespace Dpr.Battle.Logic
 {
 	public static class FreeFall
 	{
-		// TODO
-		public static bool CheckFreeFallUserPoke(BTL_POKEPARAM poke) { return default; }
+		public static bool CheckFreeFallUserPoke(BTL_POKEPARAM poke)
+		{
+			poke.IsUsingFreeFall();
+			return false;
+		}
 		
-		// TODO
-		public static bool CheckFreeFallPoke(BTL_POKEPARAM poke) { return default; }
+		public static bool CheckFreeFallPoke(BTL_POKEPARAM poke)
+		{
+			var uVar1 = poke.IsUsingFreeFall();
+			if (uVar1) {
+			  return true;
+			}
+			var uVar2 = poke.CheckSick(0x22);
+			return uVar2;
+		}
 	}
 }

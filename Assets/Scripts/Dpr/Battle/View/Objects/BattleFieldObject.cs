@@ -23,8 +23,12 @@ namespace Dpr.Battle.View.Objects
 		public GameObject[] DoubleBattleHideObjects { get => _doubleBattleHideObjects; }
 		public GameObject[] TagBattleHideObjects { get => _tagBattleHideObject; }
 		
-		// TODO
-		protected void Awake() { }
+		protected void Awake()
+		{
+			var uVar1 = UnityEngine_Component__GetComponentsInChildren<object>
+			                  (this);
+			this.mirrarPlanes = uVar1;
+		}
 		
 		// TODO
 		public void SetMirrarCharacterLayerEnable(bool isEnable) { }
@@ -41,8 +45,10 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		private void SetAllTrainerSkirtHideObjectActive(bool isHide, bool isSingle) { }
 		
-		// TODO
-		private void OnDestroy() { }
+		private void OnDestroy()
+		{
+			this._cellingObjects = null;
+		}
 		
 		// TODO
 		public BattleFieldObject() { }

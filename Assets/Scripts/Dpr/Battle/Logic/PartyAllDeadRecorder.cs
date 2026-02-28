@@ -23,7 +23,14 @@ namespace Dpr.Battle.Logic
 		// TODO
 		public void RecordPartyAllDead(byte clientID) { }
 		
-		// TODO
-		public byte GetAllDeadOrder(byte clientID) { return default; }
+		public byte GetAllDeadOrder(byte clientID)
+		{
+			if (4 < clientID) {
+			  return 5;
+			}
+			if ((uint)clientID < this.m_partyAllDeadOrder.Length) {
+			  return (byte)(this.m_partyAllDeadOrder + (ulong)clientID[0]);
+			}
+		}
 	}
 }

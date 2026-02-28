@@ -19,8 +19,11 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void setNextTurn(BTL_POKEPARAM boss) { }
 		
-		// TODO
-		private void registerHandler(BTL_POKEPARAM boss) { }
+		private void registerHandler(BTL_POKEPARAM boss)
+		{
+			var uVar1 = boss.GetID();
+			this.m_pServerCmdPutter.AddRaidBossHandler(uVar1,0);
+		}
 		
 		// TODO
 		private void decGWallRepairCount(BTL_POKEPARAM boss) { }

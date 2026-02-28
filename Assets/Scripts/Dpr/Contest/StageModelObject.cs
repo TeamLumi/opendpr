@@ -5,7 +5,7 @@ namespace Dpr.Contest
 	public sealed class StageModelObject
 	{
 		public GameObject modelObj;
-		private AudienceGenerator generator;
+		internal AudienceGenerator generator;
 		private Transform modelTransform;
 		
 		public Vector3 Position { get => modelTransform.position; }
@@ -21,8 +21,13 @@ namespace Dpr.Contest
 		// TODO
 		public void MovePosition(float moveX, Camera camera) { }
 		
-		// TODO
-		public void SetAudienceUpdateFlag(bool flag) { }
+		public void SetAudienceUpdateFlag(bool flag)
+		{
+			if (flag) {
+			  this.generator.Play();
+			}
+			this.generator.Stop();
+		}
 		
 		// TODO
 		public void Dispose() { }

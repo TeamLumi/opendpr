@@ -16,8 +16,13 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private void addWazaAction() { }
 		
-		// TODO
-		private void appearGWall(BTL_POKEPARAM boss) { }
+		private void appearGWall(BTL_POKEPARAM boss)
+		{
+			var uVar1 = boss.GetID();
+			this.m_pServerCmdPutter.RepairGWall(uVar1);
+			uVar1 = boss.GetID();
+			this.m_pServerCmdPutter.Act_RaidBoss_GWallAppear(uVar1);
+		}
 
 		public class Description
 		{

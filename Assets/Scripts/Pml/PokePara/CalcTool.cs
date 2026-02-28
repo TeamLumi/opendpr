@@ -288,8 +288,12 @@
         // TODO
         public static PokeType CalcMezamerupawaaType(byte hp, byte atk, byte def, byte agi, byte spatk, byte spdef) { return PokeType.NORMAL; }
 
-        // TODO
-        public static uint CalcMezamerupawaaPower(byte hp, byte atk, byte def, byte agi, byte spatk, byte spdef) { return 0; }
+        public static uint CalcMezamerupawaaPower(byte hp, byte atk, byte def, byte agi, byte spatk, byte spdef)
+        {
+        	return ((atk & 2 | hp >> 1 & 1 | (def >> 1 & 1) << 2 | (agi >> 1 & 1) << 3 |
+        	         (spatk >> 1 & 1) << 4 | (spdef >> 1 & 1) << 5) * 0x28) / 0x3f + 0x1e;
+        	return 0;
+        }
 
         // TODO
         public static TasteJudge JudgeTaste(Seikaku seikaku, Taste taste) { return TasteJudge.NORMAL; }
@@ -297,8 +301,17 @@
         // TODO
         public static bool CanCreateEgg(MonsNo monsno1, Sex sex1, uint eggGroup1_1, uint eggGroup1_2, MonsNo monsno2, Sex sex2, uint eggGroup2_1, uint eggGroup2_2) { return false; }
 
-        // TODO
-        public static LoveLevel CalcLoveLevel(MonsNo monsno1, uint id1, MonsNo monsno2, uint id2) { return LoveLevel.GOOD; }
+        public static LoveLevel CalcLoveLevel(MonsNo monsno1, uint id1, MonsNo monsno2, uint id2)
+        {
+        	if (monsno1 == monsno2) {
+        	  return id1 == id2;
+        	}
+        	var uVar1 = 1;
+        	if (id1 == id2) {
+        	  uVar1 = 2;
+        	}
+        	return (bool)uVar1;
+        }
 
         // TODO
         public static WazaNo GetRotomuWazaNo(ushort formno) { return WazaNo.NULL; }

@@ -2,8 +2,8 @@
 {
     public sealed class BattleEnv
     {
-        private POKECON m_pokecon;
-        private FieldStatus m_fieldStatus;
+        internal POKECON m_pokecon;
+        internal FieldStatus m_fieldStatus;
         private SideEffectManager m_sideEffectManager;
         private PosEffectManager m_posEffectManager;
         private EventFactorContainer m_eventFactorContainer;
@@ -17,9 +17,9 @@
         private GRightsManager m_gRightsManager;
         private GGauge[] m_gGauge = new GGauge[(int)BTL_CLIENT_ID.BTL_CLIENT_NUM];
         private RaidBattleStatus m_raidBattleStatus;
-        private BattleFlags m_flags;
-        private BattleCounter m_counter;
-        private EscapeInfo m_escapeInfo;
+        internal BattleFlags m_flags;
+        internal BattleCounter m_counter;
+        internal EscapeInfo m_escapeInfo;
         private WazaParam m_lastExecutedWaza = new WazaParam();
         private TamaHiroiData m_tamaHiroiData = new TamaHiroiData();
 
@@ -68,8 +68,29 @@
             Initialize(param.pMainModule);
         }
 
-        // TODO
-        public void Dispose() { }
+        public void Dispose()
+        {
+        	this.m_pokecon = null;
+        	this.m_fieldStatus = null;
+        	this.m_sideEffectManager = null;
+        	this.m_posEffectManager = null;
+        	this.m_eventFactorContainer = null;
+        	this.m_posPoke = null;
+        	this.m_deadRec = null;
+        	this.m_wazaRec = null;
+        	this.m_affCounter = null;
+        	this.m_actionRecorder = null;
+        	this.m_actionSerialNoManager = null;
+        	this.m_timeLimit = null;
+        	this.m_gRightsManager = null;
+        	this.m_gGauge = null;
+        	this.m_raidBattleStatus = null;
+        	this.m_flags = null;
+        	this.m_counter = null;
+        	this.m_escapeInfo = null;
+        	this.m_lastExecutedWaza = null;
+        	this.m_tamaHiroiData = null;
+        }
 
         // TODO
         public void Initialize(MainModule mainModule) { }
@@ -87,8 +108,10 @@
             return m_fieldStatus;
         }
 
-        // TODO
-        public SideEffectManager GetSideEffectManager() { return null; }
+        public SideEffectManager GetSideEffectManager()
+        {
+        	return this.m_sideEffectManager;
+        }
 
         // TODO
         public SideEffectStatus GetSideEffectStatus(BtlSide side, BtlSideEffect effect) { return null; }
@@ -101,44 +124,68 @@
             return m_eventFactorContainer;
         }
 
-        // TODO
-        public PosPoke GetPosPoke() { return null; }
+        public PosPoke GetPosPoke()
+        {
+        	return this.m_posPoke;
+        }
 
-        // TODO
-        public DeadRec GetDeadRec() { return null; }
+        public DeadRec GetDeadRec()
+        {
+        	return this.m_deadRec;
+        }
 
-        // TODO
-        public WazaRec GetWazaRec() { return null; }
+        public WazaRec GetWazaRec()
+        {
+        	return this.m_wazaRec;
+        }
 
-        // TODO
-        public AffCounter GetAffinityCounter() { return null; }
+        public AffCounter GetAffinityCounter()
+        {
+        	return this.m_affCounter;
+        }
 
-        // TODO
-        public ActionRecorder GetActionRecorder() { return null; }
+        public ActionRecorder GetActionRecorder()
+        {
+        	return this.m_actionRecorder;
+        }
 
-        // TODO
-        public ActionSerialNoManager GetActionSerialNoManager() { return null; }
+        public ActionSerialNoManager GetActionSerialNoManager()
+        {
+        	return this.m_actionSerialNoManager;
+        }
 
-        // TODO
-        public TimeLimit GetTimeLimit() { return null; }
+        public TimeLimit GetTimeLimit()
+        {
+        	return this.m_timeLimit;
+        }
 
-        // TODO
-        public GRightsManager GetGRightsManager() { return null; }
+        public GRightsManager GetGRightsManager()
+        {
+        	return this.m_gRightsManager;
+        }
 
         // TODO
         public GGauge GetGGauge(BTL_CLIENT_ID clientID) { return null; }
 
-        // TODO
-        public RaidBattleStatus GetRaidBattleStatus() { return null; }
+        public RaidBattleStatus GetRaidBattleStatus()
+        {
+        	return this.m_raidBattleStatus;
+        }
 
-        // TODO
-        public BattleFlags GetBattleFlags() { return null; }
+        public BattleFlags GetBattleFlags()
+        {
+        	return this.m_flags;
+        }
 
-        // TODO
-        public BattleCounter GetBattleCounter() { return null; }
+        public BattleCounter GetBattleCounter()
+        {
+        	return this.m_counter;
+        }
 
-        // TODO
-        public EscapeInfo GetEscapeInfo() { return null; }
+        public EscapeInfo GetEscapeInfo()
+        {
+        	return this.m_escapeInfo;
+        }
 
         public WazaParam GetLastExecutedWaza()
         {
@@ -150,11 +197,22 @@
             m_lastExecutedWaza.CopyFrom(wazaParam);
         }
 
-        // TODO
-        public void SetTamaHiroiData(ushort itemNo) { }
+        public void SetTamaHiroiData(ushort itemNo)
+        {
+        	if (this.m_tamaHiroiData.ballItem != 0) {
+        	}
+        	this.m_tamaHiroiData.ballItem = itemNo;
+        	this.m_tamaHiroiData.ballValid = 1;
+        }
 
-        // TODO
-        public ushort GetTamaHiroiData() { return 0; }
+        public ushort GetTamaHiroiData()
+        {
+        	if (this.m_tamaHiroiData.ballValid != 0) {
+        	  this.m_tamaHiroiData.ballValid = 0;
+        	  return (ushort)(this.m_tamaHiroiData.ballItem);
+        	}
+        	return 0;
+        }
 
         public class SetupParam
         {
