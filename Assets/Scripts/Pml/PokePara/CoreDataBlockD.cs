@@ -33,10 +33,16 @@ namespace Pml.PokePara
 		private const int bitsA0_mask = 127;
 		private const int bitsA1_mask = 128;
 		
-		// TODO
-		public byte getLevel { get; set; }
-		
-		// TODO
-		public byte parentsSex { get; set; }
+		public byte getLevel
+		{
+			get => (byte)((_bitsA & bitsA0_mask) >> bitsA0_loc);
+			set => _bitsA = (byte)((_bitsA & ~bitsA0_mask) | ((value << bitsA0_loc) & bitsA0_mask));
+		}
+
+		public byte parentsSex
+		{
+			get => (byte)((_bitsA & bitsA1_mask) >> bitsA1_loc);
+			set => _bitsA = (byte)((_bitsA & ~bitsA1_mask) | ((value << bitsA1_loc) & bitsA1_mask));
+		}
 	}
 }

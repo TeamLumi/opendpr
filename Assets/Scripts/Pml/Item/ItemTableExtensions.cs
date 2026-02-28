@@ -171,7 +171,7 @@ namespace Pml.Item
                     return ((int)prm.flags0 & ItemData.FLAG0_MASK_ALLPP_RCV) != 0 ? 1 : 0;
 
                 case ItemData.PrmID.HP_RCV:
-                    if (prm.GetWorkRecoverItem(ItemData.PrmID.DEATH_RCV) != 1 || prm.GetWorkRecoverItem(ItemData.PrmID.ALL_DEATH_RCV) != 1)
+                    if (((int)prm.flags0 & (ItemData.FLAG0_MASK_DEATH_RCV | ItemData.FLAG0_MASK_ALLDEATH_RCV)) != 0)
                         return 0;
                     return prm.wk_prm_hp_rcv != 0 ? 1 : 0;
 
@@ -244,64 +244,217 @@ namespace Pml.Item
             }
         }
 
-        // TODO
-        public static uint GetHealingItemType(this ItemTable.SheetItem item) { return 0; }
+        public static uint GetHealingItemType(this ItemTable.SheetItem item)
+        {
+            int flags0 = (int)item.flags0;
 
-        // TODO
-        public static bool IsNeedSelectSkill(this ItemTable.SheetItem item) { return false; }
+            // Not WORK_TYPE → ETC
+            if ((flags0 & ItemData.FLAG0_MASK_WORK_TYPE) == 0)
+                return (uint)ItemData.ItemType.ETC;
 
-        // TODO
-        public static bool IsDeathRecoverAllItem(this ItemTable.SheetItem item) { return false; }
+            // ALLDEATH_RCV
+            if ((flags0 & ItemData.FLAG0_MASK_ALLDEATH_RCV) != 0)
+                return (uint)ItemData.ItemType.ALLDETH_RCV;
 
-        // TODO
-        public static bool IsSale(this ItemTable.SheetItem item) { return false; }
+            // LV_UP
+            if ((flags0 & ItemData.FLAG0_MASK_LV_UP) != 0)
+                return (uint)ItemData.ItemType.LV_UP;
 
-        // TODO
-        public static bool IsEventItem(this ItemTable.SheetItem item) { return false; }
+            // Build composite from 6 status cure flags
+            int statusCure = 0;
+            if ((flags0 & ItemData.FLAG0_MASK_SLEEP_RCV) != 0) statusCure |= 1;
+            if ((flags0 & ItemData.FLAG0_MASK_POISON_RCV) != 0) statusCure |= 2;
+            if ((flags0 & ItemData.FLAG0_MASK_BURN_RCV) != 0) statusCure |= 4;
+            if ((flags0 & ItemData.FLAG0_MASK_ICE_RCV) != 0) statusCure |= 8;
+            if ((flags0 & ItemData.FLAG0_MASK_PARALAYZE_RCV) != 0) statusCure |= 16;
+            if ((flags0 & ItemData.FLAG0_MASK_PANIC_RCV) != 0) statusCure |= 32;
 
-        // TODO
-        public static int GetGroupId(this ItemTable.SheetItem item) { return 0; }
+            if (statusCure <= 8)
+            {
+                switch (statusCure)
+                {
+                    case 1: return (uint)ItemData.ItemType.NEMURI_RCV;
+                    case 2: return (uint)ItemData.ItemType.DOKU_RCV;
+                    case 4: return (uint)ItemData.ItemType.YAKEDO_RCV;
+                    case 8: return (uint)ItemData.ItemType.KOORI_RCV;
+                }
+            }
+            else
+            {
+                if (statusCure == 16)
+                    return (uint)ItemData.ItemType.MAHI_RCV;
+                if (statusCure == 32)
+                    return (uint)ItemData.ItemType.KONRAN_RCV;
+                if (statusCure == 0x3f)
+                {
+                    if ((flags0 & (ItemData.FLAG0_MASK_DEATH_RCV | ItemData.FLAG0_MASK_ALLDEATH_RCV)) != 0)
+                        return (uint)ItemData.ItemType.ALL_ST_RCV;
+                    if (item.wk_prm_hp_rcv != 0)
+                        return (uint)ItemData.ItemType.HP_RCV;
+                    return (uint)ItemData.ItemType.ALL_ST_RCV;
+                }
+            }
 
-        // TODO
-        public static BallId GetBallID(this ItemTable.SheetItem item) { return BallId.NULL; }
+            // MEROMERO_RCV
+            if ((flags0 & ItemData.FLAG0_MASK_MEROMERO_RCV) != 0)
+                return (uint)ItemData.ItemType.MEROMERO_RCV;
 
-        // TODO
-        public static bool IsWazaMachine(this ItemTable.SheetItem item) { return false; }
+            // HP_RCV (only if no death recovery)
+            if ((flags0 & (ItemData.FLAG0_MASK_DEATH_RCV | ItemData.FLAG0_MASK_ALLDEATH_RCV)) == 0
+                && item.wk_prm_hp_rcv != 0)
+                return (uint)ItemData.ItemType.HP_RCV;
 
-        // TODO
-        public static uint GetWazaMashineNo(this ItemTable.SheetItem item) { return 0; }
+            // DEATH_RCV
+            if ((flags0 & ItemData.FLAG0_MASK_DEATH_RCV) != 0)
+                return (uint)ItemData.ItemType.DEATH_RCV;
 
-        // TODO
-        public static bool IsWazaRecord(this ItemTable.SheetItem item) { return false; }
+            // Stat increases/decreases (signed exp values)
+            if (item.wk_prm_hp_exp > 0) return (uint)ItemData.ItemType.HP_UP;
+            if (item.wk_prm_hp_exp < 0) return (uint)ItemData.ItemType.HP_DOWN;
 
-        // TODO
-        public static bool IsNuts(this ItemTable.SheetItem item) { return false; }
+            if (item.wk_prm_pow_exp > 0) return (uint)ItemData.ItemType.ATC_UP;
+            if (item.wk_prm_pow_exp < 0) return (uint)ItemData.ItemType.ATC_DOWN;
 
-        // TODO
-        public static byte GetNutsNo(this ItemTable.SheetItem item) { return 0; }
+            if (item.wk_prm_def_exp > 0) return (uint)ItemData.ItemType.DEF_UP;
+            if (item.wk_prm_def_exp < 0) return (uint)ItemData.ItemType.DEF_DOWN;
 
-        // TODO
-        public static bool IsGroupOf(this ItemTable.SheetItem item, byte itemgroup) { return false; }
+            if (item.wk_prm_spa_exp > 0) return (uint)ItemData.ItemType.SPA_UP;
+            if (item.wk_prm_spa_exp < 0) return (uint)ItemData.ItemType.SPA_DOWN;
 
-        // TODO
-        public static bool IsMegaStone(this ItemTable.SheetItem item) { return false; }
+            if (item.wk_prm_agi_exp > 0) return (uint)ItemData.ItemType.AGI_UP;
+            if (item.wk_prm_agi_exp < 0) return (uint)ItemData.ItemType.AGI_DOWN;
 
-        // TODO
-        public static bool IsJewel(this ItemTable.SheetItem item) { return false; }
+            if (item.wk_prm_spd_exp > 0) return (uint)ItemData.ItemType.SPD_UP;
+            if (item.wk_prm_spd_exp < 0) return (uint)ItemData.ItemType.SPD_DOWN;
 
-        // TODO
-        public static bool IsPiece(this ItemTable.SheetItem item) { return false; }
+            // EVOLUTION
+            if ((flags0 & ItemData.FLAG0_MASK_EVOLUTION) != 0)
+                return (uint)ItemData.ItemType.EVO;
 
-        // TODO
-        public static bool IsBeads(this ItemTable.SheetItem item) { return false; }
+            // PP_UP
+            if ((flags0 & ItemData.FLAG0_MASK_PP_UP) != 0)
+                return (uint)ItemData.ItemType.PP_UP;
 
-        // TODO
-        public static bool IsHeart(this ItemTable.SheetItem item) { return false; }
+            // PP_3UP
+            if ((flags0 & ItemData.FLAG0_MASK_PP_3UP) != 0)
+                return (uint)ItemData.ItemType.PP_3UP;
 
-        // TODO
-        public static bool CanPokeHave(this ItemTable.SheetItem item) { return false; }
+            // PP_RCV
+            if ((flags0 & ItemData.FLAG0_MASK_PP_RCV) != 0)
+                return (uint)ItemData.ItemType.PP_RCV;
 
-        // TODO
-        public static uint GetTypeSortNumber(this ItemTable.SheetItem item) { return 0; }
+            // ALLPP_RCV → PP_RCV type
+            if ((flags0 & ItemData.FLAG0_MASK_ALLPP_RCV) != 0)
+                return (uint)ItemData.ItemType.PP_RCV;
+
+            return (uint)ItemData.ItemType.ETC;
+        }
+
+        public static bool IsNeedSelectSkill(this ItemTable.SheetItem item)
+        {
+            uint healType = item.GetHealingItemType();
+            if (healType == (uint)ItemData.ItemType.PP_UP || healType == (uint)ItemData.ItemType.PP_3UP)
+                return true;
+            if (healType != (uint)ItemData.ItemType.PP_RCV)
+                return false;
+            return item.GetParam(ItemData.PrmID.PP_RCV) != 0;
+        }
+
+        public static bool IsDeathRecoverAllItem(this ItemTable.SheetItem item)
+        {
+            return ((int)item.flags0 & ItemData.FLAG0_MASK_WORK_TYPE) != 0
+                && ((int)item.flags0 & ItemData.FLAG0_MASK_ALLDEATH_RCV) != 0;
+        }
+
+        public static bool IsSale(this ItemTable.SheetItem item)
+        {
+            return ((int)item.flags0 & ItemData.FLAG0_MASK_IMP) == 0 && item.price != 0;
+        }
+
+        public static bool IsEventItem(this ItemTable.SheetItem item)
+        {
+            return item.type == Pml.ItemType.EVENT;
+        }
+
+        public static int GetGroupId(this ItemTable.SheetItem item)
+        {
+            return item.group_id;
+        }
+
+        public static BallId GetBallID(this ItemTable.SheetItem item)
+        {
+            if (item.group != ItemGroup.BALL)
+                return BallId.NULL;
+            return (BallId)(item.group_id + 1);
+        }
+
+        public static bool IsWazaMachine(this ItemTable.SheetItem item)
+        {
+            return item.group == ItemGroup.WAZA_MACHINE;
+        }
+
+        public static uint GetWazaMashineNo(this ItemTable.SheetItem item)
+        {
+            if (!item.IsWazaMachine())
+                return ItemData.ITEM_WAZAMACHINE_ERROR;
+            return (uint)item.group_id;
+        }
+
+        public static bool IsWazaRecord(this ItemTable.SheetItem item)
+        {
+            return item.IsWazaMachine() && ((int)item.flags0 & ItemData.FLAG0_MASK_IMP) == 0;
+        }
+
+        public static bool IsNuts(this ItemTable.SheetItem item)
+        {
+            return item.group == ItemGroup.NUTS;
+        }
+
+        public static byte GetNutsNo(this ItemTable.SheetItem item)
+        {
+            if (!item.IsNuts())
+                return ItemData.NUTS_ID_ERROR;
+            return item.group_id;
+        }
+
+        public static bool IsGroupOf(this ItemTable.SheetItem item, byte itemgroup)
+        {
+            return item.group == itemgroup;
+        }
+
+        public static bool IsMegaStone(this ItemTable.SheetItem item)
+        {
+            return item.group == ItemGroup.MEGA_STONE;
+        }
+
+        public static bool IsJewel(this ItemTable.SheetItem item)
+        {
+            return item.group == ItemGroup.JEWEL;
+        }
+
+        public static bool IsPiece(this ItemTable.SheetItem item)
+        {
+            return item.group == ItemGroup.PIECE;
+        }
+
+        public static bool IsBeads(this ItemTable.SheetItem item)
+        {
+            return item.group == ItemGroup.BEADS;
+        }
+
+        public static bool IsHeart(this ItemTable.SheetItem item)
+        {
+            return item.group == ItemGroup.HEART;
+        }
+
+        public static bool CanPokeHave(this ItemTable.SheetItem item)
+        {
+            return ((int)item.flags0 & ItemData.FLAG0_MASK_SET_TO_POKE) != 0;
+        }
+
+        public static uint GetTypeSortNumber(this ItemTable.SheetItem item)
+        {
+            return (uint)(((uint)item.type << 28) | ((uint)item.sort << 16)) + (uint)(short)item.no;
+        }
     }
 }

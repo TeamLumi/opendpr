@@ -13,16 +13,44 @@ namespace Pml.PokePara
         [SerializeField]
         private byte markingIndex;
 
-        // TODO
-        public void Serialize_Full(PokeParty party) { }
+        public void Serialize_Full(PokeParty party)
+        {
+            CreateWorkIfNeed();
+            for (int i = 0; i < PokeParty.MAX_MEMBERS; i++)
+            {
+                var member = party.GetMemberPointer((uint)i);
+                member.Serialize_Full(ref members[i]);
+            }
+            memberCount = (byte)party.GetMemberCount();
+            markingIndex = (byte)party.GetMarkingIndex();
+        }
 
-        // TODO
-        public void Deserialize_Full(PokeParty party) { }
+        public void Deserialize_Full(PokeParty party)
+        {
+            CreateWorkIfNeed();
+            for (int i = 0; i < PokeParty.MAX_MEMBERS; i++)
+            {
+                var pp = party.GetMemberPointer((uint)i);
+                pp.Deserialize_Full(members[i]);
+            }
+            party.SetMemberCount(memberCount);
+            party.SetMarkingIndex(markingIndex);
+        }
 
-        // TODO
-        public void CreateWorkIfNeed() { }
+        public void CreateWorkIfNeed()
+        {
+            if (members == null)
+                members = new SerializedPokemonFull[PokeParty.MAX_MEMBERS];
+            for (int i = 0; i < members.Length; i++)
+                members[i].CreateWorkIfNeed();
+        }
 
-        // TODO
-        public void Clear() { }
+        public void Clear()
+        {
+            members = null;
+            memberCount = 0;
+            markingIndex = 0;
+            CreateWorkIfNeed();
+        }
     }
 }

@@ -9,13 +9,26 @@ namespace Pml.PokePara
         [SerializeField]
         public byte[] buffer;
 
-        // TODO
-        public void CopyFrom(in SerializedPokemonFull src) { }
+        public void CopyFrom(in SerializedPokemonFull src)
+        {
+            src.buffer.CopyTo(buffer, 0);
+        }
 
-        // TODO
-        public static void Swap(ref SerializedPokemonFull lhs, ref SerializedPokemonFull rhs) { }
+        public static void Swap(ref SerializedPokemonFull lhs, ref SerializedPokemonFull rhs)
+        {
+            var temp = new byte[PokemonParam.DATASIZE];
+            lhs.buffer.CopyTo(temp, 0);
+            rhs.buffer.CopyTo(lhs.buffer, 0);
+            temp.CopyTo(rhs.buffer, 0);
+        }
 
-        // TODO
-        public void CreateWorkIfNeed() { }
+        public void CreateWorkIfNeed()
+        {
+            if (buffer == null)
+            {
+                buffer = new byte[PokemonParam.DATASIZE];
+                Accessor.updateChecksumAndEncode_Core(buffer);
+            }
+        }
     }
 }

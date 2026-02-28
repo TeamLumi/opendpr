@@ -37,86 +37,161 @@
             return ItemManager.Instance.GetParam(itemno, prmID, true);
         }
 
-        // TODO
-        public static uint GetHealingItemType(ushort itemno) { return 0; }
+        public static uint GetHealingItemType(ushort itemno)
+        {
+            var item = ItemManager.Instance.Get(itemno);
+            return item.GetHealingItemType();
+        }
 
-        // TODO
-        public static bool IsNeedSelectSkill(ushort itemno) { return false; }
+        public static bool IsNeedSelectSkill(ushort itemno)
+        {
+            var item = ItemManager.Instance.Get(itemno);
+            return item.IsNeedSelectSkill();
+        }
 
-        // TODO
-        public static bool IsDeathRecoverAllItem(ushort itemno) { return false; }
+        public static bool IsDeathRecoverAllItem(ushort itemno)
+        {
+            var item = ItemManager.Instance.Get(itemno);
+            return item.IsDeathRecoverAllItem();
+        }
 
-        // TODO
-        public static bool IsSale(ushort itemno) { return false; }
+        public static bool IsSale(ushort itemno)
+        {
+            var item = ItemManager.Instance.Get(itemno);
+            return item.IsSale();
+        }
 
-        // TODO
-        public static bool IsEventItem(ushort itemno) { return false; }
+        public static bool IsEventItem(ushort itemno)
+        {
+            var item = ItemManager.Instance.Get(itemno);
+            return item.IsEventItem();
+        }
 
-        // TODO
-        public static int GetGroupId(ushort itemno) { return 0; }
+        public static int GetGroupId(ushort itemno)
+        {
+            var item = ItemManager.Instance.Get(itemno);
+            return item.GetGroupId();
+        }
 
-        // TODO
-        public static BallId GetBallID(ushort itemno) { return BallId.NULL; }
+        public static BallId GetBallID(ushort itemno)
+        {
+            return ItemManager.Instance.ItemID2BallID(itemno);
+        }
 
-        // TODO
-        public static ushort BallId2ItemId(BallId ballId) { return 0; }
+        public static ushort BallId2ItemId(BallId ballId)
+        {
+            return ItemManager.Instance.BallID2ItemID(ballId);
+        }
 
-        // TODO
-        public static bool IsWazaMachine(ushort itemno) { return false; }
+        public static bool IsWazaMachine(ushort itemno)
+        {
+            var item = ItemManager.Instance.Get(itemno);
+            return item.IsWazaMachine();
+        }
 
-        // TODO
-        public static WazaNo GetWazaNo(ushort itemno) { return WazaNo.NULL; }
+        public static WazaNo GetWazaNo(ushort itemno)
+        {
+            return ItemManager.Instance.GetWazaNo(itemno);
+        }
 
-        // TODO
-        public static uint GetWazaMashineNo(ushort item) { return 0; }
+        public static uint GetWazaMashineNo(ushort item)
+        {
+            var sheetItem = ItemManager.Instance.Get(item);
+            return sheetItem.GetWazaMashineNo();
+        }
 
-        // TODO
-        public static uint GetWazaMashineMax() { return 0; }
+        public static uint GetWazaMashineMax()
+        {
+            return ItemManager.Instance.GetWazaMachineItemNum();
+        }
 
-        // TODO
-        public static WazaNo GetWazaMashineWaza(byte machine_no) { return WazaNo.NULL; }
+        public static WazaNo GetWazaMashineWaza(byte machine_no)
+        {
+            return ItemManager.Instance.WazaMachineIDToWazaID(machine_no);
+        }
 
-        // TODO
-        public static ItemNo GetWazaMashineItemNo(byte machine_no) { return ItemNo.DUMMY_DATA; }
+        public static ItemNo GetWazaMashineItemNo(byte machine_no)
+        {
+            return ItemManager.Instance.WazaMachineIDToItemNo(machine_no);
+        }
 
-        // TODO
-        public static bool IsWazaRecord(ushort itemno) { return false; }
+        public static bool IsWazaRecord(ushort itemno)
+        {
+            var item = ItemManager.Instance.Get(itemno);
+            return item.IsWazaRecord();
+        }
 
-        // TODO
-        public static bool IsNuts(ushort itemno) { return false; }
+        public static bool IsNuts(ushort itemno)
+        {
+            var item = ItemManager.Instance.Get(itemno);
+            return item.IsNuts();
+        }
 
-        // TODO
-        public static byte GetNutsNo(ushort itemno) { return 0; }
+        public static byte GetNutsNo(ushort itemno)
+        {
+            var item = ItemManager.Instance.Get(itemno);
+            return item.GetNutsNo();
+        }
 
-        // TODO
-        public static ushort NutsIDToItemNo(byte nutsid) { return 0; }
+        public static ushort NutsIDToItemNo(byte nutsid)
+        {
+            ushort itemNo;
+            if (ItemManager.Instance.GroupIdToItemNo((byte)ItemGroup.NUTS, nutsid, out itemNo))
+                return itemNo;
+            return 0;
+        }
 
-        // TODO
-        public static bool IsGroupOf(ushort itemno, byte itemgroup) { return false; }
+        public static bool IsGroupOf(ushort itemno, byte itemgroup)
+        {
+            return ItemManager.Instance.IsGroupOf(itemno, itemgroup);
+        }
 
-        // TODO
-        public static bool IsMegaStone(ushort itemno) { return false; }
+        public static bool IsMegaStone(ushort itemno)
+        {
+            var item = ItemManager.Instance.Get(itemno);
+            return item.IsMegaStone();
+        }
 
-        // TODO
-        public static bool IsJewel(ushort itemno) { return false; }
+        public static bool IsJewel(ushort itemno)
+        {
+            var item = ItemManager.Instance.Get(itemno);
+            return item.IsJewel();
+        }
 
-        // TODO
-        public static bool IsPiece(ushort itemno) { return false; }
+        public static bool IsPiece(ushort itemno)
+        {
+            var item = ItemManager.Instance.Get(itemno);
+            return item.IsPiece();
+        }
 
-        // TODO
-        public static bool IsBeads(ushort itemno) { return false; }
+        public static bool IsBeads(ushort itemno)
+        {
+            var item = ItemManager.Instance.Get(itemno);
+            return item.IsBeads();
+        }
 
-        // TODO
-        public static bool IsHeart(ushort itemno) { return false; }
+        public static bool IsHeart(ushort itemno)
+        {
+            var item = ItemManager.Instance.Get(itemno);
+            return item.IsHeart();
+        }
 
-        // TODO
-        public static bool CanPokeHave(ushort itemno) { return false; }
+        public static bool CanPokeHave(ushort itemno)
+        {
+            var item = ItemManager.Instance.Get(itemno);
+            return item.CanPokeHave();
+        }
 
-        // TODO
-        public static bool IsValid(ushort item) { return false; }
+        public static bool IsValid(ushort item)
+        {
+            return ItemManager.Instance.GetParam(item, PrmID.INACTIVE, false) == 0;
+        }
 
-        // TODO
-        public static uint GetTypeSortNumber(ushort itemno) { return 0; }
+        public static uint GetTypeSortNumber(ushort itemno)
+        {
+            var item = ItemManager.Instance.Get(itemno);
+            return item.GetTypeSortNumber();
+        }
 
         public enum PrmID : int
         {

@@ -2,16 +2,26 @@
 {
     public static class SerializedPokemonExtensions
     {
-        // TODO
-        public static void Serialize_Full(this PokemonParam self, ref SerializedPokemonFull buffer) { }
+        public static void Serialize_Full(this PokemonParam self, ref SerializedPokemonFull buffer)
+        {
+            buffer.CreateWorkIfNeed();
+            self.Serialize_Full(buffer.buffer);
+        }
 
-        // TODO
-        public static void Deserialize_Full(this PokemonParam self, in SerializedPokemonFull serializedData) { }
+        public static void Deserialize_Full(this PokemonParam self, in SerializedPokemonFull serializedData)
+        {
+            self.Deserialize_Full(serializedData.buffer);
+        }
 
-        // TODO
-        public static void Serialize_Core(this PokemonParam self, ref SerializedPokemonCore buffer) { }
+        public static void Serialize_Core(this PokemonParam self, ref SerializedPokemonCore buffer)
+        {
+            buffer.CreateWorkIfNeed();
+            self.Serialize_Core(buffer.buffer);
+        }
 
-        // TODO
-        public static void Deserialize_Core(this PokemonParam self, in SerializedPokemonCore serializedData) { }
+        public static void Deserialize_Core(this PokemonParam self, in SerializedPokemonCore serializedData)
+        {
+            self.Deserialize_Core(serializedData.buffer);
+        }
     }
 }

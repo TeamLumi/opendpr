@@ -1,4 +1,6 @@
-﻿namespace Pml.PokePara
+﻿using Pml.Personal;
+
+namespace Pml.PokePara
 {
     public static class CalcTool
     {
@@ -154,44 +156,54 @@
             new ITEM_VIEW_PARAM(ItemNo.RIBONAMEZAIKU,    Cream2ViewID.RIBBON),
         };
 
-        // TODO
-        public static byte CalcLevel(MonsNo monsno, ushort formno, uint exp) { return 0; }
+        public static byte CalcLevel(MonsNo monsno, ushort formno, uint exp)
+        {
+            var growTable = Personal.PersonalSystem.GetGrowTable(monsno, formno);
+            byte level = PmlConstants.MIN_POKE_LEVEL;
+            for (byte i = PmlConstants.MIN_POKE_LEVEL; i <= MAX_POKE_LEVEL; i++)
+            {
+                if (growTable.GetMinExp(i) > exp)
+                    break;
+                level = i;
+            }
+            return level;
+        }
 
         public static ushort CalcMaxHp(MonsNo monsno, byte level, ushort basev, ushort rnd, ushort exp)
         {
             if (monsno == MonsNo.NUKENIN)
                 return 1;
 
-            return (ushort)((short)((basev * 2u + rnd + exp / 4u * level) / 100u) + (ushort)level + 10u);
+            return (ushort)((basev * 2u + rnd + exp / 4u) * level / 100u + level + 10u);
         }
 
         public static ushort CalcAtk(byte level, ushort basev, ushort rnd, ushort exp, Seikaku seikaku)
         {
-            var calcv = (ushort)((short)((basev * 2u + rnd + exp / 4u * level) / 100u) + 5u);
+            var calcv = (ushort)((basev * 2u + rnd + exp / 4u) * level / 100u + 5u);
             return CalcCorrectedPowerBySeikaku(calcv, (ushort)seikaku, PowerID.ATK);
         }
 
         public static ushort CalcDef(byte level, ushort basev, ushort rnd, ushort exp, Seikaku seikaku)
         {
-            var calcv = (ushort)((short)((basev * 2u + rnd + exp / 4u * level) / 100u) + 5u);
+            var calcv = (ushort)((basev * 2u + rnd + exp / 4u) * level / 100u + 5u);
             return CalcCorrectedPowerBySeikaku(calcv, (ushort)seikaku, PowerID.DEF);
         }
 
         public static ushort CalcSpAtk(byte level, ushort basev, ushort rnd, ushort exp, Seikaku seikaku)
         {
-            var calcv = (ushort)((short)((basev * 2u + rnd + exp / 4u * level) / 100u) + 5u);
+            var calcv = (ushort)((basev * 2u + rnd + exp / 4u) * level / 100u + 5u);
             return CalcCorrectedPowerBySeikaku(calcv, (ushort)seikaku, PowerID.SPATK);
         }
 
         public static ushort CalcSpDef(byte level, ushort basev, ushort rnd, ushort exp, Seikaku seikaku)
         {
-            var calcv = (ushort)((short)((basev * 2u + rnd + exp / 4u * level) / 100u) + 5u);
+            var calcv = (ushort)((basev * 2u + rnd + exp / 4u) * level / 100u + 5u);
             return CalcCorrectedPowerBySeikaku(calcv, (ushort)seikaku, PowerID.SPDEF);
         }
 
         public static ushort CalcAgi(byte level, ushort basev, ushort rnd, ushort exp, Seikaku seikaku)
         {
-            var calcv = (ushort)((short)((basev * 2u + rnd + exp / 4u * level) / 100u) + 5u);
+            var calcv = (ushort)((basev * 2u + rnd + exp / 4u) * level / 100u + 5u);
             return CalcCorrectedPowerBySeikaku(calcv, (ushort)seikaku, PowerID.AGI);
         }
 
@@ -237,14 +249,30 @@
             return (id & 0xFFFF) ^ (id >> 0x10) ^ (rnd >> 0x10) ^ (rnd & 0xFFFF);
         }
 
-        // TODO
-        public static uint CorrectColorRndForNormal(uint id, uint rnd) { return 0; }
+        public static uint CorrectColorRndForNormal(uint id, uint rnd)
+        {
+            if (IsRareColor(id, rnd))
+                rnd ^= 0x10000000;
+            return rnd;
+        }
 
-        // TODO
-        public static uint CorrectColorRndForRare(uint id, uint rnd) { return 0; }
+        public static uint CorrectColorRndForRare(uint id, uint rnd)
+        {
+            if (!IsRareColor(id, rnd))
+            {
+                uint upper = (id >> 0x10) ^ id ^ rnd;
+                rnd = (rnd & 0xFFFF) | (upper << 0x10);
+            }
+            return rnd;
+        }
 
-        // TODO
-        public static RareType CalcRareColorType(uint id, uint rnd, uint cassetVersion, bool isEventGetPoke) { return RareType.NOT_RARE; }
+        public static RareType CalcRareColorType(uint id, uint rnd, uint cassetVersion, bool isEventGetPoke)
+        {
+            var rareType = CalcRareColorTypeByID(id, rnd);
+            if ((cassetVersion == VERSION_HOLOHOLO || isEventGetPoke) && rareType != RareType.NOT_RARE)
+                return RareType.DISTRIBUTED;
+            return rareType;
+        }
 
         public static RareType CalcRareColorTypeByID(uint id, uint rnd)
         {
@@ -256,70 +284,192 @@
                 return RareType.CAPTURED;
         }
 
-        // TODO
-        public static uint CorrectColorRndForRareType(uint id, uint rnd, RareType type) { return 0; }
+        public static uint CorrectColorRndForRareType(uint id, uint rnd, RareType type)
+        {
+            if (type != RareType.NOT_RARE)
+            {
+                uint upper = (id ^ (id >> 0x10) ^ rnd ^ (type == RareType.CAPTURED ? 1u : 0u)) << 0x10;
+                return (rnd & 0xFFFF) | upper;
+            }
+            return CorrectColorRndForNormal(id, rnd);
+        }
 
-        // TODO
-        public static Sex GetCorrectSexInPersonalData(MonsNo monsno, ushort formno, Sex bothCase) { return Sex.MALE; }
+        public static Sex GetCorrectSexInPersonalData(MonsNo monsno, ushort formno, Sex bothCase)
+        {
+            var sexVector = (SexVector)Personal.PersonalSystem.GetPersonalData(monsno, formno).GetParam(Personal.ParamID.SEX);
+            switch (sexVector)
+            {
+                case SexVector.ONLY_MALE:
+                    return Sex.MALE;
+                case SexVector.ONLY_FEMALE:
+                    return Sex.FEMALE;
+                case SexVector.UNKNOWN:
+                    return Sex.UNKNOWN;
+                default:
+                    return bothCase;
+            }
+        }
 
-        // TODO
-        public static bool IsSeikakuHigh(Seikaku seikaku) { return false; }
+        public static bool IsSeikakuHigh(Seikaku seikaku)
+        {
+            for (int i = 0; i < HIGH_SEIKAKU.Length; i++)
+            {
+                if (HIGH_SEIKAKU[i] == seikaku)
+                    return true;
+            }
+            return false;
+        }
 
-        // TODO
-        public static bool IsSeikakuLow(Seikaku seikaku) { return false; }
+        public static bool IsSeikakuLow(Seikaku seikaku)
+        {
+            for (int i = 0; i < LOW_SEIKAKU.Length; i++)
+            {
+                if (LOW_SEIKAKU[i] == seikaku)
+                    return true;
+            }
+            return false;
+        }
 
-        // TODO
         public static Seikaku[] GetSeikakuHigh(out byte pNum)
         {
-            pNum = 0;
-            return null;
+            pNum = (byte)HIGH_SEIKAKU.Length;
+            return HIGH_SEIKAKU;
         }
 
-        // TODO
         public static Seikaku[] GetSeikakuLow(out byte pNum)
         {
-            pNum = 0;
-            return null;
+            pNum = (byte)LOW_SEIKAKU.Length;
+            return LOW_SEIKAKU;
         }
 
-        // TODO
-        public static ushort GetTokuseiNo(MonsNo monsno, ushort formno, byte tokuseiIndex) { return 0; }
+        public static ushort GetTokuseiNo(MonsNo monsno, ushort formno, byte tokuseiIndex)
+        {
+            Personal.ParamID paramID;
+            if (tokuseiIndex < 3)
+                paramID = (Personal.ParamID)((int)Personal.ParamID.TOKUSEI1 + tokuseiIndex);
+            else
+                paramID = Personal.ParamID.TOKUSEI1;
+            return (ushort)Personal.PersonalSystem.GetPersonalData(monsno, formno).GetParam(paramID);
+        }
 
-        // TODO
-        public static PokeType CalcMezamerupawaaType(byte hp, byte atk, byte def, byte agi, byte spatk, byte spdef) { return PokeType.NORMAL; }
+        public static PokeType CalcMezamerupawaaType(byte hp, byte atk, byte def, byte agi, byte spatk, byte spdef)
+        {
+            uint val = (uint)((hp & 1) | ((atk & 1) << 1) | ((def & 1) << 2) | ((agi & 1) << 3) | ((spatk & 1) << 4) | ((spdef & 1) << 5));
+            uint typeIndex = val * 15 / 63;
+            return TYPE_TABLE[typeIndex];
+        }
 
-        // TODO
-        public static uint CalcMezamerupawaaPower(byte hp, byte atk, byte def, byte agi, byte spatk, byte spdef) { return 0; }
+        public static uint CalcMezamerupawaaPower(byte hp, byte atk, byte def, byte agi, byte spatk, byte spdef)
+        {
+            uint val = (uint)(((hp >> 1) & 1) | (((atk >> 1) & 1) << 1) | (((def >> 1) & 1) << 2) | (((agi >> 1) & 1) << 3) | (((spatk >> 1) & 1) << 4) | (((spdef >> 1) & 1) << 5));
+            return val * 40 / 63 + 30;
+        }
 
-        // TODO
-        public static TasteJudge JudgeTaste(Seikaku seikaku, Taste taste) { return TasteJudge.NORMAL; }
+        public static TasteJudge JudgeTaste(Seikaku seikaku, Taste taste)
+        {
+            return DESIRED_TASTE_TBL[(int)seikaku, (int)taste];
+        }
 
-        // TODO
-        public static bool CanCreateEgg(MonsNo monsno1, Sex sex1, uint eggGroup1_1, uint eggGroup1_2, MonsNo monsno2, Sex sex2, uint eggGroup2_1, uint eggGroup2_2) { return false; }
+        public static bool CanCreateEgg(MonsNo monsno1, Sex sex1, uint eggGroup1_1, uint eggGroup1_2, MonsNo monsno2, Sex sex2, uint eggGroup2_1, uint eggGroup2_2)
+        {
+            if (eggGroup1_1 == (uint)Personal.EggGroup.MUSEISYOKU && eggGroup1_2 == (uint)Personal.EggGroup.MUSEISYOKU)
+                return false;
+            if (eggGroup2_1 == (uint)Personal.EggGroup.MUSEISYOKU && eggGroup2_2 == (uint)Personal.EggGroup.MUSEISYOKU)
+                return false;
 
-        // TODO
-        public static LoveLevel CalcLoveLevel(MonsNo monsno1, uint id1, MonsNo monsno2, uint id2) { return LoveLevel.GOOD; }
+            bool mon1IsMetamon = (eggGroup1_1 == (uint)Personal.EggGroup.METAMON || eggGroup1_2 == (uint)Personal.EggGroup.METAMON);
+            bool mon2IsMetamon = (eggGroup2_1 == (uint)Personal.EggGroup.METAMON || eggGroup2_2 == (uint)Personal.EggGroup.METAMON);
 
-        // TODO
-        public static WazaNo GetRotomuWazaNo(ushort formno) { return WazaNo.NULL; }
+            if (mon1IsMetamon && mon2IsMetamon)
+                return false;
 
-        // TODO
-        public static PokeType GetAruseusuType(uint itemno) { return PokeType.NORMAL; }
+            if (mon1IsMetamon || mon2IsMetamon)
+                return true;
 
-        // TODO
-        public static PokeType GetGuripusu2Type(uint itemno) { return PokeType.NORMAL; }
+            if (sex1 == sex2)
+                return false;
 
-        // TODO
-        public static bool IsAmezaikuForCream2Evolution(uint itemno) { return false; }
+            if (sex1 == Sex.UNKNOWN || sex2 == Sex.UNKNOWN)
+                return false;
 
-        // TODO
-        public static Cream2ViewID GetCream2ViewID(uint itemno) { return Cream2ViewID.STRAWBERRY; }
+            if (eggGroup1_1 == eggGroup2_1 || eggGroup1_1 == eggGroup2_2 ||
+                eggGroup1_2 == eggGroup2_1 || eggGroup1_2 == eggGroup2_2)
+                return true;
 
-        // TODO
+            return false;
+        }
+
+        public static LoveLevel CalcLoveLevel(MonsNo monsno1, uint id1, MonsNo monsno2, uint id2)
+        {
+            if (monsno1 == monsno2)
+                return (id1 == id2) ? LoveLevel.NORMAL : LoveLevel.GOOD;
+            return (id1 == id2) ? LoveLevel.BAD : LoveLevel.NORMAL;
+        }
+
+        public static WazaNo GetRotomuWazaNo(ushort formno)
+        {
+            if (formno < ROTOM_WAZA_TBL.Length)
+                return ROTOM_WAZA_TBL[formno];
+            return WazaNo.NULL;
+        }
+
+        public static PokeType GetAruseusuType(uint itemno)
+        {
+            for (int i = 0; i < ITEM_TYPE_ARUSEUSU.Length; i++)
+            {
+                if ((uint)ITEM_TYPE_ARUSEUSU[i].item == itemno)
+                    return ITEM_TYPE_ARUSEUSU[i].type;
+            }
+            return PokeType.NORMAL;
+        }
+
+        public static PokeType GetGuripusu2Type(uint itemno)
+        {
+            for (int i = 0; i < ITEM_TYPE_Guripusu2.Length; i++)
+            {
+                if ((uint)ITEM_TYPE_Guripusu2[i].item == itemno)
+                    return ITEM_TYPE_Guripusu2[i].type;
+            }
+            return PokeType.NORMAL;
+        }
+
+        public static bool IsAmezaikuForCream2Evolution(uint itemno)
+        {
+            for (int i = 0; i < CREAM2_ITEM_TABLE.Length; i++)
+            {
+                if ((uint)CREAM2_ITEM_TABLE[i].item == itemno)
+                    return true;
+            }
+            return false;
+        }
+
+        public static Cream2ViewID GetCream2ViewID(uint itemno)
+        {
+            for (int i = 0; i < CREAM2_ITEM_TABLE.Length; i++)
+            {
+                if ((uint)CREAM2_ITEM_TABLE[i].item == itemno)
+                    return CREAM2_ITEM_TABLE[i].viewID;
+            }
+            return Cream2ViewID.STRAWBERRY;
+        }
+
         public static bool DecideFormNoFromHoldItem(MonsNo monsno, uint holdItemno, out ushort formno)
         {
             formno = 0;
-            return false;
+
+            if (monsno == MonsNo.GIRATHINA)
+            {
+                formno = (ushort)(holdItemno == (uint)ItemNo.HAKKINDAMA ? 1 : 0);
+            }
+            else if (monsno == MonsNo.ARUSEUSU)
+            {
+                formno = (ushort)(byte)GetAruseusuType(holdItemno);
+            }
+            else
+            {
+                return false;
+            }
+            return true;
         }
 
         private struct ITEM_TYPE_PARAM

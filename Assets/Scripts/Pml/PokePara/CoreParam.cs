@@ -1,4 +1,4 @@
-﻿using Pml.Personal;
+using Pml.Personal;
 using Pml.WazaData;
 using System;
 using System.Collections.Generic;
@@ -79,7 +79,7 @@ namespace Pml.PokePara
             if (HaveCalcParam())
                 return m_accessor.GetMaxHp();
 
-            return CalcMaxHp();
+            return CalcMaxHp_NotG();
         }
 
         public uint GetHp()
@@ -87,7 +87,7 @@ namespace Pml.PokePara
             if (HaveCalcParam())
                 return m_accessor.GetHp();
 
-            return CalcMaxHp();
+            return CalcMaxHp_NotG();
         }
 
         public void SetHp(uint value)
@@ -106,23 +106,26 @@ namespace Pml.PokePara
 
         public void ReduceNowHp(uint value)
         {
-            var max = m_accessor.GetMaxHp();
-            var curr = m_accessor.GetHp();
+            uint result = m_accessor.GetMaxHp();
+            uint curr = m_accessor.GetHp();
 
-            var newhp = (ushort)((curr - value <= max) ? (curr - value) : max);
-            newhp = (ushort)((curr <= value) ? 0 : newhp);
+            if (curr - value <= result)
+                result = curr - value;
+            if (curr <= value)
+                result = 0;
 
-            m_accessor.SetHp(newhp);
+            m_accessor.SetHp((ushort)result);
         }
 
         public void RecoverHp(uint value)
         {
-            var max = m_accessor.GetMaxHp();
-            var curr = m_accessor.GetHp();
+            uint result = m_accessor.GetMaxHp();
+            uint curr = m_accessor.GetHp();
 
-            var newhp = (ushort)((curr + value <= max) ? (curr + value) : max);
+            if ((uint)(curr + value) <= result)
+                result = curr + value;
 
-            m_accessor.SetHp(newhp);
+            m_accessor.SetHp((ushort)result);
         }
 
         public void RecoverHpFull()
@@ -216,44 +219,192 @@ namespace Pml.PokePara
             return m_accessor.GetExp();
         }
 
-        // TODO
-        public void SetExp(uint value) { }
+        public void SetExp(uint value)
+        {
+            PersonalSystem.LoadGrowTable(GetMonsNo(), GetFormNo());
+            var maxExp = PersonalSystem.GetMinExp(PmlConstants.MAX_POKE_LEVEL);
+            if (value > maxExp)
+                value = maxExp;
+            m_accessor.SetExp(value);
+            if (HaveCalcParam())
+                UpdateCalcDatas();
+        }
 
-        // TODO
-        public void AddExp(uint value) { }
+        public void AddExp(uint value)
+        {
+            SetExp(GetExp() + value);
+        }
 
-        // TODO
-        public uint GetExpForCurrentLevel() { return 0; }
+        public uint GetExpForCurrentLevel()
+        {
+            PersonalSystem.LoadGrowTable(GetMonsNo(), GetFormNo());
+            return PersonalSystem.GetMinExp((byte)GetLevel());
+        }
 
-        // TODO
-        public uint GetExpForNextLevel() { return 0; }
+        public uint GetExpForNextLevel()
+        {
+            var level = GetLevel();
+            if (level >= PmlConstants.MAX_POKE_LEVEL)
+                return GetExp();
 
-        // TODO
-        public void LevelUp(byte upVal) { }
+            PersonalSystem.LoadGrowTable(GetMonsNo(), GetFormNo());
+            return PersonalSystem.GetMinExp((byte)(level + 1));
+        }
 
-        // TODO
-        public uint GetBasicPower(PowerID powerID) { return 0; }
+        public void LevelUp(byte upVal)
+        {
+            var level = GetLevel();
+            var newLevel = level + upVal;
+            if (newLevel > PmlConstants.MAX_POKE_LEVEL)
+                newLevel = PmlConstants.MAX_POKE_LEVEL;
 
-        // TODO
-        public uint GetNativeTalentPower(PowerID powerId) { return 0; }
+            PersonalSystem.LoadGrowTable(GetMonsNo(), GetFormNo());
+            SetExp(PersonalSystem.GetMinExp((byte)newLevel));
+        }
 
-        // TODO
-        public uint GetTalentPower(PowerID powerId) { return 0; }
+        public uint GetBasicPower(PowerID powerID)
+        {
+            PersonalSystem.LoadPersonalData(GetMonsNo(), GetFormNo());
+            switch (powerID)
+            {
+                case PowerID.HP:
+                    return PersonalSystem.GetPersonalParam(ParamID.BASIC_HP);
+                case PowerID.ATK:
+                    return PersonalSystem.GetPersonalParam(ParamID.BASIC_ATK);
+                case PowerID.DEF:
+                    return PersonalSystem.GetPersonalParam(ParamID.BASIC_DEF);
+                case PowerID.SPATK:
+                    return PersonalSystem.GetPersonalParam(ParamID.BASIC_SPATK);
+                case PowerID.SPDEF:
+                    return PersonalSystem.GetPersonalParam(ParamID.BASIC_SPDEF);
+                case PowerID.AGI:
+                    return PersonalSystem.GetPersonalParam(ParamID.BASIC_AGI);
+                default:
+                    GFL.ASSERT(false);
+                    return 0;
+            }
+        }
 
-        // TODO
-        public void ChangeTalentPower(PowerID powerId, uint value) { }
+        public uint GetNativeTalentPower(PowerID powerId)
+        {
+            switch (powerId)
+            {
+                case PowerID.HP:
+                    return m_accessor.GetTalentHp();
+                case PowerID.ATK:
+                    return m_accessor.GetTalentAtk();
+                case PowerID.DEF:
+                    return m_accessor.GetTalentDef();
+                case PowerID.SPATK:
+                    return m_accessor.GetTalentSpAtk();
+                case PowerID.SPDEF:
+                    return m_accessor.GetTalentSpDef();
+                case PowerID.AGI:
+                    return m_accessor.GetTalentAgi();
+                default:
+                    GFL.ASSERT(false);
+                    return 0;
+            }
+        }
 
-        // TODO
-        public uint GetTalentPowerMaxNum() { return 0; }
+        public uint GetTalentPower(PowerID powerId)
+        {
+            if ((int)powerId < 6)
+            {
+                byte flag = m_accessor.GetTrainingFlag();
+                if ((flag & (1 << ((int)powerId & 0x1f))) != 0)
+                    return PmlConstants.MAX_TALENT_POWER;
+            }
+            return GetNativeTalentPower(powerId);
+        }
 
-        // TODO
-        public bool IsTrainingDone(PowerID powerId) { return false; }
+        public void ChangeTalentPower(PowerID powerId, uint value)
+        {
+            if (value > PmlConstants.MAX_TALENT_POWER)
+                value = PmlConstants.MAX_TALENT_POWER;
 
-        // TODO
-        public void SetTrainingDone(PowerID powerId) { }
+            switch (powerId)
+            {
+                case PowerID.HP:
+                    m_accessor.SetTalentHp((byte)value);
+                    break;
+                case PowerID.ATK:
+                    m_accessor.SetTalentAtk((byte)value);
+                    break;
+                case PowerID.DEF:
+                    m_accessor.SetTalentDef((byte)value);
+                    break;
+                case PowerID.SPATK:
+                    m_accessor.SetTalentSpAtk((byte)value);
+                    break;
+                case PowerID.SPDEF:
+                    m_accessor.SetTalentSpDef((byte)value);
+                    break;
+                case PowerID.AGI:
+                    m_accessor.SetTalentAgi((byte)value);
+                    break;
+                default:
+                    GFL.ASSERT(false);
+                    break;
+            }
 
-        // TODO
-        public uint GetEffortPower(PowerID powerId) { return 0; }
+            if (HaveCalcParam())
+                UpdateCalcDatas();
+        }
+
+        public uint GetTalentPowerMaxNum()
+        {
+            uint count = 0;
+            for (int i = 0; i < (int)PowerID.NUM; i++)
+            {
+                if (GetTalentPower((PowerID)i) >= PmlConstants.MAX_TALENT_POWER)
+                    count++;
+            }
+            return count;
+        }
+
+        public bool IsTrainingDone(PowerID powerId)
+        {
+            byte flag = m_accessor.GetTrainingFlag();
+            return (flag & (1 << (int)powerId)) != 0;
+        }
+
+        public void SetTrainingDone(PowerID powerId)
+        {
+            if ((int)powerId < 6)
+            {
+                byte flag = m_accessor.GetTrainingFlag();
+                flag |= (byte)(1 << (int)powerId);
+                m_accessor.SetTrainingFlag(flag);
+                UpdateCalcDatas(true);
+            }
+            else
+            {
+                GFL.ASSERT(false);
+            }
+        }
+
+        public uint GetEffortPower(PowerID powerId)
+        {
+            switch (powerId)
+            {
+                case PowerID.HP:
+                    return m_accessor.GetEffortHp();
+                case PowerID.ATK:
+                    return m_accessor.GetEffortAtk();
+                case PowerID.DEF:
+                    return m_accessor.GetEffortDef();
+                case PowerID.SPATK:
+                    return m_accessor.GetEffortSpAtk();
+                case PowerID.SPDEF:
+                    return m_accessor.GetEffortSpDef();
+                case PowerID.AGI:
+                    return m_accessor.GetEffortAgi();
+                default:
+                    GFL.ASSERT(false);
+                    return 0;
+            }
+        }
 
         public uint GetTotalEffortPower()
         {
@@ -265,14 +416,49 @@ namespace Pml.PokePara
                 m_accessor.GetEffortAgi();
         }
 
-        // TODO
-        public void ChangeEffortPower(PowerID powerId, uint value) { }
+        public void ChangeEffortPower(PowerID powerId, uint value)
+        {
+            value = AdjustEffortPower(GetEffortPower(powerId), value);
 
-        // TODO
-        public void AddEffortPower(PowerID powerId, uint value) { }
+            switch (powerId)
+            {
+                case PowerID.HP:
+                    m_accessor.SetEffortHp((byte)value);
+                    break;
+                case PowerID.ATK:
+                    m_accessor.SetEffortAtk((byte)value);
+                    break;
+                case PowerID.DEF:
+                    m_accessor.SetEffortDef((byte)value);
+                    break;
+                case PowerID.SPATK:
+                    m_accessor.SetEffortSpAtk((byte)value);
+                    break;
+                case PowerID.SPDEF:
+                    m_accessor.SetEffortSpDef((byte)value);
+                    break;
+                case PowerID.AGI:
+                    m_accessor.SetEffortAgi((byte)value);
+                    break;
+                default:
+                    GFL.ASSERT(false);
+                    break;
+            }
 
-        // TODO
-        public void SubEffortPower(PowerID powerId, uint value) { }
+            if (HaveCalcParam())
+                UpdateCalcDatas();
+        }
+
+        public void AddEffortPower(PowerID powerId, uint value)
+        {
+            ChangeEffortPower(powerId, GetEffortPower(powerId) + value);
+        }
+
+        public void SubEffortPower(PowerID powerId, uint value)
+        {
+            var current = GetEffortPower(powerId);
+            ChangeEffortPower(powerId, current >= value ? current - value : 0);
+        }
 
         public GState GetGState()
         {
@@ -302,32 +488,58 @@ namespace Pml.PokePara
             return false;
         }
 
-        // TODO
-        public void ChangeEffortG(byte value) { }
+        public void ChangeEffortG(byte value)
+        {
+            if (value > PmlConstants.MAX_EFFORT_G)
+                value = PmlConstants.MAX_EFFORT_G;
+            m_accessor.SetEffortG(value);
+        }
 
-        // TODO
-        public byte GetEffortG() { return 0; }
+        public byte GetEffortG()
+        {
+            return (byte)m_accessor.GetEffortG();
+        }
 
-        // TODO
-        public void AddEffortG(uint value) { }
+        public void AddEffortG(uint value)
+        {
+            var current = m_accessor.GetEffortG();
+            var newval = current + value;
+            if (newval > PmlConstants.MAX_EFFORT_G)
+                newval = PmlConstants.MAX_EFFORT_G;
+            m_accessor.SetEffortG((byte)newval);
+        }
 
-        // TODO
-        public void SubEffortG(uint value) { }
+        public void SubEffortG(uint value)
+        {
+            var current = m_accessor.GetEffortG();
+            m_accessor.SetEffortG((byte)(current >= value ? current - value : 0));
+        }
 
-        // TODO
-        public uint GetPower_G(PowerID powerID) { return 0; }
+        public uint GetPower_G(PowerID powerID)
+        {
+            // Gigantamax power calculation not implemented for BDSP
+            return GetPower(powerID);
+        }
 
-        // TODO
-        public uint GetPower_NotG(PowerID powerID) { return 0; }
+        public uint GetPower_NotG(PowerID powerID)
+        {
+            return GetPower(powerID);
+        }
 
-        // TODO
-        public bool IsSpecialGEnable() { return false; }
+        public bool IsSpecialGEnable()
+        {
+            return m_accessor.IsSpecialGEnable();
+        }
 
-        // TODO
-        public void SetSpecialGEnable() { }
+        public void SetSpecialGEnable()
+        {
+            m_accessor.SetSpecialGFlag(true);
+        }
 
-        // TODO
-        public void SetSpecialGDisable() { }
+        public void SetSpecialGDisable()
+        {
+            m_accessor.SetSpecialGFlag(false);
+        }
 
         public MonsNo GetMonsNo()
         {
@@ -339,8 +551,17 @@ namespace Pml.PokePara
             return m_accessor.GetFormNo();
         }
 
-        // TODO
-        public void ChangeMonsNo(MonsNo newMonsno, ushort newFormno) { }
+        public void ChangeMonsNo(MonsNo newMonsno, ushort newFormno)
+        {
+            // TODO: Ghidra shows: early return if monsNo unchanged, sets MonsNo/FormNo,
+            // recalculates tokusei index (IsTokusei2/3 flags -> CalcTool.GetTokuseiNo),
+            // corrects sex via CalcTool.GetCorrectSexInPersonalData,
+            // if no nickname set calls SetDefaultNickName, calls UpdateCalcDatas(keepDead=true)
+            m_accessor.SetMonsNo((uint)newMonsno);
+            m_accessor.SetFormNo(newFormno);
+            if (HaveCalcParam())
+                UpdateCalcDatas();
+        }
 
         public WazaNo GetWazaNo(byte index)
         {
@@ -382,8 +603,30 @@ namespace Pml.PokePara
                 return 4;
         }
 
-        // TODO
-        public void SetDefaultWaza() { }
+        public void SetDefaultWaza()
+        {
+            PersonalSystem.LoadWazaOboeData(GetMonsNo(), GetFormNo());
+            var oboeNum = PersonalSystem.GetWazaOboeNum();
+
+            for (byte i = 0; i < PmlConstants.MAX_WAZA_NUM; i++)
+            {
+                m_accessor.SetWazaNo(i, (uint)WazaNo.NULL);
+                m_accessor.SetPP(i, 0);
+                m_accessor.SetWazaPPUpCount(i, 0);
+            }
+
+            for (ushort i = 0; i < oboeNum; i++)
+            {
+                var level = PersonalSystem.GetWazaOboeLevel(i);
+                if (level > GetLevel())
+                    break;
+
+                var wazano = (WazaNo)PersonalSystem.GetWazaOboeWazaNo(i);
+                var kind = PersonalSystem.GetWazaOboeKind(i);
+                if (kind == OboeWazaKind.LEVEL || kind == OboeWazaKind.BASE)
+                    PushWaza(wazano);
+            }
+        }
 
         public void PushWaza(WazaNo wazano)
         {
@@ -426,32 +669,104 @@ namespace Pml.PokePara
             }
         }
 
-        // TODO
-        public void RemoveWaza(byte wazaIndex) { }
+        public void RemoveWaza(byte wazaIndex)
+        {
+            if (wazaIndex < PmlConstants.MAX_WAZA_NUM)
+            {
+                m_accessor.SetWazaNo(wazaIndex, (uint)WazaNo.NULL);
+                m_accessor.SetPP(wazaIndex, 0);
+                m_accessor.SetWazaPPUpCount(wazaIndex, 0);
+            }
+        }
 
-        // TODO
-        public void RemoveDuplicatedWaza() { }
+        public void RemoveDuplicatedWaza()
+        {
+            for (byte i = 0; i < PmlConstants.MAX_WAZA_NUM; i++)
+            {
+                var waza = GetWazaNo(i);
+                if (waza == WazaNo.NULL)
+                    continue;
 
-        // TODO
-        public void ExchangeWazaPos(byte pos1, byte pos2) { }
+                for (byte j = (byte)(i + 1); j < PmlConstants.MAX_WAZA_NUM; j++)
+                {
+                    if (GetWazaNo(j) == waza)
+                        RemoveWaza(j);
+                }
+            }
+        }
 
-        // TODO
-        public void CloseUpWazaPos() { }
+        public void ExchangeWazaPos(byte pos1, byte pos2)
+        {
+            if (pos1 >= PmlConstants.MAX_WAZA_NUM || pos2 >= PmlConstants.MAX_WAZA_NUM)
+                return;
 
-        // TODO
-        public bool CheckWazaMachine(uint machineNo) { return false; }
+            var waza1 = m_accessor.GetWazaNo(pos1);
+            var pp1 = m_accessor.GetPP(pos1);
+            var upcount1 = m_accessor.GetWazaPPUpCount(pos1);
 
-        // TODO
-        public bool CheckWazaRecord(uint recordNo) { return false; }
+            m_accessor.SetWazaNo(pos1, (uint)m_accessor.GetWazaNo(pos2));
+            m_accessor.SetPP(pos1, m_accessor.GetPP(pos2));
+            m_accessor.SetWazaPPUpCount(pos1, m_accessor.GetWazaPPUpCount(pos2));
 
-        // TODO
-        public bool CheckWazaOshie(uint oshieNo) { return false; }
+            m_accessor.SetWazaNo(pos2, (uint)waza1);
+            m_accessor.SetPP(pos2, pp1);
+            m_accessor.SetWazaPPUpCount(pos2, upcount1);
+        }
 
-        // TODO
-        public bool CheckWazaOshie(WazaNo wazano) { return false; }
+        public void CloseUpWazaPos()
+        {
+            byte writePos = 0;
+            for (byte readPos = 0; readPos < PmlConstants.MAX_WAZA_NUM; readPos++)
+            {
+                if (GetWazaNo(readPos) != WazaNo.NULL)
+                {
+                    if (writePos != readPos)
+                    {
+                        m_accessor.SetWazaNo(writePos, (uint)m_accessor.GetWazaNo(readPos));
+                        m_accessor.SetPP(writePos, m_accessor.GetPP(readPos));
+                        m_accessor.SetWazaPPUpCount(writePos, m_accessor.GetWazaPPUpCount(readPos));
 
-        // TODO
-        public WazaNo GetTamagoWazaNo(byte index) { return WazaNo.NULL; }
+                        m_accessor.SetWazaNo(readPos, (uint)WazaNo.NULL);
+                        m_accessor.SetPP(readPos, 0);
+                        m_accessor.SetWazaPPUpCount(readPos, 0);
+                    }
+                    writePos++;
+                }
+            }
+        }
+
+        public bool CheckWazaMachine(uint machineNo)
+        {
+            PersonalSystem.LoadPersonalData(GetMonsNo(), GetFormNo());
+            return PersonalSystem.CheckPersonalWazaMachine((ushort)machineNo);
+        }
+
+        public bool CheckWazaRecord(uint recordNo)
+        {
+            PersonalSystem.LoadPersonalData(GetMonsNo(), GetFormNo());
+            return PersonalSystem.CheckPersonalWazaRecord((ushort)recordNo);
+        }
+
+        public bool CheckWazaOshie(uint oshieNo)
+        {
+            PersonalSystem.LoadPersonalData(GetMonsNo(), GetFormNo());
+            return PersonalSystem.CheckPersonalWazaOshie((ushort)oshieNo);
+        }
+
+        public bool CheckWazaOshie(WazaNo wazano)
+        {
+            for (int i = 0; i < PersonalSystem.GetOshieWazaNum(); i++)
+            {
+                if (PersonalSystem.GetOshieWazaNo(i) == wazano)
+                    return CheckWazaOshie((uint)i);
+            }
+            return false;
+        }
+
+        public WazaNo GetTamagoWazaNo(byte index)
+        {
+            return m_accessor.GetTamagoWazaNo(index);
+        }
 
         public void SetTamagoWazaNo(byte index, WazaNo wazano)
         {
@@ -461,31 +776,140 @@ namespace Pml.PokePara
                 GFL.ASSERT(false);
         }
 
-        // TODO
-        public void ClearTamagoWaza() { }
+        public void ClearTamagoWaza()
+        {
+            for (byte i = 0; i < PmlConstants.MAX_WAZA_NUM; i++)
+                m_accessor.SetTamagoWazaNo(i, (uint)WazaNo.NULL);
+        }
 
-        // TODO
-        public void InheriteTamagoWaza(CoreParam teacher) { }
+        public void InheriteTamagoWaza(CoreParam teacher)
+        {
+            // TODO: Ghidra shows completely different logic — checks if both Pokemon are same species,
+            // creates EggWazaData, loads personal egg waza data, iterates teacher's REGULAR waza
+            // (not tamago waza), checks each against egg waza data set, calls AddWazaIfEmptyExist
+            // on the child for matching waza. Current implementation incorrectly copies tamago slots.
+        }
 
-        // TODO
-        public WazaLearningResult AddWazaIfEmptyExist(WazaNo wazano) { return WazaLearningResult.SUCCEEDED; }
+        public WazaLearningResult AddWazaIfEmptyExist(WazaNo wazano)
+        {
+            if (HaveWaza(wazano))
+                return WazaLearningResult.FAILED_SAME;
 
-        // TODO
-        public WazaLearningResult LearnNewWazaOnCurrentLevel(ref uint sameLevelIndex, ref WazaNo newWazano, [Optional] WazaLearnWork work) { return WazaLearningResult.SUCCEEDED; }
+            var count = GetWazaCount();
+            if (count >= PmlConstants.MAX_WAZA_NUM)
+                return WazaLearningResult.FAILED_FULL;
 
-        // TODO
-        public WazaLearningResult LearnNewWazaOnLevel(byte level, ref uint sameLevelIndex, ref WazaNo newWazano, [Optional] WazaLearnWork work) { return WazaLearningResult.SUCCEEDED; }
+            SetWaza(count, wazano);
+            return WazaLearningResult.SUCCEEDED;
+        }
 
-        // TODO
-        public WazaLearningResult LearnNewWazaOnEvolution(ref uint learnIndex, ref WazaNo newWazano, [Optional] WazaLearnWork work) { return WazaLearningResult.SUCCEEDED; }
+        public WazaLearningResult LearnNewWazaOnCurrentLevel(ref uint sameLevelIndex, ref WazaNo newWazano, [Optional] WazaLearnWork work)
+        {
+            return LearnNewWazaOnLevel((byte)GetLevel(), ref sameLevelIndex, ref newWazano, work);
+        }
 
-        // TODO
+        public WazaLearningResult LearnNewWazaOnLevel(byte level, ref uint sameLevelIndex, ref WazaNo newWazano, [Optional] WazaLearnWork work)
+        {
+            PersonalSystem.LoadWazaOboeData(GetMonsNo(), GetFormNo());
+            var oboeNum = PersonalSystem.GetWazaOboeNum();
+
+            uint matchCount = 0;
+            for (ushort i = 0; i < oboeNum; i++)
+            {
+                var oboeLevel = PersonalSystem.GetWazaOboeLevel(i);
+                if (oboeLevel != level)
+                    continue;
+
+                if (matchCount < sameLevelIndex)
+                {
+                    matchCount++;
+                    continue;
+                }
+
+                var wazano = (WazaNo)PersonalSystem.GetWazaOboeWazaNo(i);
+
+                if (work != null && work.IsCheckedWaza(wazano))
+                    continue;
+
+                if (work != null)
+                    work.AddCheckedWaza(wazano);
+
+                newWazano = wazano;
+                sameLevelIndex = matchCount + 1;
+
+                return AddWazaIfEmptyExist(wazano);
+            }
+
+            return WazaLearningResult.FAILED_NOT_EXIST;
+        }
+
+        public WazaLearningResult LearnNewWazaOnEvolution(ref uint learnIndex, ref WazaNo newWazano, [Optional] WazaLearnWork work)
+        {
+            PersonalSystem.LoadWazaOboeData(GetMonsNo(), GetFormNo());
+            var oboeNum = PersonalSystem.GetWazaOboeNum();
+
+            uint matchCount = 0;
+            for (ushort i = 0; i < oboeNum; i++)
+            {
+                var kind = PersonalSystem.GetWazaOboeKind(i);
+                if (kind != OboeWazaKind.EVOLVE)
+                    continue;
+
+                if (matchCount < learnIndex)
+                {
+                    matchCount++;
+                    continue;
+                }
+
+                var wazano = (WazaNo)PersonalSystem.GetWazaOboeWazaNo(i);
+
+                if (work != null && work.IsCheckedWaza(wazano))
+                    continue;
+
+                if (work != null)
+                    work.AddCheckedWaza(wazano);
+
+                newWazano = wazano;
+                learnIndex = matchCount + 1;
+
+                return AddWazaIfEmptyExist(wazano);
+            }
+
+            return WazaLearningResult.FAILED_NOT_EXIST;
+        }
+
         public HashSet<WazaNo> CollectRemindableWaza()
         {
-            // TODO
-            void CheckAndAddWazaNo(HashSet<WazaNo> list, WazaNo wazaNo) { }
+            // TODO: Ghidra shows: first adds 4 tamago waza, then iterates waza record flags
+            // (0-98) — if a record flag is set, gets the corresponding waza from ItemManager
+            // and adds it. Then three separate passes through waza oboe by kind (LEVEL, BASE,
+            // EVOLVE) up to current level. Current implementation is missing waza record flag
+            // iteration entirely and doesn't separate by OboeWazaKind.
+            void CheckAndAddWazaNo(HashSet<WazaNo> list, WazaNo wazaNo)
+            {
+                if (wazaNo != WazaNo.NULL)
+                    list.Add(wazaNo);
+            }
 
-            return default;
+            var result = new HashSet<WazaNo>();
+
+            for (byte i = 0; i < PmlConstants.MAX_WAZA_NUM; i++)
+                CheckAndAddWazaNo(result, GetTamagoWazaNo(i));
+
+            PersonalSystem.LoadWazaOboeData(GetMonsNo(), GetFormNo());
+            var oboeNum = PersonalSystem.GetWazaOboeNum();
+
+            for (ushort i = 0; i < oboeNum; i++)
+            {
+                var level = PersonalSystem.GetWazaOboeLevel(i);
+                if (level > GetLevel())
+                    break;
+
+                var wazano = (WazaNo)PersonalSystem.GetWazaOboeWazaNo(i);
+                CheckAndAddWazaNo(result, wazano);
+            }
+
+            return result;
         }
 
         public uint GetWazaPP(byte wazaIndex)
@@ -504,8 +928,11 @@ namespace Pml.PokePara
             m_accessor.SetPP(wazaIndex, (byte)((value <= max) ? value : max));
         }
 
-        // TODO
-        public void ReduceWazaPP(byte wazaIndex, byte value) { }
+        public void ReduceWazaPP(byte wazaIndex, byte value)
+        {
+            var curr = GetWazaPP(wazaIndex);
+            SetWazaPP(wazaIndex, (byte)(curr >= value ? curr - value : 0));
+        }
 
         public void RecoverWazaPP(byte wazaIndex)
         {
@@ -529,168 +956,333 @@ namespace Pml.PokePara
             RecoverWazaPP(3);
         }
 
-        // TODO
-        public bool CanUsePointUp(byte wazaIndex) { return false; }
+        public bool CanUsePointUp(byte wazaIndex)
+        {
+            if (GetWazaNo(wazaIndex) == WazaNo.NULL)
+                return false;
 
-        // TODO
-        public void UsePointUp(byte wazaIndex) { }
+            return GetWazaPPUpCount(wazaIndex) < PmlConstants.MAX_WAZAPP_UPCOUNT;
+        }
+
+        public void UsePointUp(byte wazaIndex)
+        {
+            if (!CanUsePointUp(wazaIndex))
+                return;
+
+            var count = (byte)(GetWazaPPUpCount(wazaIndex) + 1);
+            m_accessor.SetWazaPPUpCount(wazaIndex, count);
+            RecoverWazaPP(wazaIndex);
+        }
 
         public uint GetWazaPPUpCount(byte wazaIndex)
         {
             return m_accessor.GetWazaPPUpCount(wazaIndex);
         }
 
-        // TODO
-        public void SetWazaPPUpCount(byte wazaIndex, byte value) { }
+        public void SetWazaPPUpCount(byte wazaIndex, byte value)
+        {
+            if (value > PmlConstants.MAX_WAZAPP_UPCOUNT)
+                value = PmlConstants.MAX_WAZAPP_UPCOUNT;
+            m_accessor.SetWazaPPUpCount(wazaIndex, value);
+        }
 
-        // TODO
-        public void IncWazaPPUpCount(byte wazaIndex) { }
+        public void IncWazaPPUpCount(byte wazaIndex)
+        {
+            var count = GetWazaPPUpCount(wazaIndex);
+            if (count < PmlConstants.MAX_WAZAPP_UPCOUNT)
+                m_accessor.SetWazaPPUpCount(wazaIndex, (byte)(count + 1));
+        }
 
-        // TODO
-        public bool GetWazaRecordFlag(byte recordIndex) { return false; }
+        public bool GetWazaRecordFlag(byte recordIndex)
+        {
+            return m_accessor.GetWazaRecordFlag(recordIndex);
+        }
 
-        // TODO
-        public void SetWazaRecordFlag(byte recordIndex) { }
+        public void SetWazaRecordFlag(byte recordIndex)
+        {
+            m_accessor.SetWazaRecordFlag(recordIndex, true);
+        }
 
-        // TODO
-        public void RemoveWazaRecordFlag(byte recordIndex) { }
+        public void RemoveWazaRecordFlag(byte recordIndex)
+        {
+            m_accessor.SetWazaRecordFlag(recordIndex, false);
+        }
 
-        // TODO
-        public void ClearWazaRecordFlag() { }
+        public void ClearWazaRecordFlag()
+        {
+            m_accessor.ClearWazaRecordFlag();
+        }
 
         public void ClearBankUniqueID()
         {
             m_accessor.ClearBankUniqueID();
         }
 
-        // TODO
-        public ulong GetBankUniqueID() { return 0; }
+        public ulong GetBankUniqueID()
+        {
+            return m_accessor.GetBankUniqueID();
+        }
 
-        // TODO
-        public void SetBankUniqueID(ulong value) { }
+        public void SetBankUniqueID(ulong value)
+        {
+            m_accessor.SetBankUniqueID(value);
+        }
 
         public Sex GetSex()
         {
             return m_accessor.GetSex();
         }
 
-        // TODO
-        public byte GetSexVector() { return 0; }
+        public byte GetSexVector()
+        {
+            PersonalSystem.LoadPersonalData(GetMonsNo(), GetFormNo());
+            return (byte)PersonalSystem.GetPersonalParam(ParamID.SEX);
+        }
 
-        // TODO
-        public SexType GetSexType() { return SexType.RANDOM; }
+        public SexType GetSexType()
+        {
+            PersonalSystem.LoadPersonalData(GetMonsNo(), GetFormNo());
+            return PersonalSystem.GetPersonalSexType();
+        }
 
-        // TODO
-        public void ChangeSex(Sex newSex) { }
+        public void ChangeSex(Sex newSex)
+        {
+            m_accessor.SetSex(newSex);
+        }
 
-        // TODO
-        public Seikaku GetSeikaku() { return Seikaku.GANBARIYA; }
+        public Seikaku GetSeikaku()
+        {
+            return (Seikaku)m_accessor.GetSeikaku();
+        }
 
-        // TODO
-        public void ChangeSeikaku(Seikaku seikaku) { }
+        public void ChangeSeikaku(Seikaku seikaku)
+        {
+            m_accessor.SetSeikaku((uint)seikaku);
+        }
 
-        // TODO
-        public bool IsSeikakuHigh() { return false; }
+        public bool IsSeikakuHigh()
+        {
+            return CalcTool.IsSeikakuHigh(GetSeikaku());
+        }
 
-        // TODO
-        public bool IsSeikakuLow() { return false; }
+        public bool IsSeikakuLow()
+        {
+            return CalcTool.IsSeikakuLow(GetSeikaku());
+        }
 
-        // TODO
-        public Seikaku GetSeikakuHosei() { return Seikaku.GANBARIYA; }
+        public Seikaku GetSeikakuHosei()
+        {
+            return (Seikaku)m_accessor.GetSeikakuHosei();
+        }
 
-        // TODO
-        public void ChangeSeikakuHosei(Seikaku seikaku) { }
+        public void ChangeSeikakuHosei(Seikaku seikaku)
+        {
+            m_accessor.SetSeikakuHosei((uint)seikaku);
+            if (HaveCalcParam())
+                UpdateCalcDatas();
+        }
 
-        // TODO
-        public TokuseiNo GetTokuseiNo() { return TokuseiNo.NULL; }
+        public TokuseiNo GetTokuseiNo()
+        {
+            return m_accessor.GetTokuseiNo();
+        }
 
-        // TODO
-        public byte GetTokuseiIndex() { return 0; }
+        public byte GetTokuseiIndex()
+        {
+            if (m_accessor.IsTokusei3())
+                return 2;
+            if (m_accessor.IsTokusei2())
+                return 1;
+            if (m_accessor.IsTokusei1())
+                return 0;
 
-        // TODO
-        public byte GetTokuseiIndexStrict() { return 0; }
+            return TOKUSEI_INDEX_ERROR;
+        }
 
-        // TODO
-        public void FlipTokuseiIndex() { }
+        public byte GetTokuseiIndexStrict()
+        {
+            var tokuseiNo = (ushort)m_accessor.GetTokuseiNo();
+            PersonalSystem.LoadPersonalData(GetMonsNo(), GetFormNo());
 
-        // TODO
-        public void SetTokusei3rd() { }
+            if (tokuseiNo == PersonalSystem.GetPersonalParam(ParamID.TOKUSEI1))
+                return 0;
+            if (tokuseiNo == PersonalSystem.GetPersonalParam(ParamID.TOKUSEI2))
+                return 1;
+            if (tokuseiNo == PersonalSystem.GetPersonalParam(ParamID.TOKUSEI3))
+                return 2;
 
-        // TODO
-        public void SetTokuseiIndex(byte tokuseiIndex) { }
+            return TOKUSEI_INDEX_ERROR;
+        }
 
-        // TODO
-        public void SetFavoriteFlag(bool flag) { }
+        public void FlipTokuseiIndex()
+        {
+            var index = GetTokuseiIndex();
+            if (index == 2)
+                return;
 
-        // TODO
-        public bool GetFavoriteFlag() { return false; }
+            byte newIndex = (byte)(index == 0 ? 1 : 0);
+            SetTokuseiIndex(newIndex);
+        }
 
-        // TODO
-        public bool CompareOwnerInfo(OwnerInfo ownerInfo) { return false; }
+        public void SetTokusei3rd()
+        {
+            SetTokuseiIndex(2);
+        }
 
-        // TODO
-        public bool UpdateOwnerInfo(OwnerInfo ownerInfo) { return false; }
+        public void SetTokuseiIndex(byte tokuseiIndex)
+        {
+            PersonalSystem.LoadPersonalData(GetMonsNo(), GetFormNo());
+
+            m_accessor.SetTokusei1Flag(tokuseiIndex == 0);
+            m_accessor.SetTokusei2Flag(tokuseiIndex == 1);
+            m_accessor.SetTokusei3Flag(tokuseiIndex == 2);
+
+            var tokusei = CalcTool.GetTokuseiNo(GetMonsNo(), GetFormNo(), tokuseiIndex);
+            m_accessor.SetTokuseiNo(tokusei);
+        }
+
+        public void SetFavoriteFlag(bool flag)
+        {
+            m_accessor.SetFavoriteFlag(flag);
+        }
+
+        public bool GetFavoriteFlag()
+        {
+            return m_accessor.IsFavorite();
+        }
+
+        public bool CompareOwnerInfo(OwnerInfo ownerInfo)
+        {
+            return (byte)m_accessor.GetOyasex() == ownerInfo.sex &&
+                   m_accessor.GetID() == ownerInfo.trainerId &&
+                   m_accessor.CompareOyaName(ownerInfo.name);
+        }
+
+        public bool UpdateOwnerInfo(OwnerInfo ownerInfo)
+        {
+            // TODO: Ghidra shows: if same owner -> SetOwnedOthersFlag(false), return true.
+            // If different owner -> SetOwnedOthersFlag(true), copy PastParentsName/Sex/LangID,
+            // reset OthersMemories (Level/Code/Data/Feel to 0), load personal data,
+            // set OthersFriendship to base friendship from personal, return false.
+            // Return value semantics are inverted vs current implementation.
+            if (CompareOwnerInfo(ownerInfo))
+                return false;
+
+            m_accessor.SetOwnedOthersFlag(true);
+            m_accessor.SetOthersFriendshipTrainerID((ushort)(ownerInfo.trainerId & 0xFFFF));
+            return true;
+        }
 
         public bool IsOwnedOriginalParent()
         {
             return !m_accessor.GetOwnedOthersFlag();
         }
 
-        // TODO
-        public bool HaveNickName() { return false; }
+        public bool HaveNickName()
+        {
+            return m_accessor.HaveNickName();
+        }
 
         public string GetNickName()
         {
             return m_accessor.GetNickName();
         }
 
-        // TODO
-        public void SetNickName(string nickName) { }
+        public void SetNickName(string nickName)
+        {
+            m_accessor.SetNickName(nickName);
+            m_accessor.SetNickNameFlag(true);
+        }
 
-        // TODO
-        public void SetDefaultNickName() { }
+        public void SetDefaultNickName()
+        {
+            var monsno = GetMonsNo();
+            if (monsno != MonsNo.NULL)
+            {
+                var name = PersonalSystem.GetMonsName(monsno);
+                m_accessor.SetNickName(name);
+                m_accessor.SetNickNameFlag(false);
+            }
+        }
 
-        // TODO
-        public bool IsDefaultNickName() { return false; }
+        public bool IsDefaultNickName()
+        {
+            return !m_accessor.HaveNickName();
+        }
 
-        // TODO
-        public uint GetFriendship() { return 0; }
+        public uint GetFriendship()
+        {
+            return m_accessor.GetFriendship();
+        }
 
-        // TODO
-        public void SetFriendship(uint value) { }
+        public void SetFriendship(uint value)
+        {
+            if (value > PmlConstants.MAX_FRIENDSHIP)
+                value = PmlConstants.MAX_FRIENDSHIP;
+            m_accessor.SetFriendship((byte)value);
+        }
 
-        // TODO
-        public void AddFriendship(uint value) { }
+        public void AddFriendship(uint value)
+        {
+            SetFriendship(GetFriendship() + value);
+        }
 
-        // TODO
-        public void SubFriendship(uint value) { }
+        public void SubFriendship(uint value)
+        {
+            var curr = GetFriendship();
+            SetFriendship(curr >= value ? curr - value : 0);
+        }
 
-        // TODO
-        public uint GetOriginalFriendship() { return 0; }
+        public uint GetOriginalFriendship()
+        {
+            return m_accessor.GetOriginalFriendship();
+        }
 
-        // TODO
-        public void SetOriginalFriendship(uint value) { }
+        public void SetOriginalFriendship(uint value)
+        {
+            if (value > PmlConstants.MAX_FRIENDSHIP)
+                value = PmlConstants.MAX_FRIENDSHIP;
+            m_accessor.SetOriginalFriendship((byte)value);
+        }
 
-        // TODO
-        public void AddOriginalFriendship(uint value) { }
+        public void AddOriginalFriendship(uint value)
+        {
+            SetOriginalFriendship(GetOriginalFriendship() + value);
+        }
 
-        // TODO
-        public void SubOriginalFriendship(uint value) { }
+        public void SubOriginalFriendship(uint value)
+        {
+            var curr = GetOriginalFriendship();
+            SetOriginalFriendship(curr >= value ? curr - value : 0);
+        }
 
-        // TODO
-        public ushort GetOthersFriendshipTrainerID() { return 0; }
+        public ushort GetOthersFriendshipTrainerID()
+        {
+            return m_accessor.GetOthersFriendshipTrainerID();
+        }
 
-        // TODO
-        public uint GetOthersFriendship() { return 0; }
+        public uint GetOthersFriendship()
+        {
+            return m_accessor.GetOthersFriendship();
+        }
 
-        // TODO
-        public void SetOthersFriendship(uint value) { }
+        public void SetOthersFriendship(uint value)
+        {
+            if (value > PmlConstants.MAX_FRIENDSHIP)
+                value = PmlConstants.MAX_FRIENDSHIP;
+            m_accessor.SetOthersFriendship((byte)value);
+        }
 
-        // TODO
-        public void AddOthersFriendship(uint value) { }
+        public void AddOthersFriendship(uint value)
+        {
+            SetOthersFriendship(GetOthersFriendship() + value);
+        }
 
-        // TODO
-        public void SubOthersFriendship(uint value) { }
+        public void SubOthersFriendship(uint value)
+        {
+            var curr = GetOthersFriendship();
+            SetOthersFriendship(curr >= value ? curr - value : 0);
+        }
 
         public bool IsEgg(EggCheckType type)
         {
@@ -720,11 +1312,25 @@ namespace Pml.PokePara
                 m_accessor.SetTamagoFlag(true);
         }
 
-        // TODO
-        public void ChangeEgg() { }
+        public void ChangeEgg()
+        {
+            // TODO: Ghidra shows: checks IsFuseiTamago (returns if bad egg), sets TamagoFlag,
+            // gets language ID and calls GetMonsName(0x1ee, langId) to set egg nickname,
+            // sets NickNameFlag=false, loads personal data to get FRIENDSHIP_BIRTH param
+            // and sets OriginalFriendship to that value (NOT SetFriendship)
+            m_accessor.SetTamagoFlag(true);
+            m_accessor.SetNickNameFlag(false);
+            SetFriendship(BIRTH_FRIENDSHIP);
+        }
 
-        // TODO
-        public void Birth() { }
+        public void Birth()
+        {
+            // TODO: Ghidra shows: asserts IsTamago, sets TamagoFlag=false,
+            // sets OriginalFriendship=120, sets LangId from PmlUse.Instance.LangId,
+            // calls SetDefaultNickName, sets OwnedOthersFlag=false
+            m_accessor.SetTamagoFlag(false);
+            SetDefaultNickName();
+        }
 
         public ushort GetItem()
         {
@@ -736,73 +1342,167 @@ namespace Pml.PokePara
             m_accessor.SetItemNo(itemno);
         }
 
-        // TODO
-        public void RemoveItem() { }
+        public void RemoveItem()
+        {
+            m_accessor.SetItemNo((ushort)ItemNo.DUMMY_DATA);
+        }
 
-        // TODO
-        public void Evolve(MonsNo nextMonsno, uint routeIndex) { }
+        public void Evolve(MonsNo nextMonsno, uint routeIndex)
+        {
+            // TODO: Ghidra shows: loads evolution table, asserts evolved mons matches nextMonsno,
+            // checks form specification, calls ChangeMonsNo (which itself needs fixing),
+            // then checks evolution condition — if it matches item-consuming types
+            // (conditions 6, 18, 33, 45), removes the held item via SetItemNo(0).
+            // Tokusei recalculation is handled inside ChangeMonsNo in the binary.
+            PersonalSystem.LoadEvolutionTable(GetMonsNo(), GetFormNo());
+            var formno = PersonalSystem.GetEvolvedFormNo((byte)routeIndex);
+            if (!PersonalSystem.IsEvolvedFormNoSpecified((byte)routeIndex))
+                formno = GetFormNo();
 
-        // TODO
-        public bool CanEvolve(EvolveSituation situation, PokeParty party, ref MonsNo nextMonsno, ref uint rootNum) { return false; }
+            ChangeMonsNo(nextMonsno, formno);
 
-        // TODO
-        public bool CanEvolveByItem(EvolveSituation situation, ushort itemno, ref MonsNo nextMonsno, ref uint rootNum) { return false; }
+            PersonalSystem.LoadPersonalData(nextMonsno, formno);
+            var tokuseiIndex = GetTokuseiIndex();
+            if (tokuseiIndex != 2)
+            {
+                var tokusei = CalcTool.GetTokuseiNo(nextMonsno, formno, tokuseiIndex);
+                m_accessor.SetTokuseiNo(tokusei);
+            }
+            else
+            {
+                var tokusei = CalcTool.GetTokuseiNo(nextMonsno, formno, 2);
+                m_accessor.SetTokuseiNo(tokusei);
+            }
+        }
 
-        // TODO
-        public bool CanEvolveByTrade(CoreParam pairPoke, ref MonsNo nextMonsno, ref uint rootNum) { return false; }
+        public bool CanEvolve(EvolveSituation situation, PokeParty party, ref MonsNo nextMonsno, ref uint rootNum)
+        {
+            // Evolution checking is complex and depends on EvolveManager
+            // Stub for now - full implementation requires EvolveManager
+            return false;
+        }
 
-        // TODO
-        public bool CanEvolveByEvent(EvolveSituation situation, PokeParty party, ref MonsNo nextMonsno, ref uint rootNum) { return false; }
+        public bool CanEvolveByItem(EvolveSituation situation, ushort itemno, ref MonsNo nextMonsno, ref uint rootNum)
+        {
+            return false;
+        }
 
-        // TODO
-        public bool HaveEvolutionRoot() { return false; }
+        public bool CanEvolveByTrade(CoreParam pairPoke, ref MonsNo nextMonsno, ref uint rootNum)
+        {
+            return false;
+        }
 
-        // TODO
-        public void ChangeFormNo(ushort nextFormno, [Optional] FormChangeResult pResult) { }
+        public bool CanEvolveByEvent(EvolveSituation situation, PokeParty party, ref MonsNo nextMonsno, ref uint rootNum)
+        {
+            return false;
+        }
 
-        // TODO
-        public ushort GetNextFormNoFromHoldItem(ushort holdItemno) { return 0; }
+        public bool HaveEvolutionRoot()
+        {
+            PersonalSystem.LoadEvolutionTable(GetMonsNo(), GetFormNo());
+            return PersonalSystem.GetEvolutionRouteNum() > 0;
+        }
 
-        // TODO
-        public bool RegulateFormParams() { return false; }
+        public void ChangeFormNo(ushort nextFormno, [Optional] FormChangeResult pResult)
+        {
+            m_accessor.SetFormNo(nextFormno);
 
-        // TODO
-        public bool IsRare() { return false; }
+            PersonalSystem.LoadPersonalData(GetMonsNo(), nextFormno);
+            var tokuseiIndex = GetTokuseiIndex();
+            var tokusei = CalcTool.GetTokuseiNo(GetMonsNo(), nextFormno, tokuseiIndex);
+            m_accessor.SetTokuseiNo(tokusei);
 
-        // TODO
-        public uint GetRareRnd() { return 0; }
+            changeWazaByFormChange(nextFormno, pResult);
 
-        // TODO
-        public RareType GetRareType() { return RareType.NOT_RARE; }
+            if (HaveCalcParam())
+                UpdateCalcDatas();
+        }
 
-        // TODO
-        public uint GetID() { return 0; }
+        public ushort GetNextFormNoFromHoldItem(ushort holdItemno)
+        {
+            if (CalcTool.DecideFormNoFromHoldItem(GetMonsNo(), holdItemno, out ushort formno))
+                return formno;
+            return GetFormNo();
+        }
+
+        public bool RegulateFormParams()
+        {
+            var formno = GetFormNo();
+            PersonalSystem.LoadPersonalData(GetMonsNo(), formno);
+            var maxForm = PersonalSystem.GetPersonalParam(ParamID.FORM_MAX);
+            if (formno >= maxForm && maxForm > 0)
+            {
+                m_accessor.SetFormNo(0);
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsRare()
+        {
+            return CalcTool.IsRareColor(m_accessor.GetID(), m_accessor.GetColorRnd());
+        }
+
+        public uint GetRareRnd()
+        {
+            return m_accessor.GetColorRnd();
+        }
+
+        public RareType GetRareType()
+        {
+            return CalcTool.CalcRareColorType(m_accessor.GetID(), m_accessor.GetColorRnd(),
+                m_accessor.GetCassetteVersion(), m_accessor.IsEventPokemon());
+        }
+
+        public uint GetID()
+        {
+            return m_accessor.GetID();
+        }
 
         public uint GetPersonalRnd()
         {
             return m_accessor.GetPersonalRnd();
         }
 
-        // TODO
-        public uint GetCheckSum() { return 0; }
+        public uint GetCheckSum()
+        {
+            return m_accessor.GetCheckSum();
+        }
 
-        // TODO
-        public void SetID(uint id) { }
+        public void SetID(uint id)
+        {
+            m_accessor.SetID(id);
+        }
 
-        // TODO
-        public void SetRare() { }
+        public void SetRare()
+        {
+            var rnd = CalcTool.CorrectColorRndForRare(m_accessor.GetID(), m_accessor.GetColorRnd());
+            m_accessor.SetColorRnd(rnd);
+        }
 
-        // TODO
-        public void SetNotRare() { }
+        public void SetNotRare()
+        {
+            var rnd = CalcTool.CorrectColorRndForNormal(m_accessor.GetID(), m_accessor.GetColorRnd());
+            m_accessor.SetColorRnd(rnd);
+        }
 
-        // TODO
-        public void SetRareType(RareType type) { }
+        public void SetRareType(RareType type)
+        {
+            var rnd = CalcTool.CorrectColorRndForRareType(m_accessor.GetID(), m_accessor.GetColorRnd(), type);
+            m_accessor.SetColorRnd(rnd);
+        }
 
-        // TODO
-        public PokeType GetType1() { return PokeType.NORMAL; }
+        public PokeType GetType1()
+        {
+            PersonalSystem.LoadPersonalData(GetMonsNo(), GetFormNo());
+            return (PokeType)PersonalSystem.GetPersonalParam(ParamID.TYPE1);
+        }
 
-        // TODO
-        public PokeType GetType2() { return PokeType.NORMAL; }
+        public PokeType GetType2()
+        {
+            PersonalSystem.LoadPersonalData(GetMonsNo(), GetFormNo());
+            return (PokeType)PersonalSystem.GetPersonalParam(ParamID.TYPE2);
+        }
 
         public string GetParentName()
         {
@@ -824,59 +1524,242 @@ namespace Pml.PokePara
             m_accessor.SetOyasex(sex);
         }
 
-        // TODO
-        public uint GetMemories(Memories memoriesKind) { return default; }
+        public uint GetMemories(Memories memoriesKind)
+        {
+            switch (memoriesKind)
+            {
+                case Memories.EGG_TAKEN_YEAR:
+                    return m_accessor.GetTamagoGetYear();
+                case Memories.EGG_TAKEN_MONTH:
+                    return m_accessor.GetTamagoGetMonth();
+                case Memories.EGG_TAKEN_DAY:
+                    return m_accessor.GetTamagoGetDay();
+                case Memories.FIRST_CONTACT_YEAR:
+                    return m_accessor.GetBirthYear();
+                case Memories.FIRST_CONTACT_MONTH:
+                    return m_accessor.GetBirthMonth();
+                case Memories.FIRST_CONTACT_DAY:
+                    return m_accessor.GetBirthDay();
+                case Memories.EGG_TAKEN_PLACE:
+                    return m_accessor.GetBirthPlace();
+                case Memories.FIRST_CONTACT_PLACE:
+                    return m_accessor.GetGetPlace();
+                case Memories.CAPTURED_BALL:
+                    return m_accessor.GetGetBall();
+                case Memories.CAPTURED_LEVEL:
+                    return m_accessor.GetGetLevel();
+                case Memories.LEVEL_WITH_PARENT:
+                    return m_accessor.GetMemoriesLevel();
+                case Memories.CODE_WITH_PARENT:
+                    return m_accessor.GetMemoriesCode();
+                case Memories.DATA_WITH_PARENT:
+                    return m_accessor.GetMemoriesData();
+                case Memories.FEEL_WITH_PARENT:
+                    return m_accessor.GetMemoriesFeel();
+                case Memories.LEVEL_WITH_OTHERS:
+                    return m_accessor.GetOthersMemoriesLevel();
+                case Memories.CODE_WITH_OTHERS:
+                    return m_accessor.GetOthersMemoriesCode();
+                case Memories.DATA_WITH_OTHERS:
+                    return m_accessor.GetOthersMemoriesData();
+                case Memories.FEEL_WITH_OTHERS:
+                    return m_accessor.GetOthersMemoriesFeel();
+                default:
+                    GFL.ASSERT(false);
+                    return 0;
+            }
+        }
 
-        // TODO
-        public void SetMemories(Memories memoriesKind, uint value) { }
+        public void SetMemories(Memories memoriesKind, uint value)
+        {
+            switch (memoriesKind)
+            {
+                case Memories.EGG_TAKEN_YEAR:
+                    m_accessor.SetTamagoGetYear((byte)value);
+                    break;
+                case Memories.EGG_TAKEN_MONTH:
+                    m_accessor.SetTamagoGetMonth((byte)value);
+                    break;
+                case Memories.EGG_TAKEN_DAY:
+                    m_accessor.SetTamagoGetDay((byte)value);
+                    break;
+                case Memories.FIRST_CONTACT_YEAR:
+                    m_accessor.SetBirthYear((byte)value);
+                    break;
+                case Memories.FIRST_CONTACT_MONTH:
+                    m_accessor.SetBirthMonth((byte)value);
+                    break;
+                case Memories.FIRST_CONTACT_DAY:
+                    m_accessor.SetBirthDay((byte)value);
+                    break;
+                case Memories.EGG_TAKEN_PLACE:
+                    m_accessor.SetBirthPlace((ushort)value);
+                    break;
+                case Memories.FIRST_CONTACT_PLACE:
+                    m_accessor.SetGetPlace((ushort)value);
+                    break;
+                case Memories.CAPTURED_BALL:
+                    m_accessor.SetGetBall((byte)value);
+                    break;
+                case Memories.CAPTURED_LEVEL:
+                    m_accessor.SetGetLevel((byte)value);
+                    break;
+                case Memories.LEVEL_WITH_PARENT:
+                    m_accessor.SetMemoriesLevel((byte)value);
+                    break;
+                case Memories.CODE_WITH_PARENT:
+                    m_accessor.SetMemoriesCode((byte)value);
+                    break;
+                case Memories.DATA_WITH_PARENT:
+                    m_accessor.SetMemoriesData((ushort)value);
+                    break;
+                case Memories.FEEL_WITH_PARENT:
+                    m_accessor.SetMemoriesFeel((byte)value);
+                    break;
+                case Memories.LEVEL_WITH_OTHERS:
+                    m_accessor.SetOthersMemoriesLevel((byte)value);
+                    break;
+                case Memories.CODE_WITH_OTHERS:
+                    m_accessor.SetOthersMemoriesCode((byte)value);
+                    break;
+                case Memories.DATA_WITH_OTHERS:
+                    m_accessor.SetOthersMemoriesData((ushort)value);
+                    break;
+                case Memories.FEEL_WITH_OTHERS:
+                    m_accessor.SetOthersMemoriesFeel((byte)value);
+                    break;
+                default:
+                    GFL.ASSERT(false);
+                    break;
+            }
+        }
 
-        // TODO
-        public string GetPastParentsName() { return ""; }
+        public string GetPastParentsName()
+        {
+            return m_accessor.GetPastParentsName();
+        }
 
-        // TODO
-        public void SetPastParentsName(string name) { }
+        public void SetPastParentsName(string name)
+        {
+            m_accessor.SetPastParentsName(name);
+        }
 
-        // TODO
-        public Sex GetPastParentsSex() { return Sex.NUM; }
+        public Sex GetPastParentsSex()
+        {
+            return m_accessor.GetPastParentsSex();
+        }
 
-        // TODO
-        public void SetPastParentsSex(Sex sex) { }
+        public void SetPastParentsSex(Sex sex)
+        {
+            m_accessor.SetPastParentsSex(sex);
+        }
 
-        // TODO
-        public byte GetPastParentsLangID() { return 0; }
+        public byte GetPastParentsLangID()
+        {
+            return m_accessor.GetPastParentsLangID();
+        }
 
-        // TODO
-        public void SetPastParentsLangID(byte langID) { }
+        public void SetPastParentsLangID(byte langID)
+        {
+            m_accessor.SetPastParentsLangID(langID);
+        }
 
-        // TODO
-        public byte GetCondition(Condition cond) { return 0; }
+        public byte GetCondition(Condition cond)
+        {
+            switch (cond)
+            {
+                case Condition.STYLE:
+                    return m_accessor.GetStyle();
+                case Condition.BEAUTIFUL:
+                    return m_accessor.GetBeautiful();
+                case Condition.CUTE:
+                    return m_accessor.GetCute();
+                case Condition.CLEVER:
+                    return m_accessor.GetClever();
+                case Condition.STRONG:
+                    return m_accessor.GetStrong();
+                case Condition.FUR:
+                    return m_accessor.GetFur();
+                default:
+                    GFL.ASSERT(false);
+                    return 0;
+            }
+        }
 
-        // TODO
-        public void SetCondition(Condition cond, byte value) { }
+        public void SetCondition(Condition cond, byte value)
+        {
+            switch (cond)
+            {
+                case Condition.STYLE:
+                    m_accessor.SetStyle(value);
+                    break;
+                case Condition.BEAUTIFUL:
+                    m_accessor.SetBeautiful(value);
+                    break;
+                case Condition.CUTE:
+                    m_accessor.SetCute(value);
+                    break;
+                case Condition.CLEVER:
+                    m_accessor.SetClever(value);
+                    break;
+                case Condition.STRONG:
+                    m_accessor.SetStrong(value);
+                    break;
+                case Condition.FUR:
+                    m_accessor.SetFur(value);
+                    break;
+                default:
+                    GFL.ASSERT(false);
+                    break;
+            }
+        }
 
-        // TODO
-        public bool IsBoxMarkSet() { return false; }
+        public bool IsBoxMarkSet()
+        {
+            return m_accessor.GetBoxMark() != 0;
+        }
 
-        // TODO
-        public bool IsBoxMarkSet(BoxMark mark) { return false; }
+        public bool IsBoxMarkSet(BoxMark mark)
+        {
+            return GetBoxMark(mark) != BoxMarkColor.NONE;
+        }
 
-        // TODO
-        public void SetBoxMark(BoxMark mark, BoxMarkColor color) { }
+        public void SetBoxMark(BoxMark mark, BoxMarkColor color)
+        {
+            var bits = m_accessor.GetBoxMark();
+            int shift = (int)mark * 2;
+            bits = (ushort)((bits & ~(3 << shift)) | ((int)color << shift));
+            m_accessor.SetBoxMark(bits);
+        }
 
-        // TODO
-        public void RemoveBoxMark(BoxMark mark) { }
+        public void RemoveBoxMark(BoxMark mark)
+        {
+            SetBoxMark(mark, BoxMarkColor.NONE);
+        }
 
-        // TODO
-        public BoxMarkColor GetBoxMark(BoxMark mark) { return default; }
+        public BoxMarkColor GetBoxMark(BoxMark mark)
+        {
+            var bits = m_accessor.GetBoxMark();
+            int shift = (int)mark * 2;
+            return (BoxMarkColor)((bits >> shift) & 3);
+        }
 
-        // TODO
-        public void RemoveAllBoxMark() { }
+        public void RemoveAllBoxMark()
+        {
+            m_accessor.SetBoxMark(0);
+        }
 
-        // TODO
-        public void SetAllBoxMark(BoxMarkContainer markContainer) { }
+        public void SetAllBoxMark(BoxMarkContainer markContainer)
+        {
+            for (int i = 0; i < (int)BoxMark.MARK_NUM; i++)
+                SetBoxMark((BoxMark)i, markContainer.markColor[i]);
+        }
 
-        // TODO
-        public void GetAllBoxMark(BoxMarkContainer markContainer) { }
+        public void GetAllBoxMark(BoxMarkContainer markContainer)
+        {
+            for (int i = 0; i < (int)BoxMark.MARK_NUM; i++)
+                markContainer.markColor[i] = GetBoxMark((BoxMark)i);
+        }
 
         public uint GetLangId()
         {
@@ -888,11 +1771,15 @@ namespace Pml.PokePara
             m_accessor.SetLangId((byte)langId);
         }
 
-        // TODO
-        public uint GetCassetteVersion() { return 0; }
+        public uint GetCassetteVersion()
+        {
+            return m_accessor.GetCassetteVersion();
+        }
 
-        // TODO
-        public void SetCassetteVersion(uint version) { }
+        public void SetCassetteVersion(uint version)
+        {
+            m_accessor.SetCassetteVersion(version);
+        }
 
         public uint GetGetBall()
         {
@@ -904,67 +1791,126 @@ namespace Pml.PokePara
             m_accessor.SetGetBall((byte)value);
         }
 
-        // TODO
-        public byte GetBattleRomMark() { return 0; }
+        public byte GetBattleRomMark()
+        {
+            return m_accessor.GetBattleRomMark();
+        }
 
-        // TODO
-        public void SetBattleRomMark(byte battleRomMark) { }
+        public void SetBattleRomMark(byte battleRomMark)
+        {
+            m_accessor.SetBattleRomMark(battleRomMark);
+        }
 
-        // TODO
-        public byte GetNadenadeValue() { return 0; }
+        public byte GetNadenadeValue()
+        {
+            return m_accessor.GetNadenadeValue();
+        }
 
-        // TODO
-        public void SetNadenadeValue(byte value) { }
+        public void SetNadenadeValue(byte value)
+        {
+            if (value > PmlConstants.MAX_NADENADE_VALUE)
+                value = PmlConstants.MAX_NADENADE_VALUE;
+            m_accessor.SetNadenadeValue(value);
+        }
 
-        // TODO
-        public void AddNadenadeValue(byte value) { }
+        public void AddNadenadeValue(byte value)
+        {
+            var curr = GetNadenadeValue();
+            var newval = curr + value;
+            SetNadenadeValue((byte)(newval > PmlConstants.MAX_NADENADE_VALUE ? PmlConstants.MAX_NADENADE_VALUE : newval));
+        }
 
-        // TODO
-        public void SubNadenadeValue(byte value) { }
+        public void SubNadenadeValue(byte value)
+        {
+            var curr = GetNadenadeValue();
+            SetNadenadeValue((byte)(curr >= value ? curr - value : 0));
+        }
 
-        // TODO
-        public PokeType GetMezapaType() { return PokeType.NULL; }
+        public PokeType GetMezapaType()
+        {
+            return CalcTool.CalcMezamerupawaaType(
+                (byte)m_accessor.GetTalentHp(),
+                (byte)m_accessor.GetTalentAtk(),
+                (byte)m_accessor.GetTalentDef(),
+                (byte)m_accessor.GetTalentAgi(),
+                (byte)m_accessor.GetTalentSpAtk(),
+                (byte)m_accessor.GetTalentSpDef());
+        }
 
-        // TODO
-        public uint GetMezapaPower() { return 0; }
+        public uint GetMezapaPower()
+        {
+            return CalcTool.CalcMezamerupawaaPower(
+                (byte)m_accessor.GetTalentHp(),
+                (byte)m_accessor.GetTalentAtk(),
+                (byte)m_accessor.GetTalentDef(),
+                (byte)m_accessor.GetTalentAgi(),
+                (byte)m_accessor.GetTalentSpAtk(),
+                (byte)m_accessor.GetTalentSpDef());
+        }
 
-        // TODO
-        public TasteJudge JudgeTaste(Taste taste) { return TasteJudge.NORMAL; }
+        public TasteJudge JudgeTaste(Taste taste)
+        {
+            return CalcTool.JudgeTaste(GetSeikakuHosei(), taste);
+        }
 
-        // TODO
-        public bool HaveRibbon(uint ribbonNo) { return false; }
+        public bool HaveRibbon(uint ribbonNo)
+        {
+            return m_accessor.HaveRibbon(ribbonNo);
+        }
 
-        // TODO
-        public void SetRibbon(uint ribbonNo) { }
+        public void SetRibbon(uint ribbonNo)
+        {
+            m_accessor.SetRibbon(ribbonNo);
+        }
 
-        // TODO
-        public void RemoveRibbon(uint ribbonNo) { }
+        public void RemoveRibbon(uint ribbonNo)
+        {
+            m_accessor.RemoveRibbon(ribbonNo);
+        }
 
         public void RemoveAllRibbon()
         {
             m_accessor.RemoveAllRibbon();
         }
 
-        // TODO
-        public void SetLumpingRibbon(LumpingRibbon ribbonId, uint num) { }
+        public void SetLumpingRibbon(LumpingRibbon ribbonId, uint num)
+        {
+            m_accessor.SetLumpingRibbon(ribbonId, num);
+        }
 
-        // TODO
-        public void SetLumpingRibbon(uint ribbonNo, uint num) { }
+        public void SetLumpingRibbon(uint ribbonNo, uint num)
+        {
+            // Map ribbon number to lumping ribbon ID based on ribbon ranges
+            if (ribbonNo < (uint)LumpingRibbon.NUM)
+                m_accessor.SetLumpingRibbon((LumpingRibbon)ribbonNo, num);
+        }
 
-        // TODO
-        public uint GetLumpingRibbon(LumpingRibbon ribbonId) { return default; }
+        public uint GetLumpingRibbon(LumpingRibbon ribbonId)
+        {
+            return m_accessor.GetLumpingRibbon(ribbonId);
+        }
 
-        // TODO
-        public uint GetLumpingRibbon(uint ribbonNo) { return default; }
+        public uint GetLumpingRibbon(uint ribbonNo)
+        {
+            if (ribbonNo < (uint)LumpingRibbon.NUM)
+                return m_accessor.GetLumpingRibbon((LumpingRibbon)ribbonNo);
+            return 0;
+        }
 
-        // TODO
-        public bool IsEquipRibbonExist() { return false; }
+        public bool IsEquipRibbonExist()
+        {
+            return m_accessor.GetEquipRibbonNo() != PmlConstants.EQUIP_RIBBON_NULL;
+        }
 
-        // TODO
-        public byte GetEquipRibbonNo() { return 0; }
+        public byte GetEquipRibbonNo()
+        {
+            return m_accessor.GetEquipRibbonNo();
+        }
 
-        // TODO
-        public void SetEquipRibbonNo(byte ribbonNo) { }
+        public void SetEquipRibbonNo(byte ribbonNo)
+        {
+            m_accessor.SetEquipRibbonNo(ribbonNo);
+        }
 
         public bool HavePokerusJustNow()
         {
@@ -976,19 +1922,33 @@ namespace Pml.PokePara
             return (m_accessor.GetPokerus() & 0xFF) != 0;
         }
 
-        // TODO
-        public bool HavePokerusPast() { return false; }
+        public bool HavePokerusPast()
+        {
+            return !HavePokerusJustNow() && ((m_accessor.GetPokerus() >> 4) & 0xF) != 0;
+        }
 
-        // TODO
-        public void CatchPokerus() { }
+        public void CatchPokerus()
+        {
+            // Random pokerus strain and duration
+            var strain = (byte)((Local.Random.GetValue(4) + 1) << 4);
+            var duration = (byte)((strain >> 4) % 4 + 1);
+            m_accessor.SetPokerus((byte)(strain | duration));
+        }
 
         public void InfectPokerusWith(CoreParam target)
         {
             target.SetPokerus(GetPokerus());
         }
 
-        // TODO
-        public void DecreasePokerusDayCount(int passedDayCount) { }
+        public void DecreasePokerusDayCount(int passedDayCount)
+        {
+            var pokerus = m_accessor.GetPokerus();
+            var duration = (int)(pokerus & 0xF);
+            duration -= passedDayCount;
+            if (duration < 0)
+                duration = 0;
+            m_accessor.SetPokerus((byte)((pokerus & 0xF0) | duration));
+        }
 
         public uint GetPokerus()
         {
@@ -1025,18 +1985,29 @@ namespace Pml.PokePara
             m_accessor.SetOfficialBattleEnableFlag(true);
         }
 
-        // TODO
-        public void RemoveAllRotomWaza() { }
+        public void RemoveAllRotomWaza()
+        {
+            var rotomWaza = CalcTool.GetRotomuWazaNo(GetFormNo());
+            if (rotomWaza != WazaNo.NULL)
+            {
+                var idx = GetWazaIndex(rotomWaza);
+                if (idx < PmlConstants.MAX_WAZA_NUM)
+                    RemoveWaza(idx);
+            }
+        }
 
-        // TODO
         public void SetRotomWaza(byte wazaIndex)
         {
             var formno = GetFormNo();
-
+            var rotomWaza = CalcTool.GetRotomuWazaNo(formno);
+            if (rotomWaza != WazaNo.NULL && wazaIndex < PmlConstants.MAX_WAZA_NUM)
+                SetWaza(wazaIndex, rotomWaza);
         }
 
-        // TODO
-        public LoveLevel CheckLoveLevel(CoreParam partner) { return LoveLevel.GOOD; }
+        public LoveLevel CheckLoveLevel(CoreParam partner)
+        {
+            return CalcTool.CalcLoveLevel(GetMonsNo(), GetID(), partner.GetMonsNo(), partner.GetID());
+        }
 
         public bool GetPokeJobFlag(byte jobIndex)
         {
@@ -1318,7 +2289,7 @@ namespace Pml.PokePara
             if (HaveCalcParam())
                 return m_accessor.GetAtk();
 
-            return CalcAtk();
+            return CalcAtk_NotG();
         }
 
         protected uint GetDef()
@@ -1326,7 +2297,7 @@ namespace Pml.PokePara
             if (HaveCalcParam())
                 return m_accessor.GetDef();
 
-            return CalcDef();
+            return CalcDef_NotG();
         }
 
         protected uint GetSpAtk()
@@ -1334,7 +2305,7 @@ namespace Pml.PokePara
             if (HaveCalcParam())
                 return m_accessor.GetSpAtk();
 
-            return CalcSpAtk();
+            return CalcSpAtk_NotG();
         }
 
         protected uint GetSpDef()
@@ -1342,7 +2313,7 @@ namespace Pml.PokePara
             if (HaveCalcParam())
                 return m_accessor.GetSpDef();
 
-            return CalcSpDef();
+            return CalcSpDef_NotG();
         }
 
         protected uint GetAgi()
@@ -1350,10 +2321,9 @@ namespace Pml.PokePara
             if (HaveCalcParam())
                 return m_accessor.GetAgi();
 
-            return CalcAgi();
+            return CalcAgi_NotG();
         }
 
-        // TODO
         protected byte CalcLevel()
         {
             return CalcTool.CalcLevel(GetMonsNo(), GetFormNo(), GetExp());
@@ -1419,41 +2389,89 @@ namespace Pml.PokePara
             return CalcAgi_NotG();
         }
 
-        // TODO
-        protected ushort CalcMaxHp_G() { return 0; }
+        protected ushort CalcMaxHp_G()
+        {
+            return CalcMaxHp_NotG();
+        }
 
-        // TODO
-        protected ushort CalcAtk_G() { return 0; }
+        protected ushort CalcAtk_G()
+        {
+            return CalcAtk_NotG();
+        }
 
-        // TODO
-        protected ushort CalcDef_G() { return 0; }
+        protected ushort CalcDef_G()
+        {
+            return CalcDef_NotG();
+        }
 
-        // TODO
-        protected ushort CalcSpAtk_G() { return 0; }
+        protected ushort CalcSpAtk_G()
+        {
+            return CalcSpAtk_NotG();
+        }
 
-        // TODO
-        protected ushort CalcSpDef_G() { return 0; }
+        protected ushort CalcSpDef_G()
+        {
+            return CalcSpDef_NotG();
+        }
 
-        // TODO
-        protected ushort CalcAgi_G() { return 0; }
+        protected ushort CalcAgi_G()
+        {
+            return CalcAgi_NotG();
+        }
 
-        // TODO
-        protected ushort CalcMaxHp_NotG() { return 0; }
+        protected ushort CalcMaxHp_NotG()
+        {
+            PersonalSystem.LoadPersonalData(GetMonsNo(), GetFormNo());
+            var basev = (ushort)PersonalSystem.GetPersonalParam(ParamID.BASIC_HP);
+            byte flag = m_accessor.GetTrainingFlag();
+            ushort talent = (flag & (1 << (int)PowerID.HP)) != 0 ? PmlConstants.MAX_TALENT_POWER : (ushort)m_accessor.GetTalentHp();
+            return CalcTool.CalcMaxHp(GetMonsNo(), CalcLevel(), basev, talent, (ushort)m_accessor.GetEffortHp());
+        }
 
-        // TODO
-        protected ushort CalcAtk_NotG() { return 0; }
+        protected ushort CalcAtk_NotG()
+        {
+            PersonalSystem.LoadPersonalData(GetMonsNo(), GetFormNo());
+            var basev = (ushort)PersonalSystem.GetPersonalParam(ParamID.BASIC_ATK);
+            byte flag = m_accessor.GetTrainingFlag();
+            ushort talent = (flag & (1 << (int)PowerID.ATK)) != 0 ? PmlConstants.MAX_TALENT_POWER : (ushort)m_accessor.GetTalentAtk();
+            return CalcTool.CalcAtk(CalcLevel(), basev, talent, (ushort)m_accessor.GetEffortAtk(), GetSeikakuHosei());
+        }
 
-        // TODO
-        protected ushort CalcDef_NotG() { return 0; }
+        protected ushort CalcDef_NotG()
+        {
+            PersonalSystem.LoadPersonalData(GetMonsNo(), GetFormNo());
+            var basev = (ushort)PersonalSystem.GetPersonalParam(ParamID.BASIC_DEF);
+            byte flag = m_accessor.GetTrainingFlag();
+            ushort talent = (flag & (1 << (int)PowerID.DEF)) != 0 ? PmlConstants.MAX_TALENT_POWER : (ushort)m_accessor.GetTalentDef();
+            return CalcTool.CalcDef(CalcLevel(), basev, talent, (ushort)m_accessor.GetEffortDef(), GetSeikakuHosei());
+        }
 
-        // TODO
-        protected ushort CalcSpAtk_NotG() { return 0; }
+        protected ushort CalcSpAtk_NotG()
+        {
+            PersonalSystem.LoadPersonalData(GetMonsNo(), GetFormNo());
+            var basev = (ushort)PersonalSystem.GetPersonalParam(ParamID.BASIC_SPATK);
+            byte flag = m_accessor.GetTrainingFlag();
+            ushort talent = (flag & (1 << (int)PowerID.SPATK)) != 0 ? PmlConstants.MAX_TALENT_POWER : (ushort)m_accessor.GetTalentSpAtk();
+            return CalcTool.CalcSpAtk(CalcLevel(), basev, talent, (ushort)m_accessor.GetEffortSpAtk(), GetSeikakuHosei());
+        }
 
-        // TODO
-        protected ushort CalcSpDef_NotG() { return 0; }
+        protected ushort CalcSpDef_NotG()
+        {
+            PersonalSystem.LoadPersonalData(GetMonsNo(), GetFormNo());
+            var basev = (ushort)PersonalSystem.GetPersonalParam(ParamID.BASIC_SPDEF);
+            byte flag = m_accessor.GetTrainingFlag();
+            ushort talent = (flag & (1 << (int)PowerID.SPDEF)) != 0 ? PmlConstants.MAX_TALENT_POWER : (ushort)m_accessor.GetTalentSpDef();
+            return CalcTool.CalcSpDef(CalcLevel(), basev, talent, (ushort)m_accessor.GetEffortSpDef(), GetSeikakuHosei());
+        }
 
-        // TODO
-        protected ushort CalcAgi_NotG() { return 0; }
+        protected ushort CalcAgi_NotG()
+        {
+            PersonalSystem.LoadPersonalData(GetMonsNo(), GetFormNo());
+            var basev = (ushort)PersonalSystem.GetPersonalParam(ParamID.BASIC_AGI);
+            byte flag = m_accessor.GetTrainingFlag();
+            ushort talent = (flag & (1 << (int)PowerID.AGI)) != 0 ? PmlConstants.MAX_TALENT_POWER : (ushort)m_accessor.GetTalentAgi();
+            return CalcTool.CalcAgi(CalcLevel(), basev, talent, (ushort)m_accessor.GetEffortAgi(), GetSeikakuHosei());
+        }
 
         protected void changeWazaByFormChange(ushort nextFormno, [Optional] FormChangeResult pResult)
         {
@@ -1482,16 +2500,38 @@ namespace Pml.PokePara
             }
         }
 
-        // TODO
         protected void changeWazaByFormChange_Forget(WazaNo forgetWaza, WazaNo supplyWaza, [Optional] FormChangeResult pResult)
         {
+            var idx = GetWazaIndex(forgetWaza);
+            if (idx < PmlConstants.MAX_WAZA_NUM)
+            {
+                RemoveWaza(idx);
+                if (pResult != null)
+                    pResult.SetRemovedWaza(forgetWaza);
 
+                if (supplyWaza != WazaNo.NULL)
+                    changeWazaByFormChange_Learn(supplyWaza, pResult);
+
+                CloseUpWazaPos();
+            }
         }
 
-        // TODO
         protected void changeWazaByFormChange_Replace(WazaNo forgetWaza, WazaNo learnWaza, [Optional] FormChangeResult pResult)
         {
-
+            var idx = GetWazaIndex(forgetWaza);
+            if (idx < PmlConstants.MAX_WAZA_NUM)
+            {
+                SetWaza(idx, learnWaza);
+                if (pResult != null)
+                {
+                    pResult.SetRemovedWaza(forgetWaza);
+                    pResult.SetAddedWaza(learnWaza);
+                }
+            }
+            else
+            {
+                changeWazaByFormChange_Learn(learnWaza, pResult);
+            }
         }
 
         protected uint AdjustEffortPower(uint beforeValue, uint afterValue)
@@ -1511,7 +2551,7 @@ namespace Pml.PokePara
 
         public class WazaLearnWork
         {
-	        private WazaNo[] m_checkedWazaArray = new WazaNo[PersonalConstants.MAX_WAZAOBOE_CODE_NUM];
+            private WazaNo[] m_checkedWazaArray = new WazaNo[PersonalConstants.MAX_WAZAOBOE_CODE_NUM];
             private uint m_checkedWazaNum;
 
             public WazaLearnWork()
@@ -1556,7 +2596,7 @@ namespace Pml.PokePara
 
         public class FormChangeResult
         {
-	        private WazaNo[] m_addedWaza = new WazaNo[4];
+            private WazaNo[] m_addedWaza = new WazaNo[4];
             private WazaNo[] m_removedWaza = new WazaNo[4];
             private WazaNo[] m_addFailedWaza = new WazaNo[4];
 
@@ -1653,7 +2693,7 @@ namespace Pml.PokePara
                 {
                     GFL.ASSERT(false);
                     return WazaNo.NULL;
-                } 
+                }
             }
 
             private byte getCount(WazaNo[] pArray)

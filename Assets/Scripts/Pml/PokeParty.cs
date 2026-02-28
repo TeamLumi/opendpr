@@ -20,95 +20,270 @@ namespace Pml
             m_member[5] = new PokemonParam(MonsNo.NULL, 1, 0);
         }
 
-        // TODO
-        public bool AddMember(PokemonParam pp) { return false; }
+        public bool AddMember(PokemonParam pp)
+        {
+            if (pp.GetMonsNo() == MonsNo.NULL)
+                return false;
+            if (IsFull())
+                return false;
+            m_member[m_memberCount].CopyFrom(pp);
+            m_memberCount++;
+            return true;
+        }
 
-        // TODO
-        public void ReplaceMember(uint idx, PokemonParam pp) { }
+        public void ReplaceMember(uint idx, PokemonParam pp)
+        {
+            // TODO: Ghidra shows complex logic — checks source/dest MonsNo, Serialize/Deserialize,
+            // increments memberCount if replacing NULL with non-NULL, updates markingIndex via
+            // ClearMarkingIndex-like logic when markingIndex == idx
+        }
 
-        // TODO
-        public void RemoveMember(uint idx) { }
+        public void RemoveMember(uint idx)
+        {
+            // TODO: Ghidra shows complex logic — checks MonsNo, calls FieldWalkingManager.CheckPartnerPokeChange,
+            // gets ID/PersonalRnd for BallDecoWork.GetAttachCapsuleId/SetAttachCapsule, calls ClearData,
+            // scootOver, decrements memberCount, BallDecoWork.ScootOverCapsuleExtraData, markingIndex adjustment
+        }
 
-        // TODO
-        public void ExchangePosition(byte pos1, byte pos2) { }
+        public void ExchangePosition(byte pos1, byte pos2)
+        {
+            // TODO: Ghidra shows complex logic — sorts positions, swaps array references directly,
+            // calls scootOver, swaps markingIndex if either position matches,
+            // calls BallDecoWork.SwapCapsuleExtraData
+        }
 
-        // TODO
-        public PokemonParam GetMemberPointer(uint idx) { return null; }
+        public PokemonParam GetMemberPointer(uint idx)
+        {
+            return m_member[idx];
+        }
 
-        // TODO
-        public PokemonParam GetMemberPointerConst(uint idx) { return null; }
+        public PokemonParam GetMemberPointerConst(uint idx)
+        {
+            return m_member[idx];
+        }
 
-        // TODO
-        public uint GetMemberCount() { return 0; }
+        public uint GetMemberCount()
+        {
+            return m_memberCount;
+        }
 
-        // TODO
-        public void SetMemberCount(uint count) { }
+        public void SetMemberCount(uint count)
+        {
+            m_memberCount = count;
+        }
 
-        // TODO
-        public uint GetMemberIndex(PokemonParam pokeParam) { return 0; }
+        public uint GetMemberIndex(PokemonParam pokeParam)
+        {
+            for (uint i = 0; i < m_memberCount; i++)
+            {
+                if (m_member[i] == pokeParam)
+                    return i;
+            }
+            return MEMBER_INDEX_ERROR;
+        }
 
-        // TODO
-        public uint GetMemberCountEx(CountType type) { return 0; }
+        public uint GetMemberCountEx(CountType type)
+        {
+            return GetMemberCountEx(type, 0);
+        }
 
-        // TODO
-        public uint GetMemberCountEx(CountType type, byte pass_idx_bit) { return 0; }
+        public uint GetMemberCountEx(CountType type, byte pass_idx_bit)
+        {
+            uint count = 0;
+            for (uint i = 0; i < m_memberCount; i++)
+            {
+                if ((pass_idx_bit & (1 << (int)i)) != 0)
+                    continue;
 
-        // TODO
-        public uint GetMemberTopIndex(SearchType type) { return 0; }
+                var member = m_member[i];
+                if (member.GetMonsNo() == MonsNo.NULL)
+                    continue;
 
-        // TODO
-        public bool CheckPokeExist(MonsNo monsno) { return false; }
+                switch (type)
+                {
+                    case CountType.ALL:
+                        count++;
+                        break;
+                    case CountType.BATTLE_ENABLE:
+                        if (!member.IsEgg(EggCheckType.BOTH_EGG) && (!member.HaveCalcParam() || member.GetHp() > 0))
+                            count++;
+                        break;
+                    case CountType.NOT_EGG:
+                        if (!member.IsEgg(EggCheckType.BOTH_EGG))
+                            count++;
+                        break;
+                    case CountType.ONLY_LEGAL_EGG:
+                        if (member.IsEgg(EggCheckType.ONLY_LEGAL_EGG))
+                            count++;
+                        break;
+                    case CountType.ONLY_ILLEGAL_EGG:
+                        if (member.IsEgg(EggCheckType.ONLY_ILLEGAL_EGG))
+                            count++;
+                        break;
+                    case CountType.BOTH_EGG:
+                        if (member.IsEgg(EggCheckType.BOTH_EGG))
+                            count++;
+                        break;
+                }
+            }
+            return count;
+        }
 
-        // TODO
-        public bool IsFull() { return false; }
+        public uint GetMemberTopIndex(SearchType type)
+        {
+            for (uint i = 0; i < m_memberCount; i++)
+            {
+                var member = m_member[i];
+                if (member.GetMonsNo() == MonsNo.NULL)
+                    continue;
 
-        // TODO
-        public void CopyFrom(PokeParty src) { }
+                switch (type)
+                {
+                    case SearchType.BATTLE_ENABLE:
+                        if (!member.IsEgg(EggCheckType.BOTH_EGG) && (!member.HaveCalcParam() || member.GetHp() > 0))
+                            return i;
+                        break;
+                    case SearchType.NOT_EGG:
+                        if (!member.IsEgg(EggCheckType.BOTH_EGG))
+                            return i;
+                        break;
+                }
+            }
+            return MEMBER_INDEX_ERROR;
+        }
 
-        // TODO
-        public void Clear() { }
+        public bool CheckPokeExist(MonsNo monsno)
+        {
+            for (uint i = 0; i < m_memberCount; i++)
+            {
+                if (m_member[i].IsEgg(EggCheckType.BOTH_EGG))
+                    continue;
+                if (m_member[i].GetMonsNo() == monsno)
+                    return true;
+            }
+            return false;
+        }
 
-        // TODO
-        public void SerializeFull(ref SavePokeParty save) { }
+        public bool IsFull()
+        {
+            return m_memberCount >= MAX_MEMBERS;
+        }
 
-        // TODO
-        public void DeserializeFull(ref SavePokeParty save) { }
+        public void CopyFrom(PokeParty src)
+        {
+            for (int i = 0; i < MAX_MEMBERS; i++)
+            {
+                m_member[i].CopyFrom(src.m_member[i]);
+            }
+            m_memberCount = src.m_memberCount;
+        }
 
-        // TODO
-        public bool CheckPokerusExist() { return false; }
+        public void Clear()
+        {
+            for (int i = 0; i < MAX_MEMBERS; i++)
+            {
+                m_member[i].Clear();
+            }
+            m_memberCount = 0;
+            ClearMarkingIndex();
+        }
 
-        // TODO
-        public bool PokerusCatchCheck() { return false; }
+        public void SerializeFull(ref SavePokeParty save)
+        {
+            save.Serialize_Full(this);
+        }
 
-        // TODO
-        public bool PokerusInfectionCheck() { return false; }
+        public void DeserializeFull(ref SavePokeParty save)
+        {
+            save.Deserialize_Full(this);
+        }
 
-        // TODO
-        public void DecreasePokerusDayCount(int passed_day_count) { }
+        public bool CheckPokerusExist()
+        {
+            for (uint i = 0; i < m_memberCount; i++)
+            {
+                if (m_member[i].GetPokerus() != 0)
+                    return true;
+            }
+            return false;
+        }
 
-        // TODO
-        public void RecoverAll() { }
+        public bool PokerusCatchCheck()
+        {
+            // TODO: Ghidra shows completely different algorithm — uses Pml.Local.Random.GetValue,
+            // checks for specific values (0x4000, 0xc000, 0x8000 from range 0x10000),
+            // loops to find non-legal-egg with MonsNo != 0, different strain/days calculation
+            return false;
+        }
 
-        // TODO
-        public void SetMarkingIndex(uint pos) { }
+        public bool PokerusInfectionCheck()
+        {
+            // TODO: Ghidra shows different algorithm — uses Pml.Local.Random.GetValue(3) for 1/3 chance,
+            // copies full pokerus value (not recalculated strain/days) to adjacent members,
+            // extra index increment when infecting forward neighbor, checks (pokerus & 0xf) != 0
+            return false;
+        }
 
-        // TODO
-        public uint GetMarkingIndex() { return 0; }
+        public void DecreasePokerusDayCount(int passed_day_count)
+        {
+            // TODO: Ghidra shows two separate paths — if passed_day_count < 5: subtract days with
+            // clamping, preserve strain (or set to 0x10 if strain was 0), assert result != 0;
+            // if passed_day_count >= 5: zero out days completely, keep strain, assert strain != 0
+        }
 
-        // TODO
-        public bool CanTrade() { return false; }
+        public void RecoverAll()
+        {
+            for (uint i = 0; i < m_memberCount; i++)
+            {
+                m_member[i].RecoverAll();
+            }
+        }
 
-        // TODO
-        public bool CanTradeMember(uint idx) { return false; }
+        public void SetMarkingIndex(uint pos)
+        {
+            markingIndex = (byte)pos;
+        }
 
-        // TODO
-        private void Dump() { }
+        public uint GetMarkingIndex()
+        {
+            return markingIndex;
+        }
 
-        // TODO
-        private void scootOver() { }
+        public bool CanTrade()
+        {
+            if (GetMemberCountEx(CountType.ONLY_ILLEGAL_EGG) != 0)
+                return false;
+            uint eggCount = GetMemberCountEx(CountType.BOTH_EGG);
+            return (uint)(m_memberCount - eggCount) > 1;
+        }
 
-        // TODO
-        private void ClearMarkingIndex() { }
+        public bool CanTradeMember(uint idx)
+        {
+            return GetMemberCountEx(CountType.BATTLE_ENABLE, (byte)(1 << (int)(idx & 0x1f))) != 0;
+        }
+
+        private void Dump()
+        {
+        }
+
+        private void scootOver()
+        {
+            // TODO: Ghidra shows reverse iteration pattern (from index 4 down to 0), finds NULL entries
+            // and shifts non-NULL entries from end to fill gaps, with array reference swapping
+        }
+
+        private void ClearMarkingIndex()
+        {
+            for (uint i = 0; i < m_memberCount; i++)
+            {
+                if (!m_member[i].IsEgg(EggCheckType.BOTH_EGG))
+                {
+                    markingIndex = (byte)i;
+                    return;
+                }
+            }
+            markingIndex = 0;
+        }
 
         public enum CountType : int
         {

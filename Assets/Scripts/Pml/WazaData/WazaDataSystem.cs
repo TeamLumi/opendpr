@@ -24,11 +24,17 @@ namespace Pml.WazaData
             return s_wazaTable.Waza[(int)id];
         }
 
-        // TODO
-        public static bool IsValid(WazaNo id) { return false; }
+        public static bool IsValid(WazaNo id)
+        {
+            if (id <= WazaNo.NULL || (int)id >= s_wazaTable.Waza.Length)
+                return false;
+            return Get(id).isValid;
+        }
 
-        // TODO
-        public static bool GetFlag(WazaNo id, WazaFlag flag) { return false; }
+        public static bool GetFlag(WazaNo id, WazaFlag flag)
+        {
+            return (Get(id).flags & (1u << (int)flag)) != 0;
+        }
 
         public static uint GetMaxPP(WazaNo id, uint maxupcnt)
         {
@@ -38,26 +44,43 @@ namespace Pml.WazaData
             return (maxupcnt * basePP * 20 / 100 + basePP) & 0xFF;
         }
 
-        // TODO
-        public static uint GetPower(WazaNo id) { return 0; }
+        public static uint GetPower(WazaNo id)
+        {
+            return Get(id).power;
+        }
 
-        // TODO
-        public static byte GetType(WazaNo id) { return 0; }
+        public static byte GetType(WazaNo id)
+        {
+            return Get(id).type;
+        }
 
-        // TODO
-        public static WazaDamageType GetDamageType(WazaNo id) { return 0; }
+        public static WazaDamageType GetDamageType(WazaNo id)
+        {
+            return (WazaDamageType)Get(id).damageType;
+        }
 
-        // TODO
-        public static WazaCategory GetCategory(WazaNo id) { return WazaCategory.SIMPLE_DAMAGE; }
+        public static WazaCategory GetCategory(WazaNo id)
+        {
+            return (WazaCategory)Get(id).category;
+        }
 
-        // TODO
-        public static int GetPriority(WazaNo id) { return 0; }
+        public static int GetPriority(WazaNo id)
+        {
+            return Get(id).priority;
+        }
 
-        // TODO
-        public static ushort GetHitPer(WazaNo id) { return 0; }
+        public static ushort GetHitPer(WazaNo id)
+        {
+            var hitPer = Get(id).hitPer;
+            if (hitPer == HITRATIO_MUST)
+                return 100;
+            return hitPer;
+        }
 
-        // TODO
-        public static bool IsAlwaysHit(WazaNo id) { return false; }
+        public static bool IsAlwaysHit(WazaNo id)
+        {
+            return Get(id).hitPer == HITRATIO_MUST;
+        }
 
         public static uint GetHitCountMax(WazaNo id)
         {
@@ -69,68 +92,160 @@ namespace Pml.WazaData
             return Get(id).hitCountMin;
         }
 
-        // TODO
-        public static bool IsMustCritical(WazaNo id) { return false; }
+        public static bool IsMustCritical(WazaNo id)
+        {
+            return Get(id).criticalRank == CRITICAL_MUST;
+        }
 
-        // TODO
-        public static uint GetShrinkPer(WazaNo id) { return 0; }
+        public static uint GetShrinkPer(WazaNo id)
+        {
+            return Get(id).shrinkPer;
+        }
 
-        // TODO
-        public static bool IsDamage(WazaNo id) { return false; }
+        public static bool IsDamage(WazaNo id)
+        {
+            return GetPower(id) != 0;
+        }
 
-        // TODO
-        public static byte GetCriticalRank(WazaNo id) { return 0; }
+        public static byte GetCriticalRank(WazaNo id)
+        {
+            return Get(id).criticalRank;
+        }
 
-        // TODO
-        public static WazaWeather GetWeather(WazaNo wazano) { return default; }
+        public static WazaWeather GetWeather(WazaNo wazano)
+        {
+            switch (wazano)
+            {
+                case WazaNo.NIHONBARE: return WazaWeather.SHINE;
+                case WazaNo.AMAGOI:    return WazaWeather.RAIN;
+                case WazaNo.ARARE:     return WazaWeather.SNOW;
+                case WazaNo.SUNAARASI: return WazaWeather.SAND;
+                default:               return WazaWeather.NONE;
+            }
+        }
 
-        // TODO
-        public static WazaSick GetSick(WazaNo id) { return WazaSick.WAZASICK_NONE; }
+        public static WazaSick GetSick(WazaNo id)
+        {
+            return (WazaSick)Get(id).sickID;
+        }
 
-        // TODO
-        public static int GetSickPer(WazaNo id) { return 0; }
+        public static int GetSickPer(WazaNo id)
+        {
+            return Get(id).sickPer;
+        }
 
-        // TODO
-        public static SickContParam GetSickCont(WazaNo id) { return default; }
+        public static SickContParam GetSickCont(WazaNo id)
+        {
+            var waza = Get(id);
+            var param = new SickContParam();
+            param.type = waza.sickCont;
+            param.turnMin = waza.sickTurnMin;
+            param.turnMax = waza.sickTurnMax;
+            return param;
+        }
 
-        // TODO
-        public static byte GetRankEffectCount(WazaNo id) { return 0; }
+        public static byte GetRankEffectCount(WazaNo id)
+        {
+            var waza = Get(id);
+            byte count = 0;
+            if (waza.rankEffType1 != (byte)WazaRankEffect.NONE) count++;
+            if (waza.rankEffType2 != (byte)WazaRankEffect.NONE) count++;
+            if (waza.rankEffType3 != (byte)WazaRankEffect.NONE) count++;
+            return count;
+        }
 
-        // TODO
         public static WazaRankEffect GetRankEffect(WazaNo id, uint idx, out int volume)
         {
             volume = 0;
-            return WazaRankEffect.NONE;
+            if (idx >= RANK_STORE_MAX)
+            {
+                GFL.ASSERT(false);
+                return WazaRankEffect.NONE;
+            }
+
+            var waza = Get(id);
+            byte type;
+            switch (idx)
+            {
+                case 0: type = waza.rankEffType1; break;
+                case 1: type = waza.rankEffType2; break;
+                case 2: type = waza.rankEffType3; break;
+                default: return WazaRankEffect.NONE;
+            }
+
+            if (type == (byte)WazaRankEffect.NONE)
+                return WazaRankEffect.NONE;
+
+            switch (idx)
+            {
+                case 0: volume = waza.rankEffValue1; break;
+                case 1: volume = waza.rankEffValue2; break;
+                case 2: volume = waza.rankEffValue3; break;
+            }
+            return (WazaRankEffect)type;
         }
 
-        // TODO
-        public static int GetRankEffectPer(WazaNo id, uint idx) { return 0; }
+        public static int GetRankEffectPer(WazaNo id, uint idx)
+        {
+            var waza = Get(id);
+            switch (idx)
+            {
+                case 0: return waza.rankEffPer1;
+                case 1: return waza.rankEffPer2;
+                case 2: return waza.rankEffPer3;
+                default: return 0;
+            }
+        }
 
-        // TODO
-        public static uint GetDamageRecoverRatio(WazaNo id) { return 0; }
+        public static uint GetDamageRecoverRatio(WazaNo id)
+        {
+            uint val = (uint)Get(id).damageRecoverRatio;
+            return val & (uint)((int)val >> 31 ^ ~0);
+        }
 
-        // TODO
-        public static uint GetHPRecoverRatio(WazaNo id) { return 0; }
+        public static uint GetHPRecoverRatio(WazaNo id)
+        {
+            uint val = (uint)Get(id).hpRecoverRatio;
+            return val & (uint)((int)val >> 31 ^ ~0);
+        }
 
-        // TODO
-        public static WazaTarget GetTarget(WazaNo id) { return WazaTarget.TARGET_OTHER_SELECT; }
+        public static WazaTarget GetTarget(WazaNo id)
+        {
+            return (WazaTarget)Get(id).target;
+        }
 
-        // TODO
-        public static int GetAISeqNo(WazaNo id) { return 0; }
+        public static int GetAISeqNo(WazaNo id)
+        {
+            return Get(id).aiSeqNo;
+        }
 
-        // TODO
-        public static byte GetDamageReactionRatio(WazaNo id) { return 0; }
+        public static uint GetDamageReactionRatio(WazaNo id)
+        {
+            int val = (int)Get(id).damageRecoverRatio;
+            return (uint)(-val & (val >> 7));
+        }
 
-        // TODO
-        public static byte GetHPReactionRatio(WazaNo id) { return 0; }
+        public static uint GetHPReactionRatio(WazaNo id)
+        {
+            int val = (int)Get(id).hpRecoverRatio;
+            return (uint)(-val & (val >> 7));
+        }
 
-        // TODO
-        public static byte GetGPower(WazaNo id) { return 0; }
+        public static byte GetGPower(WazaNo id)
+        {
+            return 0;
+        }
 
-        // TODO
-        public static ushort[] GetYubiWoHuruPermitWazaTable() { return null; }
+        public static ushort[] GetYubiWoHuruPermitWazaTable()
+        {
+            if (s_wazaTable.Yubiwohuru != null && s_wazaTable.Yubiwohuru.Length > 0)
+                return s_wazaTable.Yubiwohuru[0].wazaNos;
+            return null;
+        }
 
-        // TODO
-        public static uint GetContestWazaNo(WazaNo id) { return 0; }
+        public static uint GetContestWazaNo(WazaNo id)
+        {
+            return Get(id).contestWazaNo;
+        }
     }
 }

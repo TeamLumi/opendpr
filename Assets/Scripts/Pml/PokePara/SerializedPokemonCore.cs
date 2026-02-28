@@ -9,10 +9,15 @@ namespace Pml.PokePara
 		[SerializeField]
 		public byte[] buffer;
 		
-		// TODO
-		public void CopyFrom(in SerializedPokemonCore src) { }
-		
-		// TODO
-		public void CreateWorkIfNeed(bool isRecreate = false) { }
+		public void CopyFrom(in SerializedPokemonCore src)
+		{
+			src.buffer.CopyTo(buffer, 0);
+		}
+
+		public void CreateWorkIfNeed(bool isRecreate = false)
+		{
+			if (buffer == null || isRecreate)
+				buffer = new byte[CoreParam.DATASIZE];
+		}
 	}
 }

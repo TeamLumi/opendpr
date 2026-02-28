@@ -13,9 +13,22 @@
         private const int mask2 = 64512;
         public ushort raw;
 
-        // TODO
-        public byte type { get; set; }
-        public byte turnMin { get; set; }
-        public byte turnMax { get; set; }
+        public byte type
+        {
+            get => (byte)((raw & mask0) >> loc0);
+            set => raw = (ushort)((raw & ~mask0) | ((value << loc0) & mask0));
+        }
+
+        public ushort turnMin
+        {
+            get => (ushort)((raw & mask1) >> loc1);
+            set => raw = (ushort)((raw & ~mask1) | ((value << loc1) & mask1));
+        }
+
+        public ushort turnMax
+        {
+            get => (ushort)((raw & mask2) >> loc2);
+            set => raw = (ushort)((raw & ~mask2) | ((value << loc2) & mask2));
+        }
     }
 }
