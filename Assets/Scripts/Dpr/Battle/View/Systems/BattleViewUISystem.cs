@@ -230,32 +230,37 @@ namespace Dpr.Battle.View.Systems
         // TODO
         public void CMD_StartPokeList(PokeSelParam param, BTL_POKEPARAM outMemberParam, uint outMemberIndex, bool fCantEsc, PokeSelResult result) { }
 
-        // TODO
-        public bool CMD_WaitPokeList() { return false; }
+        public bool CMD_WaitPokeList() {
+            return _isMenuUIEnd;
+        }
 
         // TODO
         public void CMD_ForceQuitPokeList() { }
 
-        // TODO
-        public bool CMD_WaitForceQuitPokeList() { return false; }
+        public bool CMD_WaitForceQuitPokeList() {
+            return _isMenuUIEnd;
+        }
 
         // TODO
         public void CMD_StartPokeSelect(PokeSelParam param, uint outMemberIndex, bool bCancelable, PokeSelResult result) { }
 
-        // TODO
-        public bool CMD_WaitPokeSelect() { return false; }
+        public bool CMD_WaitPokeSelect() {
+            return _isMenuUIEnd;
+        }
 
         // TODO
         public void CMD_ForceQuitPokeSelect() { }
 
-        // TODO
-        public bool CMD_WaitForceQuitPokeSelect() { return false; }
+        public bool CMD_WaitForceQuitPokeSelect() {
+            return _isMenuUIEnd;
+        }
 
         // TODO
         public void CMD_ExpGet_Start(in BattleViewBase.ExpGetDesc desc, BattleViewBase.ExpGetResult pResult) { }
 
-        // TODO
-        public bool CMD_ExpGet_Wait(ref BattleViewBase.ExpGetResult pResult) { return false; }
+        public bool CMD_ExpGet_Wait(ref BattleViewBase.ExpGetResult pResult) {
+            return _isMenuUIEnd;
+        }
 
         // TODO
         public void MSG_Start(MessageTextParseDataModel pStrBuf, bool isKeyWait = true) { }
@@ -284,8 +289,9 @@ namespace Dpr.Battle.View.Systems
         // TODO
         public bool CMD_WaitMsg() { return false; }
 
-        // TODO
-        public bool CMD_WaitMsg_WithoutHide() { return false; }
+        public bool CMD_WaitMsg_WithoutHide() {
+            return _isMsgEnd;
+        }
 
         // TODO
         public void CMD_HideMsg() { }
@@ -357,17 +363,21 @@ namespace Dpr.Battle.View.Systems
         // TODO
         public bool MSG_IsRunnning() { return false; }
 
-        // TODO
-        public bool MSG_WaitMenu(ref byte selectId) { return false; }
+        public bool MSG_WaitMenu(ref byte selectId) {
+            return true;
+        }
 
-        // TODO
-        public bool AutoPilot_EventTest(AutoPilotEventID id) { return false; }
+        public bool AutoPilot_EventTest(AutoPilotEventID id) {
+            return true;
+        }
 
-        // TODO
-        public bool HUD_StartingDemo_Wait() { return false; }
+        public bool HUD_StartingDemo_Wait() {
+            return true;
+        }
 
-        // TODO
-        public bool UIFog_Wait() { return false; }
+        public bool UIFog_Wait() {
+            return true;
+        }
 
         // TODO
         public bool HUD_IsPinch(BtlvPos vPos) { return false; }

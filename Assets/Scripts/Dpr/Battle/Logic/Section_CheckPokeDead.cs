@@ -19,11 +19,13 @@ namespace Dpr.Battle.Logic
 		// TODO
 		private bool isKillCountIncrementEnable(byte deadPokeID, byte deadCausePokeID, DamageCause deadCause) { return default; }
 		
-		// TODO
-		private bool isKillCountEffectEnable(bool isKillCountInc) { return default; }
+		private bool isKillCountEffectEnable(bool isKillCountInc) {
+		    return false;
+		}
 		
-		// TODO
-		private bool needDeadMessage(BTL_POKEPARAM pDeadPoke) { return default; }
+		private bool needDeadMessage(BTL_POKEPARAM pDeadPoke) {
+		    return true;
+		}
 		
 		// TODO
 		private bool needDeadAct(BTL_POKEPARAM pDeadPoke) { return default; }

@@ -12,8 +12,9 @@ namespace Dpr.Battle.Logic
 		// TODO
 		public void Clear() { }
 		
-		// TODO
-		public void Request(InterruptCode interrupt) { }
+		public void Request(InterruptCode interrupt) {
+		    this.m_interrupt = interrupt;
+		}
 		
 		// TODO
 		public bool IsRequested(InterruptCode interrupt) { return default; }
@@ -21,7 +22,8 @@ namespace Dpr.Battle.Logic
 		// TODO
 		public bool IsRequested() { return default; }
 		
-		// TODO
-		public InterruptCode GetRequest() { return default; }
+		public InterruptCode GetRequest() {
+		    return m_interrupt;
+		}
 	}
 }

@@ -35,8 +35,9 @@ namespace Dpr.UI
 		// TODO
 		private void SetParamIndex(int index) { }
 		
-		// TODO
-		public int GetParamIndex() { return default; }
+		public int GetParamIndex() {
+		    return _paramIndex;
+		}
 		
 		// TODO
 		private BoxInfinityScrollItem.BaseParam GetParam(int index) { return default; }

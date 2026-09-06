@@ -30,11 +30,13 @@
         // TODO
         public bool IsExist(BTL_CLIENT_ID clientID) { return false; }
 
-        // TODO
-        public byte GetCount() { return 0; }
+        public byte GetCount() {
+            return m_requestCount;
+        }
 
-        // TODO
-        public byte GetCount(BTL_CLIENT_ID clientID) { return 0; }
+        public byte GetCount(BTL_CLIENT_ID clientID) {
+            return m_requestCount;
+        }
 
         // TODO
         public BtlPokePos GetRequestPos(byte index) { return BtlPokePos.POS_1ST_0; }

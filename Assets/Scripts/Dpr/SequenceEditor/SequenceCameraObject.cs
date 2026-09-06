@@ -182,26 +182,32 @@ namespace Dpr.SequenceEditor
 		// TODO
 		public Vector3 CalcPseudoTarget(in Vector3 pos, in Vector3 rot) { return default; }
 		
-		// TODO
-		public PostEffects GetPostEffects() { return default; }
+		public PostEffects GetPostEffects() {
+		    return _postEffects;
+		}
 		
-		// TODO
-		public void SetCameraAnimationCheckGround(bool value) { }
+		public void SetCameraAnimationCheckGround(bool value) {
+		    this.m_isCheckGround = value;
+		}
 		
-		// TODO
-		public bool GetCameraAnimationCheckGround() { return default; }
+		public bool GetCameraAnimationCheckGround() {
+		    return m_isCheckGround;
+		}
 		
 		// TODO
 		public void SetCameraAnimationmFreezeOnGround(bool value) { }
 		
-		// TODO
-		public bool GetCameraAnimationmFreezeOnGround() { return default; }
+		public bool GetCameraAnimationmFreezeOnGround() {
+		    return m_isCheckFreezeOnGround;
+		}
 		
-		// TODO
-		public void SetFreezeHeight(float height = DEFAULT_FREEZE_CAMERA_HEIGHT) { }
+		public void SetFreezeHeight(float height = DEFAULT_FREEZE_CAMERA_HEIGHT) {
+		    this.m_freezeHeight = height;
+		}
 		
-		// TODO
-		public float GetFreezeHeight() { return default; }
+		public float GetFreezeHeight() {
+		    return m_freezeHeight;
+		}
 		
 		// TODO
 		public void SyncOtherCamera(CameraCommander commander, bool isForceUpdate = false) { }

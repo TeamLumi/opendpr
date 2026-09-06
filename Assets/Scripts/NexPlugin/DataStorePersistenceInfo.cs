@@ -11,14 +11,17 @@ namespace NexPlugin
 			dataId = 0;
 		}
 		
-		// TODO
-		public ulong GetPrincipalId() { return default; }
+		public ulong GetPrincipalId() {
+		    return principalId;
+		}
 		
-		// TODO
-		public ushort GetPersistenceSlotId() { return default; }
+		public ushort GetPersistenceSlotId() {
+		    return persistenceSlotId;
+		}
 		
-		// TODO
-		public ulong GetDataId() { return default; }
+		public ulong GetDataId() {
+		    return dataId;
+		}
 		
 		// TODO
 		public bool IsValid() { return default; }

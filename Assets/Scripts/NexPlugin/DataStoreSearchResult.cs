@@ -13,14 +13,17 @@ namespace NexPlugin
 			result = new List<DataStoreMetaInfo>();
 		}
 		
-		// TODO
-		public uint GetTotalCount() { return default; }
+		public uint GetTotalCount() {
+		    return totalCount;
+		}
 		
-		// TODO
-		public List<DataStoreMetaInfo> GetResult() { return default; }
+		public List<DataStoreMetaInfo> GetResult() {
+		    return result;
+		}
 		
-		// TODO
-		public DataStore.SearchResultTotalCountType GetTotalCountType() { return default; }
+		public DataStore.SearchResultTotalCountType GetTotalCountType() {
+		    return totalCountType;
+		}
 		
 		// TODO
 		public void Trace() { }

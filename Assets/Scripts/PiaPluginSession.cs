@@ -263,104 +263,123 @@ public class PiaPluginSession
         // TODO
         public void SetParticipantNumMin(ushort participantNumMin) { }
 
-        // TODO
-        public ushort GetParticipantNumMin() { return default; }
+        public ushort GetParticipantNumMin() {
+            return participantNumMin;
+        }
 
         // TODO
         public void SetParticipantNumMax(ushort participantNumMax) { }
 
-        // TODO
-        public ushort GetParticipantNumMax() { return default; }
+        public ushort GetParticipantNumMax() {
+            return participantNumMax;
+        }
 
         // TODO
         public void SetGameMode(ushort gameMode) { }
 
-        // TODO
-        public ushort GetGameMode() { return default; }
+        public ushort GetGameMode() {
+            return gameMode;
+        }
 
         // TODO
         public void SetApplicationData(byte[] applicationData) { }
 
-        // TODO
-        public byte[] GetApplicationData() { return default; }
+        public byte[] GetApplicationData() {
+            return applicationData;
+        }
 
         // TODO
         public void SetOpenSession(bool isOpenSession) { }
 
-        // TODO
-        public bool IsOpenSession() { return default; }
+        public bool IsOpenSession() {
+            return isOpenSession;
+        }
 
         // TODO
         public void SetMatchmakeSessionOption(uint matchmakeSessionOption) { }
 
-        // TODO
-        public uint GetMatchmakeSessionOption() { return default; }
+        public uint GetMatchmakeSessionOption() {
+            return matchmakeSessionOption;
+        }
 
         // TODO
         public void SetCountryCode(string countryCode) { }
 
-        // TODO
-        public string GetCountryCode() { return default; }
+        public string GetCountryCode() {
+            return countryCode;
+        }
 
         // TODO
         public void SetRatingValue(uint ratingValue) { }
 
-        // TODO
-        public uint GetRatingValue() { return default; }
+        public uint GetRatingValue() {
+            return ratingValue;
+        }
 
         // TODO
         public void SetDisconnectionRate(uint disconnectionRate) { }
 
-        // TODO
-        public uint GetDisconnectionRate() { return default; }
+        public uint GetDisconnectionRate() {
+            return disconnectionRate;
+        }
 
         // TODO
         public void SetViolationRate(uint violationRate) { }
 
-        // TODO
-        public uint GetViolationRate() { return default; }
+        public uint GetViolationRate() {
+            return violationRate;
+        }
 
         // TODO
         public void SetUseGeoIp(bool isGeoIpUsed) { }
 
-        // TODO
-        public bool IsGeoIpUsed() { return default; }
+        public bool IsGeoIpUsed() {
+            return isGeoIpUsed;
+        }
 
         // TODO
         public void SetWirelessCryptoKey(string wirelessCryptoKey) { }
 
-        // TODO
-        public string GetWirelessCryptoKey() { return default; }
+        public string GetWirelessCryptoKey() {
+            return wirelessCryptoKey;
+        }
 
         // TODO
         public PiaPlugin.Result SetAttributeList(List<Attribute> attributeList) { return default; }
 
-        // TODO
-        public List<Attribute> GetAttributeList() { return default; }
+        public List<Attribute> GetAttributeList() {
+            return attributeList;
+        }
 
-        // TODO
-        public void SetLocalCommunicationId(ulong localCommunicationId) { }
+        public void SetLocalCommunicationId(ulong localCommunicationId) {
+            this.localCommunicationId = localCommunicationId;
+        }
 
-        // TODO
-        public ulong GetLocalCommunicationId() { return default; }
+        public ulong GetLocalCommunicationId() {
+            return localCommunicationId;
+        }
 
         // TODO
         public PiaPlugin.Result SetSessionUserPassword(string userPassword) { return default; }
 
-        // TODO
-        public string GetSessionUserPassword() { return default; }
+        public string GetSessionUserPassword() {
+            return sessionUserPassword;
+        }
 
         // TODO
         public PiaPlugin.Result SetSessionMatchmakeKeyword(string keyword) { return default; }
 
-        // TODO
-        public string GetSessionMatchmakeKeyword() { return default; }
+        public string GetSessionMatchmakeKeyword() {
+            return matchmakeKeyword;
+        }
 
-        // TODO
-        public void SetLocalCommunicationChannel(ushort localCommunicationChannel) { }
+        public void SetLocalCommunicationChannel(ushort localCommunicationChannel) {
+            this.localCommunicationChannel = localCommunicationChannel;
+        }
 
-        // TODO
-        public ushort GetLocalCommunicationChannel() { return default; }
+        public ushort GetLocalCommunicationChannel() {
+            return localCommunicationChannel;
+        }
 
         private enum CondMask : int
         {
@@ -469,104 +488,122 @@ public class PiaPluginSession
         // TODO
         public void SetParticipantNumMin(ushort participantNumMin) { }
 
-        // TODO
-        public ushort GetParticipantNumMin() { return default; }
+        public ushort GetParticipantNumMin() {
+            return participantNumMin;
+        }
 
         // TODO
         public void SetParticipantNumMax(ushort participantNumMax) { }
 
-        // TODO
-        public ushort GetParticipantNumMax() { return default; }
+        public ushort GetParticipantNumMax() {
+            return participantNumMax;
+        }
 
         // TODO
         public void SetOpenedOnly(bool isOpenedOnly) { }
 
-        // TODO
-        public bool IsOpenedOnly() { return default; }
+        public bool IsOpenedOnly() {
+            return isOpenedOnly;
+        }
 
         // TODO
         public void SetVacantOnly(bool isVacantOnly) { }
 
-        // TODO
-        public bool IsVacantOnly() { return default; }
+        public bool IsVacantOnly() {
+            return isVacantOnly;
+        }
 
         // TODO
         public void SetGameMode(ushort gameMode) { }
 
-        // TODO
-        public ushort GetGameMode() { return default; }
+        public ushort GetGameMode() {
+            return gameMode;
+        }
 
         // TODO
         public void SetCountryCode(string countryCode) { }
 
-        // TODO
-        public string GetCountryCode() { return default; }
+        public string GetCountryCode() {
+            return countryCode;
+        }
 
         // TODO
         public void SetRatingValue(uint ratingValue) { }
 
-        // TODO
-        public uint GetRatingValue() { return default; }
+        public uint GetRatingValue() {
+            return ratingValue;
+        }
 
         // TODO
         public void SetDisconnectionRate(uint disconnectionRate) { }
 
-        // TODO
-        public uint GetDisconnectionRate() { return default; }
+        public uint GetDisconnectionRate() {
+            return disconnectionRate;
+        }
 
         // TODO
         public void SetViolationRate(uint violationRate) { }
 
-        // TODO
-        public uint GetViolationRate() { return default; }
+        public uint GetViolationRate() {
+            return violationRate;
+        }
 
         // TODO
         public void SetUseGeoIp(bool isGeoIpUsed) { }
 
-        // TODO
-        public bool IsGeoIpUsed() { return default; }
+        public bool IsGeoIpUsed() {
+            return isGeoIpUsed;
+        }
 
         // TODO
         public void SetScoreSettingIndex(uint scoreSettingIndex) { }
 
-        // TODO
-        public uint GetScoreSettingIndex() { return default; }
+        public uint GetScoreSettingIndex() {
+            return scoreSettingIndex;
+        }
 
         // TODO
         public void SetSelectionMethod(SelectionMethod selectionMethod) { }
 
-        // TODO
-        public SelectionMethod GetSelectionMethod() { return default; }
+        public SelectionMethod GetSelectionMethod() {
+            return selectionMethod;
+        }
 
         // TODO
         public PiaPlugin.Result SetAttributeList(List<Attribute> attributeList) { return default; }
 
-        // TODO
-        public List<Attribute> GetAttributeList() { return default; }
+        public List<Attribute> GetAttributeList() {
+            return attributeList;
+        }
 
         // TODO
         public PiaPlugin.Result SetAttributeRangeList(List<AttributeRange> attributeRangeList) { return default; }
 
-        // TODO
-        public List<AttributeRange> GetAttributeRangeList() { return default; }
+        public List<AttributeRange> GetAttributeRangeList() {
+            return attributeRangeList;
+        }
 
-        // TODO
-        public void SetLocalCommunicationId(ulong localCommunicationId) { }
+        public void SetLocalCommunicationId(ulong localCommunicationId) {
+            this.localCommunicationId = localCommunicationId;
+        }
 
-        // TODO
-        public ulong GetLocalCommunicationId() { return default; }
+        public ulong GetLocalCommunicationId() {
+            return localCommunicationId;
+        }
 
         // TODO
         public PiaPlugin.Result SetSessionMatchmakeKeyword(string keyword) { return default; }
 
-        // TODO
-        public string GetSessionMatchmakeKeyword() { return default; }
+        public string GetSessionMatchmakeKeyword() {
+            return matchmakeKeyword;
+        }
 
         // TODO
         public void SetExcludeUserPasswordSet(bool isExcludeUserPasswordSet) { }
 
-        // TODO
-        public bool IsExcludeUserPasswordSet() { return default; }
+        public bool IsExcludeUserPasswordSet() {
+            return isExcludeUserPasswordSet;
+        }
 
         private enum CondMask : int
         {
@@ -961,77 +998,90 @@ public class PiaPluginSession
         // TODO
         public void SetApplicationData(byte[] applicationData, int applicationDataSize) { }
 
-        // TODO
-        public byte[] GetApplicationData() { return default; }
+        public byte[] GetApplicationData() {
+            return applicationData;
+        }
 
-        // TODO
-        public int GetApplicationDataSize() { return default; }
+        public int GetApplicationDataSize() {
+            return applicationDataSize;
+        }
 
         // TODO
         public void SetSelectionPriority(byte selectionPriority) { }
 
-        // TODO
-        public byte GetSelectionPriority() { return default; }
+        public byte GetSelectionPriority() {
+            return priority;
+        }
 
         // TODO
         public void SetParticipantNumMin(ushort participantNumMin) { }
 
-        // TODO
-        public ushort GetParticipantNumMin() { return default; }
+        public ushort GetParticipantNumMin() {
+            return participantNumMin;
+        }
 
         // TODO
         public void SetParticipantNumMax(ushort participantNumMax) { }
 
-        // TODO
-        public ushort GetParticipantNumMax() { return default; }
+        public ushort GetParticipantNumMax() {
+            return participantNumMax;
+        }
 
         // TODO
         public void SetCountryCode(string countryCode) { }
 
-        // TODO
-        public string GetCountryCode() { return default; }
+        public string GetCountryCode() {
+            return countryCode;
+        }
 
         // TODO
         public void SetRatingValue(uint ratingValue) { }
 
-        // TODO
-        public uint GetRatingValue() { return default; }
+        public uint GetRatingValue() {
+            return ratingValue;
+        }
 
         // TODO
         public void SetDisconnectionRate(uint disconnectionRate) { }
 
-        // TODO
-        public uint GetDisconnectionRate() { return default; }
+        public uint GetDisconnectionRate() {
+            return disconnectionRate;
+        }
 
         // TODO
         public void SetViolationRate(uint violationRate) { }
 
-        // TODO
-        public uint GetViolationRate() { return default; }
+        public uint GetViolationRate() {
+            return violationRate;
+        }
 
         // TODO
         public void SetUpdateGeoIp(bool isUpdateGeoIp) { }
 
-        // TODO
-        public bool IsUpdateGeoIp() { return default; }
+        public bool IsUpdateGeoIp() {
+            return isUpdateGeoIp;
+        }
 
         // TODO
         public PiaPlugin.Result SetAttributeList(List<Attribute> attributeList) { return default; }
 
-        // TODO
-        public List<Attribute> GetAttributeList() { return default; }
+        public List<Attribute> GetAttributeList() {
+            return attributeList;
+        }
 
         // TODO
         public PiaPlugin.Result SetSessionUserPassword(string userPassword) { return default; }
 
-        // TODO
-        public string GetSessionUserPassword() { return default; }
+        public string GetSessionUserPassword() {
+            return sessionUserPassword;
+        }
 
         // TODO
         public PiaPlugin.Result SetSessionMatchmakeKeyword(string keyword) { return default; }
 
-        // TODO
-        public string GetSessionMatchmakeKeyword() { return default; }
+        public string GetSessionMatchmakeKeyword() {
+            return matchmakeKeyword;
+        }
 
         // TODO
         public PiaPlugin.Result SetStartedTime(PiaPlugin.DateTime dateTime) { return default; }

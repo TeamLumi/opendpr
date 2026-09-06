@@ -14,11 +14,13 @@ public class HoneyWork
     // TODO
     public static int GetTblMonsCount() { return 0; }
 
-    // TODO
-    public static int GetRareLvCount() { return 0; }
+    public static int GetRareLvCount() {
+        return 4;
+    }
 
-    // TODO
-    public static int GetSwayLvCount() { return 0; }
+    public static int GetSwayLvCount() {
+        return 4;
+    }
 
     // TODO
     public static HONEY_DATA? GetHoneyData(ZoneID zoneId) { return null; }

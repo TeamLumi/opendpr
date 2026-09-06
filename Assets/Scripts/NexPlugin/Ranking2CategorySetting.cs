@@ -17,32 +17,41 @@ namespace NexPlugin
 			// Empty, declared explicitly
 		}
 		
-		// TODO
-		public uint GetMinScore() { return default; }
+		public uint GetMinScore() {
+		    return minScore;
+		}
 		
-		// TODO
-		public uint GetMaxScore() { return default; }
+		public uint GetMaxScore() {
+		    return maxScore;
+		}
 		
-		// TODO
-		public bool GetScoreOrder() { return default; }
+		public bool GetScoreOrder() {
+		    return scoreOrder;
+		}
 		
-		// TODO
-		public uint GetLowestRank() { return default; }
+		public uint GetLowestRank() {
+		    return lowestRank;
+		}
 		
-		// TODO
-		public byte GetMaxSeasonsToGoBack() { return default; }
+		public byte GetMaxSeasonsToGoBack() {
+		    return maxSeasonsToGoBack;
+		}
 		
-		// TODO
-		public byte GetResetMode() { return default; }
+		public byte GetResetMode() {
+		    return resetMode;
+		}
 		
-		// TODO
-		public byte GetResetHour() { return default; }
+		public byte GetResetHour() {
+		    return resetHour;
+		}
 		
-		// TODO
-		public byte GetResetDay() { return default; }
+		public byte GetResetDay() {
+		    return resetDay;
+		}
 		
-		// TODO
-		public ushort GetResetMonth() { return default; }
+		public ushort GetResetMonth() {
+		    return resetMonth;
+		}
 		
 		// TODO
 		public void Trace() { }

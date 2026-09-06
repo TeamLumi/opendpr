@@ -229,11 +229,13 @@
         // TODO
         public unsafe void Copy(void* data, ushort dataLength) { }
 
-        // TODO
-        public unsafe void* GetData() { return null; }
+        public unsafe void* GetData() {
+            return m_buffer;
+        }
 
-        // TODO
-        public uint GetDataSize() { return 0; }
+        public uint GetDataSize() {
+            return m_writePtr;
+        }
 
         // TODO
         public bool IsContainActCommand(ushort startPos, ushort endPos) { return false; }
@@ -268,11 +270,13 @@
         // TODO
         private void put_reserved_pos_core(ushort pos, ServerCommand cmd, int[] args, uint argsNum) { }
 
-        // TODO
-        public uint PushReadState() { return 0; }
+        public uint PushReadState() {
+            return m_readPtr;
+        }
 
-        // TODO
-        public void PopReadState(uint state) { }
+        public void PopReadState(uint state) {
+            this.m_readPtr = state;
+        }
 
         // TODO
         public void ReplaceWithSkipCmd(uint pos) { }

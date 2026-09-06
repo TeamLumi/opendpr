@@ -65,8 +65,9 @@ namespace Dpr.Battle.Logic
             return m_formNo;
         }
 
-        // TODO
-        public byte GetFriendship() { return 0; }
+        public byte GetFriendship() {
+            return m_friendship;
+        }
 
         // TODO
         public static byte PokeIDtoFreeFallCounter(byte pokeID) { return 0; }
@@ -177,8 +178,9 @@ namespace Dpr.Battle.Logic
         // TODO
         public BtlSpecialPri GetSpActPriority() { return BtlSpecialPri.BTL_SPPRI_LOW; }
 
-        // TODO
-        public void SetSpActPriority(byte priority) { }
+        public void SetSpActPriority(byte priority) {
+            this.m_spActPriority = priority;
+        }
 
         // TODO
         private void resetSpActPriority() { }
@@ -392,8 +394,9 @@ namespace Dpr.Battle.Logic
         // TODO
         public byte WAZA_GetUsedCountInAlive() { return 0; }
 
-        // TODO
-        public byte WAZA_GetUsedCount() { return 0; }
+        public byte WAZA_GetUsedCount() {
+            return m_usedWazaCount;
+        }
 
         // TODO
         public byte WAZA_GetUsableCount() { return 0; }
@@ -412,8 +415,9 @@ namespace Dpr.Battle.Logic
         // TODO
         public void WAZA_Copy(BTL_POKEPARAM bppDst) { }
 
-        // TODO
-        public byte WAZA_GetUsedCount(byte wazaIdx) { return 0; }
+        public byte WAZA_GetUsedCount(byte wazaIdx) {
+            return m_usedWazaCount;
+        }
 
         // TODO
         public void WAZA_SetUsedCount(byte wazaIdx, byte value) { }
@@ -532,11 +536,13 @@ namespace Dpr.Battle.Logic
         // TODO
         public void IncTotalTurnCount() { }
 
-        // TODO
-        public ushort GetTurnCount() { return 0; }
+        public ushort GetTurnCount() {
+            return m_turnCount;
+        }
 
-        // TODO
-        public ushort GetAppearTurn() { return 0; }
+        public ushort GetAppearTurn() {
+            return m_appearedTurn;
+        }
 
         // TODO
         public bool TURNFLAG_Get(TurnFlag flagID) { return false; }
@@ -621,8 +627,9 @@ namespace Dpr.Battle.Logic
         // TODO
         public byte GetCriticalRank() { return 0; }
 
-        // TODO
-        public byte GetCriticalRankPure() { return 0; }
+        public byte GetCriticalRankPure() {
+            return m_criticalRank;
+        }
 
         // TODO
         public bool AddCriticalRank(int value) { return false; }
@@ -737,16 +744,18 @@ namespace Dpr.Battle.Logic
         // TODO
         public void UpdateWazaProcResult(BtlPokePos actTargetPos, byte actWazaType, bool fActEnable, WazaNo actWaza, WazaNo orgWaza) { }
 
-        // TODO
-        public uint GetWazaContCounter() { return 0; }
+        public uint GetWazaContCounter() {
+            return m_wazaContCounter;
+        }
 
         public WazaNo GetPrevWazaID()
         {
             return m_prevActWazaID;
         }
 
-        // TODO
-        public byte GetPrevWazaType() { return 0; }
+        public byte GetPrevWazaType() {
+            return m_prevWazaType;
+        }
 
         // TODO
         public WazaNo GetPrevOrgWazaID() { return WazaNo.NULL; }
@@ -760,8 +769,9 @@ namespace Dpr.Battle.Logic
         // TODO
         public void SetWeight(ushort weight) { }
 
-        // TODO
-        public ushort GetWeight() { return 0; }
+        public ushort GetWeight() {
+            return m_weight;
+        }
 
         // TODO
         public void WAZADMGREC_Add(WAZADMG_REC rec) { }
@@ -832,8 +842,9 @@ namespace Dpr.Battle.Logic
         // TODO
         public bool MIGAWARI_IsExist() { return false; }
 
-        // TODO
-        public uint MIGAWARI_GetHP() { return 0; }
+        public uint MIGAWARI_GetHP() {
+            return m_migawariHP;
+        }
 
         // TODO
         public bool MIGAWARI_AddDamage(ref ushort damage) { return false; }

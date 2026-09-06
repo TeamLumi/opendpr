@@ -1628,14 +1628,17 @@ namespace Dpr.Battle.View.Systems
 		// TODO
 		private void PreloadOtherModel(SequenceFile pSeqFile, ISequenceViewSystem pViewSystem, CommandParam param) { }
 		
-		// TODO
-		public VectorHash<int, ObjectEntity> GetModelHashTable() { return default; }
+		public VectorHash<int, ObjectEntity> GetModelHashTable() {
+		    return _uPtrModelHash;
+		}
 		
-		// TODO
-		public VectorHash<int, BtlvEffectInstance> GetParticleHashTable() { return default; }
+		public VectorHash<int, BtlvEffectInstance> GetParticleHashTable() {
+		    return _uPtrParticleVectorHash;
+		}
 		
-		// TODO
-		private VectorHash<int, BtlvSound> GetSoundHashTable() { return default; }
+		private VectorHash<int, BtlvSound> GetSoundHashTable() {
+		    return _uPtrSoundHash;
+		}
 		
 		// TODO
 		public void DeleteAllVector() { }

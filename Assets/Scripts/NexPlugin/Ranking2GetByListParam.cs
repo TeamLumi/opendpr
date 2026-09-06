@@ -19,41 +19,53 @@ namespace NexPlugin
 			optionFlags = Ranking2.Ranking2GetOptionFlags.NOTHING;
 		}
 		
-		// TODO
-		public uint GetCategory() { return default; }
+		public uint GetCategory() {
+		    return category;
+		}
 		
-		// TODO
-		public void SetCategory(uint category_) { }
+		public void SetCategory(uint category_) {
+		    this.category = category_;
+		}
 		
-		// TODO
-		public byte GetNumSeasonsToGoBack() { return default; }
+		public byte GetNumSeasonsToGoBack() {
+		    return numSeasonsToGoBack;
+		}
 		
-		// TODO
-		public void SetNumSeasonsToGoBack(byte numSeasonsToGoBack_) { }
+		public void SetNumSeasonsToGoBack(byte numSeasonsToGoBack_) {
+		    this.numSeasonsToGoBack = numSeasonsToGoBack_;
+		}
 		
-		// TODO
-		public uint GetOffset() { return default; }
+		public uint GetOffset() {
+		    return offset;
+		}
 		
-		// TODO
-		public void SetOffset(uint offset_) { }
+		public void SetOffset(uint offset_) {
+		    this.offset = offset_;
+		}
 		
-		// TODO
-		public uint GetLength() { return default; }
+		public uint GetLength() {
+		    return length;
+		}
 		
-		// TODO
-		public void SetLength(uint length_) { }
+		public void SetLength(uint length_) {
+		    this.length = length_;
+		}
 		
-		// TODO
-		public Ranking2.Ranking2SortFlags GetSortFlags() { return default; }
+		public Ranking2.Ranking2SortFlags GetSortFlags() {
+		    return sortFlags;
+		}
 		
-		// TODO
-		public void SetSortFlags(Ranking2.Ranking2SortFlags sortFlags_) { }
+		public void SetSortFlags(Ranking2.Ranking2SortFlags sortFlags_) {
+		    this.sortFlags = sortFlags_;
+		}
 		
-		// TODO
-		public Ranking2.Ranking2GetOptionFlags GetOptionFlags() { return default; }
+		public Ranking2.Ranking2GetOptionFlags GetOptionFlags() {
+		    return optionFlags;
+		}
 		
-		// TODO
-		public void SetOptionFlags(Ranking2.Ranking2GetOptionFlags optionFlags_) { }
+		public void SetOptionFlags(Ranking2.Ranking2GetOptionFlags optionFlags_) {
+		    this.optionFlags = optionFlags_;
+		}
 		
 		// TODO
 		public void Reset() { }

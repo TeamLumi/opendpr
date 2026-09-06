@@ -2432,8 +2432,9 @@ public class FieldManager
     // TODO
     public SYS_WEATHER GetBatleWeather() { return SYS_WEATHER.SUNNY; }
 
-    // TODO
-    public UgMainProc GetUgMainProc() { return null; }
+    public UgMainProc GetUgMainProc() {
+        return _ugMainProc;
+    }
 
     private void SaveCheckCyclingRoad()
     {

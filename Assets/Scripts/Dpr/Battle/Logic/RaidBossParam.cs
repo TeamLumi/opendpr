@@ -35,20 +35,25 @@ namespace Dpr.Battle.Logic
         // TODO
         public float GetHPCoef() { return 0f; }
 
-        // TODO
-        public GWall GetGWallConst() { return null; }
+        public GWall GetGWallConst() {
+            return m_gWall;
+        }
 
-        // TODO
-        public GWall GetGWall() { return null; }
+        public GWall GetGWall() {
+            return m_gWall;
+        }
 
-        // TODO
-        public byte GetGrade() { return 0; }
+        public byte GetGrade() {
+            return m_grade;
+        }
 
-        // TODO
-        public byte GetReinforceTurn() { return 0; }
+        public byte GetReinforceTurn() {
+            return m_reinforceTurn;
+        }
 
-        // TODO
-        public void SetReinforceTurn(byte turn) { }
+        public void SetReinforceTurn(byte turn) {
+            this.m_reinforceTurn = turn;
+        }
 
         // TODO
         public void DecReinforceTurn() { }

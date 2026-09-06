@@ -9,23 +9,29 @@ namespace NexPlugin
 		internal uint samplingRate;
 		internal uint length;
 		
-		// TODO
-		public uint GetRank() { return default; }
+		public uint GetRank() {
+		    return rank;
+		}
 		
-		// TODO
-		public uint GetScore() { return default; }
+		public uint GetScore() {
+		    return score;
+		}
 		
-		// TODO
-		public uint GetCategory() { return default; }
+		public uint GetCategory() {
+		    return category;
+		}
 		
-		// TODO
-		public uint GetSeason() { return default; }
+		public uint GetSeason() {
+		    return season;
+		}
 		
-		// TODO
-		public uint GetSamplingRate() { return default; }
+		public uint GetSamplingRate() {
+		    return samplingRate;
+		}
 		
-		// TODO
-		public uint GetLength() { return default; }
+		public uint GetLength() {
+		    return length;
+		}
 		
 		// TODO
 		public void Trace() { }

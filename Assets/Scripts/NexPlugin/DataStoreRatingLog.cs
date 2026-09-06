@@ -12,14 +12,17 @@ namespace NexPlugin
 			isRated = false;
 		}
 		
-		// TODO
-		public bool IsRated() { return default; }
+		public bool IsRated() {
+		    return isRated;
+		}
 		
-		// TODO
-		public ulong GetPrincipalId() { return default; }
+		public ulong GetPrincipalId() {
+		    return pid;
+		}
 		
-		// TODO
-		public int GetRatingValue() { return default; }
+		public int GetRatingValue() {
+		    return ratingValue;
+		}
 		
 		// TODO
 		public NpDateTime GetLockExpirationTime() { return default; }

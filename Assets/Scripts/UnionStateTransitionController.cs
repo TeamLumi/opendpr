@@ -61,11 +61,13 @@ public class UnionStateTransitionController
 	// TODO
 	public void SetBattleMatchingManager(BattleMatchingManager manager) { }
 	
-	// TODO
-	public void SetTransitionState(OpcState.OnlineState onlineState) { }
+	public void SetTransitionState(OpcState.OnlineState onlineState) {
+	    this.transitionState = onlineState;
+	}
 	
-	// TODO
-	public void SetIsRecruiment(bool flag) { }
+	public void SetIsRecruiment(bool flag) {
+	    this.isRecruiment = flag;
+	}
 	
 	// TODO
 	public void SetStanbyWaitDataList(List<UnionMatchWaitData> unionMatchWaitDatas) { }
@@ -148,6 +150,7 @@ public class UnionStateTransitionController
 	// TODO
 	public void BallDecoForceClose() { }
 	
-	// TODO
-	public bool GetIsFade() { return default; }
+	public bool GetIsFade() {
+	    return isFade;
+	}
 }

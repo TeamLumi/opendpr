@@ -49,8 +49,9 @@ public abstract class OpcController : OnlinePlayerCharacter
 	// TODO
 	public void AddNextPosition(Vector2 pos, float rotY) { }
 	
-	// TODO
-	public void SetRotationY(float rotY) { }
+	public void SetRotationY(float rotY) {
+	    _RotY = rotY;
+	}
 	
 	// TODO
 	public void ClearPos() { }
@@ -73,8 +74,9 @@ public abstract class OpcController : OnlinePlayerCharacter
 	// TODO
 	public virtual void SetNetData(INetData netData) { }
 	
-	// TODO
-	public FieldObjectEntity GetEntity() { return default; }
+	public FieldObjectEntity GetEntity() {
+	    return _Entity;
+	}
 	
 	// TODO
 	protected override void OnDestroy() { }

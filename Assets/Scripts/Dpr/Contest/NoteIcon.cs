@@ -28,8 +28,9 @@ namespace Dpr.Contest
 		public float LifeTime { get => lifeTime; }
 		public float AbsLifeTime { get => lifeTime >= 0.0f ? lifeTime : -lifeTime; }
 		
-		// TODO
-		public bool IsActive() { return default; }
+		public bool IsActive() {
+		    return active;
+		}
 		
 		// TODO
 		public void Create(NotesDataModel noteData, float elapsedTime, float moveSpeed, float validTapTimeRange, float fadeDuration) { }
@@ -69,8 +70,9 @@ namespace Dpr.Contest
 		// TODO
 		public void OnTap() { }
 		
-		// TODO
-		public void SetTapEnabled(bool enabled) { }
+		public void SetTapEnabled(bool enabled) {
+		    this.canTap = enabled;
+		}
 		
 		// TODO
 		public void ChangeStateMiss() { }

@@ -8,8 +8,9 @@
         private bool m_bDisabledPutPosSequence;
         private byte[] m_prohibit = new byte[DefineConstants.BTL_PARTY_MEMBER_MAX];
 
-        // TODO
-        public BTL_PARTY GetParty() { return null; }
+        public BTL_PARTY GetParty() {
+            return m_party;
+        }
 
         // TODO
         public void Init(BTL_CLIENT_ID clientID, BTL_PARTY party, byte numSelect) { }
@@ -23,13 +24,15 @@
         // TODO
         public BTL_CLIENT_ID GetClientID() { return BTL_CLIENT_ID.BTL_CLIENT_PLAYER; }
 
-        // TODO
-        public byte GetNumSelect() { return 0; }
+        public byte GetNumSelect() {
+            return m_numSelect;
+        }
 
         // TODO
         public void DisablePutPosSequence() { }
 
-        // TODO
-        public bool IsDisabledPutPosSequence() { return false; }
+        public bool IsDisabledPutPosSequence() {
+            return m_bDisabledPutPosSequence;
+        }
     }
 }

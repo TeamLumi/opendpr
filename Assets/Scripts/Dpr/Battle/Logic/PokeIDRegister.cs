@@ -15,8 +15,9 @@ namespace Dpr.Battle.Logic
 			m_count = 0;
 		}
 		
-		// TODO
-		public byte GetCount() { return default; }
+		public byte GetCount() {
+		    return m_count;
+		}
 		
 		// TODO
 		public byte GetID(byte index) { return default; }

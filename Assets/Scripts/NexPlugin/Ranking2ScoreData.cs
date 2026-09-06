@@ -13,23 +13,29 @@ namespace NexPlugin
 			misc = 0;
 		}
 		
-		// TODO
-		public uint GetCategory() { return default; }
+		public uint GetCategory() {
+		    return category;
+		}
 		
-		// TODO
-		public void SetCategory(uint category_) { }
+		public void SetCategory(uint category_) {
+		    this.category = category_;
+		}
 		
-		// TODO
-		public uint GetScore() { return default; }
+		public uint GetScore() {
+		    return score;
+		}
 		
-		// TODO
-		public void SetScore(uint score_) { }
+		public void SetScore(uint score_) {
+		    this.score = score_;
+		}
 		
-		// TODO
-		public ulong GetMisc() { return default; }
+		public ulong GetMisc() {
+		    return misc;
+		}
 		
-		// TODO
-		public void SetMisc(ulong misc_) { }
+		public void SetMisc(ulong misc_) {
+		    this.misc = misc_;
+		}
 		
 		// TODO
 		public void Reset() { }

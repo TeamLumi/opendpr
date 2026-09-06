@@ -21,47 +21,61 @@ namespace NexPlugin
 			group1 = 0;
 		}
 		
-		// TODO
-		public uint GetCategory() { return default; }
+		public uint GetCategory() {
+		    return category;
+		}
 		
-		// TODO
-		public void SetCategory(uint category_) { }
+		public void SetCategory(uint category_) {
+		    this.category = category_;
+		}
 		
-		// TODO
-		public void SetScore(uint score_) { }
+		public void SetScore(uint score_) {
+		    this.score = score_;
+		}
 		
-		// TODO
-		public uint GetScore() { return default; }
+		public uint GetScore() {
+		    return score;
+		}
 		
-		// TODO
-		public void SetOrderBy(Ranking.OrderBy orderBy_) { }
+		public void SetOrderBy(Ranking.OrderBy orderBy_) {
+		    this.orderBy = orderBy_;
+		}
 		
-		// TODO
-		public Ranking.OrderBy GetOrderBy() { return default; }
+		public Ranking.OrderBy GetOrderBy() {
+		    return orderBy;
+		}
 		
-		// TODO
-		public void SetUpdateMode(Ranking.UpdateMode updateMode_) { }
+		public void SetUpdateMode(Ranking.UpdateMode updateMode_) {
+		    this.updateMode = updateMode_;
+		}
 		
-		// TODO
-		public Ranking.UpdateMode GetUpdateMode() { return default; }
+		public Ranking.UpdateMode GetUpdateMode() {
+		    return updateMode;
+		}
 		
-		// TODO
-		public void SetGroup0(byte group0_) { }
+		public void SetGroup0(byte group0_) {
+		    this.group0 = group0_;
+		}
 		
-		// TODO
-		public byte GetGroup0() { return default; }
+		public byte GetGroup0() {
+		    return group0;
+		}
 		
-		// TODO
-		public void SetGroup1(byte group1_) { }
+		public void SetGroup1(byte group1_) {
+		    this.group1 = group1_;
+		}
 		
-		// TODO
-		public byte GetGroup1() { return default; }
+		public byte GetGroup1() {
+		    return group1;
+		}
 		
-		// TODO
-		public void SetParam(ulong param_) { }
+		public void SetParam(ulong param_) {
+		    this.param = param_;
+		}
 		
-		// TODO
-		public ulong GetParam() { return default; }
+		public ulong GetParam() {
+		    return param;
+		}
 		
 		// TODO
 		public void Trace() { }

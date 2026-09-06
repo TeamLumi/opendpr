@@ -35,8 +35,9 @@ namespace INL1
         [EditorBrowsable(EditorBrowsableState.Never)]
         public void CopyTo(ref IlcaNetGamer dst) { }
 		
-		// TODO
-		public bool IsActive() { return default; }
+		public bool IsActive() {
+		    return isActive;
+		}
 
         // TODO
         [Browsable(false)]
@@ -48,8 +49,9 @@ namespace INL1
         [EditorBrowsable(EditorBrowsableState.Never)]
         public void ActiveOFF() { }
 		
-		// TODO
-		public bool IsHomeGamer() { return default; }
+		public bool IsHomeGamer() {
+		    return isHomeGamer;
+		}
 
         // TODO
         [Browsable(false)]
@@ -66,10 +68,11 @@ namespace INL1
         [EditorBrowsable(EditorBrowsableState.Never)]
         public void LocalIndexSet(int localindex, int portOffset = 0) { }
 
-        // TODO
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public void GlobalIndexSet(int globalindex) { }
+        public void GlobalIndexSet(int globalindex) {
+            this.myGlobalIndex = globalindex;
+        }
 		
 		// TODO
 		public override int Send(PacketWriter pw, IlcaNetPacketType type) { return default; }

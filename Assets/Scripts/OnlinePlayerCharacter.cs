@@ -62,17 +62,21 @@ public class OnlinePlayerCharacter : MonoBehaviour
 	// TODO
 	public OpcState.OnlineState GetOpcOnlineState() { return default; }
 	
-	// TODO
-	public void SetMenuOpen(bool isOpen) { }
+	public void SetMenuOpen(bool isOpen) {
+	    this.isMenuOpen = isOpen;
+	}
 	
-	// TODO
-	public bool GetIsMenuOpen() { return default; }
+	public bool GetIsMenuOpen() {
+	    return isMenuOpen;
+	}
 	
-	// TODO
-	public Balloon GetBallon() { return default; }
+	public Balloon GetBallon() {
+	    return balloon;
+	}
 	
-	// TODO
-	public Emoticon GetEmoticon() { return default; }
+	public Emoticon GetEmoticon() {
+	    return emoticon;
+	}
 	
 	// TODO
 	public void PlayerInputActiveEnabled() { }
@@ -83,11 +87,13 @@ public class OnlinePlayerCharacter : MonoBehaviour
 	// TODO
 	public void SetAnimationPlayer(AnimationPlayer animationPlayer) { }
 	
-	// TODO
-	public AnimationPlayer GetAnimationPlayer() { return default; }
+	public AnimationPlayer GetAnimationPlayer() {
+	    return _myAnimationPlayer;
+	}
 	
-	// TODO
-	public void SetIsTransutuonIdle(bool isTransitionIdle) { }
+	public void SetIsTransutuonIdle(bool isTransitionIdle) {
+	    this._IsTransitionIdle = isTransitionIdle;
+	}
 	
 	// TODO
 	private int GetEmoticonType(OpcState.OnlineState state) { return default; }

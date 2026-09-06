@@ -16,8 +16,9 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Clear() { }
 
-        // TODO
-        public byte GetCount() { return 0; }
+        public byte GetCount() {
+            return m_count;
+        }
 
         // TODO
         public byte GetIndex(PokeAction action) { return 0; }

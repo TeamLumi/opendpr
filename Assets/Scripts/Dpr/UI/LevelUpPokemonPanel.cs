@@ -68,8 +68,9 @@ namespace Dpr.UI
 		// TODO
 		public float CalcExpBarTweenDuration(uint addExp) { return default; }
 		
-		// TODO
-		public void SetExpBarTweenDuration(float duration) { }
+		public void SetExpBarTweenDuration(float duration) {
+		    this.expBarTweenDuration = duration;
+		}
 		
 		// TODO
 		public void HandledLevelUp() { }

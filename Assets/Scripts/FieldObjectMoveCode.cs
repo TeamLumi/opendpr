@@ -754,8 +754,9 @@ public class FieldObjectMoveCode
     // TODO
     private void FieldOBJ_DirDispCheckSet(int dir) { }
 
-    // TODO
-    private int FieldOBJ_DirMoveGet() { return 0; }
+    private int FieldOBJ_DirMoveGet() {
+        return mv_dir;
+    }
 
     // TODO
     private void FieldOBJ_DirMoveSet(int dir) { }
@@ -862,11 +863,13 @@ public class FieldObjectMoveCode
     // TODO
     private void SubMoveNon_Init() { }
 
-    // TODO
-    private bool SubMoveNon_StartCheck() { return false; }
+    private bool SubMoveNon_StartCheck() {
+        return false;
+    }
 
-    // TODO
-    private bool SubMoveNon_Move() { return false; }
+    private bool SubMoveNon_Move() {
+        return false;
+    }
 
     // TODO
     private void SubMoveKyoro_Init() { }

@@ -84,11 +84,9 @@ namespace Dpr.Contest
 		// TODO
 		private void AppendLoadBallModel(string path, Transform cluster) { }
 		
-		// TODO
-		public List<BtlvEffectInstance> SealEffects { get; }
+		public List<BtlvEffectInstance> SealEffects { get => iPtrSealEffects; }
 		
-		// TODO
-		public BtlvEffectInstance LightEffect { get; }
+		public BtlvEffectInstance LightEffect { get => iPtrLightEffect; }
 		
 		// TODO
 		private void CreateSealEffectInstance() { }

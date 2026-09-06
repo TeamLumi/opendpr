@@ -55,8 +55,9 @@ namespace Dpr.SealPreview
 		// TODO
 		public SealPreviewSetupParam GetSealPreviewSetupParam() { return default; }
 		
-		// TODO
-		public SequenceCameraObject GetSequenceCameraObject() { return default; }
+		public SequenceCameraObject GetSequenceCameraObject() {
+		    return sequenceCameraObject;
+		}
 
 		private enum CameraMode : int
 		{

@@ -16,20 +16,25 @@
         // TODO
         public void Initialize() { }
 
-        // TODO
-        public ActionSharedDataStack GetActionSharedDataStack() { return default; }
+        public ActionSharedDataStack GetActionSharedDataStack() {
+            return m_actionSharedDataStack;
+        }
 
-        // TODO
-        public InterruptAccessor GetInterruptAccessor() { return default; }
+        public InterruptAccessor GetInterruptAccessor() {
+            return m_interruptAccessor;
+        }
 
-        // TODO
-        public PartyAllDeadRecorder GetPartyAllDeadRecorder() { return default; }
+        public PartyAllDeadRecorder GetPartyAllDeadRecorder() {
+            return m_partyAllDeadRecorder;
+        }
 
-        // TODO
-        public PokemonBattleInRegister GetPokemonBattleInRegister() { return default; }
+        public PokemonBattleInRegister GetPokemonBattleInRegister() {
+            return m_pokemonBattleInRegister;
+        }
 
-        // TODO
-        public byte GetTurnCheckStep() { return 0; }
+        public byte GetTurnCheckStep() {
+            return m_turnCheckStep;
+        }
 
         // TODO
         public void IncTurnCheckStep() { }

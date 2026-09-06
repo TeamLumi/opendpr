@@ -82,8 +82,9 @@ namespace Dpr.Contest
 		// TODO
 		public void SetAudioListenerPositionUpdate(bool flag) { }
 		
-		// TODO
-		public BattleScreenObject GetScreenObject() { return default; }
+		public BattleScreenObject GetScreenObject() {
+		    return m_iPtrScreenObject;
+		}
 		
 		// TODO
 		private void SetupWazaParam(WazaNo waza) { }
@@ -124,20 +125,25 @@ namespace Dpr.Contest
 		// TODO
 		public MainModule GetMainModule() { return default; }
 		
-		// TODO
-		public Dictionary<int, HashSet<ObjectEntity>> GetModelHashTable() { return default; }
+		public Dictionary<int, HashSet<ObjectEntity>> GetModelHashTable() {
+		    return hashTabel;
+		}
 		
-		// TODO
-		public Dictionary<int, HashSet<BtlvEffectInstance>> GetParticleVectorHashTable() { return default; }
+		public Dictionary<int, HashSet<BtlvEffectInstance>> GetParticleVectorHashTable() {
+		    return m_uPtrParticleVectorHash;
+		}
 		
-		// TODO
-		public Stack<Tuple<int, uint, uint>> GetSoundPlayingIDHashTable() { return default; }
+		public Stack<Tuple<int, uint, uint>> GetSoundPlayingIDHashTable() {
+		    return m_uPtrSoundPlayingIDHash;
+		}
 		
-		// TODO
-		public TaskManager GetTaskManager() { return default; }
+		public TaskManager GetTaskManager() {
+		    return m_iPtrTaskManager;
+		}
 		
-		// TODO
-		public TaskManager GetTaskManagerLate() { return default; }
+		public TaskManager GetTaskManagerLate() {
+		    return m_iPtrTaskManagerLate;
+		}
 		
 		// TODO
 		public ushort GetTrainerType(byte clientID) { return default; }
@@ -163,8 +169,9 @@ namespace Dpr.Contest
 		// TODO
 		public string GetBttleWazaModelPath(string idx) { return default; }
 		
-		// TODO
-		public SequenceCameraSystem GetCameraSystem() { return default; }
+		public SequenceCameraSystem GetCameraSystem() {
+		    return cameraSystem;
+		}
 		
 		// TODO
 		public BattleCharacterSystem GetCharacterSystem() { return default; }
@@ -223,8 +230,9 @@ namespace Dpr.Contest
 		// TODO
 		public BattleViewCharacter SeqComFunc_GetTargetChara(SEQ_DEF_TRAINER_ADD trg, int idx = 0) { return default; }
 		
-		// TODO
-		public int SeqComFunc_GetTargetPokeNum(bool isCheck = true) { return default; }
+		public int SeqComFunc_GetTargetPokeNum(bool isCheck = true) {
+		    return 0;
+		}
 		
 		// TODO
 		public BtlvPos SeqComFunc_GetTargetPokeSub(SEQ_DEF_POS target) { return default; }
@@ -235,8 +243,9 @@ namespace Dpr.Contest
 		// TODO
 		public BtlvPos SeqComFunc_GetTargetPoke(SEQ_DEF_POS target, int index = 0) { return default; }
 		
-		// TODO
-		public bool SeqComFunc_IsFlipEffect(BtlvPos target, BtlvPos subTarget) { return default; }
+		public bool SeqComFunc_IsFlipEffect(BtlvPos target, BtlvPos subTarget) {
+		    return false;
+		}
 		
 		// TODO
 		public void SeqComFunc_MoveRelativePoke(ITranslationObject iPtrObj, int frame, RELARIVE_POKE_OPTION opt, bool isTrainer = false) { }
@@ -256,8 +265,9 @@ namespace Dpr.Contest
 		// TODO
 		public void SetSuspendSequenceFunc(SEQ_DEF_WAIT type) { }
 		
-		// TODO
-		public BattleSequenceSystem GetSequenceSystem() { return default; }
+		public BattleSequenceSystem GetSequenceSystem() {
+		    return m_iPtrSequenceSystem;
+		}
 		
 		// TODO
 		public void __ClearSetWords__() { }
@@ -287,8 +297,9 @@ namespace Dpr.Contest
 		
 		public bool CanOpenMsgWindow { get => canOpenMsgWindowFlag; }
 		
-		// TODO
-		public void SetCanOpenMsgWindowFlag(bool flag) { }
+		public void SetCanOpenMsgWindowFlag(bool flag) {
+		    this.canOpenMsgWindowFlag = flag;
+		}
 		
 		// TODO
 		public void SetTerrainChipVisibility(bool disp) { }

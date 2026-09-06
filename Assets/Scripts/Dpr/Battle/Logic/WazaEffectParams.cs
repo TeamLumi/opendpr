@@ -30,11 +30,13 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Setup(BTL_POKEPARAM attacker, PokeSet targets, in PosPoke posPoke) { }
 
-        // TODO
-        public void ChangeAttackerPos(BtlPokePos atkPos) { }
+        public void ChangeAttackerPos(BtlPokePos atkPos) {
+            this.attackerPos = atkPos;
+        }
 
-        // TODO
-        public void ChangeEffectWazaID(WazaNo waza) { }
+        public void ChangeEffectWazaID(WazaNo waza) {
+            this.effectWazaID = waza;
+        }
 
         // TODO
         public WazaNo GetEffectWazaID() { return WazaNo.NULL; }
@@ -45,14 +47,17 @@ namespace Dpr.Battle.Logic
         // TODO
         public void SetEnableDummy() { }
 
-        // TODO
-        public bool IsEnable() { return false; }
+        public bool IsEnable() {
+            return fEnable;
+        }
 
-        // TODO
-        public bool IsDone() { return false; }
+        public bool IsDone() {
+            return fDone;
+        }
 
-        // TODO
-        public void SetEffectIndex(byte index) { }
+        public void SetEffectIndex(byte index) {
+            this.effectIndex = index;
+        }
 
         // TODO
         public void AddSubEffectPoke(byte pokeID) { }
@@ -63,8 +68,9 @@ namespace Dpr.Battle.Logic
         // TODO
         public bool IsSubEffectParamsValid() { return false; }
 
-        // TODO
-        public bool IsGShockOccur() { return false; }
+        public bool IsGShockOccur() {
+            return isGShockOccur;
+        }
 
         // TODO
         public void SetGShockOccur() { }

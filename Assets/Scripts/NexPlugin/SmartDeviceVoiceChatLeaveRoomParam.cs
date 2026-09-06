@@ -9,11 +9,13 @@ namespace NexPlugin
 			roomId = 0;
 		}
 		
-		// TODO
-		public void SetRoomId(ulong roomId_) { }
+		public void SetRoomId(ulong roomId_) {
+		    this.roomId = roomId_;
+		}
 		
-		// TODO
-		public ulong GetRoomId() { return default; }
+		public ulong GetRoomId() {
+		    return roomId;
+		}
 		
 		// TODO
 		public void Reset() { }

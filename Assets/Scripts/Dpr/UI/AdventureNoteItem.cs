@@ -35,11 +35,13 @@ namespace Dpr.UI
 		// TODO
 		public virtual void SetActive(bool isActive) { }
 		
-		// TODO
-		public virtual int GetIndex() { return default; }
+		public virtual int GetIndex() {
+		    return _index;
+		}
 		
-		// TODO
-		public virtual void SetIndex(int index) { }
+		public virtual void SetIndex(int index) {
+		    this._index = index;
+		}
 		
 		// TODO
 		public virtual RectTransform GetRectTransform() { return default; }

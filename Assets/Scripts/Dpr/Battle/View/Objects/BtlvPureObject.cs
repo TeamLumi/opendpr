@@ -65,8 +65,9 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		public Vector3 GetRotationVecOffset() { return default; }
 		
-		// TODO
-		public virtual bool IsActive() { return default; }
+		public virtual bool IsActive() {
+		    return false;
+		}
 		
 		// TODO
 		public virtual void OnUpdatePreJob(float deltaTime) { }

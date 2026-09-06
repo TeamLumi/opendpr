@@ -18,20 +18,25 @@ namespace NexPlugin
 			message = "";
 		}
 		
-		// TODO
-		public ulong GetContentId() { return default; }
+		public ulong GetContentId() {
+		    return contentId;
+		}
 		
-		// TODO
-		public string GetMessage() { return default; }
+		public string GetMessage() {
+		    return message;
+		}
 		
-		// TODO
-		public List<byte> GetBinary() { return default; }
+		public List<byte> GetBinary() {
+		    return binary;
+		}
 		
-		// TODO
-		public ulong GetPosterPrincipalId() { return default; }
+		public ulong GetPosterPrincipalId() {
+		    return pid;
+		}
 		
-		// TODO
-		public List<uint> GetTopic() { return default; }
+		public List<uint> GetTopic() {
+		    return topics;
+		}
 		
 		// TODO
 		public uint GetTopicSingle() { return default; }

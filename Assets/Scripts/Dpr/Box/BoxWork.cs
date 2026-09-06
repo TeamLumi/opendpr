@@ -100,8 +100,9 @@
         // TODO
         public static int GetOpenTrayMax() { return 0; }
 
-        // TODO
-        public static int GetTrayMax() { return 0; }
+        public static int GetTrayMax() {
+            return 0x28;
+        }
 
         // TODO
         public static void SetCurrentTray(int tray) { }

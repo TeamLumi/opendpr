@@ -13,8 +13,9 @@ public class UgEncountProc
 	// TODO
 	private static MonsSize[] LotSize(UgRandMark.Sheettable tbl, int lotcount) { return default; }
 	
-	// TODO
-	private static int LotMonster(UgRandMark.Sheettable tbl, MonsSize size, PokeType type) { return default; }
+	private static int LotMonster(UgRandMark.Sheettable tbl, MonsSize size, PokeType type) {
+	    return -1;
+	}
 
 	public enum ResultCode : int
 	{

@@ -11,17 +11,21 @@ namespace NexPlugin
 			size = uiSize;
 		}
 		
-		// TODO
-		public void SetOffset(uint uiOffset = 0) { }
+		public void SetOffset(uint uiOffset = 0) {
+		    this.offset = uiOffset;
+		}
 		
-		// TODO
-		public uint GetOffset() { return default; }
+		public uint GetOffset() {
+		    return offset;
+		}
 		
-		// TODO
-		public void SetSize(uint uiSize = 20) { }
+		public void SetSize(uint uiSize = 20) {
+		    this.size = uiSize;
+		}
 		
-		// TODO
-		public uint GetSize() { return default; }
+		public uint GetSize() {
+		    return size;
+		}
 		
 		// TODO
 		public static ResultRange operator ++(ResultRange r) { return default; }

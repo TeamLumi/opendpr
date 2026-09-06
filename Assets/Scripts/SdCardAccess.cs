@@ -1,20 +1,25 @@
 public class SdCardAccess
 {
-	// TODO
-	public bool FileExistsNoMount(string mountName, string filePath) { return default; }
+	public bool FileExistsNoMount(string mountName, string filePath) {
+	    return false;
+	}
 	
-	// TODO
-	public bool FileExists(string mountName, string fileName) { return default; }
+	public bool FileExists(string mountName, string fileName) {
+	    return false;
+	}
 	
-	// TODO
-	public bool Mount(string mountName) { return default; }
+	public bool Mount(string mountName) {
+	    return false;
+	}
 	
 	// TODO
 	public void Unmount(string mountName) { }
 	
-	// TODO
-	public bool DirectoryExists(string dirPath) { return default; }
+	public bool DirectoryExists(string dirPath) {
+	    return false;
+	}
 	
-	// TODO
-	public bool LoadFile(ref byte[] buffer, string mountName, string path) { return default; }
+	public bool LoadFile(ref byte[] buffer, string mountName, string path) {
+	    return false;
+	}
 }

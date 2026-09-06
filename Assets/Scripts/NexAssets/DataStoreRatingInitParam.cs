@@ -25,8 +25,9 @@ namespace NexAssets
 		[SerializeField]
 		private DataStoreRatingLockInitParam dataStoreRatingLockInitParam = new DataStoreRatingLockInitParam();
 		
-		// TODO
-		public sbyte GetSlot() { return default; }
+		public sbyte GetSlot() {
+		    return slot;
+		}
 		
 		// TODO
 		public DataStoreRatingInitParam GetDataStoreRatingInitParam() { return default; }

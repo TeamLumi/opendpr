@@ -69,8 +69,9 @@ namespace INL1
         [Conditional("INL1_DEBUG")]
         public static void SuspendOFF() { }
 		
-		// TODO
-		public static bool IsGo() { return default; }
+		public static bool IsGo() {
+		    return false;
+		}
 
         // TODO
         [Conditional("INL1_DEBUG")]

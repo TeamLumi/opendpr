@@ -15,11 +15,13 @@ public class OpcCharacterMove
 	// TODO
 	public void SetAnimationPlayer(AnimationPlayer animationPlayer) { }
 	
-	// TODO
-	public void SetSpeed(float speed) { }
+	public void SetSpeed(float speed) {
+	    _Speed = speed;
+	}
 	
-	// TODO
-	public void SetRotationSpeed(float speed) { }
+	public void SetRotationSpeed(float speed) {
+	    _RotSpeed = speed;
+	}
 	
 	// TODO
 	public void Move(float deltaTime, Vector2 pos) { }

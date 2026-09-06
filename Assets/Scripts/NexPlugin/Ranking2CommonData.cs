@@ -13,14 +13,16 @@ namespace NexPlugin
 			binaryData = new List<byte>();
 		}
 		
-		// TODO
-		public string GetUserName() { return default; }
+		public string GetUserName() {
+		    return userName;
+		}
 		
 		// TODO
 		public void SetUserName(string userName_) { }
 		
-		// TODO
-		public List<byte> GetBinaryData() { return default; }
+		public List<byte> GetBinaryData() {
+		    return binaryData;
+		}
 		
 		// TODO
 		public void SetBinaryData(List<byte> binaryData_) { }

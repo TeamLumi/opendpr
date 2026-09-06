@@ -11,8 +11,7 @@ public class PokemonSpecialVisibility : MonoBehaviour
 	// TODO
 	public void SetDispNo(int no) { }
 	
-	// TODO
-	public int DispNo { get; }
+	public int DispNo { get => dispNo; }
 	
 	// TODO
 	public int DispNoNum { get; }
