@@ -95,8 +95,9 @@ namespace Dpr.Contest
 		
 		public MultiContestStepID CurrentStepID { get => currentStepID; }
 		
-		// TODO
-		public void SetStepID(MultiContestStepID stepID) { }
+		public void SetStepID(MultiContestStepID stepID) {
+		    this.currentStepID = stepID;
+		}
 		
 		// TODO
 		public bool GetMyMainFlag() { return default; }

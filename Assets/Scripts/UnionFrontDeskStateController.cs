@@ -66,11 +66,13 @@ public class UnionFrontDeskStateController : SingletonMonoBehaviour<UnionFrontDe
 	// TODO
 	public void TalkEnd() { }
 	
-	// TODO
-	public void SetIsTalkEnd(bool isEnd) { }
+	public void SetIsTalkEnd(bool isEnd) {
+	    this.isTalkEnd = isEnd;
+	}
 	
-	// TODO
-	public bool GetIsTalkEnd() { return default; }
+	public bool GetIsTalkEnd() {
+	    return isTalkEnd;
+	}
 	
 	// TODO
 	private void TalkMessageRequirements() { }

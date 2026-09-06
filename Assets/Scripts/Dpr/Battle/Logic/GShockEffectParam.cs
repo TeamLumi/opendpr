@@ -107,20 +107,25 @@ namespace Dpr.Battle.Logic
 		// TODO
 		public bool IsNeedSummarize() { return default; }
 		
-		// TODO
-		public ActionDesc GetActionDesc() { return default; }
+		public ActionDesc GetActionDesc() {
+		    return m_pActionDesc;
+		}
 		
-		// TODO
-		public WazaParam GetWazaParam() { return default; }
+		public WazaParam GetWazaParam() {
+		    return m_pWazaParam;
+		}
 		
-		// TODO
-		public BTL_POKEPARAM GetAttacker() { return default; }
+		public BTL_POKEPARAM GetAttacker() {
+		    return m_pAttaker;
+		}
 		
-		// TODO
-		public BTL_POKEPARAM GetDefender() { return default; }
+		public BTL_POKEPARAM GetDefender() {
+		    return m_pDefender;
+		}
 		
-		// TODO
-		public GShock.Effect GetGShockEffect() { return default; }
+		public GShock.Effect GetGShockEffect() {
+		    return m_gShockEffect;
+		}
 		
 		// TODO
 		public ushort GetEffectNo(BtlPokePos pos) { return default; }

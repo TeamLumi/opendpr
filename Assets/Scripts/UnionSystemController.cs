@@ -25,23 +25,28 @@ public class UnionSystemController
 
     private byte PenaltyState;
 	
-	// TODO
-	public void SetOnlinePlayerSelectState(OpcState.OnlineState state) { }
+	public void SetOnlinePlayerSelectState(OpcState.OnlineState state) {
+	    this.onlinePlayerSelectState = state;
+	}
 	
-	// TODO
-	public OpcState.OnlineState GetOnlinePlayerSelectState() { return default; }
+	public OpcState.OnlineState GetOnlinePlayerSelectState() {
+	    return onlinePlayerSelectState;
+	}
 	
-	// TODO
-	public void SetFadeAfterSelectState(OpcState.OnlineState state) { }
+	public void SetFadeAfterSelectState(OpcState.OnlineState state) {
+	    this.fadeAfterSelectState = state;
+	}
 	
-	// TODO
-	public OpcState.OnlineState GetFadeAfterSelectState() { return default; }
+	public OpcState.OnlineState GetFadeAfterSelectState() {
+	    return fadeAfterSelectState;
+	}
 	
 	// TODO
 	public void SetTargetStationIndex(int index, int cassetVersion = -1, bool isTalkEnd = true) { }
 	
-	// TODO
-	public int GetTargetStationIndex() { return default; }
+	public int GetTargetStationIndex() {
+	    return targetStationIndex;
+	}
 	
 	public UnionSystemController()
 	{

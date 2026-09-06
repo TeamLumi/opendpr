@@ -9,23 +9,29 @@ namespace NexPlugin
 		internal string stringParam;
 		internal ulong pid;
 		
-		// TODO
-		public ulong GetSource() { return default; }
+		public ulong GetSource() {
+		    return pid;
+		}
 		
-		// TODO
-		public Common.NotificationEvents GetType() { return default; }
+		public Common.NotificationEvents GetType() {
+		    return type;
+		}
 		
-		// TODO
-		public uint GetSubType() { return default; }
+		public uint GetSubType() {
+		    return subType;
+		}
 		
-		// TODO
-		public ulong GetParam1() { return default; }
+		public ulong GetParam1() {
+		    return param1;
+		}
 		
-		// TODO
-		public ulong GetParam2() { return default; }
+		public ulong GetParam2() {
+		    return param2;
+		}
 		
-		// TODO
-		public string GetStringParam() { return default; }
+		public string GetStringParam() {
+		    return stringParam;
+		}
 		
 		// TODO
 		public void Trace() { }

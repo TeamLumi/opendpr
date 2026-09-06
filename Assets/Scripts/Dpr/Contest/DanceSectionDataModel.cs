@@ -72,8 +72,9 @@ namespace Dpr.Contest
 		// TODO
 		private void CreateComboBonusData(ContestConfigDatas.SheetComboBonusData[] bonusDataArray) { }
 		
-		// TODO
-		public PlayerDanceDataModel GetUserDanceData() { return default; }
+		public PlayerDanceDataModel GetUserDanceData() {
+		    return userDataModel;
+		}
 		
 		// TODO
 		public PlayerDanceDataModel GetPlayerDanceDataByIndex(int index) { return default; }

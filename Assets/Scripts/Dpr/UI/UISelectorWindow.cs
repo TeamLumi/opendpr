@@ -51,8 +51,9 @@ namespace Dpr.UI
 		// TODO
 		private void ResetIndex() { }
 		
-		// TODO
-		public void SetWindowActive(bool active) { }
+		public void SetWindowActive(bool active) {
+		    this.bActive = active;
+		}
 		
 		// TODO
 		public void OpenSelectWindow(string[] contestNameArray, string[] rankNameArray, Action<WindowItemID> onEvent) { }

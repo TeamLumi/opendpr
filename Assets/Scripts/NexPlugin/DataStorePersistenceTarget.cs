@@ -11,17 +11,21 @@ namespace NexPlugin
 			this.persistenceSlotId = persistenceSlotId;
 		}
 		
-		// TODO
-		public void SetOwnerId(ulong ownerId_) { }
+		public void SetOwnerId(ulong ownerId_) {
+		    this.ownerId = ownerId_;
+		}
 		
-		// TODO
-		public ulong GetOwnerId() { return default; }
+		public ulong GetOwnerId() {
+		    return ownerId;
+		}
 		
-		// TODO
-		public void SetPersistenceSlotId(ushort persistenceSlotId_) { }
+		public void SetPersistenceSlotId(ushort persistenceSlotId_) {
+		    this.persistenceSlotId = persistenceSlotId_;
+		}
 		
-		// TODO
-		public ushort GetPersistenceSlotId() { return default; }
+		public ushort GetPersistenceSlotId() {
+		    return persistenceSlotId;
+		}
 		
 		// TODO
 		public void Reset() { }

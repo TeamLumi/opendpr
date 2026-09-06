@@ -56,8 +56,9 @@ public class UnionBaseMsgWindow
 	// TODO
 	public MsgWindowParam GetNowMessage() { return default; }
 	
-	// TODO
-	public int GetNowMessageNo() { return default; }
+	public int GetNowMessageNo() {
+	    return nowMessageNo;
+	}
 	
 	// TODO
 	public void SetOnCloseCallBack(Action closeEndFunc) { }

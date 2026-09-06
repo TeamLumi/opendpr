@@ -30,11 +30,13 @@ namespace Dpr.UI
 		public bool IsNull { get => item == null; }
 		public bool IsNew { get => item.bIsNew; }
 		
-		// TODO
-		public int GetIndex() { return default; }
+		public int GetIndex() {
+		    return index;
+		}
 		
-		// TODO
-		public void SetIndex(int index) { }
+		public void SetIndex(int index) {
+		    this.index = index;
+		}
 		
 		// TODO
 		public RectTransform GetRectTransform() { return default; }
@@ -57,8 +59,9 @@ namespace Dpr.UI
 		// TODO
 		public void SetInfo(ItemInfo item) { }
 		
-		// TODO
-		public ItemInfo GetInfo() { return default; }
+		public ItemInfo GetInfo() {
+		    return item;
+		}
 		
 		// TODO
 		public void SwitchFavorite() { }

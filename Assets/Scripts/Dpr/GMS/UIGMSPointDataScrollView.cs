@@ -52,8 +52,9 @@ namespace Dpr.GMS
 		// TODO
 		public AUIGMSScrollItem GetScrollItemByIndex(int index) { return default; }
 		
-		// TODO
-		public void SetInputEnabled(bool enabled) { }
+		public void SetInputEnabled(bool enabled) {
+		    this.bInputEnabled = enabled;
+		}
 		
 		// TODO
 		public void Show(string title = "") { }

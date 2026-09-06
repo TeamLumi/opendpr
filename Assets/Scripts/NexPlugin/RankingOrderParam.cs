@@ -19,41 +19,53 @@ namespace NexPlugin
 			length = 10;
 		}
 		
-		// TODO
-		public void SetOrderCalculation(Ranking.OrderCalculation orderCalculation_) { }
+		public void SetOrderCalculation(Ranking.OrderCalculation orderCalculation_) {
+		    this.orderCalculation = orderCalculation_;
+		}
 		
-		// TODO
-		public Ranking.OrderCalculation GetOrderCalculation() { return default; }
+		public Ranking.OrderCalculation GetOrderCalculation() {
+		    return orderCalculation;
+		}
 		
-		// TODO
-		public void SetFilterGroupIndex(Ranking.FilterGroupIndex groupIndex_) { }
+		public void SetFilterGroupIndex(Ranking.FilterGroupIndex groupIndex_) {
+		    this.groupIndex = groupIndex_;
+		}
 		
-		// TODO
-		public Ranking.FilterGroupIndex GetFilterGroupIndex() { return default; }
+		public Ranking.FilterGroupIndex GetFilterGroupIndex() {
+		    return groupIndex;
+		}
 		
-		// TODO
-		public void SetFilterGroupNum(byte groupNum_) { }
+		public void SetFilterGroupNum(byte groupNum_) {
+		    this.groupNum = groupNum_;
+		}
 		
-		// TODO
-		public byte GetFilterGroupNum() { return default; }
+		public byte GetFilterGroupNum() {
+		    return groupNum;
+		}
 		
-		// TODO
-		public void SetTimeScope(Ranking.TimeScope timeScope_) { }
+		public void SetTimeScope(Ranking.TimeScope timeScope_) {
+		    this.timeScope = timeScope_;
+		}
 		
-		// TODO
-		public Ranking.TimeScope GetTimeScope() { return default; }
+		public Ranking.TimeScope GetTimeScope() {
+		    return timeScope;
+		}
 		
-		// TODO
-		public void SetOffset(uint offset_) { }
+		public void SetOffset(uint offset_) {
+		    this.offset = offset_;
+		}
 		
-		// TODO
-		public uint GetOffset() { return default; }
+		public uint GetOffset() {
+		    return offset;
+		}
 		
-		// TODO
-		public void SetLength(byte length_) { }
+		public void SetLength(byte length_) {
+		    this.length = length_;
+		}
 		
-		// TODO
-		public byte GetLength() { return default; }
+		public byte GetLength() {
+		    return length;
+		}
 		
 		// TODO
 		public void Trace() { }

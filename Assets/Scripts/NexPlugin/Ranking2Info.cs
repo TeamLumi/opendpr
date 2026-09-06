@@ -14,17 +14,21 @@ namespace NexPlugin
 			rankDataList = new List<Ranking2RankData>();
 		}
 		
-		// TODO
-		public List<Ranking2RankData> GetRankDataList() { return default; }
+		public List<Ranking2RankData> GetRankDataList() {
+		    return rankDataList;
+		}
 		
-		// TODO
-		public uint GetLowestRank() { return default; }
+		public uint GetLowestRank() {
+		    return lowestRank;
+		}
 		
-		// TODO
-		public uint GetNumRankedIn() { return default; }
+		public uint GetNumRankedIn() {
+		    return numRankedIn;
+		}
 		
-		// TODO
-		public int GetSeason() { return default; }
+		public int GetSeason() {
+		    return season;
+		}
 		
 		// TODO
 		public void Trace() { }

@@ -21,11 +21,13 @@ namespace Dpr.UI
 		
 		public bool IsSelected { get; private set; }
 		
-		// TODO
-		public int GetIndex() { return default; }
+		public int GetIndex() {
+		    return index;
+		}
 		
-		// TODO
-		public void SetIndex(int index) { }
+		public void SetIndex(int index) {
+		    this.index = index;
+		}
 		
 		// TODO
 		public RectTransform GetRectTransform() { return default; }

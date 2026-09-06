@@ -79,8 +79,9 @@ namespace Dpr.Contest
 		// TODO
 		public int GetValueData(int dataID) { return default; }
 		
-		// TODO
-		public ContestConfigDatas GetConfigData() { return default; }
+		public ContestConfigDatas GetConfigData() {
+		    return contestConfigDatas;
+		}
 		
 		// TODO
 		public Vector3 CreateInitMainCameraDofTargetPos() { return default; }
@@ -94,11 +95,13 @@ namespace Dpr.Contest
 		// TODO
 		public string GetSequenceFilePath() { return default; }
 		
-		// TODO
-		public DanceSectionData GetDanceSectionData() { return default; }
+		public DanceSectionData GetDanceSectionData() {
+		    return danceSectionData;
+		}
 		
-		// TODO
-		public uint GetMainBgmEventID() { return default; }
+		public uint GetMainBgmEventID() {
+		    return mainBgmEventID;
+		}
 		
 		// TODO
 		public string GetStagePath() { return default; }
@@ -148,8 +151,9 @@ namespace Dpr.Contest
 		// TODO
 		public PokeType GetPlayerPokeType2() { return default; }
 		
-		// TODO
-		public uint GetUserRank() { return default; }
+		public uint GetUserRank() {
+		    return userContestRank;
+		}
 		
 		// TODO
 		public AContestPlayerData[] CreateContestEntryPlayerDataArray() { return default; }

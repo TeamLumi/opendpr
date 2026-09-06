@@ -14,8 +14,9 @@ namespace Dpr.UI
 		// TODO
 		public void ChangeCategoryNext() { }
 		
-		// TODO
-		public Category GetCurrentCategory() { return default; }
+		public Category GetCurrentCategory() {
+		    return nowCategory;
+		}
 		
 		// TODO
 		private void ChangeCategory(Category category) { }

@@ -41,7 +41,8 @@ namespace Dpr.UI
         // TODO
         public virtual void Select(bool enabled) { }
 
-        // TODO
-        public virtual bool OnUpdate(float deltaTime) { return default; }
+        public virtual bool OnUpdate(float deltaTime) {
+            return false;
+        }
     }
 }

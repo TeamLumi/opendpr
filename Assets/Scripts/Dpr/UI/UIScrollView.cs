@@ -62,8 +62,9 @@ namespace Dpr.UI
         // TODO
         public void Setup(int itemCount, int selectIndex = 0, float scrollPos = 0.0f, bool isForceScroll = false) { }
 
-        // TODO
-        public void SetActive(bool isActive) { }
+        public void SetActive(bool isActive) {
+            this.isActive = isActive;
+        }
 
         // TODO
         public float GetScrollPosition() { return 0.0f; }

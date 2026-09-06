@@ -27,59 +27,72 @@ namespace NexPlugin
 		// TODO
 		public void Set(DataStore.ComparisonFlag comparisonFlag_, DataStoreMetaInfo metaInfo_) { }
 		
-		// TODO
-		public void SetComparisonFlag(DataStore.ComparisonFlag comparisonFlag_) { }
+		public void SetComparisonFlag(DataStore.ComparisonFlag comparisonFlag_) {
+		    this.comparisonFlag = comparisonFlag_;
+		}
 		
-		// TODO
-		public DataStore.ComparisonFlag GetComparisonFlag() { return default; }
+		public DataStore.ComparisonFlag GetComparisonFlag() {
+		    return comparisonFlag;
+		}
 		
 		// TODO
 		public void SetName(string name_) { }
 		
-		// TODO
-		public string GetName() { return default; }
+		public string GetName() {
+		    return name;
+		}
 		
 		// TODO
 		public void SetAccessPermission(DataStorePermission permission_) { }
 		
-		// TODO
-		public DataStorePermission GetAccessPermission() { return default; }
+		public DataStorePermission GetAccessPermission() {
+		    return accessPermission;
+		}
 		
 		// TODO
 		public void SetUpdatePermission(DataStorePermission updatePermission_) { }
 		
-		// TODO
-		public DataStorePermission GetUpdatePermission() { return default; }
+		public DataStorePermission GetUpdatePermission() {
+		    return updatePermission;
+		}
 		
-		// TODO
-		public void SetPeriod(ushort period_) { }
+		public void SetPeriod(ushort period_) {
+		    this.period = period_;
+		}
 		
-		// TODO
-		public ushort GetPeriod() { return default; }
+		public ushort GetPeriod() {
+		    return period;
+		}
 		
 		// TODO
 		public void SetTags(List<string> tags_) { }
 		
-		// TODO
-		public List<string> GetTags() { return default; }
+		public List<string> GetTags() {
+		    return tags;
+		}
 		
 		// TODO
 		public void SetMetaBinary(List<byte> meta) { }
 		
-		// TODO
-		public List<byte> GetMetaBinary() { return default; }
+		public List<byte> GetMetaBinary() {
+		    return metaBinary;
+		}
 		
-		// TODO
-		public void SetDataType(ushort dataType_) { }
+		public void SetDataType(ushort dataType_) {
+		    this.dataType = dataType_;
+		}
 		
-		// TODO
-		public ushort GetDataType() { return default; }
+		public ushort GetDataType() {
+		    return dataType;
+		}
 		
-		// TODO
-		public void SetDataStatus(DataStore.DataStatus status_) { }
+		public void SetDataStatus(DataStore.DataStatus status_) {
+		    this.status = status_;
+		}
 		
-		// TODO
-		public DataStore.DataStatus GetDataStatus() { return default; }
+		public DataStore.DataStatus GetDataStatus() {
+		    return status;
+		}
 		
 		// TODO
 		private void Reset() { }

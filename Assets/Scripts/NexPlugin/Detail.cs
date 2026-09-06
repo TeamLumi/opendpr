@@ -2112,11 +2112,13 @@ namespace NexPlugin
 			// TODO
 			public static bool FreeHGlobal(IntPtr p, bool output = true) { return default; }
 			
-			// TODO
-			public static int GetAllocedCount() { return default; }
+			public static int GetAllocedCount() {
+			    return 0;
+			}
 			
-			// TODO
-			public static int GetUsedAllocsize() { return default; }
+			public static int GetUsedAllocsize() {
+			    return 0;
+			}
 		}
 
 		public static class Utility

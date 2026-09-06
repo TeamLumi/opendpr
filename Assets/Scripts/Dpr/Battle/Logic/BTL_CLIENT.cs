@@ -401,11 +401,13 @@ namespace Dpr.Battle.Logic
         // TODO
         public void DetachCmdCheckServer() { }
 
-        // TODO
-        public Adapter GetAdapter() { return null; }
+        public Adapter GetAdapter() {
+            return m_adapter;
+        }
 
-        // TODO
-        public GameTimer GetGameTimer() { return null; }
+        public GameTimer GetGameTimer() {
+            return m_gameTimer;
+        }
 
         // TODO
         public uint GetSyncClientTime(BTL_CLIENT_ID clientID) { return 0; }
@@ -525,8 +527,9 @@ namespace Dpr.Battle.Logic
         // TODO
         private bool setupSelectStartStr(BTL_POKEPARAM procPoke, BTLV_STRPARAM strParam) { return false; }
 
-        // TODO
-        private bool checkFriendshipSpecialMessage(BTL_POKEPARAM procPoke, BTLV_STRPARAM strParam) { return false; }
+        private bool checkFriendshipSpecialMessage(BTL_POKEPARAM procPoke, BTLV_STRPARAM strParam) {
+            return false;
+        }
 
         private void selActSubProc_Set(ClientSubProc proc)
         {
@@ -546,8 +549,9 @@ namespace Dpr.Battle.Logic
         // TODO
         private bool needDisplayTipsForG() { return false; }
 
-        // TODO
-        private bool isRandomWaitCameraEnable() { return false; }
+        private bool isRandomWaitCameraEnable() {
+            return true;
+        }
 
         // TODO
         private bool DecideTrainerMessage_OnSelectAction(ref sbyte clientID, ref TrainerMessageID messageID) { return false; }
@@ -1176,8 +1180,9 @@ namespace Dpr.Battle.Logic
         // TODO
         private bool isRaidBossGWazaUseTurn(BTL_POKEPARAM boss) { return false; }
 
-        // TODO
-        private bool canRaidBossUseGWazaIfNotG(BTL_POKEPARAM boss) { return false; }
+        private bool canRaidBossUseGWazaIfNotG(BTL_POKEPARAM boss) {
+            return false;
+        }
 
         // TODO
         public byte countPuttablePokemons(byte[] list) { return 0; }
@@ -1356,8 +1361,9 @@ namespace Dpr.Battle.Logic
         // TODO
         private bool SubProc_UI_ServerCmd(ref int seq) { return false; }
 
-        // TODO
-        private bool SubProc_AI_ServerCmd(ref int seq) { return false; }
+        private bool SubProc_AI_ServerCmd(ref int seq) {
+            return true;
+        }
 
         // TODO
         private void storeWazaEffectSyncDamageParams(WAZAEFF_SYNCDAMAGE_CMD_WORK work, ServerCommand[] pTargetCmdList) { }
@@ -1720,8 +1726,9 @@ namespace Dpr.Battle.Logic
         // TODO
         private bool scProc_RemoveRaidBossHandler(ref int seq, int[] args) { return false; }
 
-        // TODO
-        public bool PrintCallback(PrintCallbackArg arg) { return false; }
+        public bool PrintCallback(PrintCallbackArg arg) {
+            return true;
+        }
 
         // TODO
         private bool scProc_ACT_BallThrow(ref int seq, int[] args) { return false; }
@@ -2014,8 +2021,9 @@ namespace Dpr.Battle.Logic
         // TODO
         private int GetVariableArgs(byte idx) { return 0; }
 
-        // TODO
-        public byte GetClientID() { return 0; }
+        public byte GetClientID() {
+            return m_wazaInfoPokeIdx;
+        }
 
         // TODO
         public BTL_PARTY GetParty() { return null; }
@@ -2128,8 +2136,9 @@ namespace Dpr.Battle.Logic
             // TODO
             public void Setup(int[] cmd_args) { }
 
-            // TODO
-            public byte GetCount() { return 0; }
+            public byte GetCount() {
+                return m_cnt;
+            }
 
             // TODO
             public int GetArg(byte idx) { return 0; }

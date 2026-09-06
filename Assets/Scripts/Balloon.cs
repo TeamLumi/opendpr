@@ -78,8 +78,9 @@ public class Balloon
     // TODO
     public void StopHostEmoAnimation() { }
 
-    // TODO
-    public void SetSpriteIndexMaxCount(int count) { }
+    public void SetSpriteIndexMaxCount(int count) {
+        spriteIndexMaxCount = count;
+    }
 
     // TODO
     public void AddSpriteIndex() { }

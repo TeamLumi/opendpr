@@ -398,8 +398,9 @@ namespace Dpr.SubContents
         // TODO
         public static string CheckNGTrainerName(ref string trainerName, MessageEnumData.MsgLangId langId, int cassetVersion) { return ""; }
 
-        // TODO
-        private static int GetPersonNameLength() { return 0; }
+        private static int GetPersonNameLength() {
+            return 6;
+        }
 
         // TODO
         public static string CheckNGPokeName(ref string nickname, MonsNo monsNo, MessageEnumData.MsgLangId langId) { return ""; }
@@ -407,8 +408,9 @@ namespace Dpr.SubContents
         // TODO
         public static string CheckNGPokeName(PokemonParam param) { return ""; }
 
-        // TODO
-        private static int GetMonsNameLength() { return 0; }
+        private static int GetMonsNameLength() {
+            return 6;
+        }
 
         // TODO
         public static string CheckNGGroupName(ref string groupName, MessageEnumData.MsgLangId langId, int cassetVersion) { return ""; }

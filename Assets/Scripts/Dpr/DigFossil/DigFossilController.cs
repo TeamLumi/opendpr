@@ -181,8 +181,9 @@ namespace Dpr.DigFossil
 		// TODO
 		private IEnumerator ResultDirection() { return default; }
 		
-		// TODO
-		private void SetState(GameState newState) { }
+		private void SetState(GameState newState) {
+		    this.gameState = newState;
+		}
 		
 		// TODO
 		private void SetUIAndCamera(DigCameraManager.CameraSet set) { }

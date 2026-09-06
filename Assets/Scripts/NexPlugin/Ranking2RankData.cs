@@ -14,23 +14,29 @@ namespace NexPlugin
 			commonData = new Ranking2CommonData();
 		}
 		
-		// TODO
-		public uint GetRank() { return default; }
+		public uint GetRank() {
+		    return rank;
+		}
 		
-		// TODO
-		public uint GetScore() { return default; }
+		public uint GetScore() {
+		    return score;
+		}
 		
-		// TODO
-		public ulong GetPrincipalId() { return default; }
+		public ulong GetPrincipalId() {
+		    return principalId;
+		}
 		
-		// TODO
-		public ulong GetNexUniqueId() { return default; }
+		public ulong GetNexUniqueId() {
+		    return nexUniqueId;
+		}
 		
-		// TODO
-		public Ranking2CommonData GetCommonData() { return default; }
+		public Ranking2CommonData GetCommonData() {
+		    return commonData;
+		}
 		
-		// TODO
-		public ulong GetMisc() { return default; }
+		public ulong GetMisc() {
+		    return misc;
+		}
 		
 		// TODO
 		public void Trace() { }

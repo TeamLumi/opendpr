@@ -12,11 +12,13 @@ namespace NexPlugin
 			Reset();
 		}
 		
-		// TODO
-		public void SetKey(byte key_) { }
+		public void SetKey(byte key_) {
+		    this.key = key_;
+		}
 		
-		// TODO
-		public byte GetKey() { return default; }
+		public byte GetKey() {
+		    return key;
+		}
 		
 		// TODO
 		public void SetValue(List<byte> _value) { }

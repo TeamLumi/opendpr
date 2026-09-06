@@ -47,14 +47,16 @@ namespace Dpr.Battle.Logic.Net
         // TODO
         public void Terminate() { }
 
-        // TODO
-        public bool IsTerminated() { return false; }
+        public bool IsTerminated() {
+            return isTerminated;
+        }
 
         // TODO
         public bool HasErrorOccured(ErrorKind kind = ErrorKind.Invalid) { return false; }
 
-        // TODO
-        public bool IsReady() { return false; }
+        public bool IsReady() {
+            return true;
+        }
 
         // TODO
         public bool StartDetermineServer() { return false; }
@@ -71,8 +73,9 @@ namespace Dpr.Battle.Logic.Net
         // TODO
         public void Update() { }
 
-        // TODO
-        public bool ToBeReconnectableMode() { return false; }
+        public bool ToBeReconnectableMode() {
+            return false;
+        }
 
         // TODO
         public void TurnToRaidAIEnableMode() { }
@@ -80,8 +83,9 @@ namespace Dpr.Battle.Logic.Net
         // TODO
         public void TurnToRaidOnlyMeMode() { }
 
-        // TODO
-        public static bool IsShouldDissconetError(int errorKindBits) { return false; }
+        public static bool IsShouldDissconetError(int errorKindBits) {
+            return false;
+        }
 
         // TODO
         public static ErrorCodeID GetErrorDialogCode(int errorKindBits) { return ErrorCodeID.ErrorNSATokenAuth; }
@@ -92,8 +96,9 @@ namespace Dpr.Battle.Logic.Net
         // TODO
         public void NotifyNetworkError(ErrorKind kind, int arg = 0) { }
 
-        // TODO
-        public bool IsClientCommunicationExist(BTL_CLIENT_ID clientId) { return false; }
+        public bool IsClientCommunicationExist(BTL_CLIENT_ID clientId) {
+            return true;
+        }
 
         // TODO
         public bool StartNotifyServerParam(in ServerParam serverParam) { return false; }
@@ -200,8 +205,9 @@ namespace Dpr.Battle.Logic.Net
         // TODO
         public void ClearBattleCommandRecvData() { }
 
-        // TODO
-        public bool BroadcastRaidAction(RaidActionIconID actionIconId, BTL_CLIENT_ID clientId) { return false; }
+        public bool BroadcastRaidAction(RaidActionIconID actionIconId, BTL_CLIENT_ID clientId) {
+            return false;
+        }
 
         // TODO
         public RaidActionIconID GetRaidAction(BTL_CLIENT_ID cliendId) { return default; }
@@ -209,11 +215,13 @@ namespace Dpr.Battle.Logic.Net
         // TODO
         public void ClearRaidAction() { }
 
-        // TODO
-        public bool BroadcastTrainerAction(BTL_CLIENT_ID clientId) { return false; }
+        public bool BroadcastTrainerAction(BTL_CLIENT_ID clientId) {
+            return false;
+        }
 
-        // TODO
-        public bool CheckTrainerAction(BTL_CLIENT_ID cliendId) { return false; }
+        public bool CheckTrainerAction(BTL_CLIENT_ID cliendId) {
+            return false;
+        }
 
         // TODO
         public void ClearTrainerAction() { }

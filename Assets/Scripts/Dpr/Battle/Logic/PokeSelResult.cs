@@ -12,8 +12,9 @@
         private byte m_max;
         private bool m_fCancel;
 
-        // TODO
-        public byte GetSelectMax() { return 0; }
+        public byte GetSelectMax() {
+            return m_max;
+        }
 
         // TODO
         public void Init(PokeSelParam param) { }
@@ -24,17 +25,20 @@
         // TODO
         public void Pop() { }
 
-        // TODO
-        public void SetCancel(bool flg) { }
+        public void SetCancel(bool flg) {
+            this.m_fCancel = flg;
+        }
 
-        // TODO
-        public bool IsCancel() { return false; }
+        public bool IsCancel() {
+            return m_fCancel;
+        }
 
         // TODO
         public bool IsDone() { return false; }
 
-        // TODO
-        public byte GetCount() { return 0; }
+        public byte GetCount() {
+            return m_cnt;
+        }
 
         // TODO
         public byte GetLast() { return 0; }

@@ -40,8 +40,9 @@ public class BattleRuleSelectWindow : UIWindow
 	// TODO
 	public override void OnCreate() { }
 	
-	// TODO
-	public int GetCurrentSelectIndex() { return default; }
+	public int GetCurrentSelectIndex() {
+	    return _currentIndex;
+	}
 	
 	// TODO
 	private void SetKeyguide() { }

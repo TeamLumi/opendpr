@@ -88,8 +88,9 @@ public class UnionStateController
 	// TODO
 	public void SetIsTransitionAfter(Action<bool> func) { }
 	
-	// TODO
-	public UnionStateTransitionController GetTransitionController() { return default; }
+	public UnionStateTransitionController GetTransitionController() {
+	    return transitionController;
+	}
 	
 	// TODO
 	public bool IsOpenContextMenu() { return default; }
@@ -142,11 +143,13 @@ public class UnionStateController
 	// TODO
 	private void CreateSelectStateMsgWindow() { }
 	
-	// TODO
-	public BattleRecruitmentStateModel GetBattleRecruimentModel() { return default; }
+	public BattleRecruitmentStateModel GetBattleRecruimentModel() {
+	    return battleRecruitmentModel;
+	}
 	
-	// TODO
-	public BattleJoinStateModel GetBattleJoinModel() { return default; }
+	public BattleJoinStateModel GetBattleJoinModel() {
+	    return battleJoinStateModel;
+	}
 	
 	// TODO
 	public NetStateModel GetTradeRecruimentModel() { return default; }
@@ -311,8 +314,9 @@ public class UnionStateController
 	// TODO
 	public void ClearMatchWait() { }
 	
-	// TODO
-	public List<UnionMatchWaitData> GetMatchWaitList() { return default; }
+	public List<UnionMatchWaitData> GetMatchWaitList() {
+	    return unionMatchWaitDataList;
+	}
 	
 	// TODO
 	private void SendRequestIsMatchWait(int stationIndex) { }

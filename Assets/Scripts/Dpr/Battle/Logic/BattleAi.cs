@@ -37,11 +37,13 @@
         // TODO
         public uint GetScript() { return 0; }
 
-        // TODO
-        public bool IsActionSelectFinished() { return false; }
+        public bool IsActionSelectFinished() {
+            return m_isFinished;
+        }
 
-        // TODO
-        public Result GetResult() { return null; }
+        public Result GetResult() {
+            return m_result;
+        }
 
         // TODO
         public void StartActionSelect(in StartParam startParam) { }

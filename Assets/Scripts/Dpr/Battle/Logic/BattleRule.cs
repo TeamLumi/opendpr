@@ -59,8 +59,9 @@
         // TODO
         public static bool IsDummyClientSwitchEnable(BtlRule rule) { return false; }
 
-        // TODO
-        public static bool IsSkipBattleAfterShowdown(BtlRule rule) { return false; }
+        public static bool IsSkipBattleAfterShowdown(BtlRule rule) {
+            return true;
+        }
 
         // TODO
         public static bool NeedPGLRecord(BtlRule rule) { return false; }

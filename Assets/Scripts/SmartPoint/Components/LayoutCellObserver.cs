@@ -35,11 +35,13 @@ namespace SmartPoint.Components
 		// TODO
 		public virtual void OnSetup() { }
 		
-		// TODO
-		public virtual bool IsReady() { return default; }
+		public virtual bool IsReady() {
+		    return true;
+		}
 		
-		// TODO
-		public virtual bool OnRebuildLayout() { return default; }
+		public virtual bool OnRebuildLayout() {
+		    return false;
+		}
 		
 		// TODO
 		public virtual void OnUpdate(float deltaTime) { }

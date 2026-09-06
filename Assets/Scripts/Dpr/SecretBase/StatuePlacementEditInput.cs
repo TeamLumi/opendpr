@@ -2,17 +2,13 @@ namespace Dpr.SecretBase
 {
 	public static class StatuePlacementEditInput
 	{
-		// TODO
-		private static int inputUp { get; }
+		private static int inputUp { get => 0x222000; }
 		
-		// TODO
-		private static int inputDown { get; }
+		private static int inputDown { get => 0x888000; }
 		
-		// TODO
-		private static int inputLeft { get; }
+		private static int inputLeft { get => 0x111000; }
 		
-		// TODO
-		private static int inputRight { get; }
+		private static int inputRight { get => 0x444000; }
 		
 		// TODO
 		public static bool Left { get; }

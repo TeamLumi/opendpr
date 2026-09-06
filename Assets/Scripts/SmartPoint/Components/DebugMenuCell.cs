@@ -39,8 +39,9 @@ namespace SmartPoint.Components
 		// TODO
 		private static void ChangedControllerParameter(DebugMenuCell observer, Vector2 moveVector, int scale) { }
 		
-		// TODO
-		public override bool OnRebuildLayout() { return default; }
+		public override bool OnRebuildLayout() {
+		    return true;
+		}
 		
 		// TODO
 		public void OnClick() { }

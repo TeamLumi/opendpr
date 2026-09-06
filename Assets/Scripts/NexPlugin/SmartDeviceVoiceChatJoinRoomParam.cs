@@ -13,23 +13,29 @@ namespace NexPlugin
 			channelId = 0;
 		}
 		
-		// TODO
-		public void SetSessionId(ulong sessionId_) { }
+		public void SetSessionId(ulong sessionId_) {
+		    this.sessionId = sessionId_;
+		}
 		
-		// TODO
-		public ulong GetSessionId() { return default; }
+		public ulong GetSessionId() {
+		    return sessionId;
+		}
 		
-		// TODO
-		public void SetGameMode(uint gameMode_) { }
+		public void SetGameMode(uint gameMode_) {
+		    this.gameMode = gameMode_;
+		}
 		
-		// TODO
-		public uint GetGameMode() { return default; }
+		public uint GetGameMode() {
+		    return gameMode;
+		}
 		
-		// TODO
-		public void SetChannelId(uint channelId_) { }
+		public void SetChannelId(uint channelId_) {
+		    this.channelId = channelId_;
+		}
 		
-		// TODO
-		public uint GetChannelId() { return default; }
+		public uint GetChannelId() {
+		    return channelId;
+		}
 		
 		// TODO
 		public void Trace() { }

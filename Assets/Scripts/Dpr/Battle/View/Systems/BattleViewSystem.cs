@@ -215,8 +215,9 @@ namespace Dpr.Battle.View.Systems
         // TODO
         private int GetBattleReflectionLayer(bool isEnable) { return 0; }
 
-        // TODO
-        public bool SetupGraphic() { return false; }
+        public bool SetupGraphic() {
+            return true;
+        }
 
         // TODO
         private void InitializeSystem() { }
@@ -374,8 +375,9 @@ namespace Dpr.Battle.View.Systems
         // TODO
         private bool SeqComWaitFunc_Message() { return false; }
 
-        // TODO
-        private bool SeqComWaitFunc_LoadPoke() { return false; }
+        private bool SeqComWaitFunc_LoadPoke() {
+            return true;
+        }
 
         // TODO
         private bool SeqComWaitFunc_SelectMessage() { return false; }
@@ -389,8 +391,9 @@ namespace Dpr.Battle.View.Systems
         // TODO
         private bool SeqComWaitFunc_UIFog() { return false; }
 
-        // TODO
-        private bool SeqComWaitFunc_UISeq() { return false; }
+        private bool SeqComWaitFunc_UISeq() {
+            return true;
+        }
 
         // TODO
         private BallId SeqComFunc_GetEffectBallId(int idx) { return BallId.NULL; }
@@ -656,8 +659,9 @@ namespace Dpr.Battle.View.Systems
         // TODO
         public override void CMD_PlaySE(SoundType SENo) { }
 
-        // TODO
-        public override bool CMD_IsSEFinished(SoundType SENo) { return default; }
+        public override bool CMD_IsSEFinished(SoundType SENo) {
+            return true;
+        }
 
         // TODO
         public override void CMD_ACT_MoveMember_Start(byte clientID, BtlvPos vpos1, BtlvPos vpos2, byte posIdx1, byte posIdx2) { }

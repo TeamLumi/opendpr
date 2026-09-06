@@ -31,11 +31,13 @@ namespace Dpr.Battle.Logic
         // TODO
         public Sex GetSex() { return Sex.MALE; }
 
-        // TODO
-        public int GetHatVariation() { return 0; }
+        public int GetHatVariation() {
+            return hat;
+        }
 
-        // TODO
-        public int GetShoesVariation() { return 0; }
+        public int GetShoesVariation() {
+            return shoes;
+        }
 
         // TODO
         public MessageEnumData.MsgLangId GetPokeLanguageId() { return MessageEnumData.MsgLangId.JPN; }
@@ -46,13 +48,15 @@ namespace Dpr.Battle.Logic
         // TODO
         public string GetModelID() { return string.Empty; }
 
-        // TODO
-        public int GetColorID() { return 0; }
+        public int GetColorID() {
+            return body_type;
+        }
 
         private Sex _sex { get => sex ? Sex.MALE : Sex.FEMALE; }
 
-        // TODO
-        public bool HasGBand() { return false; }
+        public bool HasGBand() {
+            return false;
+        }
 
         // TODO
         public void SetCyclingRoad() { }

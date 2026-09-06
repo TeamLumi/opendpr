@@ -97,17 +97,21 @@ namespace Dpr.SequenceEditor
 		// TODO
 		public void SetCameraAnimationRotateY_Deg(float rot) { }
 		
-		// TODO
-		public void SetCameraAnimationCheckGround(bool value) { }
+		public void SetCameraAnimationCheckGround(bool value) {
+		    this._isCheckGround = value;
+		}
 		
-		// TODO
-		public bool GetCameraAnimationCheckGround() { return default; }
+		public bool GetCameraAnimationCheckGround() {
+		    return _isCheckGround;
+		}
 		
-		// TODO
-		public void SetCameraPosOverCheck(bool value) { }
+		public void SetCameraPosOverCheck(bool value) {
+		    this._isPosOverCheck = value;
+		}
 		
-		// TODO
-		public bool GetCameraPosOverCheck() { return default; }
+		public bool GetCameraPosOverCheck() {
+		    return _isPosOverCheck;
+		}
 
 		public enum CameraStateType : int
 		{
