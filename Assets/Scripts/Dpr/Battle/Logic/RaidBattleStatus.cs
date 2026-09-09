@@ -54,7 +54,8 @@
         // TODO
         public void PlayBtlEffectKill() { }
 
-        // TODO
-        public bool IsPlayBtlEffectKill() { return false; }
+        public bool IsPlayBtlEffectKill() {
+            return m_isPlayBtlEffectKill;
+        }
     }
 }

@@ -151,8 +151,9 @@ namespace Pml.WazaData
         // TODO
         public static byte GetHPReactionRatio(WazaNo id) { return 0; }
 
-        // TODO
-        public static byte GetGPower(WazaNo id) { return 0; }
+        public static byte GetGPower(WazaNo id) {
+            return 0;
+        }
 
         // TODO
         public static ushort[] GetYubiWoHuruPermitWazaTable() { return null; }

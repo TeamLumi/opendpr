@@ -84,8 +84,9 @@ public sealed class SkyColorSettings : MonoBehaviour
 	// TODO
 	public Property[] GetProperties(BtlvWeather weather) { return default; }
 	
-	// TODO
-	public BtlvWeather GetWeather() { return default; }
+	public BtlvWeather GetWeather() {
+	    return _currentWeather;
+	}
 	
 	// TODO
 	public void SetWeather(BtlvWeather weather, PeriodOfDay periodOfDay, float weight = 1.0f) { }

@@ -19,8 +19,7 @@ public class BattleMatchingManager
 	private Action _onFinish;
 	private bool _isError;
 	
-	// TODO
-	public bool IsError { get; }
+	public bool IsError { get => _isError; }
 
 	public int ColiseumLeavePoint { get; set; } = -1;
 
@@ -28,14 +27,11 @@ public class BattleMatchingManager
     private bool _dispedLeaveOtherMsg;
     private MatchingState _currentState;
 
-    // TODO
-    public bool IsStateNone { get; }
+    public bool IsStateNone { get => _currentState == MatchingState.None; }
 	
-	// TODO
-	public bool IsStateBattle { get; }
+	public bool IsStateBattle { get => _currentState == MatchingState.GoBattle; }
 	
-	// TODO
-	public bool IsStateClosing { get; }
+	public bool IsStateClosing { get => _currentState == MatchingState.Closing; }
 	
 	// TODO
 	public static IEnumerator LoadBattleMatchingUI(Action<UIBattleMatching> onCompletedLoad) { return default; }

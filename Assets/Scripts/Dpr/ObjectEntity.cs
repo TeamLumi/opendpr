@@ -75,8 +75,9 @@ namespace Dpr
 		// TODO
 		public void Stop() { }
 		
-		// TODO
-		public override AnimationPlayer GetAnimationPlayer() { return default; }
+		public override AnimationPlayer GetAnimationPlayer() {
+		    return _animationPlayer;
+		}
 		
 		// TODO
 		public void SetAnimSpeed(float speed) { }
@@ -144,8 +145,9 @@ namespace Dpr
 		// TODO
 		public void GetPlaySealEffect(BallId ballId, in AffixSealData[] affixSealDatas, ref List<BtlvEffectInstance> sealEffects, ref BtlvEffectInstance lightEffect) { }
 		
-		// TODO
-		public List<BtlvEffectInstance> GetSealEffectInstances() { return default; }
+		public List<BtlvEffectInstance> GetSealEffectInstances() {
+		    return _sealEffectInstances;
+		}
 		
 		// TODO
 		private void UpdateSRT() { }

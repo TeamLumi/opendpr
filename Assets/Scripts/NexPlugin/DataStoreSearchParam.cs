@@ -27,29 +27,35 @@ namespace NexPlugin
 			Reset();
 		}
 		
-		// TODO
-		public void SetSearchType(DataStore.SearchType searchType) { }
+		public void SetSearchType(DataStore.SearchType searchType) {
+		    this.searchTarget = searchType;
+		}
 		
-		// TODO
-		public DataStore.SearchType GetSearchType() { return default; }
+		public DataStore.SearchType GetSearchType() {
+		    return searchTarget;
+		}
 		
 		// TODO
 		public void SetOwnerIds(List<ulong> ownerIds_) { }
 		
-		// TODO
-		public List<ulong> GetOwnerIds() { return default; }
+		public List<ulong> GetOwnerIds() {
+		    return ownerIds;
+		}
 		
-		// TODO
-		public void SetOwnerType(DataStore.SearchTarget ownerType_) { }
+		public void SetOwnerType(DataStore.SearchTarget ownerType_) {
+		    this.ownerType = ownerType_;
+		}
 		
-		// TODO
-		public DataStore.SearchTarget GetOwnerType() { return default; }
+		public DataStore.SearchTarget GetOwnerType() {
+		    return ownerType;
+		}
 		
 		// TODO
 		public void SetDestinationIds(List<ulong> destinationIds_) { }
 		
-		// TODO
-		public List<ulong> GetDestinationIds() { return default; }
+		public List<ulong> GetDestinationIds() {
+		    return destinationIds;
+		}
 		
 		// TODO
 		public void SetDataType(ushort dataType_) { }
@@ -87,53 +93,67 @@ namespace NexPlugin
 		// TODO
 		public NpDateTime GetUpdatedBefore() { return default; }
 		
-		// TODO
-		public void SetSearchSortOrderColumn(DataStore.SearchSortColumn resultOrderColumn_) { }
+		public void SetSearchSortOrderColumn(DataStore.SearchSortColumn resultOrderColumn_) {
+		    this.resultOrderColumn = resultOrderColumn_;
+		}
 		
-		// TODO
-		public DataStore.SearchSortColumn GetSearchSortOrderColumn() { return default; }
+		public DataStore.SearchSortColumn GetSearchSortOrderColumn() {
+		    return resultOrderColumn;
+		}
 		
-		// TODO
-		public void SetSearchSortOrder(DataStore.SearchSortOrder resultOrder_) { }
+		public void SetSearchSortOrder(DataStore.SearchSortOrder resultOrder_) {
+		    this.resultOrder = resultOrder_;
+		}
 		
-		// TODO
-		public DataStore.SearchSortOrder GetSearchSortOrder() { return default; }
+		public DataStore.SearchSortOrder GetSearchSortOrder() {
+		    return resultOrder;
+		}
 		
 		// TODO
 		public void SetResultRange(ResultRange resultRange_) { }
 		
-		// TODO
-		public ResultRange GetResultRange() { return default; }
+		public ResultRange GetResultRange() {
+		    return resultRange;
+		}
 		
-		// TODO
-		public void SetResultOption(DataStore.ResultFlag resultOption_) { }
+		public void SetResultOption(DataStore.ResultFlag resultOption_) {
+		    this.resultOption = resultOption_;
+		}
 		
-		// TODO
-		public DataStore.ResultFlag GetResultOption() { return default; }
+		public DataStore.ResultFlag GetResultOption() {
+		    return resultOption;
+		}
 		
 		// TODO
 		public void SetTags(List<string> tags_) { }
 		
-		// TODO
-		public List<string> GetTags() { return default; }
+		public List<string> GetTags() {
+		    return tags;
+		}
 		
-		// TODO
-		public void SetMinimalRatingFrequency(uint minimalRatingFrequency_) { }
+		public void SetMinimalRatingFrequency(uint minimalRatingFrequency_) {
+		    this.minimalRatingFrequency = minimalRatingFrequency_;
+		}
 		
-		// TODO
-		public uint GetMinimalRatingFrequency() { return default; }
+		public uint GetMinimalRatingFrequency() {
+		    return minimalRatingFrequency;
+		}
 		
-		// TODO
-		public void SetUseCache(bool useCache_) { }
+		public void SetUseCache(bool useCache_) {
+		    this.useCache = useCache_;
+		}
 		
-		// TODO
-		public bool GetUseCache() { return default; }
+		public bool GetUseCache() {
+		    return useCache;
+		}
 		
-		// TODO
-		public void SetTotalCountEnabled(bool totalCountEnabled_) { }
+		public void SetTotalCountEnabled(bool totalCountEnabled_) {
+		    this.totalCountEnabled = totalCountEnabled_;
+		}
 		
-		// TODO
-		public bool GetTotalCountEnabled() { return default; }
+		public bool GetTotalCountEnabled() {
+		    return totalCountEnabled;
+		}
 		
 		// TODO
 		private void Reset() { }

@@ -94,8 +94,9 @@ public abstract class OpcManager
 	// TODO
 	public void CreateEmoticon(NetEmotionData data) { }
 	
-	// TODO
-	public List<OpcController> GetOpcControllerList() { return default; }
+	public List<OpcController> GetOpcControllerList() {
+	    return _OpcControllers;
+	}
 	
 	// TODO
 	public void TargetOpcTalk(int targetIndex) { }

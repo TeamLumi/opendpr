@@ -161,8 +161,9 @@ namespace SmartPoint.Components
             // TODO
             public void Reload() { }
 
-            // TODO
-            public MenuInstance GetParent() { return null; }
+            public MenuInstance GetParent() {
+                return _parent;
+            }
 
             // TODO
             private LayoutScrollView.Cell AddChild(DebugMenuCell.Item item) { return default; }

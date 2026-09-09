@@ -53,17 +53,20 @@
         // TODO
         public DamageType GetDamageType(BTL_POKEPARAM bpp) { return DamageType.DMGTYPE_NONE; }
 
-        // TODO
-        public uint GetCount() { return 0; }
+        public uint GetCount() {
+            return m_count;
+        }
 
-        // TODO
-        public uint GetCountMax() { return 0; }
+        public uint GetCountMax() {
+            return m_countMax;
+        }
 
         // TODO
         public uint GetAliveCount() { return 0; }
 
-        // TODO
-        public void SetDefaultTargetCount(byte cnt) { }
+        public void SetDefaultTargetCount(byte cnt) {
+            this.m_targetPosCount = cnt;
+        }
 
         // TODO
         public bool IsRemovedAll() { return false; }

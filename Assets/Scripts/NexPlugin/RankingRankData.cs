@@ -27,32 +27,41 @@ namespace NexPlugin
 			updateTime = NpDateTime.Never;
 		}
 		
-		// TODO
-		public ulong GetPrincipalId() { return default; }
+		public ulong GetPrincipalId() {
+		    return principalId;
+		}
 		
-		// TODO
-		public ulong GetUniqueId() { return default; }
+		public ulong GetUniqueId() {
+		    return uniqueId;
+		}
 		
-		// TODO
-		public uint GetOrder() { return default; }
+		public uint GetOrder() {
+		    return order;
+		}
 		
-		// TODO
-		public uint GetCategory() { return default; }
+		public uint GetCategory() {
+		    return category;
+		}
 		
-		// TODO
-		public uint GetScore() { return default; }
+		public uint GetScore() {
+		    return score;
+		}
 		
-		// TODO
-		public byte GetGroup0() { return default; }
+		public byte GetGroup0() {
+		    return group0;
+		}
 		
-		// TODO
-		public byte GetGroup1() { return default; }
+		public byte GetGroup1() {
+		    return group1;
+		}
 		
-		// TODO
-		public ulong GetParam() { return default; }
+		public ulong GetParam() {
+		    return param;
+		}
 		
-		// TODO
-		public List<byte> GetCommonData() { return default; }
+		public List<byte> GetCommonData() {
+		    return commonData;
+		}
 		
 		// TODO
 		public NpDateTime GetUpdateTime() { return default; }

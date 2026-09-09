@@ -224,8 +224,9 @@ namespace NexAssets
         // TODO
         protected static int GetCallCount(FunctionInfo info, List<ApiCallsFrequency> list) { return 0; }
 
-        // TODO
-        protected bool ApiCallsFrequencyCheck(FunctionInfo api, List<ApiCallsFrequency> list) { return false; }
+        protected bool ApiCallsFrequencyCheck(FunctionInfo api, List<ApiCallsFrequency> list) {
+            return false;
+        }
 
         // TODO
         private bool ApiCallsFrequencyCheck(int type) { return false; }

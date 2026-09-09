@@ -203,8 +203,9 @@ namespace Dpr.UI
 		// TODO
 		public bool IsWindowOpen() { return default; }
 		
-		// TODO
-		public void SetShowMsgTime(float time) { }
+		public void SetShowMsgTime(float time) {
+		    this._showMsgTime = time;
+		}
 		
 		// TODO
 		public void ShowMessageWindow(string label, [Optional] Action onFinishMessage, bool isShowloadingIcon = false) { }

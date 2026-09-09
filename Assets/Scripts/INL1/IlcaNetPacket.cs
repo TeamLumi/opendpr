@@ -43,11 +43,13 @@ namespace INL1
 		// TODO
 		public virtual void Reset() { }
 		
-		// TODO
-		public virtual uint UserDataSizeNow() { return default; }
+		public virtual uint UserDataSizeNow() {
+		    return counte;
+		}
 		
-		// TODO
-		public virtual uint UserDataSizeMax() { return default; }
+		public virtual uint UserDataSizeMax() {
+		    return MyUserDataMax;
+		}
 		
 		// TODO
 		protected virtual void PayloadSerialize() { }
@@ -65,17 +67,20 @@ namespace INL1
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ref byte[] PayloadBuffRef() { return ref userData; }
 
-        // TODO
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual uint PayloadBuffSizeNow() { return default; }
+        public virtual uint PayloadBuffSizeNow() {
+            return counte;
+        }
 
-        // TODO
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual void PacketTypeSet(IlcaNetPacketType type) { }
+        public virtual void PacketTypeSet(IlcaNetPacketType type) {
+            packetType = type;
+        }
 		
-		// TODO
-		public virtual IlcaNetPacketType PacketTypeGet() { return default; }
+		public virtual IlcaNetPacketType PacketTypeGet() {
+		    return packetType;
+		}
 	}
 }

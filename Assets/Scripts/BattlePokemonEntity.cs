@@ -205,8 +205,9 @@ public sealed class BattlePokemonEntity : BattleObjectEntity
     // TODO
     public void SetAnimationSpeed(float animationSpeed) { }
 
-    // TODO
-    public float GetAnimationSpeed() { return 0.0f; }
+    public float GetAnimationSpeed() {
+        return _animationSpeed;
+    }
 
     public void SetBlinkEnabled(bool value)
     {

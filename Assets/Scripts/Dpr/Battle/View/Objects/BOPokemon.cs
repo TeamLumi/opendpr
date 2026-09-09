@@ -183,8 +183,9 @@ namespace Dpr.Battle.View.Objects
             return m_isPlayPinchSoundRTPC;
         }
 		
-		// TODO
-		public void SetRTPC_IsPlayPinchSound(bool value) { }
+		public void SetRTPC_IsPlayPinchSound(bool value) {
+		    this.m_isPlayPinchSoundRTPC = value;
+		}
 		
 		// TODO
 		public bool GetIsPlayPinchSound()
@@ -192,11 +193,13 @@ namespace Dpr.Battle.View.Objects
 			return m_isPlayPinchSound;
 		}
 		
-		// TODO
-		public void SetIsPlayPinchSound(bool value) { }
+		public void SetIsPlayPinchSound(bool value) {
+		    this.m_isPlayPinchSound = value;
+		}
 		
-		// TODO
-		public void SetEnableFloat(bool flg) { }
+		public void SetEnableFloat(bool flg) {
+		    this.IsEnableFloat = flg;
+		}
 		
 		// TODO
 		public void SetVisibleDigudaStone(bool value) { }

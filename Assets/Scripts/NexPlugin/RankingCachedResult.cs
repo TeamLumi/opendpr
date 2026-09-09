@@ -16,8 +16,9 @@ namespace NexPlugin
 			expiredTime = NpDateTime.INVALID_DATE_TIME;
 		}
 		
-		// TODO
-		public uint GetMaxLength() { return default; }
+		public uint GetMaxLength() {
+		    return maxLength;
+		}
 		
 		// TODO
 		public NpDateTime GetCreatedTime() { return default; }

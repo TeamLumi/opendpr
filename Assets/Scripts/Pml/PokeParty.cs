@@ -43,8 +43,9 @@ namespace Pml
             return m_memberCount;
         }
 
-        // TODO
-        public void SetMemberCount(uint count) { }
+        public void SetMemberCount(uint count) {
+            m_memberCount = count;
+        }
 
         // TODO
         public uint GetMemberIndex(PokemonParam pokeParam) { return 0; }
@@ -94,8 +95,9 @@ namespace Pml
         // TODO
         public void SetMarkingIndex(uint pos) { }
 
-        // TODO
-        public uint GetMarkingIndex() { return 0; }
+        public uint GetMarkingIndex() {
+            return markingIndex;
+        }
 
         // TODO
         public bool CanTrade() { return false; }

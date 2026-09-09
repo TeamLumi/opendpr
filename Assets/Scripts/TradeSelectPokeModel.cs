@@ -50,11 +50,13 @@ public class TradeSelectPokeModel
 	// TODO
 	public void ClearCallback() { }
 	
-	// TODO
-	public void SetStationIndex(int index) { }
+	public void SetStationIndex(int index) {
+	    this.tradeTargetIndex = index;
+	}
 	
-	// TODO
-	public int GetStationIndex() { return default; }
+	public int GetStationIndex() {
+	    return tradeTargetIndex;
+	}
 	
 	// TODO
 	public void SetTargetPokeParam(PokemonParam param) { }
@@ -62,32 +64,40 @@ public class TradeSelectPokeModel
 	// TODO
 	public void SetTargetDemoPokeParam(PokemonParam param) { }
 	
-	// TODO
-	public void SetIsRecivePokeParam(bool isRecive) { }
+	public void SetIsRecivePokeParam(bool isRecive) {
+	    this.isRecivePokeParam = isRecive;
+	}
 	
-	// TODO
-	public void SetIsSendPokeParam(bool isSend) { }
+	public void SetIsSendPokeParam(bool isSend) {
+	    this.isSendPokeParam = isSend;
+	}
 	
-	// TODO
-	public bool GetIsSendPokeParam() { return default; }
+	public bool GetIsSendPokeParam() {
+	    return isSendPokeParam;
+	}
 	
 	// TODO
 	private bool IsOpenModelView() { return default; }
 	
-	// TODO
-	public TradeStateModel.TradeState GetMyTradeState() { return default; }
+	public TradeStateModel.TradeState GetMyTradeState() {
+	    return myTradeState;
+	}
 	
-	// TODO
-	public TradeStateModel.TradeState GetTargetTradeState() { return default; }
+	public TradeStateModel.TradeState GetTargetTradeState() {
+	    return targetTradeState;
+	}
 	
-	// TODO
-	public void SetTradeSelectState(TradeSelectState state) { }
+	public void SetTradeSelectState(TradeSelectState state) {
+	    this.currentState = state;
+	}
 	
-	// TODO
-	public void SetNextTradePhase(BoxWindow.NetTradePhase phase) { }
+	public void SetNextTradePhase(BoxWindow.NetTradePhase phase) {
+	    this.nextTradePhase = phase;
+	}
 	
-	// TODO
-	public TradeSelectState GetTradeSelectState() { return default; }
+	public TradeSelectState GetTradeSelectState() {
+	    return currentState;
+	}
 	
 	// TODO
 	public BoxWindow GetBoxWindow() { return default; }

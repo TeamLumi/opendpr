@@ -15,29 +15,37 @@ namespace NexPlugin
 			minimumContentId = 0;
 		}
 		
-		// TODO
-		public void SetTopic(uint topic_) { }
+		public void SetTopic(uint topic_) {
+		    this.topic = topic_;
+		}
 		
-		// TODO
-		public uint GetTopic() { return default; }
+		public uint GetTopic() {
+		    return topic;
+		}
 		
-		// TODO
-		public void SetSize(uint size_) { }
+		public void SetSize(uint size_) {
+		    this.size = size_;
+		}
 		
-		// TODO
-		public uint GetSize() { return default; }
+		public uint GetSize() {
+		    return size;
+		}
 		
-		// TODO
-		public void SetOffset(uint offset_) { }
+		public void SetOffset(uint offset_) {
+		    this.offset = offset_;
+		}
 		
-		// TODO
-		public uint GetOffset() { return default; }
+		public uint GetOffset() {
+		    return offset;
+		}
 		
-		// TODO
-		public void SetMinimumContentId(ulong minimumContentId_) { }
+		public void SetMinimumContentId(ulong minimumContentId_) {
+		    this.minimumContentId = minimumContentId_;
+		}
 		
-		// TODO
-		public ulong GetMinimumContentId() { return default; }
+		public ulong GetMinimumContentId() {
+		    return minimumContentId;
+		}
 		
 		// TODO
 		public void Reset() { }

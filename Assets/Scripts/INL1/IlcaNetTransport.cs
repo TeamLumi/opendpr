@@ -76,25 +76,29 @@ namespace INL1
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static void StationAndConstantIdClear() { }
 
-        // TODO
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public void StationIndexSet(int host) { }
+        public void StationIndexSet(int host) {
+            this.stationIndex = host;
+        }
 
-        // TODO
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public void ConstantIdSet(ulong cid) { }
+        public void ConstantIdSet(ulong cid) {
+            this.constantId = cid;
+        }
 
-        // TODO
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public int StationIndexGet(int host) { return default; }
+        public int StationIndexGet(int host) {
+            return stationIndex;
+        }
 
-        // TODO
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ulong ConstantIdGet(ulong cid) { return default; }
+        public ulong ConstantIdGet(ulong cid) {
+            return constantId;
+        }
 
         // TODO
         [Browsable(false)]
@@ -136,8 +140,9 @@ namespace INL1
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ulong ValidityConstantIDGet(int index) { return default; }
 		
-		// TODO
-		protected void MyPortSet(ushort port) { }
+		protected void MyPortSet(ushort port) {
+		    this.myPort = port;
+		}
 		
 		// TODO
 		public virtual int Send(PacketWriter pw, IlcaNetPacketType type) { return default; }

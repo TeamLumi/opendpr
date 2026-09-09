@@ -44,8 +44,9 @@ namespace Dpr.Battle.Logic
         // TODO
         public bool WaitCmd() { return false; }
 
-        // TODO
-        public SendData GetReturnData() { return null; }
+        public SendData GetReturnData() {
+            return m_returnData;
+        }
 
         // TODO
         public void ResetCmd() { }

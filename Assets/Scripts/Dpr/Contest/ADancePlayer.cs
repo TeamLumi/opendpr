@@ -36,8 +36,9 @@ namespace Dpr.Contest
 		
 		public float SkillAnimDuration { get => skillAnimDuration; }
 		
-		// TODO
-		public void SetSkillAnimDuration(float skillAnimDuration) { }
+		public void SetSkillAnimDuration(float skillAnimDuration) {
+		    this.skillAnimDuration = skillAnimDuration;
+		}
 		
 		public bool IsActive { get => bIsActive; }
 		public int PlayerIndex { get => playerIndex; }

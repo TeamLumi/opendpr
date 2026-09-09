@@ -52,8 +52,9 @@ public class TradeSecurityController
 	// TODO
 	public void Error() { }
 	
-	// TODO
-	public void SetIsRecruiment(bool Recruiment) { }
+	public void SetIsRecruiment(bool Recruiment) {
+	    this.isRecruiment = Recruiment;
+	}
 	
 	// TODO
 	public void SetInitCallBack(Action func, Action<int, bool> startOpenTradeBoxWindow, Action<UnionTradeManager.TradeFlowState> setState) { }
@@ -79,8 +80,9 @@ public class TradeSecurityController
 	// TODO
 	public void ReciveState(NetDataTradeReadyOkData data) { }
 	
-	// TODO
-	public void SetTradeParent(TradeParent parent) { }
+	public void SetTradeParent(TradeParent parent) {
+	    this.tradeParent = parent;
+	}
 	
 	// TODO
 	public bool CheckPokeRarity() { return default; }

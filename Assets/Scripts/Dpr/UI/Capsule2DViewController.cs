@@ -35,8 +35,9 @@ namespace Dpr.UI
 		// TODO
 		public bool MoveGridCell(int x, int y) { return default; }
 		
-		// TODO
-		public Capsule2DGridCell GetCurrentGridCell() { return default; }
+		public Capsule2DGridCell GetCurrentGridCell() {
+		    return currentGridCell;
+		}
 		
 		// TODO
 		public void SetCurrentGridCell(Capsule2DGridCell cell) { }

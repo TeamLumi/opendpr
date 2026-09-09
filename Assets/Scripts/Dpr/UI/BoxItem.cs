@@ -42,8 +42,9 @@ namespace Dpr.UI
 		// TODO
 		public virtual void Clear() { }
 		
-		// TODO
-		public virtual PokemonIcon GetSwapRoot() { return default; }
+		public virtual PokemonIcon GetSwapRoot() {
+		    return _root;
+		}
 		
 		// TODO
 		public virtual void SetIconDefault(bool isShow = true) { }

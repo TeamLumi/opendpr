@@ -20,8 +20,9 @@ namespace Dpr.Battle.Logic
         // TODO
         public void Dispose() { }
 
-        // TODO
-        public unsafe SEND_DATA_BUFFER* GetBuffer() { return null; }
+        public unsafe SEND_DATA_BUFFER* GetBuffer() {
+            return m_buffer;
+        }
 
         public void Clear()
         {

@@ -52,8 +52,9 @@ namespace Dpr.Battle.Logic
         // TODO
         private void setupPokeParam(BTL_POKEPARAM pokeParam, byte pokeID, PokemonParam srcParam, in DefaultPowerUpDesc defaultPowerUpDesc, MyStatus playerData) { }
 
-        // TODO
-        private bool checkForceGEnable(PokemonParam pPoke) { return false; }
+        private bool checkForceGEnable(PokemonParam pPoke) {
+            return false;
+        }
 
         // TODO
         private void updateIllusionTarget(byte clientID) { }

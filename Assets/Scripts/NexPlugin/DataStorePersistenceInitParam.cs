@@ -11,17 +11,21 @@ namespace NexPlugin
 			this.deleteLastObject = deleteLastObject;
 		}
 		
-		// TODO
-		public void SetPersistenceSlotId(ushort persistenceSlotId_) { }
+		public void SetPersistenceSlotId(ushort persistenceSlotId_) {
+		    this.persistenceSlotId = persistenceSlotId_;
+		}
 		
-		// TODO
-		public ushort GetPersistenceSlotId() { return default; }
+		public ushort GetPersistenceSlotId() {
+		    return persistenceSlotId;
+		}
 		
-		// TODO
-		public void SetDeleteLastObject(bool deleteLastObject_) { }
+		public void SetDeleteLastObject(bool deleteLastObject_) {
+		    this.deleteLastObject = deleteLastObject_;
+		}
 		
-		// TODO
-		public bool GetDeleteLastObject() { return default; }
+		public bool GetDeleteLastObject() {
+		    return deleteLastObject;
+		}
 		
 		// TODO
 		public void Reset() { }

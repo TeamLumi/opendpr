@@ -75,8 +75,9 @@ namespace Dpr.Battle.Logic
         private static readonly BtlvPos[][] rule_raid_vpos4;
         private CapsuleData DummyCapsuleData;
 
-        // TODO
-        public BATTLE_SETUP_PARAM GetBattleSetupParam() { return null; }
+        public BATTLE_SETUP_PARAM GetBattleSetupParam() {
+            return m_setupParam;
+        }
 
         // TODO
         public bool GetEnableTimeStop() { return false; }
@@ -200,14 +201,16 @@ namespace Dpr.Battle.Logic
         // TODO
         private bool setup_alone_double_multi_02(ref int seq) { return false; }
 
-        // TODO
-        private bool setup_alone_double_multi_03(ref int seq) { return false; }
+        private bool setup_alone_double_multi_03(ref int seq) {
+            return true;
+        }
 
         // TODO
         private bool setup_alone_double_multi_04(ref int seq) { return false; }
 
-        // TODO
-        private bool setup_alone_double_multi_05(ref int seq) { return false; }
+        private bool setup_alone_double_multi_05(ref int seq) {
+            return true;
+        }
 
         // TODO
         private bool setup_alone_double_multi_06(ref int seq) { return false; }
@@ -326,8 +329,9 @@ namespace Dpr.Battle.Logic
         // TODO
         private void changeServerSelf() { }
 
-        // TODO
-        private bool MainLoop_Comm_Error() { return false; }
+        private bool MainLoop_Comm_Error() {
+            return true;
+        }
 
         // TODO
         public void OnCommError() { }
@@ -343,8 +347,9 @@ namespace Dpr.Battle.Logic
             return m_rule;
         }
 
-        // TODO
-        public bool IsWazaEffectEnable() { return false; }
+        public bool IsWazaEffectEnable() {
+            return m_fWazaEffectEnable;
+        }
 
         // TODO
         public byte GetMaxFollowPokeLevel() { return 0; }
@@ -367,8 +372,9 @@ namespace Dpr.Battle.Logic
         // TODO
         public bool IsScenarioMultiBattle() { return false; }
 
-        // TODO
-        public bool IsScenarioRaidBattle() { return false; }
+        public bool IsScenarioRaidBattle() {
+            return false;
+        }
 
         // TODO
         public bool IsPokeItemConsumeBattle() { return false; }
@@ -433,8 +439,9 @@ namespace Dpr.Battle.Logic
         // TODO
         public byte GetForceQuitTurnCount() { return 0; }
 
-        // TODO
-        public MyStatus GetPlayerStatus() { return null; }
+        public MyStatus GetPlayerStatus() {
+            return m_playerStatus;
+        }
 
         // TODO
         public bool IsZukanRegistered(MonsNo monsno) { return false; }
@@ -558,8 +565,9 @@ namespace Dpr.Battle.Logic
         // TODO
         public BtlPokePos ViewPosToBtlPos(byte vpos) { return BtlPokePos.POS_1ST_0; }
 
-        // TODO
-        public byte GetPlayerClientID() { return 0; }
+        public byte GetPlayerClientID() {
+            return m_myClientID;
+        }
 
         // TODO
         public byte GetPlayerFriendCleintID() { return 0; }
@@ -603,8 +611,9 @@ namespace Dpr.Battle.Logic
         // TODO
         public BtlResult GetBattleResult() { return BtlResult.BTL_RESULT_LOSE; }
 
-        // TODO
-        public ResultCause GetBattleResultCause() { return default; }
+        public ResultCause GetBattleResultCause() {
+            return m_serverResultCause;
+        }
 
         // TODO
         public void NotifyCmdCheckError() { }
@@ -669,8 +678,9 @@ namespace Dpr.Battle.Logic
         // TODO
         public void RECORDDATA_Add(RECORD_ID recID, uint value) { }
 
-        // TODO
-        public bool IsShooterEnable() { return false; }
+        public bool IsShooterEnable() {
+            return false;
+        }
 
         // TODO
         public bool IsItemEnable() { return false; }
@@ -729,8 +739,9 @@ namespace Dpr.Battle.Logic
         // TODO
         public bool CheckClientLimitTimeOver() { return false; }
 
-        // TODO
-        public bool IsLongEncount() { return false; }
+        public bool IsLongEncount() {
+            return false;
+        }
 
         // TODO
         public bool CheckRecPlayError() { return false; }
@@ -883,8 +894,9 @@ namespace Dpr.Battle.Logic
         // TODO
         public bool CheckImServerMachine() { return false; }
 
-        // TODO
-        public bool HasPlayerGakusyuSouti() { return false; }
+        public bool HasPlayerGakusyuSouti() {
+            return true;
+        }
 
         // TODO
         public BtlPokePos GetClientPokePos(byte clientID, byte posIdx) { return BtlPokePos.POS_1ST_0; }

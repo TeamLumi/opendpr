@@ -40,8 +40,9 @@
         // TODO
         public void InvalidateClient(BTL_CLIENT_ID clientID) { }
 
-        // TODO
-        public byte GetClientNum() { return 0; }
+        public byte GetClientNum() {
+            return m_clientNum;
+        }
 
         // TODO
         public int GetClientOrder(BTL_CLIENT_ID clientID) { return 0; }
@@ -58,11 +59,13 @@
         // TODO
         private byte getNextAssignTarget(byte currentIdx) { return 0; }
 
-        // TODO
-        private bool isAssignEnable(in ClientInfo clientInfo) { return false; }
+        private bool isAssignEnable(in ClientInfo clientInfo) {
+            return true;
+        }
 
-        // TODO
-        public uint GetPassedTurnCount() { return 0; }
+        public uint GetPassedTurnCount() {
+            return m_passedTurnCount;
+        }
 
         // TODO
         public void IncPassedTurnCount() { }

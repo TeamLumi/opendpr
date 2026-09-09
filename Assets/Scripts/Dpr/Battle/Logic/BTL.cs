@@ -31,8 +31,9 @@ namespace Dpr.Battle.Logic
 		// TODO
 		public static void SetEnableLog(BtlLog logType, bool isOn) { }
 		
-		// TODO
-		public static bool IsEnableLog(BtlLog logType) { return default; }
+		public static bool IsEnableLog(BtlLog logType) {
+		    return false;
+		}
 
         // TODO
         [Conditional(CONDITION)]

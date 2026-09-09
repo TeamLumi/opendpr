@@ -49,8 +49,9 @@ namespace Dpr.SubContents
 		// TODO
 		public void SetBatchDisplayFlag(bool flag) { }
 		
-		// TODO
-		public void SetNetworkMode(bool isNetwork) { }
+		public void SetNetworkMode(bool isNetwork) {
+		    this.isNetworkMode = isNetwork;
+		}
 		
 		// TODO
 		public void HideKeywaitIcon() { }

@@ -32,8 +32,9 @@ namespace Dpr.Movie
         // TODO
         public void Stop() { }
 
-        // TODO
-        public bool IsPlaying() { return false; }
+        public bool IsPlaying() {
+            return _isPlaying;
+        }
 
         // TODO
         public float GetTime() { return 0.0f; }

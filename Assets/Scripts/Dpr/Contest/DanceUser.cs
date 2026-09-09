@@ -37,8 +37,9 @@ namespace Dpr.Contest
 		// TODO
 		public override void Reset() { }
 		
-		// TODO
-		public void ChangeTutorialSetting(bool flag) { }
+		public void ChangeTutorialSetting(bool flag) {
+		    this.bAutoMode = flag;
+		}
 		
 		// TODO
 		protected override void UpdateAction() { }

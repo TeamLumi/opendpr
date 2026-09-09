@@ -45,8 +45,9 @@ namespace Dpr.GMS
 		// TODO
 		public void OnFinalize() { }
 		
-		// TODO
-		public void SetLockPlaySe(bool lockSe) { }
+		public void SetLockPlaySe(bool lockSe) {
+		    this.lockPlaySe = lockSe;
+		}
 		
 		// TODO
 		public void PlaySe(string eventName) { }

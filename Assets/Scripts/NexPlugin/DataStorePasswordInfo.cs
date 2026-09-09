@@ -13,14 +13,17 @@ namespace NexPlugin
 			dataId = 0;
 		}
 		
-		// TODO
-		public ulong GetDataId() { return default; }
+		public ulong GetDataId() {
+		    return dataId;
+		}
 		
-		// TODO
-		public ulong GetAccessPassword() { return default; }
+		public ulong GetAccessPassword() {
+		    return accessPassword;
+		}
 		
-		// TODO
-		public ulong GetUpdatePassword() { return default; }
+		public ulong GetUpdatePassword() {
+		    return updatePassword;
+		}
 		
 		// TODO
 		public bool IsValid() { return default; }

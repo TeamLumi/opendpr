@@ -15,11 +15,13 @@ namespace NexPlugin
 			sinceTime = NpDateTime.INVALID_DATE_TIME;
 		}
 		
-		// TODO
-		public uint GetTotalCount() { return default; }
+		public uint GetTotalCount() {
+		    return totalCount;
+		}
 		
-		// TODO
-		public List<RankingRankData> GetRankDataList() { return default; }
+		public List<RankingRankData> GetRankDataList() {
+		    return rankDataList;
+		}
 		
 		// TODO
 		public NpDateTime GetSinceTime() { return default; }

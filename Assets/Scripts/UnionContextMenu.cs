@@ -33,8 +33,9 @@ public class UnionContextMenu
 	// TODO
 	public void Clear() { }
 	
-	// TODO
-	public void SetZoneID(ZoneID zoneId) { }
+	public void SetZoneID(ZoneID zoneId) {
+	    zoneID = zoneId;
+	}
 	
 	// TODO
 	public void SetCallBack(Action leaveUnion, Action<OpcState.OnlineState, NetStateModel.StateModelType> createStateModel) { }
@@ -66,11 +67,13 @@ public class UnionContextMenu
 	// TODO
 	public void CloseContextWindow() { }
 	
-	// TODO
-	public ContextMenuWindow GetOpenMenu() { return default; }
+	public ContextMenuWindow GetOpenMenu() {
+	    return contextMenuWindow;
+	}
 	
-	// TODO
-	private void SetIsOpen(bool isOpen) { }
+	private void SetIsOpen(bool isOpen) {
+	    isContextOpen = isOpen;
+	}
 	
 	// TODO
 	public bool IsOpen() { return default; }

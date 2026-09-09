@@ -34,11 +34,13 @@ public class UnionTradeManager
 	// TODO
 	public void SetTargetTranerParam(uint id, string name, int cassetVersion, MessageEnumData.MsgLangId langId) { }
 	
-	// TODO
-	public void SetIsError(bool error) { }
+	public void SetIsError(bool error) {
+	    isError = error;
+	}
 	
-	// TODO
-	public bool GetIsError() { return default; }
+	public bool GetIsError() {
+	    return isError;
+	}
 	
 	// TODO
 	private void SetWaitMessage() { }
@@ -64,32 +66,39 @@ public class UnionTradeManager
 	// TODO
 	public void Error() { }
 	
-	// TODO
-	public TradeSelectPokeModel GetTradeSlectPokeModel() { return default; }
+	public TradeSelectPokeModel GetTradeSlectPokeModel() {
+	    return tradeSelectModel;
+	}
 	
-	// TODO
-	public TradeFlowState GetCurrentState() { return default; }
+	public TradeFlowState GetCurrentState() {
+	    return currentState;
+	}
 	
 	// TODO
 	public void NextState() { }
 	
-	// TODO
-	public void SetCurrentState(TradeFlowState state) { }
+	public void SetCurrentState(TradeFlowState state) {
+	    currentState = state;
+	}
 	
-	// TODO
-	public void SetTargetIndex(int index) { }
+	public void SetTargetIndex(int index) {
+	    tradeTargetIndex = index;
+	}
 	
 	// TODO
 	private void SetTargetConfirmPokeParam(PokemonParam param) { }
 	
-	// TODO
-	public PokemonParam GetTargetConfirmPokeParam() { return default; }
+	public PokemonParam GetTargetConfirmPokeParam() {
+	    return targetPokemonParam;
+	}
 	
-	// TODO
-	public void SetIsRecruiment(bool isRec) { }
+	public void SetIsRecruiment(bool isRec) {
+	    isRecruiment = isRec;
+	}
 	
-	// TODO
-	public PokemonParam GetSelectMyPokemonParam() { return default; }
+	public PokemonParam GetSelectMyPokemonParam() {
+	    return selectMyPokemonParam;
+	}
 	
 	// TODO
 	private void SendPokeParam(PokemonParam param) { }

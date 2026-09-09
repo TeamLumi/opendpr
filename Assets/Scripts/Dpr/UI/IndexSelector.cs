@@ -38,8 +38,9 @@ namespace Dpr.UI
         // TODO
         public void ResumeMoveState() { }
 
-        // TODO
-        public void SetCurrentIndex(int index) { }
+        public void SetCurrentIndex(int index) {
+            this.CurrentIndex = index;
+        }
 
         private enum MoveState : int
         {

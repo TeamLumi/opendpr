@@ -11,17 +11,21 @@ namespace NexPlugin
 			accessPassword = 0;
 		}
 		
-		// TODO
-		public void SetRatingValue(int ratingValue_) { }
+		public void SetRatingValue(int ratingValue_) {
+		    this.ratingValue = ratingValue_;
+		}
 		
-		// TODO
-		public int GetRatingValue() { return default; }
+		public int GetRatingValue() {
+		    return ratingValue;
+		}
 		
-		// TODO
-		public void SetAccessPassword(ulong accessPassword_) { }
+		public void SetAccessPassword(ulong accessPassword_) {
+		    this.accessPassword = accessPassword_;
+		}
 		
-		// TODO
-		public ulong GetAccessPassword() { return default; }
+		public ulong GetAccessPassword() {
+		    return accessPassword;
+		}
 		
 		// TODO
 		public void Reset() { }

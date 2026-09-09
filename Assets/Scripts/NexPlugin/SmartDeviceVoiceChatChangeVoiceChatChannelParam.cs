@@ -11,17 +11,21 @@ namespace NexPlugin
 			channelId = 0;
 		}
 		
-		// TODO
-		public void SetChannelId(uint channelId_) { }
+		public void SetChannelId(uint channelId_) {
+		    this.channelId = channelId_;
+		}
 		
-		// TODO
-		public uint GetChannelId() { return default; }
+		public uint GetChannelId() {
+		    return channelId;
+		}
 		
-		// TODO
-		public void SetRoomId(ulong roomId_) { }
+		public void SetRoomId(ulong roomId_) {
+		    this.roomId = roomId_;
+		}
 		
-		// TODO
-		public ulong GetRoomId() { return default; }
+		public ulong GetRoomId() {
+		    return roomId;
+		}
 		
 		// TODO
 		public void Reset() { }

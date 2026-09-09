@@ -24,8 +24,9 @@
         // TODO
         public InterruptCode GetInterruptCode() { return InterruptCode.NONE; }
 
-        // TODO
-        public bool IsEscapeSucceededOnChangeOrEscape() { return false; }
+        public bool IsEscapeSucceededOnChangeOrEscape() {
+            return m_isEscapeSucceeded;
+        }
 
         // TODO
         public void SetSendData_ConfirmCounterPokeChange(byte enemyPutPokeID) { }

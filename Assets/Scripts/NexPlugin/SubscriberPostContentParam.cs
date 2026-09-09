@@ -19,8 +19,9 @@ namespace NexPlugin
 		// TODO
 		public void SetTopic(uint topic_) { }
 		
-		// TODO
-		public List<uint> GetTopic() { return default; }
+		public List<uint> GetTopic() {
+		    return topics;
+		}
 		
 		// TODO
 		public uint GetTopicSingle() { return default; }
@@ -28,14 +29,16 @@ namespace NexPlugin
 		// TODO
 		public void SetMessage(string message_) { }
 		
-		// TODO
-		public string GetMessage() { return default; }
+		public string GetMessage() {
+		    return message;
+		}
 		
 		// TODO
 		public void SetBinary(List<byte> binary_) { }
 		
-		// TODO
-		public List<byte> GetBinary() { return default; }
+		public List<byte> GetBinary() {
+		    return binary;
+		}
 		
 		// TODO
 		public void Reset() { }

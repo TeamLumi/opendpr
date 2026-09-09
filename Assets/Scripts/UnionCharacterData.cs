@@ -10,12 +10,15 @@ public class UnionCharacterData : MonoBehaviour
 	// TODO
 	public void SetCharaAssetName(string name) { }
 	
-	// TODO
-	public string GetCharaAssetName() { return default; }
+	public string GetCharaAssetName() {
+	    return charaAssetName;
+	}
 	
-	// TODO
-	public void SetColorVariationID(int id) { }
+	public void SetColorVariationID(int id) {
+	    this.colorVariationID = id;
+	}
 	
-	// TODO
-	public int GetColorVariationID() { return default; }
+	public int GetColorVariationID() {
+	    return colorVariationID;
+	}
 }

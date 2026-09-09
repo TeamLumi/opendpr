@@ -19,11 +19,13 @@ namespace Dpr.UI
 		private RectTransform rectTransform;
 		private CapsuleInfo info;
 		
-		// TODO
-		public int GetIndex() { return default; }
+		public int GetIndex() {
+		    return index;
+		}
 		
-		// TODO
-		public void SetIndex(int index) { }
+		public void SetIndex(int index) {
+		    this.index = index;
+		}
 		
 		// TODO
 		public RectTransform GetRectTransform() { return default; }
@@ -43,8 +45,9 @@ namespace Dpr.UI
 		// TODO
 		public void SetInfo(CapsuleInfo info) { }
 		
-		// TODO
-		public CapsuleInfo GetInfo() { return default; }
+		public CapsuleInfo GetInfo() {
+		    return info;
+		}
 		
 		// TODO
 		public void OnSwapStart() { }

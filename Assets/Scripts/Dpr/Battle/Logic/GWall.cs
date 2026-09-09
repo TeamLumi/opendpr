@@ -28,8 +28,9 @@
         // TODO
         public void SetAppear() { }
 
-        // TODO
-        public bool IsAppeared() { return false; }
+        public bool IsAppeared() {
+            return m_isAppeared;
+        }
 
         // TODO
         public bool IsActive() { return false; }
@@ -37,14 +38,17 @@
         // TODO
         public bool IsBroken() { return false; }
 
-        // TODO
-        public byte GetGauseMax() { return 0; }
+        public byte GetGauseMax() {
+            return m_gaugeMax;
+        }
 
-        // TODO
-        public byte GetGaugeNow() { return 0; }
+        public byte GetGaugeNow() {
+            return m_gaugeNow;
+        }
 
-        // TODO
-        public byte GetGauseInit() { return 0; }
+        public byte GetGauseInit() {
+            return m_gaugeInit;
+        }
 
         // TODO
         public void InitGauge() { }
@@ -64,8 +68,9 @@
         // TODO
         public bool IsGaugeFull() { return false; }
 
-        // TODO
-        public byte GetRepairTurnCount() { return 0; }
+        public byte GetRepairTurnCount() {
+            return m_repairTurnCount;
+        }
 
         // TODO
         public void DecrementRepairTurnCount() { }

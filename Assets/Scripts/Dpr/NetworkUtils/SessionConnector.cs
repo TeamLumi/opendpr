@@ -72,8 +72,9 @@ namespace Dpr.NetworkUtils
         // TODO
         private void ResetParam() { }
         
-        // TODO
-        public void SetCallOnFinishedSessionFlag(bool flag) { }
+        public void SetCallOnFinishedSessionFlag(bool flag) {
+            this.canCallOnFinishedSession = flag;
+        }
 
         // TODO
         public void StartSession(NetworkParam networkParam, [Optional] Action<StartSessionResult> onCompleteStartSession) { }

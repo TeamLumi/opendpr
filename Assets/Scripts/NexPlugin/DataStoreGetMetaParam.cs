@@ -18,26 +18,32 @@ namespace NexPlugin
 		// TODO
 		public void SetDataId(ulong dataId_) { }
 		
-		// TODO
-		public ulong GetDataId() { return default; }
+		public ulong GetDataId() {
+		    return dataId;
+		}
 		
 		// TODO
 		public void SetPersistenceTarget(DataStorePersistenceTarget persistenceTarget_) { }
 		
-		// TODO
-		public DataStorePersistenceTarget GetPersistenceTarget() { return default; }
+		public DataStorePersistenceTarget GetPersistenceTarget() {
+		    return persistenceTarget;
+		}
 		
-		// TODO
-		public void SetResultOption(DataStore.ResultFlag resultOption_) { }
+		public void SetResultOption(DataStore.ResultFlag resultOption_) {
+		    this.resultOption = resultOption_;
+		}
 		
-		// TODO
-		public DataStore.ResultFlag GetResultOption() { return default; }
+		public DataStore.ResultFlag GetResultOption() {
+		    return resultOption;
+		}
 		
-		// TODO
-		public void SetAccessPassword(ulong accessPassword_) { }
+		public void SetAccessPassword(ulong accessPassword_) {
+		    this.accessPassword = accessPassword_;
+		}
 		
-		// TODO
-		public ulong GetAccessPassword() { return default; }
+		public ulong GetAccessPassword() {
+		    return accessPassword;
+		}
 		
 		// TODO
 		public void Reset() { }

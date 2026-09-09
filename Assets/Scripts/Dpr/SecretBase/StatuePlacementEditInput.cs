@@ -2,17 +2,13 @@ namespace Dpr.SecretBase
 {
 	public static class StatuePlacementEditInput
 	{
-		// TODO
-		private static int inputUp { get; }
+		private static int inputUp { get => GameController.ButtonMask.Up | GameController.ButtonMask.StickLUp | GameController.ButtonMask.StickRUp; }
 		
-		// TODO
-		private static int inputDown { get; }
+		private static int inputDown { get => GameController.ButtonMask.Down | GameController.ButtonMask.StickLDown | GameController.ButtonMask.StickRDown; }
 		
-		// TODO
-		private static int inputLeft { get; }
+		private static int inputLeft { get => GameController.ButtonMask.Left | GameController.ButtonMask.StickLLeft | GameController.ButtonMask.StickRLeft; }
 		
-		// TODO
-		private static int inputRight { get; }
+		private static int inputRight { get => GameController.ButtonMask.Right | GameController.ButtonMask.StickLRight | GameController.ButtonMask.StickRRight; }
 		
 		// TODO
 		public static bool Left { get; }

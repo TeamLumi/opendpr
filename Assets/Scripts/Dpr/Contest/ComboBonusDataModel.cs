@@ -19,8 +19,9 @@ namespace Dpr.Contest
 		// TODO
 		public bool CanGetChainBonus(int count) { return default; }
 		
-		// TODO
-		public void SetWazaType(PokeType wazaType) { }
+		public void SetWazaType(PokeType wazaType) {
+		    this.prevWazaType = wazaType;
+		}
 		
 		// TODO
 		public void ResetWazaType() { }

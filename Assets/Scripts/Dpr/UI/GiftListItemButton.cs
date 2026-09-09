@@ -17,11 +17,13 @@ namespace Dpr.UI
 		private int index;
 		private RectTransform rectTransform;
 		
-		// TODO
-		public int GetIndex() { return default; }
+		public int GetIndex() {
+		    return index;
+		}
 		
-		// TODO
-		public void SetIndex(int index) { }
+		public void SetIndex(int index) {
+		    this.index = index;
+		}
 		
 		// TODO
 		public RectTransform GetRectTransform() { return default; }

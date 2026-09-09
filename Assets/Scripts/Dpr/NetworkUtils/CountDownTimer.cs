@@ -22,8 +22,9 @@ namespace Dpr.NetworkUtils
 		// TODO
 		public bool IsChangeCountDown() { return default; }
 		
-		// TODO
-		public void SetTimeCount(int timeCount) { }
+		public void SetTimeCount(int timeCount) {
+		    this.remainingCount = timeCount;
+		}
 		
 		// TODO
 		public string GetMinuteStr() { return default; }

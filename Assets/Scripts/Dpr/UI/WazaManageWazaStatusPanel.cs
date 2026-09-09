@@ -49,8 +49,9 @@ namespace Dpr.UI
 		// TODO
 		public void SetCursorActive(bool isActive) { }
 		
-		// TODO
-		public int GetSelectedIndex() { return default; }
+		public int GetSelectedIndex() {
+		    return selectIndex;
+		}
 		
 		// TODO
 		public WazaNo GetSelectedWazaNo() { return default; }

@@ -187,23 +187,27 @@ namespace INL1
 		// TODO
 		public static void MatchingBlockRelease() { }
 		
-		// TODO
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public static uint GetSendUnreliableDataSizeMax() { return default; }
+		public static uint GetSendUnreliableDataSizeMax() {
+		    return 0;
+		}
 
-        // TODO
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static uint SessionID() { return default; }
+        public static uint SessionID() {
+            return 0;
+        }
 
-        // TODO
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static int CallbackQueueNum() { return default; }
+        public static int CallbackQueueNum() {
+            return 0;
+        }
 		
-		// TODO
-		public static uint ErrorResultGet() { return default; }
+		public static uint ErrorResultGet() {
+		    return 0;
+		}
 		
 		// TODO
 		public static PiaPlugin.Result ErrorResultGetForFamily() { return default; }

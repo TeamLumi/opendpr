@@ -32,26 +32,33 @@ namespace NexPlugin
 			metaBinary = new List<byte>();
 		}
 		
-		// TODO
-		public ulong GetDataId() { return default; }
+		public ulong GetDataId() {
+		    return dataId;
+		}
 		
-		// TODO
-		public ulong GetOwnerId() { return default; }
+		public ulong GetOwnerId() {
+		    return ownerId;
+		}
 		
-		// TODO
-		public uint GetSize() { return default; }
+		public uint GetSize() {
+		    return size;
+		}
 		
-		// TODO
-		public string GetName() { return default; }
+		public string GetName() {
+		    return name;
+		}
 		
-		// TODO
-		public ushort GetDataType() { return default; }
+		public ushort GetDataType() {
+		    return dataType;
+		}
 		
-		// TODO
-		public DataStorePermission GetAccessPermission() { return default; }
+		public DataStorePermission GetAccessPermission() {
+		    return accessPermission;
+		}
 		
-		// TODO
-		public DataStorePermission GetUpdatePermission() { return default; }
+		public DataStorePermission GetUpdatePermission() {
+		    return updatePermission;
+		}
 		
 		// TODO
 		public NpDateTime GetCreatedTime() { return default; }
@@ -59,29 +66,36 @@ namespace NexPlugin
 		// TODO
 		public NpDateTime GetUpdatedTime() { return default; }
 		
-		// TODO
-		public ushort GetPeriod() { return default; }
+		public ushort GetPeriod() {
+		    return period;
+		}
 		
-		// TODO
-		public DataStore.DataStatus GetDataStatus() { return default; }
+		public DataStore.DataStatus GetDataStatus() {
+		    return status;
+		}
 		
-		// TODO
-		public uint GetReferDataId() { return default; }
+		public uint GetReferDataId() {
+		    return referDataId;
+		}
 		
-		// TODO
-		public DataStore.DataFlag GetDataFlag() { return default; }
+		public DataStore.DataFlag GetDataFlag() {
+		    return flag;
+		}
 		
 		// TODO
 		public NpDateTime GetExpireTime() { return default; }
 		
-		// TODO
-		public List<string> GetTags() { return default; }
+		public List<string> GetTags() {
+		    return tags;
+		}
 		
-		// TODO
-		public List<DataStoreRatingInfo> GetRating() { return default; }
+		public List<DataStoreRatingInfo> GetRating() {
+		    return ratingInfo;
+		}
 		
-		// TODO
-		public List<byte> GetMetaBinary() { return default; }
+		public List<byte> GetMetaBinary() {
+		    return metaBinary;
+		}
 		
 		// TODO
 		public bool IsValid() { return default; }

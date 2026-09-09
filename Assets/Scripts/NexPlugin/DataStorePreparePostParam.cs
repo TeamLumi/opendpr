@@ -21,53 +21,65 @@ namespace NexPlugin
 			Reset();
 		}
 		
-		// TODO
-		public void SetSize(uint size_) { }
+		public void SetSize(uint size_) {
+		    this.size = size_;
+		}
 		
-		// TODO
-		public uint GetSize() { return default; }
+		public uint GetSize() {
+		    return size;
+		}
 		
 		// TODO
 		public void SetName(string name_) { }
 		
-		// TODO
-		public string GetName() { return default; }
+		public string GetName() {
+		    return name;
+		}
 		
-		// TODO
-		public void SetDataType(ushort dataType_) { }
+		public void SetDataType(ushort dataType_) {
+		    this.dataType = dataType_;
+		}
 		
-		// TODO
-		public ushort GetDataType() { return default; }
+		public ushort GetDataType() {
+		    return dataType;
+		}
 		
 		// TODO
 		public void SetAccessPermission(DataStorePermission permission_) { }
 		
-		// TODO
-		public DataStorePermission GetAccessPermission() { return default; }
+		public DataStorePermission GetAccessPermission() {
+		    return accessPermission;
+		}
 		
 		// TODO
 		public void SetUpdatePermission(DataStorePermission updatePermission_) { }
 		
-		// TODO
-		public DataStorePermission GetUpdatePermission() { return default; }
+		public DataStorePermission GetUpdatePermission() {
+		    return updatePermission;
+		}
 		
-		// TODO
-		public void SetDataFlag(DataStore.DataFlag flag_) { }
+		public void SetDataFlag(DataStore.DataFlag flag_) {
+		    this.flag = flag_;
+		}
 		
-		// TODO
-		public DataStore.DataFlag GetDataFlag() { return default; }
+		public DataStore.DataFlag GetDataFlag() {
+		    return flag;
+		}
 		
-		// TODO
-		public void SetPeriod(ushort period_) { }
+		public void SetPeriod(ushort period_) {
+		    this.period = period_;
+		}
 		
-		// TODO
-		public ushort GetPeriod() { return default; }
+		public ushort GetPeriod() {
+		    return period;
+		}
 		
 		// TODO
 		public void SetTags(List<string> tags_) { }
 		
-		// TODO
-		public List<string> GetTags() { return default; }
+		public List<string> GetTags() {
+		    return tags;
+		}
 		
 		// TODO
 		public void SetRatingSetting(Dictionary<sbyte, DataStoreRatingInitParam> ratingInitParam) { }
@@ -78,20 +90,23 @@ namespace NexPlugin
 		// TODO
 		public bool AddRatingSetting(sbyte slot, DataStoreRatingInitParam ratingInitParam) { return default; }
 		
-		// TODO
-		public Dictionary<sbyte, DataStoreRatingInitParam> GetRatingSetting() { return default; }
+		public Dictionary<sbyte, DataStoreRatingInitParam> GetRatingSetting() {
+		    return ratingInitParams;
+		}
 		
 		// TODO
 		public void SetMetaBinary(List<byte> meta_) { }
 		
-		// TODO
-		public List<byte> GetMetaBinary() { return default; }
+		public List<byte> GetMetaBinary() {
+		    return meta;
+		}
 		
 		// TODO
 		public void SetPersistenceInitParam(DataStorePersistenceInitParam persistenceInitParam_) { }
 		
-		// TODO
-		public DataStorePersistenceInitParam GetPersistenceInitParam() { return default; }
+		public DataStorePersistenceInitParam GetPersistenceInitParam() {
+		    return persistenceInitParam;
+		}
 		
 		// TODO
 		public void Reset() { }

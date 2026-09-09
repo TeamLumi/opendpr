@@ -21,22 +21,28 @@ namespace NexAssets
 		[SerializeField]
 		private uint httpRecvSocketBufferSize = 0x10000;
 
-        // TODO
-        public uint GetHttpThreadPrioritySetting() { return default; }
+        public uint GetHttpThreadPrioritySetting() {
+            return httpThreadPriority;
+        }
 		
-		// TODO
-		public uint GetHttpBufferSizeSetting() { return default; }
+		public uint GetHttpBufferSizeSetting() {
+		    return httpBufferSize;
+		}
 		
-		// TODO
-		public uint GetTimeoutBytesPerSecondSetting() { return default; }
+		public uint GetTimeoutBytesPerSecondSetting() {
+		    return timeoutBytesPerSecond;
+		}
 		
-		// TODO
-		public int GetMinimumTimeoutMilliSecondSetting() { return default; }
+		public int GetMinimumTimeoutMilliSecondSetting() {
+		    return minimumTimeoutMilliSecond;
+		}
 		
-		// TODO
-		public uint GetHttpSendSocketBufferSizeSetting() { return default; }
+		public uint GetHttpSendSocketBufferSizeSetting() {
+		    return httpSendSocketBufferSize;
+		}
 		
-		// TODO
-		public uint GetHttpRecvSocketBufferSizeSetting() { return default; }
+		public uint GetHttpRecvSocketBufferSizeSetting() {
+		    return httpRecvSocketBufferSize;
+		}
 	}
 }

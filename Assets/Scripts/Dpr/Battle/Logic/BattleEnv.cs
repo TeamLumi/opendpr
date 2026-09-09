@@ -87,8 +87,9 @@
             return m_fieldStatus;
         }
 
-        // TODO
-        public SideEffectManager GetSideEffectManager() { return null; }
+        public SideEffectManager GetSideEffectManager() {
+            return m_sideEffectManager;
+        }
 
         // TODO
         public SideEffectStatus GetSideEffectStatus(BtlSide side, BtlSideEffect effect) { return null; }
@@ -101,44 +102,56 @@
             return m_eventFactorContainer;
         }
 
-        // TODO
-        public PosPoke GetPosPoke() { return null; }
+        public PosPoke GetPosPoke() {
+            return m_posPoke;
+        }
 
-        // TODO
-        public DeadRec GetDeadRec() { return null; }
+        public DeadRec GetDeadRec() {
+            return m_deadRec;
+        }
 
-        // TODO
-        public WazaRec GetWazaRec() { return null; }
+        public WazaRec GetWazaRec() {
+            return m_wazaRec;
+        }
 
-        // TODO
-        public AffCounter GetAffinityCounter() { return null; }
+        public AffCounter GetAffinityCounter() {
+            return m_affCounter;
+        }
 
-        // TODO
-        public ActionRecorder GetActionRecorder() { return null; }
+        public ActionRecorder GetActionRecorder() {
+            return m_actionRecorder;
+        }
 
-        // TODO
-        public ActionSerialNoManager GetActionSerialNoManager() { return null; }
+        public ActionSerialNoManager GetActionSerialNoManager() {
+            return m_actionSerialNoManager;
+        }
 
-        // TODO
-        public TimeLimit GetTimeLimit() { return null; }
+        public TimeLimit GetTimeLimit() {
+            return m_timeLimit;
+        }
 
-        // TODO
-        public GRightsManager GetGRightsManager() { return null; }
+        public GRightsManager GetGRightsManager() {
+            return m_gRightsManager;
+        }
 
         // TODO
         public GGauge GetGGauge(BTL_CLIENT_ID clientID) { return null; }
 
-        // TODO
-        public RaidBattleStatus GetRaidBattleStatus() { return null; }
+        public RaidBattleStatus GetRaidBattleStatus() {
+            return m_raidBattleStatus;
+        }
 
-        // TODO
-        public BattleFlags GetBattleFlags() { return null; }
+        public BattleFlags GetBattleFlags() {
+            return m_flags;
+        }
 
-        // TODO
-        public BattleCounter GetBattleCounter() { return null; }
+        public BattleCounter GetBattleCounter() {
+            return m_counter;
+        }
 
-        // TODO
-        public EscapeInfo GetEscapeInfo() { return null; }
+        public EscapeInfo GetEscapeInfo() {
+            return m_escapeInfo;
+        }
 
         public WazaParam GetLastExecutedWaza()
         {

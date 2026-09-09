@@ -15,11 +15,13 @@ namespace NexAssets
 		[SerializeField]
 		private RankingOrderParam rankingOrderParam = new RankingOrderParam();
 		
-		// TODO
-		public uint GetCategory() { return default; }
+		public uint GetCategory() {
+		    return category;
+		}
 		
-		// TODO
-		public NexPlugin.Ranking.RankingMode GetRankingMode() { return default; }
+		public NexPlugin.Ranking.RankingMode GetRankingMode() {
+		    return mode;
+		}
 		
 		// TODO
 		public NexPlugin.Ranking.StatsFlag GetStatsFlag() { return default; }

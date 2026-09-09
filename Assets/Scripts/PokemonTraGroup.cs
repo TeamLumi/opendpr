@@ -12,8 +12,9 @@ public class PokemonTraGroup : MonoBehaviour
 	private bool needSort;
 	private SkinnedMeshRenderer[] _skinnedMeshRenderers;
 	
-	// TODO
-	public TraGrope[] GetGropes() { return default; }
+	public TraGrope[] GetGropes() {
+	    return traGropes;
+	}
 	
 	// TODO
 	private void OnEnable() { }

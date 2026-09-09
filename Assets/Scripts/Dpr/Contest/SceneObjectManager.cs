@@ -108,8 +108,9 @@ namespace Dpr.Contest
 		
 		public int UserIndex { get => userIndex; }
 		
-		// TODO
-		public ContestPlayerEntity[] GetPlayerEntities() { return default; }
+		public ContestPlayerEntity[] GetPlayerEntities() {
+		    return playerEntityArray;
+		}
 		
 		// TODO
 		public ContestPlayerEntity GetUserEntity() { return default; }

@@ -8,8 +8,9 @@ namespace Dpr.GMS
 		
 		public int DataIndex { get => dataIndex; }
 		
-		// TODO
-		public void SetDataIndex(int dataIndex) { }
+		public void SetDataIndex(int dataIndex) {
+		    this.dataIndex = dataIndex;
+		}
 		
 		// TODO
 		public string GetMonsNickname() { return default; }

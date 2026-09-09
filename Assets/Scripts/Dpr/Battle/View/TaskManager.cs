@@ -32,8 +32,9 @@ namespace Dpr.Battle.View
 		// TODO
 		public void Delete(Task iPtrTask) { }
 		
-		// TODO
-		public int GetTaskNum() { return default; }
+		public int GetTaskNum() {
+		    return _taskNum;
+		}
 		
 		// TODO
 		public void DeleteTaskFunc(Task iPtrTask) { }

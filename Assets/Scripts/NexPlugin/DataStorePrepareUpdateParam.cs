@@ -13,23 +13,29 @@ namespace NexPlugin
 			updatePassword = 0;
 		}
 		
-		// TODO
-		public void SetDataId(ulong dataId_) { }
+		public void SetDataId(ulong dataId_) {
+		    this.dataId = dataId_;
+		}
 		
-		// TODO
-		public ulong GetDataId() { return default; }
+		public ulong GetDataId() {
+		    return dataId;
+		}
 		
-		// TODO
-		public void SetSize(uint size_) { }
+		public void SetSize(uint size_) {
+		    this.size = size_;
+		}
 		
-		// TODO
-		public uint GetSize() { return default; }
+		public uint GetSize() {
+		    return size;
+		}
 		
-		// TODO
-		public void SetUpdatePassword(ulong updatePassword_) { }
+		public void SetUpdatePassword(ulong updatePassword_) {
+		    this.updatePassword = updatePassword_;
+		}
 		
-		// TODO
-		public ulong GetUpdatePassword() { return default; }
+		public ulong GetUpdatePassword() {
+		    return updatePassword;
+		}
 		
 		// TODO
 		public void Reset() { }

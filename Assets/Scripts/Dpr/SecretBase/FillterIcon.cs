@@ -18,7 +18,8 @@ namespace Dpr.SecretBase
 		// TODO
 		public void SetValueText(string value, int index) { }
 		
-		// TODO
-		public int GetIndex() { return default; }
+		public int GetIndex() {
+		    return index;
+		}
 	}
 }

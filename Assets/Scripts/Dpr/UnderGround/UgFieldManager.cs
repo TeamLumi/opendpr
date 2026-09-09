@@ -334,8 +334,7 @@ namespace Dpr.UnderGround
         // TODO
         private void YmenuHandler(int selectIndex) { }
 
-        // TODO
-        public bool IsContextMenuOpend { get; }
+        public bool IsContextMenuOpend { get => isContextMenuOpend; }
 
         // TODO
         private void OpenCustomMenu() { }

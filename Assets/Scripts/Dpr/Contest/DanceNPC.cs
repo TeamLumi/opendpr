@@ -41,8 +41,9 @@ namespace Dpr.Contest
 		// TODO
 		public override void Reset() { }
 		
-		// TODO
-		public void ChangeTutorialSetting(bool flag) { }
+		public void ChangeTutorialSetting(bool flag) {
+		    this.bIsTutorial = flag;
+		}
 		
 		// TODO
 		public override void Activate() { }

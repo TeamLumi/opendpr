@@ -23,11 +23,13 @@ namespace Dpr.SecretBase
 		// TODO
 		public void SetSelect(bool isEnable) { }
 		
-		// TODO
-		public int GetIndex() { return default; }
+		public int GetIndex() {
+		    return _index;
+		}
 		
-		// TODO
-		public void SetIndex(int index) { }
+		public void SetIndex(int index) {
+		    this._index = index;
+		}
 		
 		// TODO
 		public RectTransform GetRectTransform() { return default; }

@@ -106,8 +106,9 @@ namespace NexAssets
             return default;
         }
 
-        // TODO
-        private bool ApiCallsFrequencyCheck(int type) { return default; }
+        private bool ApiCallsFrequencyCheck(int type) {
+            return false;
+        }
 		
 		// TODO
 		public Subscriber() { }

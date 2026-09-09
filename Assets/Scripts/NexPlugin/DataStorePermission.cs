@@ -19,17 +19,20 @@ namespace NexPlugin
 			this.recipientIds = recipientIds ?? new List<ulong>();
 		}
 		
-		// TODO
-		public void SetPermission(DataStore.Permission permission_) { }
+		public void SetPermission(DataStore.Permission permission_) {
+		    this.permission = permission_;
+		}
 		
-		// TODO
-		public DataStore.Permission GetPermission() { return default; }
+		public DataStore.Permission GetPermission() {
+		    return permission;
+		}
 		
 		// TODO
 		public void SetRecipientIds(List<ulong> recipientIds_) { }
 		
-		// TODO
-		public List<ulong> GetRecipientIds() { return default; }
+		public List<ulong> GetRecipientIds() {
+		    return recipientIds;
+		}
 		
 		// TODO
 		private void Reset() { }

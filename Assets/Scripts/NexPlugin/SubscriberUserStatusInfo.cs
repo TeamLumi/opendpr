@@ -7,8 +7,9 @@ namespace NexPlugin
 		internal ulong pid;
 		internal Dictionary<byte, List<byte>> values;
 		
-		// TODO
-		public ulong GetPrincipalID() { return default; }
+		public ulong GetPrincipalID() {
+		    return pid;
+		}
 		
 		// TODO
 		public bool GetValue(byte key, List<byte> value) { return default; }

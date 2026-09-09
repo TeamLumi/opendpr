@@ -14,8 +14,9 @@ namespace Dpr.Contest
 		private bool active;
 		private bool isHold;
 		
-		// TODO
-		public bool IsActive() { return default; }
+		public bool IsActive() {
+		    return active;
+		}
 		
 		public int StartNoteID { get => startNoteID; }
 		public int EndNoteID { get => endNoteID; }

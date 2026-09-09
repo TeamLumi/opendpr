@@ -7,17 +7,21 @@ namespace NexPlugin
 		private uint count;
 		private sbyte slot;
 		
-		// TODO
-		public sbyte GetSlot() { return default; }
+		public sbyte GetSlot() {
+		    return slot;
+		}
 		
-		// TODO
-		public long GetTotalValue() { return default; }
+		public long GetTotalValue() {
+		    return totalValue;
+		}
 		
-		// TODO
-		public uint GetCount() { return default; }
+		public uint GetCount() {
+		    return count;
+		}
 		
-		// TODO
-		public long GetInitialValue() { return default; }
+		public long GetInitialValue() {
+		    return initialValue;
+		}
 		
 		// TODO
 		public void Trace() { }

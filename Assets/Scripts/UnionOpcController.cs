@@ -14,15 +14,19 @@ public class UnionOpcController : OpcController
 	// TODO
 	public override void SetNetData(INetData netData) { }
 	
-	// TODO
-	public void SetIsTransitionAfter(bool isTransition) { }
+	public void SetIsTransitionAfter(bool isTransition) {
+	    this.isTransitionAfter = isTransition;
+	}
 	
-	// TODO
-	public bool GetTransitionAfter() { return default; }
+	public bool GetTransitionAfter() {
+	    return isTransitionAfter;
+	}
 	
-	// TODO
-	public void SetIsMultiMatchWait(bool flag) { }
+	public void SetIsMultiMatchWait(bool flag) {
+	    this.isMultiMatchWait = flag;
+	}
 	
-	// TODO
-	public bool GetIsMultiMatchWait() { return default; }
+	public bool GetIsMultiMatchWait() {
+	    return isMultiMatchWait;
+	}
 }

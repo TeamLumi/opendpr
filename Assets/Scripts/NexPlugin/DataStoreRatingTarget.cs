@@ -11,17 +11,21 @@ namespace NexPlugin
 			slot = 0;
 		}
 		
-		// TODO
-		public void SetDataId(ulong dataId_) { }
+		public void SetDataId(ulong dataId_) {
+		    this.dataId = dataId_;
+		}
 		
-		// TODO
-		public ulong GetDataId() { return default; }
+		public ulong GetDataId() {
+		    return dataId;
+		}
 		
-		// TODO
-		public void SetSlot(sbyte slot_) { }
+		public void SetSlot(sbyte slot_) {
+		    this.slot = slot_;
+		}
 		
-		// TODO
-		public sbyte GetSlot() { return default; }
+		public sbyte GetSlot() {
+		    return slot;
+		}
 		
 		// TODO
 		public void Reset() { }

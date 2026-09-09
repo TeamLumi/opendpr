@@ -54,11 +54,13 @@ public class TradeStateModel
 	// TODO
 	public void SetInitCallBack(Action func, Action<int, bool> startOpenTradeBoxWindow, Action<UnionTradeManager.TradeFlowState> setState) { }
 	
-	// TODO
-	public void SetTargetTransitionIndex(int index) { }
+	public void SetTargetTransitionIndex(int index) {
+	    this.targetStationIndex = index;
+	}
 	
-	// TODO
-	public int GetTargetTransitionIndex() { return default; }
+	public int GetTargetTransitionIndex() {
+	    return targetStationIndex;
+	}
 	
 	// TODO
 	public void SetTargetTranerParam(UnionTradeManager.TargetTranerParam param) { }
@@ -69,11 +71,13 @@ public class TradeStateModel
 	// TODO
 	public void SetBoxPokeData(UnionTradeManager.BoxPokeData boxPoke) { }
 	
-	// TODO
-	public void SetTradeParent(TradeSecurityController.TradeParent parentState) { }
+	public void SetTradeParent(TradeSecurityController.TradeParent parentState) {
+	    tradeParent = parentState;
+	}
 	
-	// TODO
-	public TradeSecurityController.TradeParent GetTradeParent() { return default; }
+	public TradeSecurityController.TradeParent GetTradeParent() {
+	    return tradeParent;
+	}
 	
 	// TODO
 	protected virtual void SendPokeData() { }
@@ -102,11 +106,13 @@ public class TradeStateModel
 	// TODO
 	private void ReturnTradePokeSelectWindow() { }
 	
-	// TODO
-	public void SetNetModelState(TradeState tradeState) { }
+	public void SetNetModelState(TradeState tradeState) {
+	    this.currentState = tradeState;
+	}
 	
-	// TODO
-	public TradeState GetCurrentTradeState() { return default; }
+	public TradeState GetCurrentTradeState() {
+	    return currentState;
+	}
 	
 	// TODO
 	public bool IsTargetPokeData() { return default; }

@@ -16,17 +16,21 @@ namespace NexPlugin
 			nexUniqueIdPassword = nexUniqueIdPassword_;
 		}
 		
-		// TODO
-		public void SetUniqueId(ulong nexUniqueId_) { }
+		public void SetUniqueId(ulong nexUniqueId_) {
+		    this.nexUniqueId = nexUniqueId_;
+		}
 		
-		// TODO
-		public ulong GetUniqueId() { return default; }
+		public ulong GetUniqueId() {
+		    return nexUniqueId;
+		}
 		
-		// TODO
-		public void SetPassword(ulong nexUniqueIdPassword_) { }
+		public void SetPassword(ulong nexUniqueIdPassword_) {
+		    this.nexUniqueIdPassword = nexUniqueIdPassword_;
+		}
 		
-		// TODO
-		public ulong GetPassword() { return default; }
+		public ulong GetPassword() {
+		    return nexUniqueIdPassword;
+		}
 		
 		// TODO
 		public bool IsValid() { return default; }

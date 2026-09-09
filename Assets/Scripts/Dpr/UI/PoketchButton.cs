@@ -57,8 +57,9 @@ namespace Dpr.UI
 		// TODO
 		private void OnUpdateRepeat(float deltaTime) { }
 		
-		// TODO
-		public void SetSeEventId(uint seEventId = uint.MaxValue) { }
+		public void SetSeEventId(uint seEventId = uint.MaxValue) {
+		    this._seEventId = seEventId;
+		}
 		
 		// TODO
 		public void OnPush() { }

@@ -41,8 +41,9 @@ public class NetStateModel
 	// TODO
 	public virtual void OpenSwitchCancelMsg(bool isCancel) { }
 	
-	// TODO
-	public virtual bool IsCancelable() { return default; }
+	public virtual bool IsCancelable() {
+	    return true;
+	}
 
 	public enum StateModelType : int
 	{

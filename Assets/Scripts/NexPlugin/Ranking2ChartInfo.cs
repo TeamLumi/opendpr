@@ -26,56 +26,72 @@ namespace NexPlugin
 		// TODO
 		public NpDateTime GetCreateTime() { return default; }
 		
-		// TODO
-		public uint GetIndex() { return default; }
+		public uint GetIndex() {
+		    return index;
+		}
 		
-		// TODO
-		public uint GetCategory() { return default; }
+		public uint GetCategory() {
+		    return category;
+		}
 		
-		// TODO
-		public uint GetSeason() { return default; }
+		public uint GetSeason() {
+		    return season;
+		}
 		
-		// TODO
-		public uint GetBinsSize() { return default; }
+		public uint GetBinsSize() {
+		    return binsSize;
+		}
 		
 		// TODO
 		public bool IsValid() { return default; }
 		
-		// TODO
-		public uint GetSamplingRate() { return default; }
+		public uint GetSamplingRate() {
+		    return samplingRate;
+		}
 		
-		// TODO
-		public bool GetScoreOrder() { return default; }
+		public bool GetScoreOrder() {
+		    return scoreOrder;
+		}
 		
-		// TODO
-		public uint GetEstimateLength() { return default; }
+		public uint GetEstimateLength() {
+		    return estimateLength;
+		}
 		
-		// TODO
-		public uint GetEstimateHighestScore() { return default; }
+		public uint GetEstimateHighestScore() {
+		    return estimateHighestScore;
+		}
 		
-		// TODO
-		public uint GetEstimateLowestScore() { return default; }
+		public uint GetEstimateLowestScore() {
+		    return estimateLowestScore;
+		}
 		
-		// TODO
-		public uint GetEstimateMedianScore() { return default; }
+		public uint GetEstimateMedianScore() {
+		    return estimateMedianScore;
+		}
 		
-		// TODO
-		public double GetEstimateAverageScore() { return default; }
+		public double GetEstimateAverageScore() {
+		    return estimateAverageScore;
+		}
 		
-		// TODO
-		public uint GetHighestBinsScore() { return default; }
+		public uint GetHighestBinsScore() {
+		    return highestBinsScore;
+		}
 		
-		// TODO
-		public uint GetLowestBinsScore() { return default; }
+		public uint GetLowestBinsScore() {
+		    return lowestBinsScore;
+		}
 		
-		// TODO
-		public uint GetBinsWidth() { return default; }
+		public uint GetBinsWidth() {
+		    return binsWidth;
+		}
 		
-		// TODO
-		public uint GetAttribute1() { return default; }
+		public uint GetAttribute1() {
+		    return attribute1;
+		}
 		
-		// TODO
-		public uint GetAttribute2() { return default; }
+		public uint GetAttribute2() {
+		    return attribute2;
+		}
 		
 		// TODO
 		public List<uint> GetQuantities() { return default; }

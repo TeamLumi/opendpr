@@ -33,44 +33,56 @@ namespace Dpr.Battle.Logic
 			m_pSectionContainer = param.pSectionContainer;
 		}
 		
-		// TODO
-		protected MainModule GetMainModule() { return default; }
+		protected MainModule GetMainModule() {
+		    return m_pMainModule;
+		}
 		
-		// TODO
-		protected BattleEnv GetBattleEnv() { return default; }
+		protected BattleEnv GetBattleEnv() {
+		    return m_pBattleEnv;
+		}
 		
-		// TODO
-		protected ServerCommandQueue GetServerCommandQueue() { return default; }
+		protected ServerCommandQueue GetServerCommandQueue() {
+		    return m_pServerCmdQueue;
+		}
 		
-		// TODO
-		protected ServerCommandPutter GetServerCommandPutter() { return default; }
+		protected ServerCommandPutter GetServerCommandPutter() {
+		    return m_pServerCmdPutter;
+		}
 		
-		// TODO
-		protected WazaCommandPutter GetWazaCommandPutter() { return default; }
+		protected WazaCommandPutter GetWazaCommandPutter() {
+		    return m_pWazaCmdPutter;
+		}
 		
-		// TODO
-		protected EventSystem GetEventSystem() { return default; }
+		protected EventSystem GetEventSystem() {
+		    return m_pEventSystem;
+		}
 		
-		// TODO
-		protected EventLauncher GetEventLauncher() { return default; }
+		protected EventLauncher GetEventLauncher() {
+		    return m_pEventLauncher;
+		}
 		
-		// TODO
-		protected SectionSharedData GetSharedData() { return default; }
+		protected SectionSharedData GetSharedData() {
+		    return m_pSharedData;
+		}
 		
 		// TODO
 		protected ActionSharedData GetActionSharedData() { return default; }
 		
-		// TODO
-		protected PokeActionContainer GetPokemonActionContainer() { return default; }
+		protected PokeActionContainer GetPokemonActionContainer() {
+		    return m_pPokemonActionContainer;
+		}
 		
-		// TODO
-		protected PokeChangeRequest GetPokeChangeRequest() { return default; }
+		protected PokeChangeRequest GetPokeChangeRequest() {
+		    return m_pPokeChangeRequest;
+		}
 		
-		// TODO
-		protected CaptureInfo GetCaptureInfo() { return default; }
+		protected CaptureInfo GetCaptureInfo() {
+		    return m_pCaptureInfo;
+		}
 		
-		// TODO
-		protected SectionContainer GetSectionContainer() { return default; }
+		protected SectionContainer GetSectionContainer() {
+		    return m_pSectionContainer;
+		}
 		
 		// TODO
 		protected byte GetPokeID(BtlPokePos pos) { return default; }

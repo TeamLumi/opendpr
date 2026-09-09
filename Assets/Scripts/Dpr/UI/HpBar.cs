@@ -40,8 +40,9 @@ namespace Dpr.UI
 		// TODO
 		public void UpdateMaxHP(uint maxHp) { }
 		
-		// TODO
-		public void SetDuration(float duration) { }
+		public void SetDuration(float duration) {
+		    this.duration = duration;
+		}
 		
 		// TODO
 		public void SetHp(int hp, [Optional] Action onComplete, [Optional] Action<int> onUpdate) { }

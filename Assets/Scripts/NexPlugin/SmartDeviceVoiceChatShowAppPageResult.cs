@@ -9,11 +9,13 @@ namespace NexPlugin
 			status = 0;
 		}
 		
-		// TODO
-		public void SetStatus(SmartDeviceVoiceChat.ShowAppResultStatus status_) { }
+		public void SetStatus(SmartDeviceVoiceChat.ShowAppResultStatus status_) {
+		    this.status = status_;
+		}
 		
-		// TODO
-		public SmartDeviceVoiceChat.ShowAppResultStatus GetStatus() { return default; }
+		public SmartDeviceVoiceChat.ShowAppResultStatus GetStatus() {
+		    return status;
+		}
 		
 		// TODO
 		public void Reset() { }

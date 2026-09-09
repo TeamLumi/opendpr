@@ -18,24 +18,28 @@ namespace INL1
 			// Empty
 		}
 		
-		// TODO
-		public virtual ulong RecvTotalBytes() { return default; }
+		public virtual ulong RecvTotalBytes() {
+		    return recvByte;
+		}
 		
-		// TODO
-		public virtual int FromStationIndex() { return default; }
+		public virtual int FromStationIndex() {
+		    return fromStationIndex;
+		}
 		
 		// TODO
 		public virtual int RemainBytes() { return default; }
 		
-		// TODO
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public virtual void RecvTotalBytesSet(uint num) { }
+		public virtual void RecvTotalBytesSet(uint num) {
+		    recvByte = num;
+		}
 
-        // TODO
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual void FromStationIndexSet(int stationIndex) { }
+        public virtual void FromStationIndexSet(int stationIndex) {
+            this.fromStationIndex = stationIndex;
+        }
 
         // TODO
         [Browsable(false)]

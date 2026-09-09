@@ -25,8 +25,9 @@ namespace NexPlugin
 			rangeMax = 0;
 		}
 		
-		// TODO
-		public void SetInitialValue(long initialValue_) { }
+		public void SetInitialValue(long initialValue_) {
+		    this.initialValue = initialValue_;
+		}
 		
 		// TODO
 		public void SetRangeMin(int min_) { }
@@ -37,8 +38,9 @@ namespace NexPlugin
 		// TODO
 		public void SetLock(DataStoreRatingLockInitParam ratingLockInitParam) { }
 		
-		// TODO
-		public void SetFlag(DataStore.RatingFlag flag_) { }
+		public void SetFlag(DataStore.RatingFlag flag_) {
+		    this.flag = flag_;
+		}
 		
 		// TODO
 		public void Reset() { }
