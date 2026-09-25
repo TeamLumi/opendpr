@@ -2,6 +2,14 @@
 
 This is a reverse-engineered recreation of Brilliant Diamond and Shining Pearl.
 
+## Generative AI Disclosure
+
+No Generative AI has been used in the making of this project. Every line of code is either:
+- Hand-written
+- Made using (usually Python) scripts that were, themselves, hand-written (for the more repetitive tasks)
+
+We strongly encourage developers of other similar projects to take a strong stance against the use of Generative AI and to foster an environment where human creativity can thrive. It was possible to make projects like this before Generative AI. There is always a human-made alternative to use.
+
 ## Setup
 
 This project is intended to be opened with Unity 2019.4.27f1. It is the Unity version BDSP is built on and will keep issues to a minimum.
