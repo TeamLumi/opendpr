@@ -54,14 +54,52 @@ namespace INL1
 		// TODO
 		public static int FileCountGet(uint directoryNum) { return default; }
 		
-		// TODO
-		public static bool OkurimonoIdFlagCheck(int OkurimonoID, byte[] OkurimonoIdFlagArray256) { return default; }
+		public static bool OkurimonoIdFlagCheck(int OkurimonoID, byte[] OkurimonoIdFlagArray256)
+		{
+			if (OkurimonoID >= OkurimonoIdFlagArray256size * 8)
+				return true;
+
+			if (OkurimonoIdFlagArray256.Length != OkurimonoIdFlagArray256size)
+				return true;
+
+			var index = OkurimonoID / 8;
+			var mask = (byte)(0b10000000 >> (OkurimonoID & 0b111));
+
+			return (OkurimonoIdFlagArray256[index] & mask) != 0;
+		}
 		
-		// TODO
-		public static bool OkurimonoIdFlagSet(int OkurimonoID, ref byte[] OkurimonoIdFlagArray256) { return default; }
+		public static bool OkurimonoIdFlagSet(int OkurimonoID, ref byte[] OkurimonoIdFlagArray256)
+		{
+            if (OkurimonoID >= OkurimonoIdFlagArray256size * 8)
+                return false;
+
+            if (OkurimonoIdFlagArray256.Length != OkurimonoIdFlagArray256size)
+                return false;
+
+            var index = OkurimonoID / 8;
+            var mask = (byte)(0b10000000 >> (OkurimonoID & 0b111));
+
+            if ((OkurimonoIdFlagArray256[index] & mask) == 0)
+			{
+				OkurimonoIdFlagArray256[index] |= mask;
+                return true;
+			}
+			else
+			{
+				return false;
+			}
+        }
 		
-		// TODO
-		public static bool OkurimonoIdFlagInit(ref byte[] OkurimonoIdFlagArray256) { return default; }
+		public static bool OkurimonoIdFlagInit(ref byte[] OkurimonoIdFlagArray256)
+		{
+            if (OkurimonoIdFlagArray256.Length != OkurimonoIdFlagArray256size)
+                return false;
+
+			for (int i=0; i<OkurimonoIdFlagArray256.Length; i++)
+				OkurimonoIdFlagArray256[i] = 0;
+
+			return true;
+        }
 		
 		// TODO
 		public static bool FileFlagCheck(byte fileName, byte[] fileFlagArray) { return default; }

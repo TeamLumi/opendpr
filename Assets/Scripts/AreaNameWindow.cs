@@ -81,16 +81,16 @@ public class AreaNameWindow : MonoBehaviour
     {
         if (showing)
         {
-            if (showingLabelName.Length > 0 && labelName.GetHashCode() == showLabelHash)
+            if (IsSameShowingLabel(labelName))
             {
                 reservLabelName.Clear();
                 return;
             }
 
-            if (reservLabelName.Length < 1)
+            if (reservLabelName.Length <= 0)
                 reservLabelName.Append(labelName);
         }
-        else if (lastShowLabelHash == 0 || labelName.GetHashCode() != lastShowLabelHash)
+        else if (!IsSameLastShowingLabel(labelName))
         {
             SetActive(true);
             PerformShowAreaName(labelName);

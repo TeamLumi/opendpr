@@ -4,20 +4,38 @@ namespace Dpr.UI
 {
 	public abstract class GiftSubWindow : UIWindow
 	{
-		// TODO
-		public void Initialize(UnityAction<UIWindow> onClosedCallback) { }
+		public void Initialize(UnityAction<UIWindow> onClosedCallback)
+		{
+			onClosed = onClosedCallback;
+			OnInitialize();
+        }
 
 		protected abstract void OnInitialize();
 
 		public abstract void OnUpdate(float deltaTime);
 		
-		// TODO
-		public virtual void Show() { }
+		public virtual void Show()
+		{
+			gameObject.SetActive(true);
+		}
 		
-		// TODO
-		public virtual void Hide() { }
+		public virtual void Hide()
+        {
+            gameObject.SetActive(false);
+        }
 		
-		// TODO
-		protected void SetupKeyguide(KeyguideID[] keyguideIDs) { }
+		protected void SetupKeyguide(KeyguideID[] keyguideIDs)
+		{
+			var keyguide = UIManager.Instance.GetKeyguide(null, true);
+
+			keyguide.transform.SetParent(transform, false);
+			var param = new Keyguide.Param();
+
+			for (int i=0; i<keyguideIDs.Length; i++)
+				param.itemParams.Add(new KeyguideItem.Param()
+				{
+					keyguideId = keyguideIDs[i],
+				});
+		}
 	}
 }

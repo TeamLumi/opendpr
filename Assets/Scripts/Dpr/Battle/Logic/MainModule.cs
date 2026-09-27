@@ -75,8 +75,10 @@ namespace Dpr.Battle.Logic
         private static readonly BtlvPos[][] rule_raid_vpos4;
         private CapsuleData DummyCapsuleData;
 
-        // TODO
-        public BATTLE_SETUP_PARAM GetBattleSetupParam() { return null; }
+        public BATTLE_SETUP_PARAM GetBattleSetupParam()
+        {
+            return m_setupParam;
+        }
 
         // TODO
         public bool GetEnableTimeStop() { return false; }

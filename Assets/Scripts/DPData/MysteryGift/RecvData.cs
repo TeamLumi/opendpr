@@ -1,5 +1,4 @@
-﻿using Dpr.Item;
-using System;
+﻿using System;
 
 namespace DPData.MysteryGift
 {
@@ -21,7 +20,11 @@ namespace DPData.MysteryGift
         public int reserved_int03;
         public int reserved_int04;
 
-        // TODO
-        public void Clear() { }
+        public void Clear()
+        {
+            monsData.Clear();
+            itemDatas = new ItemInfo[MysteryGiftItemData.InfoSize];
+            dressIds = new uint[MysteryGiftDressUpData.InfoSize];
+        }
     }
 }

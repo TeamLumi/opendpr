@@ -14,6 +14,11 @@
             m_pMainModule = pMainModule;
             m_pBattleEnv = pBattleEnv;
 
+            Initialize();
+        }
+
+        public void Initialize()
+        {
             for (int i=0; i<m_clientInfo.Length; i++)
             {
                 m_clientInfo[i].clientID = BTL_CLIENT_ID.BTL_CLIENT_NULL;
@@ -25,47 +30,118 @@
             m_passedTurnCount = 0;
         }
 
-        // TODO
-        public void Initialize() { }
+        public void CopyFrom(in GRights src)
+        {
+            for (int i=0; i<m_clientInfo.Length; i++)
+            {
+                m_clientInfo[i].clientID = src.m_clientInfo[i].clientID;
+                m_clientInfo[i].isInvalid = src.m_clientInfo[i].isInvalid;
+            }
 
-        // TODO
-        public void CopyFrom(in GRights src) { }
+            m_clientNum = src.m_clientNum;
+            m_assignedClientIdx = src.m_assignedClientIdx;
+        }
 
-        // TODO
-        public bool IsGRightsRegulationExist() { return false; }
+        public bool IsGRightsRegulationExist()
+        {
+            return m_clientNum > 1;
+        }
 
-        // TODO
-        public void AddClient(BTL_CLIENT_ID clientID) { }
+        public void AddClient(BTL_CLIENT_ID clientID)
+        {
+            if (m_clientNum < m_clientInfo.Length)
+            {
+                m_clientInfo[m_clientNum].clientID = clientID;
+                m_clientInfo[m_clientNum].isInvalid = false;
+                m_clientNum++;
+            }
+        }
 
-        // TODO
-        public void InvalidateClient(BTL_CLIENT_ID clientID) { }
+        public void InvalidateClient(BTL_CLIENT_ID clientID)
+        {
+            for (int i=0; i!=m_clientInfo.Length; i++)
+            {
+                if (m_clientInfo[i].clientID == clientID)
+                {
+                    m_clientInfo[i].isInvalid = true;
+                    break;
+                }
+            }
+        }
 
-        // TODO
-        public byte GetClientNum() { return 0; }
+        public byte GetClientNum()
+        {
+            return m_clientNum;
+        }
 
-        // TODO
-        public int GetClientOrder(BTL_CLIENT_ID clientID) { return 0; }
+        public int GetClientOrder(BTL_CLIENT_ID clientID)
+        {
+            if (m_clientNum == 0)
+                return -1;
 
-        // TODO
-        public BTL_CLIENT_ID GetClientByOrder(byte order) { return BTL_CLIENT_ID.BTL_CLIENT_PLAYER; }
+            for (int i=0; i<m_clientInfo.Length; i++)
+            {
+                if (m_clientInfo[i].clientID == clientID)
+                    return i;
+            }
 
-        // TODO
-        public BTL_CLIENT_ID GetAssignedClient() { return BTL_CLIENT_ID.BTL_CLIENT_PLAYER; }
+            return -1;
+        }
 
-        // TODO
-        public bool TransferRights() { return false; }
+        public BTL_CLIENT_ID GetClientByOrder(byte order)
+        {
+            if (order >= m_clientNum)
+                return BTL_CLIENT_ID.BTL_CLIENT_NULL;
 
-        // TODO
-        private byte getNextAssignTarget(byte currentIdx) { return 0; }
+            return m_clientInfo[order].clientID;
+        }
 
-        // TODO
-        private bool isAssignEnable(in ClientInfo clientInfo) { return false; }
+        public BTL_CLIENT_ID GetAssignedClient()
+        {
+            if (m_clientNum == 0)
+                return BTL_CLIENT_ID.BTL_CLIENT_NULL;
 
-        // TODO
-        public uint GetPassedTurnCount() { return 0; }
+            return m_clientInfo[m_assignedClientIdx].clientID;
+        }
 
-        // TODO
-        public void IncPassedTurnCount() { }
+        public bool TransferRights()
+        {
+            if (!IsGRightsRegulationExist())
+                return false;
+
+            m_assignedClientIdx = getNextAssignTarget(m_assignedClientIdx);
+            m_passedTurnCount = 0;
+            return true;
+        }
+
+        private byte getNextAssignTarget(byte currentIdx)
+        {
+            if (m_clientNum == 0)
+                return currentIdx;
+
+            var newIdx = (byte)((currentIdx + 1) % m_clientNum);
+
+            // Result ignored
+            _ = isAssignEnable(m_clientInfo[newIdx]);
+
+            return newIdx;
+        }
+
+        private bool isAssignEnable(in ClientInfo clientInfo)
+        {
+            return true;
+        }
+
+        public uint GetPassedTurnCount()
+        {
+            return m_passedTurnCount;
+        }
+
+        public void IncPassedTurnCount()
+        {
+            if (m_passedTurnCount < DefineConstants.BTL_TURNCOUNT_MAX)
+                m_passedTurnCount++;
+        }
 
         private class ClientInfo
         {

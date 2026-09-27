@@ -1,5 +1,6 @@
 using DPData;
 using DPData.MysteryGift;
+using System;
 
 namespace Dpr.UI
 {
@@ -16,10 +17,20 @@ namespace Dpr.UI
 			Create(data);
 		}
 		
-		// TODO
-		public CanReceiveResult CanReceive() { return default; }
+		public CanReceiveResult CanReceive()
+		{
+			return MysteryGiftWork.CanReceive(giftData.commonData);
+		}
 		
-		// TODO
-		private void Create(byte[] data) { }
+		private void Create(byte[] data)
+		{
+			var newData = new byte[MysteryGiftData.DataSize];
+			Array.Copy(data, 0, newData, 0, newData.Length);
+
+			ConvertResult = MysteryGiftWork.ConvertMysteryGiftData(newData, out giftData);
+
+			if (ConvertResult == ConvertResult.SUCCESS)
+				RecvData = MysteryGiftWork.CreateRecvData(giftData);
+		}
 	}
 }

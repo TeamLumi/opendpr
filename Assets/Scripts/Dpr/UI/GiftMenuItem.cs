@@ -9,10 +9,14 @@ namespace Dpr.UI
         [SerializeField]
 		public GameObject buttonEffectObject;
 		
-		// TODO
-		public void Select() { }
+		public void Select()
+		{
+			buttonEffectObject.SetActive(true);
+		}
 		
-		// TODO
-		public void Unselect() { }
+		public void Unselect()
+		{
+            buttonEffectObject.SetActive(false);
+        }
 	}
 }

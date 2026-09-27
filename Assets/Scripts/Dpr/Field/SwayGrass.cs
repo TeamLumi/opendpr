@@ -1,4 +1,5 @@
 ﻿using AK;
+using AttributeData;
 using Audio;
 using Dpr.Battle.Logic;
 using Pml;
@@ -392,12 +393,12 @@ namespace Dpr.Field
             }
 
             EffectFieldID effectIndex;
-            switch ((EffectFieldID)grassData.attricode)
+            switch ((MapAttribute)grassData.attricode)
             {
-                case EffectFieldID.EF_F_ENCOUNT_TRAINER_ICE_01:
+                case MapAttribute.MATTR_E_SNOWGRASS_01:
                     effectIndex = EffectFieldID.EF_F_GRASS_03_SHAKE_01;
                     break;
-                case EffectFieldID.EF_F_WEATHER_RAIN:
+                case MapAttribute.MATTR_E_KUSA_4:
                     effectIndex = EffectFieldID.EF_F_GRASS_02_SHAKE_01;
                     break;
                 default:
@@ -420,10 +421,10 @@ namespace Dpr.Field
         {
             int[] shinyOdds = new int[41]             
             {
-                4096, 3855, 3640, 3449, 3277, 3105, 2723, 2849, 2731, 2621,
-                2521, 2405, 2347, 2213, 2113, 2049, 1986, 1927, 1856, 1791,
-                1451, 1351, 1232, 1067, 939, 822, 705, 500, 389, 364,
-                335, 296, 225, 159, 120, 104, 69, 481, 799, 200, 99
+                4096, 3855, 3640, 3449, 3277, 3121, 2979, 2849, 2731, 2621,
+                2521, 2427, 2341, 2259, 2185, 2114, 2048, 1986, 1927, 1872,
+                1820, 1771, 1724, 1680, 1638, 1598, 1560, 1524, 1489, 1456,
+                1310, 1285, 1260, 1236, 1213, 1192, 993, 799, 400, 200, 99,
             };
 
             int[] shinyCharmOdds = new int[41]         
@@ -461,51 +462,10 @@ namespace Dpr.Field
 
             PlayerWork.PoketchData.PoketoreSetCount((ushort)rensa_mons, (int)rensa_count);
 
-            int continueChain = 0;
-
-            if (result == BtlResult.BTL_RESULT_CAPTURE)
-            {
-                switch (work_data.rank)
-                {
-                    case 1: 
-                        continueChain = 63; 
-                        break;
-                    case 2: 
-                        continueChain = 73; 
-                        break;
-                    case 3: 
-                        continueChain = 83; 
-                        break;
-                    case 4: 
-                        continueChain = 93; 
-                        break;
-                }
-            }
-
-            else if (result == BtlResult.BTL_RESULT_WIN)
-            {
-                switch (work_data.rank)
-                {
-                    case 1:
-                        continueChain = 53;
-                        break;
-                    case 2:
-                        continueChain = 63;
-                        break;
-                    case 3:
-                        continueChain = 73;
-                        break;
-                    case 4:
-                        continueChain = 83;
-                        break;
-                }
-            }
-
-            if (RandomGroupWork.RandomValue(100) < continueChain)
+            if (GetChainFlg(work_data.rank, result))
             {
                 work_data = null;
             }
-
             else
             {
                 SwayGrass_InitSwayGrass();

@@ -17,28 +17,49 @@ namespace Dpr.UI
 		private int index;
 		private RectTransform rectTransform;
 		
-		// TODO
-		public int GetIndex() { return default; }
+		public int GetIndex()
+		{
+			return index;
+		}
 		
-		// TODO
-		public void SetIndex(int index) { }
+		public void SetIndex(int index)
+		{
+			this.index = index;
+		}
 		
-		// TODO
-		public RectTransform GetRectTransform() { return default; }
+		public RectTransform GetRectTransform()
+		{
+			if (rectTransform == null)
+				rectTransform = transform as RectTransform;
+
+			return rectTransform;
+		}
 		
-		// TODO
-		public bool GetActive() { return default; }
+		public bool GetActive()
+		{
+			return gameObject.activeSelf;
+		}
 		
-		// TODO
-		public void SetActive(bool isActive) { }
+		public void SetActive(bool isActive)
+		{
+			gameObject.SetActive(isActive);
+		}
 		
-		// TODO
-		public void Select() { }
+		public void Select()
+		{
+			activeObject.SetActive(true);
+			disableObject.SetActive(false);
+		}
 		
-		// TODO
-		public void UnSelect() { }
+		public void UnSelect()
+		{
+			activeObject.SetActive(false);
+			disableObject.SetActive(true);
+		}
 		
-		// TODO
-		public void Set(RecvData data) { }
+		public void Set(RecvData data)
+		{
+			GiftMessageUtility.SetTitleText(data, new UIText[] { activeNameText, disableNameText });
+		}
 	}
 }

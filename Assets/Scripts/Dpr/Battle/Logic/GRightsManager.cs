@@ -13,17 +13,32 @@
             Initialize();
         }
 
-        // TODO
-        private void createGRights(MainModule pMainModule, BattleEnv pBattleEnv) { }
+        private void createGRights(MainModule pMainModule, BattleEnv pBattleEnv)
+        {
+            m_gRights[(int)BtlSide.BTL_SIDE_1ST] = new GRights(pMainModule, pBattleEnv);
+            m_gRights[(int)BtlSide.BTL_SIDE_2ND] = new GRights(pMainModule, pBattleEnv);
+        }
 
-        // TODO
-        public void Initialize() { }
+        public void Initialize()
+        {
+            for (int i=0; i<m_gRights.Length; i++)
+                m_gRights[i].Initialize();
+        }
 
-        // TODO
-        public void CopyFrom(in GRightsManager src) { }
+        public void CopyFrom(in GRightsManager src)
+        {
+            for (int i=0; i<m_gRights.Length; i++)
+                m_gRights[i].CopyFrom(src.GetGRights((BtlSide)i));
+        }
 
-        // TODO
-        public void AddClient(BTL_CLIENT_ID clientID) { }
+        public void AddClient(BTL_CLIENT_ID clientID)
+        {
+            var side = m_pMainModule.GetClientSide((byte)clientID);
+            if (side >= BtlSide.BTL_SIDE_NUM)
+                return;
+
+            m_gRights[(int)side].AddClient(clientID);
+        }
 
         public GRights GetGRights(BtlSide side)
         {

@@ -29,17 +29,27 @@ namespace Dpr.UI
             IsLoop = isLoop;
         }
 
-        // TODO
-        public void Setup(int minCount, int maxCount) { }
+        public void Setup(int minCount, int maxCount)
+        {
+            MinCount = minCount;
+            MaxCount = maxCount;
+            moveState = MoveState.Neutral;
+            CurrentIndex = minCount;
+        }
 
         // TODO
         public bool Move(int moveValue) { return false; }
 
-        // TODO
-        public void ResumeMoveState() { }
+        public void ResumeMoveState()
+        {
+            if (moveState == MoveState.Moving)    moveState = MoveState.Neutral;
+            else if (moveState == MoveState.Stop) moveState = MoveState.Resume;
+        }
 
-        // TODO
-        public void SetCurrentIndex(int index) { }
+        public void SetCurrentIndex(int index)
+        {
+            CurrentIndex = index;
+        }
 
         private enum MoveState : int
         {

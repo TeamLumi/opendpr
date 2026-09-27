@@ -163,8 +163,28 @@ namespace Dpr.Battle.View.Objects
 		// TODO
 		public BattlePokemonEntity.AnimationState CheckReplaceAnimationState(BattlePokemonEntity.AnimationState state) { return default; }
 		
-		// TODO
-		public void ChangeAnimStatePoke(BattlePokemonEntity.AnimationState state, float duration = 0.15f, float startTime = 0.0f) { }
+		public void ChangeAnimStatePoke(BattlePokemonEntity.AnimationState state, float duration = 0.15f, float startTime = 0.0f)
+		{
+			if (!IsEnable)
+				return;
+
+			_lastPlayAnimationState = state;
+
+			if (state == BattlePokemonEntity.AnimationState.Max)
+			{
+				UpdateAnimSpeed();
+			}
+			else
+			{
+				if (state != BattlePokemonEntity.AnimationState.WaitA01)
+                    _isSickSpeedSuspend = true;
+
+				this.GetComponentThis<BattlePokemonEntity>(ref _entity).RequestAnimationState(state, duration, startTime);
+				_entity.GetAnimationPlayer().SetAnimSpeed(1.0f);
+
+				UpdateAnimSpeed();
+			}
+		}
 		
 		// TODO
 		protected override void UpdateAnimSpeed() { }

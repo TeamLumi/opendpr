@@ -1,4 +1,8 @@
+using AK;
+using Audio;
 using DPData.MysteryGift;
+using Dpr.Message;
+using Dpr.NetworkUtils;
 using UnityEngine;
 
 namespace Dpr.UI
@@ -10,22 +14,47 @@ namespace Dpr.UI
 		[SerializeField]
 		private GiftContentsPanel contentsPanel;
 		
-		// TODO
-		protected override void OnInitialize() { }
+		protected override void OnInitialize()
+		{
+			// Empty
+		}
 		
-		// TODO
-		public override void OnUpdate(float deltaTime) { }
+		public override void OnUpdate(float deltaTime)
+		{
+			if (_input.IsPushButton(UIManager.ButtonA) || _input.IsPushButton(UIManager.ButtonB))
+			{
+				CloseMessageWindow();
+				onClosed?.Invoke(null);
+				AudioManager.Instance.PlaySe(EVENTS.UI_COMMON_CANCEL, null);
+			}
+		}
 		
-		// TODO
-		public override void Show() { }
+		public override void Show()
+		{
+			base.Show();
+
+			SetupKeyguide(new KeyguideID[] { KeyguideID.GIFT_DECIDE, KeyguideID.GIFT_CANCEL });
+		}
 		
-		// TODO
-		public void Setup(RecvData data) { }
+		public void Setup(RecvData data)
+		{
+			contentsPanel.Setup(data);
+		}
 		
-		// TODO
-		public void SetInputEnable(bool isEnable) { }
+		public void SetInputEnable(bool isEnable)
+		{
+			_input.inputEnabled = isEnable;
+		}
 		
-		// TODO
-		public void ShowMessage(string labelName) { }
+		public void ShowMessage(string labelName)
+		{
+			OpenMessageWindow(new MsgWindow.MsgWindowParam()
+			{
+				useMsgFile = MessageManager.Instance.GetMsgFile(NetworkConstants.NET_COMM_MSBT_NAME),
+				labelName = labelName,
+				inputCloseEnabled = false,
+				wndAnchorPos = MsgWindowAnchorPos,
+			});
+		}
 	}
 }

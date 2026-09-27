@@ -547,8 +547,33 @@ namespace Dpr.Battle.View.Systems
 		// TODO
 		private void BTL_SEQ_FUNC_DEF_DprPokemonMoveResetAll(SequenceFile pSeqFile, ISequenceViewSystem pViewSystem, CommandParam param) { }
 		
-		// TODO
-		private void BTL_SEQ_FUNC_DEF_DprPokemonMotionIndex(SequenceFile pSeqFile, ISequenceViewSystem pViewSystem, CommandParam param) { }
+		private void BTL_SEQ_FUNC_DEF_DprPokemonMotionIndex(SequenceFile pSeqFile, ISequenceViewSystem pViewSystem, CommandParam param)
+		{
+			var macro = param.Macro as DprPokemonMotionIndex;
+			if (macro == null)
+				return;
+
+			int targetNum = 1;
+			if (macro.trg == SEQ_DEF_POS.SEQ_DEF_POS_DEF)
+			{
+				targetNum = pViewSystem.SeqComFunc_GetTargetPokeNum();
+				if (targetNum < 1)
+					return;
+            }
+
+			for (int i=0; i!=targetNum; i++)
+			{
+				var pos = pViewSystem.SeqComFunc_GetTargetPoke(macro.trg, i);
+
+                if (pos != BtlvPos.BTL_VPOS_ERROR)
+				{
+					var model = pViewSystem.GetPokeModel(pos);
+
+					if (model != null)
+						model.ChangeAnimStatePoke((BattlePokemonEntity.AnimationState)macro.index, macro.duration, macro.startTime);
+				}
+            }
+		}
 		
 		// TODO
 		private void BTL_SEQ_FUNC_DEF_DprPokemonUndiscoveredSet(SequenceFile pSeqFile, ISequenceViewSystem pViewSystem, CommandParam param) { }

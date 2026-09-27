@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pml;
+using System;
 
 namespace DPData.MysteryGift
 {
@@ -19,7 +20,9 @@ namespace DPData.MysteryGift
         public byte reserved_byte02;
         public byte reserved_byte03;
 
-        // TODO
-        public void Clear() { }
+        public void Clear()
+        {
+            wazaNos = new ushort[PmlConstants.MAX_WAZA_NUM];
+        }
     }
 }

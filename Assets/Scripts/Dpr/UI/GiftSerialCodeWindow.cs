@@ -1,3 +1,6 @@
+using AK;
+using Audio;
+using Dpr.Message;
 using UnityEngine;
 
 namespace Dpr.UI
@@ -15,25 +18,94 @@ namespace Dpr.UI
 		
 		public string InputSerialCode { get; private set; }
 		
-		// TODO
-		protected override void OnInitialize() { }
+		protected override void OnInitialize()
+		{
+			// Empty;
+		}
 		
-		// TODO
-		public override void Show() { }
+		public override void Show()
+		{
+			base.Show();
+
+			SetupKeyguide(new KeyguideID[] { KeyguideID.GIFT_DECIDE, KeyguideID.GIFT_CANCEL });
+			isShowSoftwareKeyboard = true;
+			isEnableUpdate = true;
+		}
 		
-		// TODO
-		public override void OnUpdate(float deltaTime) { }
+		public override void OnUpdate(float deltaTime)
+		{
+			if (isShowSoftwareKeyboard)
+			{
+				isShowSoftwareKeyboard = false;
+				ShowSoftwareKeyboard();
+			}
+			else if (isEnableUpdate)
+			{
+				if (_input.IsPushButton(UIManager.ButtonA))
+				{
+					ShowSoftwareKeyboard();
+					AudioManager.Instance.PlaySe(EVENTS.UI_COMMON_DECIDE, null);
+				}
+				else if (_input.IsPushButton(UIManager.ButtonB))
+                {
+					onClosed?.Invoke(null);
+                    AudioManager.Instance.PlaySe(EVENTS.UI_COMMON_CANCEL, null);
+                }
+            }
+		}
 		
-		// TODO
-		public void ClearTexts() { }
+		public void ClearTexts()
+		{
+			InputSerialCode = "";
+			for (int i=0; i<codeTexts.Length; i++)
+				codeTexts[i].text = "";
+		}
 		
-		// TODO
-		private (bool, string) OnInputCheck(string resultText, SoftwareKeyboard.ErrorState errorState) { return default; }
+		private (bool, string) OnInputCheck(string resultText, SoftwareKeyboard.ErrorState errorState)
+		{
+			return SoftwareKeyboard.InputCheck(resultText, errorState);
+		}
 		
-		// TODO
-		private void SetSerialCodeText(string text) { }
+		private void SetSerialCodeText(string text)
+		{
+			InputSerialCode = text;
+
+			for (int i=0; i<codeTexts.Length; i++)
+			{
+				string subString = "";
+
+				if (i * SplitCodeLength < text.Length)
+					subString = text.Substring(i * SplitCodeLength, Mathf.Min(SplitCodeLength, text.Length - (i * SplitCodeLength)));
+
+				codeTexts[i].text = subString;
+			}
+		}
 		
-		// TODO
-		private void ShowSoftwareKeyboard() { }
+		private void ShowSoftwareKeyboard()
+		{
+			SoftwareKeyboard.Open(new SoftwareKeyboard.Param()
+			{
+				text = InputSerialCode,
+				headerText = MessageManager.Instance.GetSimpleMessage("ss_strinput", "SS_strinput_015"),
+				textMaxLength = CodeMaxLength,
+				textMinLength = CodeMinLength,
+				invalidCharFlag = SoftwareKeyboard.InvalidChar.OutsideOfDownloadCode,
+				disableErrorChecks = (int)(SoftwareKeyboard.ErrorCheck.NgWord | SoftwareKeyboard.ErrorCheck.NumberCount),
+            },
+			OnInputCheck,
+			(isSuccess, resultText) =>
+			{
+				if (isSuccess)
+				{
+					isEnableUpdate = false;
+					SetSerialCodeText(resultText);
+					onClosed?.Invoke(this);
+				}
+				else
+				{
+					onClosed?.Invoke(null);
+				}
+			});
+		}
 	}
 }
