@@ -8,8 +8,8 @@ namespace INL1
 {
 	public class IlcaNetUtil : IlcaNetServer
 	{
-		private static bool next;
-		private static bool abort;
+		private static volatile bool next;
+		private static volatile bool abort;
 		private static IlcaNetUtilInternetBackCallBack s_backCallback;
 		
 		// TODO

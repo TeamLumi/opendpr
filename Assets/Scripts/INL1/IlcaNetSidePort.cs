@@ -19,8 +19,7 @@ namespace INL1
 		private static Stopwatch sp2 = new Stopwatch();
         private static Stopwatch sp3 = new Stopwatch();
 
-        // TODO: There seems to be something weird here using DataMemoryBarriers in ARM64 which affects this one
-        private static bool InitializeNow;
+        private static volatile bool InitializeNow;
 
 		private static uint magicNunber = 0x22222222;
 		private static string Server = null;

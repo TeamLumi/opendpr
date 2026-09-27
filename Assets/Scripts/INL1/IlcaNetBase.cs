@@ -24,8 +24,7 @@ namespace INL1
 		protected static int LocalCommunicationVersionNumber = 0;
 		protected static bool isErrorViewerAsync = true;
 
-		// TODO: There seems to be something weird here using DataMemoryBarriers in ARM64 which affects this one
-		protected static bool isErrorViewerDispNow = false;
+		protected static volatile bool isErrorViewerDispNow = false;
 
 		protected static bool isErrorViewerDispCancel = false;
 		protected static bool isNamerakaMode = true;
@@ -33,8 +32,7 @@ namespace INL1
 		public const int MaxGamers = 16;
 		protected const int WorkerThreadSleepTime = 16;
 
-        // TODO: There seems to be something weird here using DataMemoryBarriers in ARM64 which affects this one
-        protected static bool isMainThreadDispatchActive = true;
+        protected static volatile bool isMainThreadDispatchActive = true;
 
 		private static bool lastErrorViewerApplet = false;
 		protected static int debugNetworkBadEmulationLevel = 0;
@@ -48,13 +46,13 @@ namespace INL1
 		private const byte NexVersionMinor = 6;
 		private const byte NexVersionMicro = 5;
 
-		private static ErrorMode modeErrorViewerWorker;
+		private static volatile ErrorMode modeErrorViewerWorker;
 		private static PiaPlugin.Result resErrorViewerWorker;
 		private static Result nnResultErrorViewerWorker;
-		private static uint svcode;
-		private static string svdialog;
-		private static string svscreen;
-		private static string svlang;
+		private static volatile uint svcode;
+		private static volatile string svdialog;
+		private static volatile string svscreen;
+		private static volatile string svlang;
 		protected static UniqueIdInfo netNexUIdInfo = new UniqueIdInfo();
 		protected static ulong netNexUniqueId = 0;
 		protected static ulong netNexUniqueIdPassword = 0;

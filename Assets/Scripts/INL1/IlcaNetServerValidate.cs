@@ -19,8 +19,8 @@ namespace INL1
         private static MonoBehaviour s_callobj;
         private static CheckRequest s_cReq;
         private static IlcaNetServerAsyncCallback s_usercallback;
-        private static bool next;
-        private static bool abort;
+        private static volatile bool next;
+        private static volatile bool abort;
         private static byte[] data;
         private static byte[] checkDataForVerifySignature;
         private static byte[] buffValidate;

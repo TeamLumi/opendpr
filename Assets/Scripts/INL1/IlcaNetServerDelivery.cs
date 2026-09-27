@@ -11,21 +11,19 @@ namespace INL1
 		private static Stopwatch sp = new Stopwatch();
 		private static TimeSpan span;
 
-        // TODO: There seems to be something weird here using DataMemoryBarriers in ARM64 which affects this one
-        private static bool isMount = false;
+        private static volatile bool isMount = false;
 
 		public const int OkurimonoIdFlagArray256size = 256;
 		public const int FileFlagArraySize = 13;
 		public const int MaxFileNameArraySize = 100;
 
-        // TODO: There seems to be something weird here using DataMemoryBarriers in ARM64 which affects this one
-        private static bool isReading = false;
+        private static volatile bool isReading = false;
 
-		private static uint s_directoryNum;
-		private static uint s_fileNum;
-		private static byte[] s_data;
-		private static bool s_finish;
-		private static int s_ret;
+		private static volatile uint s_directoryNum;
+		private static volatile uint s_fileNum;
+		private static volatile byte[] s_data;
+		private static volatile bool s_finish;
+		private static volatile int s_ret;
 		
 		// TODO
 		public static void Init() { }

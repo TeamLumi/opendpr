@@ -10,8 +10,8 @@ namespace INL1
 		private static CheckSerialRequest scsr;
 		private static SerialResponseAuth sra;
 		private static SerialResponseUpdate sru;
-		private static bool next;
-		private static bool abort;
+		private static volatile bool next;
+		private static volatile bool abort;
 		
 		// TODO
 		public static bool CheckSerialResponseGet(ref SerialResponseAuth RetSra) { return default; }

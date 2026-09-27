@@ -14,13 +14,11 @@ namespace INL1
 		private static IlcaNetServerFinalAsyncCallback finalCallback = null;
 		private static Thread FinalAsyncCoRoutineCoreUpdateDispatchWTh;
 
-        // TODO: There seems to be something weird here using DataMemoryBarriers in ARM64 which affects this one
-        private static bool isFinalAsyncCoRoutineCoreCallbackCompleted = false;
+        private static volatile bool isFinalAsyncCoRoutineCoreCallbackCompleted = false;
 
 		private static Thread finalAsyncFWTh;
 
-        // TODO: There seems to be something weird here using DataMemoryBarriers in ARM64 which affects this one
-        private static bool isFinalAsyncFinishWorkerCompleted = false;
+        private static volatile bool isFinalAsyncFinishWorkerCompleted = false;
 
 		private static UserNexUniqueIdAcquireCallback unuiaCallback = null;
 		private static AsyncContext pOutContext = new AsyncContext();

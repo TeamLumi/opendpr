@@ -29,7 +29,7 @@ namespace NexAssets
         protected static NgsFacadeInfo s_LastLoginNgsFacadeInfo;
         protected static IntPtr s_DefaultUser;
         private static UserHandle s_AutoLoginUser;
-        public static bool s_updateAlive;
+        public static volatile bool s_updateAlive;
         public static string s_operatingSystem;
         private static Dictionary<int, FunctionInfo> FunctionInfos;
         private static List<ApiCallsFrequency> s_ApiCallsFrequencyList;
